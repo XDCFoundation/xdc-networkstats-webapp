@@ -4,7 +4,7 @@ import {Redirect, Switch} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {connect} from "react-redux";
-import {Login, SignUp} from "./modules";
+import {Dashboard} from "./modules";
 import {history} from "./managers/history";
 import BaseComponent from "./modules/baseComponent";
 
@@ -20,8 +20,7 @@ class Routes extends BaseComponent {
             <MuiThemeProvider muiTheme={getMuiTheme()}>
                 <Router history={history}>
                     <Switch>
-                        <Route exact path={'/'} component={Login}/>
-                        <Route exact path={'/sign-up'} component={SignUp}/>
+                        <Route exact path={'/'} component={Dashboard}/>
                         <Redirect exact from='*' to="/"/>
                     </Switch>
                 </Router>
