@@ -28,6 +28,10 @@ const HeaderLabel = styled.span`
 const StartGuidedLabel = styled.span`
   padding-top: 5px;
   color: white;
+  @media (max-width: 425px)
+  {
+    display: none;
+  }
 `;
 const NavbarIcon = styled.div`
   margin-right: 12px;
