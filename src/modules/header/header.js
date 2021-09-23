@@ -1,36 +1,82 @@
 import * as React from "react";
 // import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 // import { Navbar } from "react-bootstrap";
+import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
-import {Row,Column} from "simple-flexbox";
-const Navbar = styled.nav`
-background-color: #2149B9;
-display: flex;
-justify-content: space-between;
-height: 56px;
-color: white;
+const HeaderContainer = styled.nav`
+  background-color: #2149b9;
+  display: flex;
+  justify-content: space-between;
+  height: 56px;
+  color: white;
+  margin-right: 10px;
+  width: 100%;
 `;
-const Logo =styled.img`
-padding-left: 10px;
-padding-top: 10px;
+const HeaderLogoElement = styled.img`
+  padding-left: 10px;
+  padding-top: 10px;
+`;
+const StartLogo = styled.div`
+  display: inline-flex;
+  margin-top: 3px;
+  margin-right: 5px;
+`;
+const HeaderLabel = styled.span`
+  padding-top: 15px;
+  color: white;
+`;
+const StartGuidedLabel = styled.span`
+  padding-top: 5px;
+  color: white;
+`;
+const NavbarIcon = styled.div`
+  margin-right: 12px;
+`;
+const StartGuideTourButton = styled.button`
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: white;
+  background: #2a52c1 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  border: none;
+  cursor: pointer;
 `;
 export default function Header() {
   return (
-    <div>
-        <Navbar>
+    <>
+      <HeaderContainer>
+        <Row>
+          <Column>
             <div>
-            <div>
-            <Logo src="/images/XDC-Logo.svg"/>
-            <Logo src="/images/VerticalLine.svg"/>
+              <HeaderLogoElement src="/images/XDC-Logo.svg" />
+              <HeaderLogoElement src="/images/VerticalLine.svg" />
             </div>
-            <span>Network Stats</span>
-            </div>
-            <div>
-            <Logo src="/images/Play.svg"/>
-            Start Guided Tour
-            <Logo src="/images/Hamburger.svg"/>
-            </div>
-        </Navbar>
-    </div>
+          </Column>
+          <Column>
+            <HeaderLabel>Network Stats</HeaderLabel>
+          </Column>
+        </Row>
+        <Row>
+          <StartGuideTourButton onClick={"#"}>
+            <Row>
+              <Column>
+                <StartLogo>
+                  <img src="/images/Play.svg" alt="Start" />
+                </StartLogo>
+              </Column>
+              <Column>
+                <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
+              </Column>
+            </Row>
+          </StartGuideTourButton>
+          <Column>
+            <NavbarIcon>
+              <HeaderLogoElement src="/images/Hamburger.svg" />
+            </NavbarIcon>
+          </Column>
+        </Row>
+      </HeaderContainer>
+    </>
   );
 }
