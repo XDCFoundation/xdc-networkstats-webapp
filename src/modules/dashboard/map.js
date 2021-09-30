@@ -11,23 +11,23 @@ height: 169px;
 margin-top: -20px;
 `;
 
+ 
+ const geoUrl =
+   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+ 
+ const Map = () => (
+   <Div>
+   <ComposableMap >
+       <Geographies geography={geoUrl}>
+         {({ geographies }) =>
+           geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} />)
+         }
+       </Geographies>
+     <Marker coordinates={[-74.006, 40.7128]}>
+       <circle r={12} fill="#3AF219" />
+     </Marker>
+     </ComposableMap>
+   </Div>
+ );
 
-const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
-
-const Map = () => (
-  <Div>
-    <ComposableMap >
-      <Geographies geography={geoUrl}>
-        {({ geographies }) =>
-          geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} />)
-        }
-      </Geographies>
-      <Marker coordinates={[-74.006, 40.7128]}>
-        <circle r={12} fill="#3AF219" />
-      </Marker>
-    </ComposableMap>
-  </Div>
-);
 export default Map;

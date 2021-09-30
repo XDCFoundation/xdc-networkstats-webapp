@@ -6,6 +6,9 @@ import Map from "./map";
 import "../../assets/styles/custom.css";
 import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
+import Table from "./table";
+import NodeGraph from "./nodeHistoryGraph"
+
 
 const HeaderContainer = styled.nav`
   background-color: #1c3c93;
@@ -99,7 +102,7 @@ const SecurityIcon = styled.img`
   width: 20px;
   margin-top: 28px;
   margin-right: 12px;
-  margin-left: -9px;
+  margin-left: -21px;
 `;
 const SpeedLabel = styled.span`
   color: #667fc1;
@@ -252,6 +255,9 @@ export default function dashboard(props) {
                 <Row>
                   <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                 </Row>
+                <Row>
+                <NodeGraph/>
+                </Row>
               </Column>
               <Column>
                 <Row>
@@ -381,6 +387,7 @@ export default function dashboard(props) {
         </Row>
       </div>
       {/* Table view */}
+      <Table></Table>
     </div>
   );
 }
