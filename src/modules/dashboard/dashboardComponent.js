@@ -7,8 +7,7 @@ import "../../assets/styles/custom.css";
 import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
 import Table from "./table";
-import NodeGraph from "./nodeHistoryGraph"
-
+import NodeGraph from "./nodeHistoryGraph";
 
 const HeaderContainer = styled.nav`
   background-color: #1c3c93;
@@ -87,7 +86,6 @@ const SecurityLabelMid = styled.span`
   padding-left: 2px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-
 `;
 const SecurityLabelRight = styled.span`
   color: #667fc1;
@@ -155,74 +153,74 @@ const EfficiencyLabelRight = styled.span`
   font: normal normal 600 16px/20px Inter;
 `;
 const Speedbar = styled.div`
-margin-top: 45px;
-margin-left: 110px;
+  margin-top: 45px;
+  margin-left: 110px;
 `;
 const Countries = styled.span`
-padding-left: 42px;
+  padding-left: 42px;
 `;
 const Blocks = styled.span`
-padding-left: 15px;
+  padding-left: 15px;
 `;
 const LastBlock = styled.span`
-padding-left: 130px;
+  padding-left: 130px;
 `;
 const BlockBarLeftLabel = styled.span`
-padding-left: 125px;
-font-size: x-small;
+  padding-left: 125px;
+  font-size: x-small;
 `;
 const BlockBarLabelColor = styled.span`
-color: #667fc1;
+  color: #667fc1;
 `;
 const BlockBarRightLabel = styled.span`
-padding-left: 155px;
-font-size: x-small;
+  padding-left: 155px;
+  font-size: x-small;
 `;
 const EffiencyBar = styled.div`
-margin-top: 45px;     
-margin-left: 50px;
+  margin-top: 45px;
+  margin-left: 50px;
 `;
 const UpTime = styled.span`
-padding-left: 90px;
+  padding-left: 90px;
 `;
 const EfficiencyButton1 = styled.button`
-background: #1C3C93 0% 0% no-repeat padding-box;
-border-radius: 4px;
-opacity: 1;
-border: none;
-color: #3C70FF;
-margin-left: 90px;
-white-space: nowrap;
-font-size: 12px;
-:hover {
-  background-color: #3C70FF;
-} 
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  border: none;
+  color: #3c70ff;
+  margin-left: 90px;
+  white-space: nowrap;
+  font-size: 12px;
+  :hover {
+    background-color: #3c70ff;
+  }
 `;
 const EfficiencyButton2 = styled.button`
-background: #1C3C93 0% 0% no-repeat padding-box;
-border-radius: 4px;
-opacity: 1;
-border: none;
-color: #3C70FF;
-margin-left: -3px;
-white-space: nowrap;
-font-size: 12px;
-:hover {
-  background-color: #3C70FF;
-} 
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  border: none;
+  color: #3c70ff;
+  margin-left: -3px;
+  white-space: nowrap;
+  font-size: 12px;
+  :hover {
+    background-color: #3c70ff;
+  }
 `;
 const EfficiencyButton3 = styled.button`
-background: #1C3C93 0% 0% no-repeat padding-box;
-border-radius: 4px;
-opacity: 1;
-border: none;
-color: #3C70FF;
-margin-left: -3px;
-white-space: nowrap;
-font-size: 12px;
-:hover {
-  background-color: #3C70FF;
-} 
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  border: none;
+  color: #3c70ff;
+  margin-left: -3px;
+  white-space: nowrap;
+  font-size: 12px;
+  :hover {
+    background-color: #3c70ff;
+  }
 `;
 
 export default function dashboard(props) {
@@ -245,34 +243,28 @@ export default function dashboard(props) {
             <Row>
               <Column>
                 <Row>
-                  <SecurityLabel>
-                    Nodes
-                  </SecurityLabel>
+                  <SecurityLabel>Nodes</SecurityLabel>
                 </Row>
                 <Row>
-                {state.nodes}/{state.totalNodes}
-                  </Row>
+                  {state.nodes}/{state.totalNodes}
+                </Row>
                 <Row>
                   <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                 </Row>
                 <Row>
-                <NodeGraph/>
+                  <NodeGraph />
                 </Row>
               </Column>
               <Column>
                 <Row>
                   <Column>
-                  <Row>
-                    <SecurityLabelRight>
-                      Countries
-                    </SecurityLabelRight>
-                    </Row>
-                    <Countries>
-                    {state.countries}
-                    </Countries>
                     <Row>
-                    <Map></Map>
-                    </Row> 
+                      <SecurityLabelRight>Countries</SecurityLabelRight>
+                    </Row>
+                    <Countries>{state.countries}</Countries>
+                    <Row>
+                      <Map></Map>
+                    </Row>
                   </Column>
                   <Column>
                     <SecurityIcon src="/images/Expand.svg" />
@@ -285,55 +277,41 @@ export default function dashboard(props) {
             <Row>
               <Column>
                 <Row>
-                  <SpeedLabel>
-                    Best Block
-                  </SpeedLabel>
-                  </Row>
-                  <Row>
-                  <Blocks>#{state.bestBlock}</Blocks>
-                  </Row>
-                <Row>
-                  <SpeedLabelMid>
-                    Avg Block Time
-                  </SpeedLabelMid>
+                  <SpeedLabel>Best Block</SpeedLabel>
                 </Row>
                 <Row>
-                <Blocks>
-                {state.avgTime}Sec
-                </Blocks>
+                  <Blocks>#{state.bestBlock}</Blocks>
+                </Row>
+                <Row>
+                  <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
+                </Row>
+                <Row>
+                  <Blocks>{state.avgTime}Sec</Blocks>
                 </Row>
               </Column>
               <Column>
                 <Row>
-                  <SpeedLabelRight>
-                    Last Block
-                  </SpeedLabelRight>
+                  <SpeedLabelRight>Last Block</SpeedLabelRight>
                 </Row>
-                <LastBlock>
-                {state.lastBlock}s ago
-                </LastBlock>
+                <LastBlock>{state.lastBlock}s ago</LastBlock>
                 <Row>
                   <Speedbar>
-                <LastBlockBar></LastBlockBar>
-                </Speedbar>   
+                    <LastBlockBar></LastBlockBar>
+                  </Speedbar>
                 </Row>
                 <Row>
-                <Column>
-                <BlockBarLeftLabel>
-                <BlockBarLabelColor>
-                Min
-                </BlockBarLabelColor>
-                1s
-                </BlockBarLeftLabel>
-                </Column>
-                <Column>
-                <BlockBarRightLabel>
-                <BlockBarLabelColor>
-                Max
-                </BlockBarLabelColor>
-                26s
-                </BlockBarRightLabel>
-                </Column>
+                  <Column>
+                    <BlockBarLeftLabel>
+                      <BlockBarLabelColor>Min</BlockBarLabelColor>
+                      1s
+                    </BlockBarLeftLabel>
+                  </Column>
+                  <Column>
+                    <BlockBarRightLabel>
+                      <BlockBarLabelColor>Max</BlockBarLabelColor>
+                      26s
+                    </BlockBarRightLabel>
+                  </Column>
                 </Row>
               </Column>
             </Row>
@@ -342,44 +320,38 @@ export default function dashboard(props) {
             <Row>
               <Column>
                 <Row>
-                  <EfficiencyLabel>
-                    Gas Price (USD)
-                  </EfficiencyLabel>
+                  <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                 </Row>
+                <Row>{state.gasPrice}</Row>
                 <Row>
-                {state.gasPrice}
-                  </Row>
-                <Row>
-                  <EfficiencyLabelMid>
-                    Avg Transaction Rate
-                  </EfficiencyLabelMid>
+                  <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
-                <Row>
-                {state.avgTime}TPS
-                </Row>
+                <Row>{state.avgTime}TPS</Row>
               </Column>
               <Column>
                 <Row>
-                  <EfficiencyLabelRight>
-                    Up Time
-                  </EfficiencyLabelRight>
+                  <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                 </Row>
                 <Row>
-                <UpTime>
-                {state.upTime}%
-                </UpTime>
-                <div>
-                  <Row>
-                  <Column><EfficiencyButton1>30D</EfficiencyButton1></Column>
-                  <Column><EfficiencyButton2>7D</EfficiencyButton2></Column>
-                  <Column><EfficiencyButton3>24H</EfficiencyButton3></Column>
-                  </Row>
-                </div>
+                  <UpTime>{state.upTime}%</UpTime>
+                  <div>
+                    <Row>
+                      <Column>
+                        <EfficiencyButton1>30D</EfficiencyButton1>
+                      </Column>
+                      <Column>
+                        <EfficiencyButton2>7D</EfficiencyButton2>
+                      </Column>
+                      <Column>
+                        <EfficiencyButton3>24H</EfficiencyButton3>
+                      </Column>
+                    </Row>
+                  </div>
                 </Row>
                 <Row>
-                <EffiencyBar>
-                  <UpTimeBar> </UpTimeBar>
-                </EffiencyBar>
+                  <EffiencyBar>
+                    <UpTimeBar> </UpTimeBar>
+                  </EffiencyBar>
                 </Row>
               </Column>
             </Row>
