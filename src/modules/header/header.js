@@ -1,6 +1,4 @@
 import * as React from "react";
-// import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
-// import { Navbar } from "react-bootstrap";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 const HeaderContainer = styled.nav`
