@@ -194,6 +194,7 @@ const EfficiencyButton1 = styled.button`
   font-size: 12px;
   :hover {
     background-color: #3c70ff;
+    color: white;
   }
 `;
 const EfficiencyButton2 = styled.button`
@@ -207,6 +208,7 @@ const EfficiencyButton2 = styled.button`
   font-size: 12px;
   :hover {
     background-color: #3c70ff;
+     color: white;
   }
 `;
 const EfficiencyButton3 = styled.button`
@@ -220,7 +222,22 @@ const EfficiencyButton3 = styled.button`
   font-size: 12px;
   :hover {
     background-color: #3c70ff;
+    color: white;
   }
+`;
+const TableDiv = styled.table`
+background-color: "#F8F8F8";
+margin-left: auto;
+margin-right: auto;
+margin-top: 50px;
+margin-bottom: 80px;
+`;
+
+const Footer = styled.div`
+background-color: white;
+color: #808080;
+text-align: center;
+padding-bottom: 20px;
 `;
 
 export default function dashboard(props) {
@@ -359,7 +376,12 @@ export default function dashboard(props) {
         </Row>
       </div>
       {/* Table view */}
-      <Table></Table>
+      <TableDiv>
+      <Table/>
+      </TableDiv>
+      <Footer>
+      © 2021 XDC Network. All Rights Reserved.
+      </Footer>
     </div>
   );
 }

@@ -7,18 +7,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Radio from '@mui/material/Radio';
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import TableGraph from "./tableGraph";
 
 function createData(
   nodeName,
@@ -27,6 +22,7 @@ function createData(
   peers,
   pendingTxn,
   lastBlock,
+  graph,
   upTime
 ) {
   return {
@@ -36,6 +32,7 @@ function createData(
     peers,
     pendingTxn,
     lastBlock,
+    graph,
     upTime,
   };
 }
@@ -48,6 +45,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -57,6 +55,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -66,6 +65,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%" 
   ),
   createData(
@@ -75,6 +75,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -84,6 +85,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -93,6 +95,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -102,6 +105,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -111,6 +115,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -120,6 +125,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -129,6 +135,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -138,6 +145,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
   createData(
@@ -147,6 +155,7 @@ const rows = [
     8,
     0,
     "#526,481",
+    <TableGraph/>,
     "100%"
   ),
 ];
@@ -216,6 +225,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "Last Block",
+  },
+  {
+    id: "graph",
+    numeric: true,
+    disablePadding: false,
+    label: " ",
   },
   {
     id: "upTime",
@@ -301,38 +316,8 @@ const EnhancedTableToolbar = (props) => {
             ),
         }),
       }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        ></Typography>
-      )}
+    > 
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
     </Toolbar>
   );
 };
@@ -345,8 +330,6 @@ export default function EnhancedTable() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -383,20 +366,9 @@ export default function EnhancedTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -416,11 +388,9 @@ export default function EnhancedTable() {
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
-
                   return (
                     <TableRow
                       hover
@@ -453,27 +423,14 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.peers}</TableCell>
                       <TableCell align="right">{row.pendingTxn}</TableCell>
                       <TableCell align="right">{row.lastBlock}</TableCell>
+                      <TableCell align="right">{row.graph}</TableCell>
                       <TableCell align="right">{row.upTime}</TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 15]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        </TableContainer> 
       </Paper>
     </Box>
   );
