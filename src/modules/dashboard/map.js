@@ -9,6 +9,17 @@ fill: #103AAA;
 width: 300px;
 height: 169px;
 margin-top: -20px;
+@media (max-width: 768px) {
+    height: 180px;
+    width: 400px;
+    margin-top: -40px;
+    margin-left: 70px;
+  }
+@media (max-width: 425px) {
+    height: 150px;
+    width: 300px;
+    margin-left: 40px;
+}
 `;
 
  
