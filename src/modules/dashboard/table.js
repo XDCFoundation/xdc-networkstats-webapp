@@ -1,6 +1,5 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,11 +8,24 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Radio from '@mui/material/Radio';
 import { visuallyHidden } from "@mui/utils";
 import TableGraph from "./tableGraph";
+import styled from "styled-components";
+
+const TableBox = styled.div`
+@media (max-width: 768px) {
+  width: 768px;
+}
+
+@media (max-width: 425px) 
+{
+  width: 425px;
+}
+
+`;
+
 
 function createData(
   nodeName,
@@ -300,32 +312,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    > 
-
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
@@ -371,9 +357,8 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+    <TableBox sx={{ width: "auto" }}>
+      <Paper sx={{ width: "auto"}}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -432,6 +417,6 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer> 
       </Paper>
-    </Box>
+    </TableBox>
   );
 }

@@ -1,10 +1,21 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
+import styled from "styled-components";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center",
-};
+const Div = styled.div`
+width: 250px;
+height: 120px;
+font-family: sans-serif;
+text-align: center;
+@media(max-width: 768px){
+  height: 150px;
+  width: 420px;
+}
+@media (max-width: 425px){
+  height: 100px;
+  width: 400px;
+}
+`;
 
 const data = [
   { time: 1, value: 9000 },
@@ -30,8 +41,7 @@ const data = [
 
 
 const efficiencyBar = () => (
-  <div style={styles}>
-    <div style={{ height: "120px", width: "250px"}}>
+      <Div>
       <ResponsiveBar 
       data={data} 
       keys={["value"]} 
@@ -46,8 +56,7 @@ const efficiencyBar = () => (
     //       colors: "#FFFFFF"
     //    }}
     />
-    </div>
-  </div>
+    </Div>
 );
 
 export default efficiencyBar;
