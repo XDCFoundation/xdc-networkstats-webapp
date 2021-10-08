@@ -2,6 +2,10 @@ import React from "react";
 import BaseComponent from "../baseComponent";
 import DashboardComponent from "./dashboardComponent";
 import openSocket from "socket.io-client";
+import io from "socket.io-client";
+import Utils, {dispatchAction} from "../../utility";
+import {connect} from "react-redux";
+import ConnectSocket from "../../services/socket";
 
 class Dashboard extends BaseComponent {
   constructor(props) {
@@ -18,12 +22,16 @@ class Dashboard extends BaseComponent {
           upTime: 99
 
       };
-      this.connectToSocket();
+      ConnectSocket.connectSocket().then(r => {
+          console.log(r);
+      })
+      // this.connectToSocket();
   }
 
 
   connectToSocket(){
-      const socket = openSocket("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
+      const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
+      // const socket = openSocket("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
       socket.on('open', function open() {
           socket.emit('ready');
           console.log('The connection has been opened.');
@@ -61,4 +69,9 @@ class Dashboard extends BaseComponent {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {stats: state.stats}
+};
+
+export default connect(mapStateToProps, {dispatchAction})(Dashboard);
+
