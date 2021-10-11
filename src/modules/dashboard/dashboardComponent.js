@@ -1,5 +1,4 @@
-import React from "react";
-import Header from "../header/header";
+import React, { useState } from "react";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 import Map from "./map";
@@ -8,6 +7,53 @@ import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
 import Table from "./table";
 import NodeGraph from "./nodeHistoryGraph";
+import Side from "./sideDrawer";
+import Country from "./countries";
+import Joyride from "react-joyride";
+
+const HeaderNav = styled.nav`
+  background-color: #2149b9;
+  display: flex;
+  justify-content: space-between;
+  height: 56px;
+  color: white;
+  margin-right: 10px;
+  width: 100%;
+`;
+const HeaderLogoElement = styled.img`
+  padding-left: 10px;
+  padding-top: 10px;
+  cursor: pointer;
+`;
+const StartLogo = styled.div`
+  display: inline-flex;
+  margin-top: 3px;
+  margin-right: 5px;
+`;
+const HeaderLabel = styled.span`
+  padding-top: 15px;
+  color: white;
+`;
+const StartGuidedLabel = styled.span`
+  padding-top: 5px;
+  color: white;
+  @media (max-width: 425px) {
+    display: none;
+  }
+`;
+const NavbarIcon = styled.div`
+  margin-right: 12px;
+`;
+const StartGuideTourButton = styled.button`
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: white;
+  background: #2a52c1 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  border: none;
+  cursor: pointer;
+`;
 
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
@@ -161,6 +207,7 @@ const SecurityIcon = styled.img`
   @media (max-width: 425px) {
     margin-left: 230px;
   }
+  cursor: pointer;
 `;
 const SpeedLabel = styled.span`
   color: #667fc1;
@@ -515,7 +562,30 @@ const HeaderMob = styled.span`
   }
 `;
 
-export default function Dashboard(props) {
+const TOUR_STEPS = [
+  {
+    target: ".security",
+    content:
+      "Quis cupidatat voluptate commodo ullamco. Proident elit ullamco ad tempor voluptate non consectetur duis eiusmod nulla.",
+    disableBeacon: true,
+  },
+  {
+    target: ".speed",
+    content:
+      "Sit ut tempor reprehenderit ullamco pariatur adipisicing laboris consectetur labore aute pariatur labore consequat. m.",
+  },
+  {
+    target: ".efficiency",
+    content:
+      "Esse in velit ad pariatur mollit aute nostrud laborum. Nostrud laboris amet elit Lorem labore sit duis nisi magna adipis.",
+  },
+  {
+    target: ".tour-policy",
+    content: "We accept returns after 14 days max",
+  },
+];
+
+const Dashboard = (props) => {
   const { state } = props;
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
@@ -525,11 +595,80 @@ export default function Dashboard(props) {
   const changeMob = (value) => {
     setMob(value);
   };
+  const [SwitchSide, setSide] = React.useState(1);
+  const changeSide = (value) => {
+    setSide(value);
+  };
+
+  const [Expand, setCountry] = React.useState(1);
+  const changeExpand = (value) => {
+    setCountry(value);
+  };
+
+  const [joyrideRun, setJoyrideRun] = useState(false);
 
   return (
     <>
       {/* Header nav bar */}
-      <Header />
+      <Joyride
+        steps={TOUR_STEPS}
+        continuous={true}
+        showSkipButton={true}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "blue",
+          },
+          buttonBack: {
+            marginRight: 10,
+          },
+        }}
+        run={joyrideRun}
+      />
+      <>
+        <HeaderNav>
+          <Row>
+            <Column>
+              <div>
+                <HeaderLogoElement src="/images/XDC-Logo.svg" />
+                <HeaderLogoElement src="/images/VerticalLine.svg" />
+              </div>
+            </Column>
+            <Column>
+              <HeaderLabel>Network Stats</HeaderLabel>
+            </Column>
+          </Row>
+          <Row>
+            <StartGuideTourButton>
+              <Row>
+                <Column>
+                  <StartLogo>
+                    <img
+                      src="/images/Play.svg"
+                      alt="Start"
+                      onClick={() => {
+                        setJoyrideRun(true);
+                      }}
+                    />
+                  </StartLogo>
+                </Column>
+                <Column>
+                  <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
+                </Column>
+              </Row>
+            </StartGuideTourButton>
+            <Column>
+              <NavbarIcon onClick={() => changeSide(2)}>
+                <HeaderLogoElement src="/images/Hamburger.svg" />
+              </NavbarIcon>
+            </Column>
+          </Row>
+          {SwitchSide === 2 ? <Side /> : ""}
+        </HeaderNav>
+        {Expand === 2 ? <Country /> : ""}
+      </>
       {/* Section containers(Graph) */}
       <div>
         <Row>
@@ -550,7 +689,7 @@ export default function Dashboard(props) {
           {/*Switching of Tabs*/}
           {SwitchTab === 1 ? (
             <>
-              <SecurityMain>
+              <SecurityMain className="security">
                 {" "}
                 {/*Security Section for Main,Tab*/}
                 <Row>
@@ -582,13 +721,16 @@ export default function Dashboard(props) {
                         </Row>
                       </Column>
                       <Column>
-                        <SecurityIcon src="/images/Expand.svg" />
+                        <SecurityIcon
+                          src="/images/Expand.svg"
+                          onClick={() => changeExpand(2)}
+                        />
                       </Column>
                     </Row>
                   </Column>
                 </Row>
               </SecurityMain>
-              <SecurityMobDiv>
+              <SecurityMobDiv className="security">
                 <>
                   <Column>
                     <Row>
@@ -596,7 +738,10 @@ export default function Dashboard(props) {
                       <HeaderMob onClick={() => changeMob(5)}>
                         Countries
                       </HeaderMob>
-                      <SecurityIcon src="/images/Expand.svg" />
+                      <SecurityIcon
+                        src="/images/Expand.svg"
+                        onClick={() => changeExpand(2)}
+                      />
                     </Row>
                     {SwitchMob === 4 ? (
                       <>
@@ -648,7 +793,7 @@ export default function Dashboard(props) {
           )}
           {SwitchTab === 2 ? (
             <>
-              <SpeedTab>
+              <SpeedTab className="speed">
                 {" "}
                 {/*Speed Section for Tab */}
                 <Row>
@@ -693,9 +838,9 @@ export default function Dashboard(props) {
                   </Column>
                 </Row>
               </SpeedTab>
-              <SpeedMob>
+              <SpeedMob className="speed">
                 {" "}
-                {/*Speed Section for Tab */}
+                {/*Speed Section for Mob */}
                 <Column>
                   <Row>
                     <SpeedLabel>Best Block</SpeedLabel>
@@ -736,7 +881,7 @@ export default function Dashboard(props) {
           )}
           {SwitchTab === 3 ? (
             <>
-              <EfficiencyTab>
+              <EfficiencyTab className="efficiency">
                 {/*Efficiency Section for Tab*/}
                 <Row>
                   <Column>
@@ -779,7 +924,7 @@ export default function Dashboard(props) {
                   </Column>
                 </Row>
               </EfficiencyTab>
-              <EfficiencyMob>
+              <EfficiencyMob className="efficiency">
                 {/*Efficiency Section for Mob*/}
                 <Row>
                   <Column>
@@ -820,7 +965,7 @@ export default function Dashboard(props) {
           ) : (
             ""
           )}
-          <SpeedMain>
+          <SpeedMain className="speed">
             {" "}
             {/*Speed Section for Main*/}
             <Row>
@@ -865,7 +1010,7 @@ export default function Dashboard(props) {
               </Column>
             </Row>
           </SpeedMain>
-          <EfficiencyMain>
+          <EfficiencyMain className="efficiency">
             {/*Efficiency Section for Main*/}
             <Row>
               <Column>
@@ -915,4 +1060,6 @@ export default function Dashboard(props) {
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>
   );
-}
+};
+
+export default Dashboard;

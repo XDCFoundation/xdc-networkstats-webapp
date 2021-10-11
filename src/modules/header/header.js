@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
-const HeaderContainer = styled.nav`
+const HeaderNav = styled.nav`
   background-color: #2149b9;
   display: flex;
   justify-content: space-between;
@@ -47,7 +47,7 @@ const StartGuideTourButton = styled.button`
 export default function Header() {
   return (
     <>
-      <HeaderContainer>
+      <HeaderNav>
         <Row>
           <Column>
             <div>
@@ -78,7 +78,7 @@ export default function Header() {
             </NavbarIcon>
           </Column>
         </Row>
-      </HeaderContainer>
+      </HeaderNav>
     </>
   );
 }
