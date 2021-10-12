@@ -50,8 +50,20 @@ const TabDiv = styled.div`
     width: 425px;
   }
 `;
+const Img = styled.img`
+padding-top: 20px;
+padding-left: 655px;
+cursor: pointer;
+@media (max-width: 768px){
+  padding-left: 700px;
+}
+@media (max-width: 425px){
+  padding-left: 370px;
+}
+`;
 
-export default function countries() {
+
+export default function countries(props) {
   return (
     <>
       <DesktopDiv>
@@ -67,13 +79,21 @@ export default function countries() {
               </Row>
             </Column>
             <Column>
+            <Row>
+            <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
+            </Row>
+            <Row>
               <CountryMap />
+              </Row>
             </Column>
           </Row>
         </Column>
       </DesktopDiv>
       <TabDiv>
         <Column>
+        <Row>
+        <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
+        </Row>
           <Row>
             <CountryMap />
           </Row>

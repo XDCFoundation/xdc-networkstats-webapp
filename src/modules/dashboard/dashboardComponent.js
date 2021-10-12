@@ -2,61 +2,17 @@ import React, { useState } from "react";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 import Map from "./map";
-import "../../assets/styles/custom.css";
 import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
 import Table from "./table";
 import NodeGraph from "./nodeHistoryGraph";
-import Side from "./sideDrawer";
 import Country from "./countries";
 import Joyride from "react-joyride";
+import Header from "../header/header";
 
-const HeaderNav = styled.nav`
-  background-color: #2149b9;
-  display: flex;
-  justify-content: space-between;
-  height: 56px;
-  color: white;
-  margin-right: 10px;
-  width: 100%;
-`;
-const HeaderLogoElement = styled.img`
-  padding-left: 10px;
-  padding-top: 10px;
-  cursor: pointer;
-`;
-const StartLogo = styled.div`
-  display: inline-flex;
-  margin-top: 3px;
-  margin-right: 5px;
-`;
-const HeaderLabel = styled.span`
-  padding-top: 15px;
-  color: white;
-`;
-const StartGuidedLabel = styled.span`
-  padding-top: 5px;
-  color: white;
-  @media (max-width: 425px) {
-    display: none;
-  }
-`;
-const NavbarIcon = styled.div`
-  margin-right: 12px;
-`;
-const StartGuideTourButton = styled.button`
-  margin-top: 7px;
-  margin-bottom: 7px;
-  color: white;
-  background: #2a52c1 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  border: none;
-  cursor: pointer;
-`;
 
 const HeaderContainer = styled.div`
-  background-color: #1c3c93;
+  background-color: #1c3c93; 
   display: flex;
   width: 100%;
   height: 38px;
@@ -65,6 +21,7 @@ const HeaderContainer = styled.div`
     display: none;
   }
 `;
+
 const SectionLabel = styled.div`
   color: #c8d1f1;
   padding-left: 12px;
@@ -83,6 +40,7 @@ const SectionLabel = styled.div`
     }
   }
 `;
+
 const SecurityMain = styled.div`
   background-color: #102c78;
   width: 33.33%;
@@ -595,12 +553,12 @@ const Dashboard = (props) => {
   const changeMob = (value) => {
     setMob(value);
   };
-  const [SwitchSide, setSide] = React.useState(1);
+  const [SwitchSide, setSide] = React.useState(false);
   const changeSide = (value) => {
     setSide(value);
   };
 
-  const [Expand, setCountry] = React.useState(1);
+  const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
     setCountry(value);
   };
@@ -628,46 +586,12 @@ const Dashboard = (props) => {
         run={joyrideRun}
       />
       <>
-        <HeaderNav>
-          <Row>
-            <Column>
-              <div>
-                <HeaderLogoElement src="/images/XDC-Logo.svg" />
-                <HeaderLogoElement src="/images/VerticalLine.svg" />
-              </div>
-            </Column>
-            <Column>
-              <HeaderLabel>Network Stats</HeaderLabel>
-            </Column>
-          </Row>
-          <Row>
-            <StartGuideTourButton>
-              <Row>
-                <Column>
-                  <StartLogo>
-                    <img
-                      src="/images/Play.svg"
-                      alt="Start"
-                      onClick={() => {
-                        setJoyrideRun(true);
-                      }}
-                    />
-                  </StartLogo>
-                </Column>
-                <Column>
-                  <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
-                </Column>
-              </Row>
-            </StartGuideTourButton>
-            <Column>
-              <NavbarIcon onClick={() => changeSide(2)}>
-                <HeaderLogoElement src="/images/Hamburger.svg" />
-              </NavbarIcon>
-            </Column>
-          </Row>
-          {SwitchSide === 2 ? <Side /> : ""}
-        </HeaderNav>
-        {Expand === 2 ? <Country /> : ""}
+        <Header
+          setJoyrideRun={setJoyrideRun}
+          changeSide={changeSide}
+          SwitchSide={SwitchSide} 
+        />
+        {Expand === 2 ? <Country expand={setCountry} /> : ""}
       </>
       {/* Section containers(Graph) */}
       <div>
@@ -773,7 +697,7 @@ const Dashboard = (props) => {
                         </Row>
                         <Row>
                           <MapContainer>
-                            <Map />
+                            <Map/>
                           </MapContainer>
                         </Row>
                       </>
