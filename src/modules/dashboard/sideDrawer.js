@@ -46,15 +46,20 @@ const Content = styled.span`
 const Img = styled.img`
   padding-left: 10px;
 `;
+const CloseImg = styled.img`
+  padding-left: 10px;
+  cursor: pointer;
+`;
 
-export default function sideDrawer() {
+export default function sideDrawer(props) {
+  console.log("bhaii",props)
   return (
     <Div>
       <Column>
         <Nav>
           <NavLabel>Browser</NavLabel>
           <Column>
-            <Img src="/images/Group 60.svg" alt="close" />
+            <CloseImg src="/images/Group 60.svg" alt="close" onClick={()=>{props.close(false)}}/>
           </Column>
         </Nav>
         <Column>

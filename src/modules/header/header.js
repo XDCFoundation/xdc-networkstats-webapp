@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
+import Side from "../dashboard/sideDrawer";
+
 const HeaderNav = styled.nav`
   background-color: #2149b9;
   display: flex;
@@ -13,6 +15,7 @@ const HeaderNav = styled.nav`
 const HeaderLogoElement = styled.img`
   padding-left: 10px;
   padding-top: 10px;
+  cursor: pointer;
 `;
 const StartLogo = styled.div`
   display: inline-flex;
@@ -22,12 +25,12 @@ const StartLogo = styled.div`
 const HeaderLabel = styled.span`
   padding-top: 15px;
   color: white;
+  padding-left: 10px;
 `;
 const StartGuidedLabel = styled.span`
   padding-top: 5px;
   color: white;
-  @media (max-width: 425px)
-  {
+  @media (max-width: 425px) {
     display: none;
   }
 `;
@@ -44,7 +47,8 @@ const StartGuideTourButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-export default function Header() {
+export default function Header(props) {
+  console.log("string", props);
   return (
     <>
       <HeaderNav>
@@ -60,7 +64,11 @@ export default function Header() {
           </Column>
         </Row>
         <Row>
-          <StartGuideTourButton onClick={"#"}>
+          <StartGuideTourButton
+            onClick={() => {
+              props.setJoyrideRun(true);
+            }}
+          >
             <Row>
               <Column>
                 <StartLogo>
@@ -73,11 +81,12 @@ export default function Header() {
             </Row>
           </StartGuideTourButton>
           <Column>
-            <NavbarIcon>
+            <NavbarIcon onClick={() => props.changeSide(true)}>
               <HeaderLogoElement src="/images/Hamburger.svg" />
             </NavbarIcon>
           </Column>
         </Row>
+        {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
       </HeaderNav>
     </>
   );
