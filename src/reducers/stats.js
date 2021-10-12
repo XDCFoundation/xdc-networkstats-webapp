@@ -1,14 +1,14 @@
 import {eventConstants} from '../constants'
 let initialState = {
-    nodes: 192,
-    totalNodes: 196,
-    countries: 60,
-    bestBlock: 55963,
-    avgTime: 0.1,
-    lastBlock: 15,
-    gasPrice: 0.002,
-    avgRate: 98,
-    upTime: 99
+    nodes: 172,
+    totalNodes: 176,
+    countries: 70,
+    bestBlock: 55963787,
+    avgTime: 0.7,
+    lastBlock: 17,
+    gasPrice: 0.007,
+    avgRate: 78,
+    upTime: 77
 };
 export default function stats(state = initialState, action) {
     switch (action.type) {

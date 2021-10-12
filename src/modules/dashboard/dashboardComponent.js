@@ -516,7 +516,7 @@ const HeaderMob = styled.span`
 `;
 
 export default function Dashboard(props) {
-  const { state } = props;
+  const { state, content } = props;
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
     setTab(value);
@@ -559,7 +559,7 @@ export default function Dashboard(props) {
                       <SecurityLabel>Nodes</SecurityLabel>
                     </Row>
                     <Row>
-                      {state.nodes}/{state.totalNodes}
+                      {content.stats.nodes}/{content.stats.totalNodes}
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
@@ -574,7 +574,7 @@ export default function Dashboard(props) {
                         <Row>
                           <SecurityLabelRight>Countries</SecurityLabelRight>
                         </Row>
-                        <Countries>{state.countries}</Countries>
+                        <Countries>{content.stats.countries}</Countries>
                         <Row>
                           <MapContainer>
                             <Map />
@@ -604,7 +604,7 @@ export default function Dashboard(props) {
                           <SecurityLabel>Nodes</SecurityLabel>
                         </Row>
                         <Row>
-                          {state.nodes}/{state.totalNodes}
+                          {content.stats.nodes}/{content.stats.totalNodes}
                         </Row>
                         <Row>
                           <SecurityLabelMid>
@@ -624,7 +624,7 @@ export default function Dashboard(props) {
                           <SecurityLabelRight>Countries</SecurityLabelRight>
                         </Row>
                         <Row>
-                          <Countries>{state.countries}</Countries>
+                          <Countries>{content.stats.countries}</Countries>
                         </Row>
                         <Row>
                           <MapContainer>
@@ -657,20 +657,20 @@ export default function Dashboard(props) {
                       <SpeedLabel>Best Block</SpeedLabel>
                     </Row>
                     <Row>
-                      <Blocks>#{state.bestBlock}</Blocks>
+                      <Blocks>#{content.stats.bestBlock}</Blocks>
                     </Row>
                     <Row>
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                     </Row>
                     <Row>
-                      <Blocks>{state.avgTime}Sec</Blocks>
+                      <Blocks>{content.stats.avgTime}Sec</Blocks>
                     </Row>
                   </Column>
                   <Column>
                     <Row>
                       <SpeedLabelRight>Last Block</SpeedLabelRight>
                     </Row>
-                    <LastBlock>{state.lastBlock}s ago</LastBlock>
+                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                     <Row>
                       <Speedbar>
                         <LastBlockBar></LastBlockBar>
@@ -702,14 +702,14 @@ export default function Dashboard(props) {
                     <SpeedLabelRight>Last Block</SpeedLabelRight>
                   </Row>
                   <Row>
-                    <Blocks>#{state.bestBlock}</Blocks>
-                    <LastBlock>{state.lastBlock}s ago</LastBlock>
+                    <Blocks>#{content.stats.bestBlock}</Blocks>
+                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                   </Row>
                   <Row>
                     <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                   </Row>
                   <Row>
-                    <Blocks>{state.avgTime}Sec</Blocks>
+                    <Blocks>{content.stats.avgTime}Sec</Blocks>
                   </Row>
                   <Row>
                     <Speedbar>
@@ -743,20 +743,20 @@ export default function Dashboard(props) {
                     <Row>
                       <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                     </Row>
-                    <Row>{state.gasPrice}</Row>
+                    <Row>{content.stats.gasPrice}</Row>
                     <Row>
                       <EfficiencyLabelMid>
                         Avg Transaction Rate
                       </EfficiencyLabelMid>
                     </Row>
-                    <Row>{state.avgTime}TPS</Row>
+                    <Row>{content.stats.avgRate}TPS</Row>
                   </Column>
                   <Column>
                     <Row>
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      <UpTime>{state.upTime}%</UpTime>
+                      <UpTime>{content.stats.upTime}%</UpTime>
                       <div>
                         <Row>
                           <Column>
@@ -788,15 +788,15 @@ export default function Dashboard(props) {
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      {state.gasPrice}
-                      <UpTime>{state.upTime}%</UpTime>
+                      {content.stats.gasPrice}
+                      <UpTime>{content.stats.upTime}%</UpTime>
                     </Row>
                     <Row>
                       <EfficiencyLabelMid>
                         Avg Transaction Rate
                       </EfficiencyLabelMid>
                     </Row>
-                    <Row>{state.avgTime}TPS</Row>
+                    <Row>{content.stats.avgRate}TPS</Row>
                     <Row>
                       <Column>
                         <EfficiencyButton1>30D</EfficiencyButton1>
@@ -829,20 +829,20 @@ export default function Dashboard(props) {
                   <SpeedLabel>Best Block</SpeedLabel>
                 </Row>
                 <Row>
-                  <Blocks>#{state.bestBlock}</Blocks>
+                  <Blocks>#{content.stats.bestBlock}</Blocks>
                 </Row>
                 <Row>
                   <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                 </Row>
                 <Row>
-                  <Blocks>{state.avgTime}Sec</Blocks>
+                  <Blocks>{content.stats.avgTime}Sec</Blocks>
                 </Row>
               </Column>
               <Column>
                 <Row>
                   <SpeedLabelRight>Last Block</SpeedLabelRight>
                 </Row>
-                <LastBlock>{state.lastBlock}s ago</LastBlock>
+                <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                 <Row>
                   <Speedbar>
                     <LastBlockBar></LastBlockBar>
@@ -872,18 +872,18 @@ export default function Dashboard(props) {
                 <Row>
                   <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                 </Row>
-                <Row>{state.gasPrice}</Row>
+                <Row>{content.stats.gasPrice}</Row>
                 <Row>
                   <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
-                <Row>{state.avgTime}TPS</Row>
+                <Row>{content.stats.avgRate}TPS</Row>
               </Column>
               <Column>
                 <Row>
                   <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                 </Row>
                 <Row>
-                  <UpTime>{state.upTime}%</UpTime>
+                  <UpTime>{content.stats.upTime}%</UpTime>
                   <div>
                     <Row>
                       <Column>

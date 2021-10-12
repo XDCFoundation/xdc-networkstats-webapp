@@ -63,6 +63,7 @@ export default utility;
 
 
 export const dispatchAction = (type, data) => {
+    console.log('data =================', data);
     return dispatch => dispatch({type, data});
 };
 

@@ -2,9 +2,10 @@ import io from "socket.io-client";
 import Utils, {dispatchAction} from "../utility";
 import {eventConstants} from "../constants";
 import _ from 'lodash';
-export default {
-    connectSocket
-}
+import store from '../store'
+// export default {
+//     connectSocket
+// }
 let MAX_BINS = 40;
 let nodes = 0;
 let totalNodes = 0;
@@ -32,38 +33,50 @@ let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 
-async function connectSocket(){
-    const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
+// async function connectSocket(){
+    // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
 
-    socket.on('open', () => {
+    console.log('line 38383838383838383838383838383838338383838');
+
+    const socket = io('wss://stats1.xinfin.network', {
+        path: '/primus/',
+        transports: ['websocket'],
+        query: {_primuscb: '1633499928674-0'},
+        reconnection: true
+    });
+
+
+    // store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: 888888888})
+
+    socket.on('open', function open(){
         socket.emit('ready');
         console.log('The connection has been opened.');
     })
 
-    socket.on('end', () => {
+    socket.on('end', function end(){
         console.log('Socket connection ended.')
     })
 
-    socket.on('error', (err) => {
+    socket.on('error', function error(err){
         console.log(err);
     })
 
-    socket.on('reconnecting', (opts) => {
+    socket.on('reconnecting', function reconnecting(opts) {
         console.log('We are scheduling a reconnect operation', opts);
     })
 
-    socket.on('data', (data) => {
+    socket.on('data', function incoming(data) {
+        socketAction(data.action, data.data);
+    });
 
+    socket.on('init', function(data) {
+        socketAction("init", data.nodes);
+    });
+
+    socket.on('client-latency', function(data) {
+        // $scope.latency = data.latency;
     })
-
-    socket.on('init', (data) => {
-
-    })
-
-    socket.on('client-latency', (data) => {
-
-    })
-}
+//}
 
 async function socketAction(action, data){
     // data = xssFilter(data);
@@ -89,7 +102,8 @@ async function socketAction(action, data){
 
             if( nodes.length > 0 )
             {
-                dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
                 await updateActiveNodes(); //all the commented stuff above needs to be implemented in the correct way for this.
             }
             break;
@@ -130,7 +144,8 @@ async function socketAction(action, data){
                         nodes[index] = await latencyFilter(nodes[index]);
                     }
 
-                    dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                    // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                    store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
                     await updateBestBlock();
                 }
@@ -160,7 +175,8 @@ async function socketAction(action, data){
                 nodes[index1].stats.block = data.block;
                 nodes[index1].stats.propagationAvg = data.propagationAvg;
 
-                dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
                 await updateBestBlock();
             }
@@ -177,7 +193,8 @@ async function socketAction(action, data){
                     nodes[index2].stats.pending = data.pending;
             }
 
-            dispatchAction(eventConstants.UPDATE_NODES, nodes);
+            // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+            store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
             break;
         case "stats":
@@ -204,7 +221,8 @@ async function socketAction(action, data){
                         nodes[index3] = await latencyFilter(nodes[index3]);
                     }
 
-                    dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                    // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                    store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
                     await updateActiveNodes();
                 }
@@ -225,7 +243,8 @@ async function socketAction(action, data){
                 // Init latency
                 nodes[index4] = await latencyFilter(nodes[index4]);
 
-                dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
                 await updateActiveNodes();
             }
@@ -292,7 +311,8 @@ async function socketAction(action, data){
                 if( !_.isUndefined(data.stats) )
                     nodes[index5].stats = data.stats;
 
-                dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
                 await updateActiveNodes();
             }
@@ -313,7 +333,8 @@ async function socketAction(action, data){
                     }
                 }
 
-                dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
             }
 
             break;
@@ -362,7 +383,8 @@ async function updateActiveNodes(){
     await updateBestBlock();
 
     totalNodes = nodes.length;
-    dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
+    // dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
+    store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
 
     nodesActive = _.filter(nodes, function (node) {
         return node.stats.active === true;
@@ -371,7 +393,8 @@ async function updateActiveNodes(){
     upTime = _.reduce(nodes, function (total, node) {
         return total + node.stats.uptime;
     }, 0) / nodes.length;
-    dispatchAction(eventConstants.UPDATE_UP_TIME, upTime);
+    // dispatchAction(eventConstants.UPDATE_UP_TIME, upTime);
+    store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
 
     // $scope.map = _.map($scope.nodes, function (node) {
     //     var fill = $filter('bubbleClass')(node.stats, $scope.bestBlock);
@@ -407,14 +430,16 @@ async function updateBestBlock(){
         if( bBlock !== bestBlock )
         {
             bestBlock = bBlock;
-            dispatchAction(eventConstants.UPDATE_BEST_BLOCK, bestBlock);
+            // dispatchAction(eventConstants.UPDATE_BEST_BLOCK, bestBlock);
+            store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
 
             bestStats = _.max(nodes, function (node) {
                 return parseInt(node.stats.block.number);
             }).stats;
 
             lastBlock = bestStats.block.arrived;
-            dispatchAction(eventConstants.UPDATE_LAST_BLOCK, lastBlock);
+            // dispatchAction(eventConstants.UPDATE_LAST_BLOCK, lastBlock);
+            store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: lastBlock})
 
             lastDifficulty = bestStats.block.difficulty;
         }
