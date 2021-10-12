@@ -48,9 +48,8 @@ const StartGuideTourButton = styled.button`
   cursor: pointer;
 `;
 export default function Header(props) {
-  console.log("string", props);
   return (
-    <>
+    <> 
       <HeaderNav>
         <Row>
           <Column>

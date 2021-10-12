@@ -52,7 +52,6 @@ const CloseImg = styled.img`
 `;
 
 export default function sideDrawer(props) {
-  console.log("bhaii",props)
   return (
     <Div>
       <Column>
