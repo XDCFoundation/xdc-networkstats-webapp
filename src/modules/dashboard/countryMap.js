@@ -12,7 +12,8 @@ const Div = styled.div`
   /* transform: scale(1.8); */
   width: 710px;
   height: auto;
-  margin-top: 80px;
+  margin-top: 100px;
+  margin-left: 130px;
   @media (max-width: 425px) {
     width: 400px;
   }

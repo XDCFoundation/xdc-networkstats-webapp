@@ -3,7 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import styled from "styled-components";
 
 const Div = styled.div`
-width: 250px;
+width: 320px;
 height: 120px;
 font-family: sans-serif;
 text-align: center;
@@ -39,6 +39,24 @@ const data = [
   { time: 19 , value: 9000 }
 ];
 
+const theme = {
+  axis: {
+    fontSize: "5px",
+
+    ticks: {
+      line: {
+        stroke: "#555555"
+      },
+      text: {
+        fill: "#ffffff"
+      }
+    },
+    legend: {
+      text: {
+        fill: "#aaaaaa"
+      }
+    }
+  }}
 
 const efficiencyBar = () => (
       <Div>
@@ -49,12 +67,9 @@ const efficiencyBar = () => (
       colors = {["#3AF219"]} 
       enableLabel={false}
       enableGridY={false}
+      theme={theme}
       padding={0.2}
-    //     axisBottom = {{
-    //        legend: 'Min 1s',
-    //        legendPosition: 'start',
-    //       colors: "#FFFFFF"
-    //    }}
+      
     />
     </Div>
 );

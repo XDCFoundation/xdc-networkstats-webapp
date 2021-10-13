@@ -15,6 +15,8 @@ import TableGraph from "./tableGraph";
 import styled from "styled-components";
 
 const TableBox = styled.div`
+width: 1800px;
+
 @media (max-width: 768px) {
   width: 768px;
 }
@@ -207,6 +209,7 @@ const headCells = [
     id: "nodeName",
     disablePadding: true,
     label: "Node Name",
+    
   },
   {
     id: "type",
@@ -280,9 +283,10 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            style={{fontWeight: 600}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -403,13 +407,13 @@ export default function EnhancedTable() {
                       >
                         {row.nodeName}
                       </TableCell>
-                      <TableCell align="right">{row.type}</TableCell>
-                      <TableCell align="right">{row.latency}</TableCell>
-                      <TableCell align="right">{row.peers}</TableCell>
-                      <TableCell align="right">{row.pendingTxn}</TableCell>
-                      <TableCell align="right">{row.lastBlock}</TableCell>
-                      <TableCell align="right">{row.graph}</TableCell>
-                      <TableCell align="right">{row.upTime}</TableCell>
+                      <TableCell>{row.type}</TableCell>
+                      <TableCell>{row.latency}</TableCell>
+                      <TableCell>{row.peers}</TableCell>
+                      <TableCell>{row.pendingTxn}</TableCell>
+                      <TableCell>{row.lastBlock}</TableCell>
+                      <TableCell>{row.graph}</TableCell> 
+                      <TableCell>{row.upTime}</TableCell>
                     </TableRow>
                   );
                 })}

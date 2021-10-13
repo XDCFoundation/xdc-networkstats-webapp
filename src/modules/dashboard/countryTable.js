@@ -14,7 +14,7 @@ import styled from "styled-components";
 const TableBox = styled.div`
   padding-top: 100px;
   padding-left: 50px;
-  width: 800px;
+  width: 1000px;
   height: auto;
   @media (max-width: 768px) {
     width: 700px;
@@ -122,7 +122,7 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{ color: "white", columnWidth: "60px" }}
+            style={{ color: "white", columnWidth: "70px" }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -224,19 +224,19 @@ export default function EnhancedTable() {
                     key={row.id}
                     selected={isItemSelected}
                   >
-                    <TableCell style={{ color: "white" }} align="right">
+                    <TableCell style={{ color: "white" }}>
                       {row.id}
                     </TableCell>
-                    <TableCell style={{ color: "white" }} align="right">
+                    <TableCell style={{ color: "white" }}>
                       {row.countries}
                     </TableCell>
-                    <TableCell style={{ color: "white" }} align="right">
+                    <TableCell style={{ color: "white" }}>
                       {row.last24h}
                     </TableCell>
-                    <TableCell style={{ color: "white" }} align="right">
+                    <TableCell style={{ color: "white" }}>
                       {row.last24}
                     </TableCell>
-                    <TableCell style={{ color: "white" }} align="right">
+                    <TableCell style={{ color: "white" }}>
                       {row.last7}
                     </TableCell>
                   </TableRow>

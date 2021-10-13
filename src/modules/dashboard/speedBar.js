@@ -26,7 +26,7 @@ const data = [
 ];
 
 const Div = styled.div`
-width: 250px;
+width: 360px;
 height: 120px;
 font-family: sans-serif;
 text-align: center;
