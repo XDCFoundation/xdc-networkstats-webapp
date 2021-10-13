@@ -138,7 +138,7 @@ const SecurityLabelRight = styled.span`
   color: #667fc1;
   display: flex;
   padding-top: 12px;
-  margin-left: 40px;
+  margin-left: 130px;
   font: normal normal 600 16px/20px Inter;
   @media (max-width: 768px) {
     padding-left: 120px;
@@ -155,7 +155,7 @@ const SecurityIcon = styled.img`
   width: 20px;
   margin-top: 28px;
   margin-right: 12px;
-  margin-left: -21px;
+  margin-left: 30px;
   @media (max-width: 768px) {
     margin-left: 261px;
     margin-top: 19px;
@@ -269,7 +269,7 @@ const Speedbar = styled.div`
   }
 `;
 const Countries = styled.span`
-  padding-left: 42px;
+  padding-left: 130px;
   @media (max-width: 768px) {
     padding-left: 162px;
   }
@@ -300,7 +300,7 @@ const BlockBarLabelColor = styled.span`
   color: #667fc1;
 `;
 const BlockBarRightLabel = styled.span`
-  padding-left: 155px;
+  padding-left: 270px;
   font-size: x-small;
   @media (max-width: 768px) {
     padding-left: 330px;
@@ -311,7 +311,7 @@ const BlockBarRightLabel = styled.span`
 `;
 const EffiencyBar = styled.div`
   margin-top: 45px;
-  margin-left: 50px;
+  margin-left: -5px;
   @media (max-width: 768px) {
     margin-top: 25px;
     margin-left: 120px;
@@ -336,9 +336,10 @@ const EfficiencyButton1 = styled.button`
   opacity: 1;
   border: none;
   color: #3c70ff;
-  margin-left: 90px;
+  margin-left: 210px;
   white-space: nowrap;
   font-size: 12px;
+  
   :hover {
     background-color: #3c70ff;
     color: white;
@@ -357,7 +358,7 @@ const EfficiencyButton2 = styled.button`
   opacity: 1;
   border: none;
   color: #3c70ff;
-  margin-left: -3px;
+  margin-left: 0px;
   white-space: nowrap;
   font-size: 12px;
   :hover {
@@ -374,7 +375,7 @@ const EfficiencyButton3 = styled.button`
   opacity: 1;
   border: none;
   color: #3c70ff;
-  margin-left: -3px;
+  margin-left: 0px;
   white-space: nowrap;
   font-size: 12px;
   :hover {
@@ -389,7 +390,7 @@ const TableDiv = styled.table`
   background-color: "#F8F8F8";
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 80px;
 `;
 
@@ -401,6 +402,7 @@ const Footer = styled.div`
 `;
 
 const MapContainer = styled.div`
+  padding-left: 90px;
   @media (max-width: 768px) {
     width: 70px;
     height: 40px;
@@ -518,6 +520,27 @@ const HeaderMob = styled.span`
     color: white;
     text-decoration: underline;
   }
+`;
+
+const EfficiencyBarLabel = styled.span`
+  color: #667fc1;
+  font-size: 10px;
+  padding-left: 113px;
+  padding-top: 53px;
+  `;
+
+const EfficiencyBarLabelMid = styled.span`
+color: #667fc1;
+font-size: 10px;
+padding-left: 113px;
+padding-top: 10px;
+`;
+
+const EfficiencyBarLabelEnd = styled.span`
+color: #667fc1;
+font-size: 10px;
+padding-left: 113px;
+padding-top: 10px;
 `;
 
 const TOUR_STEPS = [
@@ -968,9 +991,22 @@ const Dashboard = (props) => {
                   </div>
                 </Row>
                 <Row>
+                  <Column>
+                  <Row>
+                  <EfficiencyBarLabel>100</EfficiencyBarLabel>
+                  </Row>
+                  <Row>
+                  <EfficiencyBarLabelMid>50</EfficiencyBarLabelMid>
+                  </Row>
+                  <Row>
+                  <EfficiencyBarLabelEnd>0</EfficiencyBarLabelEnd>
+                  </Row>
+                  </Column>
+                  <Column>
                   <EffiencyBar>
                     <UpTimeBar> </UpTimeBar>
                   </EffiencyBar>
+                  </Column>
                 </Row>
               </Column>
             </Row>

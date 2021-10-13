@@ -8,7 +8,7 @@ const Div = styled.div`
   color: white;
   height: 1080px;
   position: absolute;
-  left: 1138px;
+  left: 1537px;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
