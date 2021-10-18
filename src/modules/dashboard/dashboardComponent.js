@@ -10,14 +10,13 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 
-
 const HeaderContainer = styled.div`
-  background-color: #1c3c93; 
+  background-color: #1c3c93;
   display: flex;
   width: 100%;
   height: 38px;
   justify-content: space-between;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     display: none;
   }
 `;
@@ -30,8 +29,11 @@ const SectionLabel = styled.div`
   width: 33.33%;
   border-right: 1px solid #274598;
   padding-top: 8px;
+  font-size: 18px;
+  font-family: "Inter";
+  
 
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     justify-content: center;
     :hover {
       background-color: #3c70ff;
@@ -48,8 +50,8 @@ const SecurityMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (max-width: 1025px) {
+    width: 1025px;
     padding-top: 5px;
     font-size: 20px;
   }
@@ -69,7 +71,7 @@ const SpeedTab = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
     font-size: 20px;
@@ -89,7 +91,7 @@ const EfficiencyTab = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
   }
@@ -110,8 +112,9 @@ const SecurityLabel = styled.span`
   width: 50%;
   padding-top: 12px;
   padding-left: 1 px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  font-size: 16px;
+  font-family: "Inter";
+  @media (max-width: 1025px) {
     font-size: 20px;
   }
   @media (max-width: 425px) {
@@ -126,8 +129,9 @@ const SecurityLabelMid = styled.span`
   padding-left: 2px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 20px;
+    padding-top: 32px;
   }
   @media (max-width: 425px) {
     padding-top: 44px;
@@ -138,9 +142,9 @@ const SecurityLabelRight = styled.span`
   color: #667fc1;
   display: flex;
   padding-top: 12px;
-  margin-left: 130px;
+  margin-left: 40px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-left: 120px;
     font-size: 20px;
   }
@@ -155,8 +159,8 @@ const SecurityIcon = styled.img`
   width: 20px;
   margin-top: 28px;
   margin-right: 12px;
-  margin-left: 30px;
-  @media (max-width: 768px) {
+  margin-left: 10px;
+  @media (max-width: 1025px) {
     margin-left: 261px;
     margin-top: 19px;
     height: 23px;
@@ -176,7 +180,7 @@ const SpeedLabel = styled.span`
   padding-left: 13px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 40px;
     font-size: 18px;
   }
@@ -192,7 +196,7 @@ const SpeedLabelMid = styled.span`
   padding-left: 15px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 18px;
   }
   @media (max-width: 425px) {
@@ -205,7 +209,7 @@ const SpeedLabelRight = styled.span`
   padding-top: 12px;
   margin-left: 130px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 40px;
     font-size: 18px;
   }
@@ -222,7 +226,7 @@ const EfficiencyLabel = styled.span`
   padding-top: 14px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 35px;
     font-size: 20px;
   }
@@ -234,7 +238,7 @@ const EfficiencyLabelMid = styled.span`
   padding-top: 90px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 20px;
   }
   @media (max-width: 425px) {
@@ -245,9 +249,9 @@ const EfficiencyLabelRight = styled.span`
   color: #667fc1;
   display: flex;
   padding-top: 12px;
-  margin-left: 90px;
+  margin-left: 130px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 35px;
     margin-left: 130px;
     font-size: 20px;
@@ -260,7 +264,7 @@ const EfficiencyLabelRight = styled.span`
 const Speedbar = styled.div`
   margin-top: 45px;
   margin-left: 110px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-left: 170px;
     margin-top: 20px;
   }
@@ -269,8 +273,8 @@ const Speedbar = styled.div`
   }
 `;
 const Countries = styled.span`
-  padding-left: 130px;
-  @media (max-width: 768px) {
+  padding-left: 40px;
+  @media (max-width: 1025px) {
     padding-left: 162px;
   }
   @media (max-width: 425px) {
@@ -289,7 +293,7 @@ const LastBlock = styled.span`
 const BlockBarLeftLabel = styled.span`
   padding-left: 125px;
   font-size: x-small;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-left: 185px;
   }
   @media (max-width: 425px) {
@@ -302,7 +306,7 @@ const BlockBarLabelColor = styled.span`
 const BlockBarRightLabel = styled.span`
   padding-left: 270px;
   font-size: x-small;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-left: 330px;
   }
   @media (max-width: 425px) {
@@ -310,9 +314,9 @@ const BlockBarRightLabel = styled.span`
   }
 `;
 const EffiencyBar = styled.div`
-  margin-top: 45px;
-  margin-left: -5px;
-  @media (max-width: 768px) {
+  margin-top: -10px;
+  margin-left: 90px;
+  @media (max-width: 1025px) {
     margin-top: 25px;
     margin-left: 120px;
   }
@@ -322,8 +326,8 @@ const EffiencyBar = styled.div`
   }
 `;
 const UpTime = styled.span`
-  padding-left: 90px;
-  @media (max-width: 768px) {
+  padding-left: 130px;
+  @media (max-width: 1025px) {
     padding-left: 130px;
   }
   @media (max-width: 425px) {
@@ -331,7 +335,7 @@ const UpTime = styled.span`
   }
 `;
 const EfficiencyButton1 = styled.button`
-  background: #1c3c93 0% 0% no-repeat padding-box;
+  background: #1c3c93;
   border-radius: 4px;
   opacity: 1;
   border: none;
@@ -339,12 +343,12 @@ const EfficiencyButton1 = styled.button`
   margin-left: 210px;
   white-space: nowrap;
   font-size: 12px;
-  
+
   :hover {
     background-color: #3c70ff;
     color: white;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-left: 240px;
     margin-top: -17px;
   }
@@ -352,6 +356,7 @@ const EfficiencyButton1 = styled.button`
     margin-left: 300px;
   }
 `;
+
 const EfficiencyButton2 = styled.button`
   background: #1c3c93 0% 0% no-repeat padding-box;
   border-radius: 4px;
@@ -365,7 +370,7 @@ const EfficiencyButton2 = styled.button`
     background-color: #3c70ff;
     color: white;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-top: -17px;
   }
 `;
@@ -382,16 +387,36 @@ const EfficiencyButton3 = styled.button`
     background-color: #3c70ff;
     color: white;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-top: -17px;
   }
 `;
-const TableDiv = styled.table`
-  background-color: "#F8F8F8";
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 80px;
+
+const ButtonDiv = styled.div`
+  padding-left: 120px;
+  white-space: nowrap;
+`;
+const Button = styled.button`
+  background: #1c3c93;
+  opacity: 1;
+  border: none;
+  border-radius: 1px;
+  color: #3c70ff;
+  font-size: 12px;
+  width: 50px;
+  height: 30px;
+
+  :hover {
+    background-color: #3c70ff;
+    color: white;
+  }
+`;
+
+const TableDiv = styled.div`
+  background-color: #F8F8F8;
+  padding-top: 50px;
+  padding-bottom: 90px;
+  
 `;
 
 const Footer = styled.div`
@@ -399,11 +424,12 @@ const Footer = styled.div`
   color: #808080;
   text-align: center;
   padding-bottom: 20px;
+  font-family: "Inter", sans-serif;
+  
 `;
 
 const MapContainer = styled.div`
-  padding-left: 90px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     width: 70px;
     height: 40px;
     padding-left: 30px;
@@ -417,7 +443,7 @@ const SpeedMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     display: none;
   }
@@ -433,7 +459,7 @@ const EfficiencyMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     display: none;
   }
@@ -444,12 +470,12 @@ const EfficiencyMain = styled.div`
 `;
 
 const HeaderCustom = styled.div`
-  background-color: #1c3c93;
+  background-color: #1c3c93; 
   display: flex;
   width: 100%;
   height: 38px;
   justify-content: space-between;
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     display: none;
   }
 `;
@@ -475,7 +501,7 @@ const SpeedMob = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
     font-size: 20px;
@@ -495,7 +521,7 @@ const EfficiencyMob = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
   }
@@ -527,22 +553,21 @@ const EfficiencyBarLabel = styled.span`
   font-size: 10px;
   padding-left: 113px;
   padding-top: 53px;
-  `;
+`;
 
 const EfficiencyBarLabelMid = styled.span`
-color: #667fc1;
-font-size: 10px;
-padding-left: 113px;
-padding-top: 10px;
+  color: #667fc1;
+  font-size: 10px;
+  padding-left: 113px;
+  padding-top: 10px;
 `;
 
 const EfficiencyBarLabelEnd = styled.span`
-color: #667fc1;
-font-size: 10px;
-padding-left: 113px;
-padding-top: 10px;
+  color: #667fc1;
+  font-size: 10px;
+  padding-left: 113px;
+  padding-top: 10px;
 `;
-
 const TOUR_STEPS = [
   {
     target: ".security",
@@ -559,10 +584,6 @@ const TOUR_STEPS = [
     target: ".efficiency",
     content:
       "Esse in velit ad pariatur mollit aute nostrud laborum. Nostrud laboris amet elit Lorem labore sit duis nisi magna adipis.",
-  },
-  {
-    target: ".tour-policy",
-    content: "We accept returns after 14 days max",
   },
 ];
 
@@ -612,7 +633,7 @@ const Dashboard = (props) => {
         <Header
           setJoyrideRun={setJoyrideRun}
           changeSide={changeSide}
-          SwitchSide={SwitchSide} 
+          SwitchSide={SwitchSide}
         />
         {Expand === 2 ? <Country expand={setCountry} /> : ""}
       </>
@@ -720,7 +741,7 @@ const Dashboard = (props) => {
                         </Row>
                         <Row>
                           <MapContainer>
-                            <Map/>
+                            <Map />
                           </MapContainer>
                         </Row>
                       </>
@@ -978,34 +999,19 @@ const Dashboard = (props) => {
                   <UpTime>{state.upTime}%</UpTime>
                   <div>
                     <Row>
-                      <Column>
-                        <EfficiencyButton1>30D</EfficiencyButton1>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton2>7D</EfficiencyButton2>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton3>24H</EfficiencyButton3>
-                      </Column>
+                      <ButtonDiv>
+                        <Button>30D</Button>
+                        <Button>7D</Button>
+                        <Button>24H</Button>
+                      </ButtonDiv>
                     </Row>
                   </div>
                 </Row>
                 <Row>
                   <Column>
-                  <Row>
-                  <EfficiencyBarLabel>100</EfficiencyBarLabel>
-                  </Row>
-                  <Row>
-                  <EfficiencyBarLabelMid>50</EfficiencyBarLabelMid>
-                  </Row>
-                  <Row>
-                  <EfficiencyBarLabelEnd>0</EfficiencyBarLabelEnd>
-                  </Row>
-                  </Column>
-                  <Column>
-                  <EffiencyBar>
-                    <UpTimeBar> </UpTimeBar>
-                  </EffiencyBar>
+                    <EffiencyBar>
+                      <UpTimeBar> </UpTimeBar>
+                    </EffiencyBar>
                   </Column>
                 </Row>
               </Column>

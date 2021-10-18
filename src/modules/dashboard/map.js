@@ -10,8 +10,8 @@ width: 300px;
 height: 169px;
 margin-top: -20px;
 @media (max-width: 768px) {
-    height: 180px;
-    width: 400px;
+    height: 400px;
+    width: 900px;
     margin-top: -40px;
     margin-left: 70px;
   }

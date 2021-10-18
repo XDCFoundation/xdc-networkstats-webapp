@@ -12,9 +12,9 @@ import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
 
 const TableBox = styled.div`
-  padding-top: 100px;
-  padding-left: 50px;
-  width: 1000px;
+  padding-top: 41px;
+  padding-left: 38px;
+  width: 700px;
   height: auto;
   @media (max-width: 768px) {
     width: 700px;
@@ -37,14 +37,14 @@ function createData(id, countries, last24h, last24, last7) {
 
 const rows = [
   createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("2", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("3", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("4", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("5", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("6", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("7", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("8", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("9", "USA", "64(25.57%)", "3.56%", "5.56%"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -122,7 +122,7 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{ color: "white", columnWidth: "70px" }}
+            style={{ color: "white", columnWidth: "70px", whiteSpace: "nowrap" }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}

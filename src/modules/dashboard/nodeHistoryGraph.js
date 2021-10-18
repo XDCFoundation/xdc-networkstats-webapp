@@ -1,69 +1,124 @@
 import React from "react";
+import { ResponsiveLine } from "@nivo/line";
 import styled from "styled-components";
-import { Line } from "react-chartjs-2";
+import { linearGradientDef } from '@nivo/core'
 
-const data = {
-    labels: ["0", "1", "2", "3", "4", "5"],
-    datasets: [
+const data = [
+  {
+    id: "Stats",
+    data: [
       {
-        data: [100,95,97,95,96,98],
-        fill: true,
-        backgroundColor: "#275FF5",
-        borderColor: "#7299FF"
-      }
-    ]
-  };
-  
-  const lineOptions = {
-    scales: {
-      x: {
-          display: false,
+        x: "0",
+        y: 150,
       },
-      gridLines: {
-          display: false,
-        },
+      {
+        x: "1",
+        y: 160,
+      },
+      {
+        x: "2",
+        y: 140,
+      },
+      {
+        x: "3",
+        y: 130,
+      },
+      {
+        x: "4",
+        y: 150,
+      },
+      {
+        x: "5",
+        y: 180,
+      },
+      {
+        x: "6",
+        y: 160,
+      },
+      {
+        x: "7",
+        y: 140,
+      },
+      {
+        x: "8",
+        y: 170,
+      },
+      {
+        x: "9",
+        y: 190,
+      },
+    ],
+  },
+];
 
-        y: {
-            display: false,
-        },
-        // gridLines: {
-        //     display: true,
-        //   },
-          
-    },
-    tooltips: {
-      enabled: false,
-    },
-    label: {
-        display: true,
-    },
-
-    plugins: {
-        legend: {
-            display: false,
-        }
-    }
-
-  };
-const Div = styled.div`   
-width: 150px;
-height: 500px;
-@media (max-width: 425px){
-padding-left: 10px;
-
-}
+const Div = styled.div`
+  width: 250px;
+  height: 150px;
+  padding-bottom: 10px;
 `;
 
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        fill: "#667FC1",
+      },
+    },
+  },
+};
 
-export default function NodeHistory() {
-  return (
-      <Div> 
-      <Line data={data} 
-      options={lineOptions} 
-      height={110}
-      width={150}
-      
+const NodeGraph = () => (
+  <div>
+    <Div>
+      <ResponsiveLine
+        data={data}
+        theme={theme}
+        key={'Stats'}
+        margin={{
+          top: 30,
+          right: 30,
+          bottom: 30,
+          left: 30,
+        }}
+        yScale={{
+          type: "linear",
+          stacked: true,
+          min: 0,
+          max: 200,
+         
+        }}
+        
+        
+        dotSize={10}
+        dotColor="inherit:darker(0.9)"
+        dotBorderWidth={1}
+        dotBorderColor="#ffffff"
+        dotLabel="y"
+        dotLabelYOffset={0}
+        enableArea={true}
+        enableGridX={false}
+        enableGridY={false}
+        enableDotLabel={false}
+        axisLeft={{
+          tickSize: 2,
+          tickValues: ['0', '100', '200'],
+        }}
+        axisBottom={false}
+        curve="monotoneX"
+        colors={["#275FF5"]}
+        areaOpacity={0.3}
+        defs={[
+          linearGradientDef('gradientA', [
+            { offset: 55, color: '#275FF5' },
+            { offset: 100, color: '#102C78' },
+        ])
+        ]}
+        fill={[
+          { match: { id: 'Stats' }, id: 'gradientA' },
+        ]}
       />
-      </Div>
-  );
-}
+    </Div>
+  </div>
+);
+
+export default NodeGraph;

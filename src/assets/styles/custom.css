@@ -1,11 +1,12 @@
 @import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 
 body {
     background-color: #ffffff;
 }
 
-body, button, html, input, select, textarea, div, p, span, label {
-    font-family: "Roboto", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif" !important;
+button, html, input, select {
+    font-family: "Inter","Roboto", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif" !important;
 }
 
 html, body {
@@ -13,8 +14,8 @@ html, body {
     height: 100%;
 }
 
-body, button, html, input, select, textarea, div, p, span, label {
-    font-family: "SFProText", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif" !important;
+button, html, input, select {
+    font-family: "Inter","SFProText", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif" !important;
 }
 
 input:focus {

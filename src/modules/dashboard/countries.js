@@ -21,14 +21,15 @@ const DesktopDiv = styled.div`
   }
 `;
 
-const Label = styled.span`
+const Label1 = styled.span`
   color: #667fc1;
-  display: flex;
-  justify-content: space-between;
   width: 50%;
-  margin-top: 14px;
+  margin-top: 105px;
   padding-left: 45px;
-  font: normal normal 600 16px/20px Inter;
+`;
+const Label2 = styled.span`
+  width: 50%;
+  padding-left: 45px;
 `;
 
 const TabDiv = styled.div`
@@ -52,7 +53,7 @@ const TabDiv = styled.div`
 `;
 const Img = styled.img`
 padding-top: 36px;
-padding-left: 846px;
+padding-left: 1110px;
 cursor: pointer;
 @media (max-width: 768px){
   padding-left: 700px;
@@ -71,9 +72,9 @@ export default function countries(props) {
           <Row>
             <Column>
               <Row>
-                <Label>Nodes</Label>
+                <Label1>Nodes</Label1>
               </Row>
-              <Row>Top 10 Countries</Row>
+              <Label2>Top 10 Countries</Label2>
               <Row>
                 <CountryTable />
               </Row>
@@ -98,9 +99,9 @@ export default function countries(props) {
             <CountryMap />
           </Row>
           <Row>
-            <Label>Nodes</Label>
+            <Label1>Nodes</Label1>
           </Row>
-          <Row>Top 10 Countries</Row>
+          <Label2>Top 10 Countries</Label2>
           <Row>
             <CountryTable />
           </Row>
