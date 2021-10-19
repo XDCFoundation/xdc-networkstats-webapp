@@ -16,11 +16,11 @@ const TableBox = styled.div`
   padding-left: 38px;
   width: 700px;
   height: auto;
-  @media (max-width: 768px) {
-    width: 700px;
+  @media (max-width: 1025px) {
+    width: 1000px;
 
-    @media (max-width: 425px) {
-      width: 425px;
+    @media (max-width: 415px) {
+      width: 380px;
     }
   }
 `;
@@ -120,9 +120,13 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{ color: "white", columnWidth: "70px", whiteSpace: "nowrap" }}
+            style={{
+              color: "white",
+              columnWidth: "70px",
+              whiteSpace: "nowrap",
+              alignContent: "start",
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -224,19 +228,17 @@ export default function EnhancedTable() {
                     key={row.id}
                     selected={isItemSelected}
                   >
-                    <TableCell style={{ color: "white" }}>
-                      {row.id}
-                    </TableCell>
+                    <TableCell style={{ color: "white" }}>{row.id}</TableCell>
                     <TableCell style={{ color: "white" }}>
                       {row.countries}
                     </TableCell>
                     <TableCell style={{ color: "white" }}>
                       {row.last24h}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "#3AF219" }}>
                       {row.last24}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "#3AF219" }}>
                       {row.last7}
                     </TableCell>
                   </TableRow>

@@ -16,7 +16,7 @@ const DesktopDiv = styled.div`
   transition: linear;
   font-size: 20px;
   padding-left: 10px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     display: none;
   }
 `;
@@ -35,7 +35,7 @@ const Label2 = styled.span`
 const TabDiv = styled.div`
   background-color: #102e84;
   display: block;
-  width: 768px;
+  width: 1024px;
   color: white;
   height: 2000px;
   position: absolute;
@@ -44,25 +44,24 @@ const TabDiv = styled.div`
   transition: linear;
   font-size: 20px;
   padding-left: 10px;
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     display: none;
   }
-  @media (max-width: 425px) {
-    width: 425px;
+  @media (max-width: 415px) {
+    width: 415px;
   }
 `;
 const Img = styled.img`
-padding-top: 36px;
-padding-left: 1110px;
-cursor: pointer;
-@media (max-width: 768px){
-  padding-left: 700px;
-}
-@media (max-width: 425px){
-  padding-left: 370px;
-}
+  padding-top: 36px;
+  padding-left: 1110px;
+  cursor: pointer;
+  @media (max-width: 1025px) {
+    padding-left: 945px;
+  }
+  @media (max-width: 415px) {
+    padding-left: 355px;
+  }
 `;
-
 
 export default function countries(props) {
   return (
@@ -80,11 +79,17 @@ export default function countries(props) {
               </Row>
             </Column>
             <Column>
-            <Row>
-            <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
-            </Row>
-            <Row>
-              <CountryMap />
+              <Row>
+                <Img
+                  src="/images/Collapse.svg"
+                  alt="close"
+                  onClick={() => {
+                    props.expand(false);
+                  }}
+                />
+              </Row>
+              <Row>
+                <CountryMap />
               </Row>
             </Column>
           </Row>
@@ -92,9 +97,15 @@ export default function countries(props) {
       </DesktopDiv>
       <TabDiv>
         <Column>
-        <Row>
-        <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
-        </Row>
+          <Row>
+            <Img
+              src="/images/Collapse.svg"
+              alt="close"
+              onClick={() => {
+                props.expand(false);
+              }}
+            />
+          </Row>
           <Row>
             <CountryMap />
           </Row>

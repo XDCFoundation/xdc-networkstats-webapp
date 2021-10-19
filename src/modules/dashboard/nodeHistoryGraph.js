@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 import styled from "styled-components";
-import { linearGradientDef } from '@nivo/core'
+import { linearGradientDef } from "@nivo/core";
 
 const data = [
   {
@@ -55,6 +55,15 @@ const Div = styled.div`
   width: 250px;
   height: 150px;
   padding-bottom: 10px;
+  @media (max-width: 1024px) {
+    width: 450px;
+    height: 200px;
+    padding-left: 40px;
+  }
+  @media (max-width: 415px) {
+    width: 300px;
+    height: 170px;
+  }
 `;
 
 const theme = {
@@ -73,7 +82,7 @@ const NodeGraph = () => (
       <ResponsiveLine
         data={data}
         theme={theme}
-        key={'Stats'}
+        key={"Stats"}
         margin={{
           top: 30,
           right: 30,
@@ -85,10 +94,7 @@ const NodeGraph = () => (
           stacked: true,
           min: 0,
           max: 200,
-         
         }}
-        
-        
         dotSize={10}
         dotColor="inherit:darker(0.9)"
         dotBorderWidth={1}
@@ -101,21 +107,19 @@ const NodeGraph = () => (
         enableDotLabel={false}
         axisLeft={{
           tickSize: 2,
-          tickValues: ['0', '100', '200'],
+          tickValues: ["0", "100", "200"],
         }}
         axisBottom={false}
         curve="monotoneX"
         colors={["#275FF5"]}
         areaOpacity={0.3}
         defs={[
-          linearGradientDef('gradientA', [
-            { offset: 55, color: '#275FF5' },
-            { offset: 100, color: '#102C78' },
-        ])
+          linearGradientDef("gradientA", [
+            { offset: 55, color: "#275FF5" },
+            { offset: 100, color: "#102C78" },
+          ]),
         ]}
-        fill={[
-          { match: { id: 'Stats' }, id: 'gradientA' },
-        ]}
+        fill={[{ match: { id: "Stats" }, id: "gradientA" }]}
       />
     </Div>
   </div>

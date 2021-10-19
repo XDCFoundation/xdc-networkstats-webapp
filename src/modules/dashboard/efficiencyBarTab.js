@@ -23,11 +23,11 @@ const data = [
   { time: 19, value: 90 },
 ];
 
-const EfficiencyBar = () => (
+const EfficiencyBarTab = () => (
   <div>
     <Bar
-      width={350}
-      height={200}
+      width={540}
+      height={210}
       margin={{ top: 60, bottom: 20, left: 40 }}
       data={data}
       keys={["value"]}
@@ -54,4 +54,4 @@ const EfficiencyBar = () => (
   </div>
 );
 
-export default EfficiencyBar;
+export default EfficiencyBarTab;

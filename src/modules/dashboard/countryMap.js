@@ -14,8 +14,12 @@ const Div = styled.div`
   height: auto;
   margin-top: 70px;
   margin-left: 100px;
-  @media (max-width: 425px) {
+  @media (max-width: 1025px) {
+    margin-left: -40px;
+  }
+  @media (max-width: 415px) {
     width: 400px;
+    margin-left: -10px;
   }
 `;
 

@@ -10,6 +10,12 @@ const Blur = styled.div`
   position: absolute;
   z-index: 1;
   transition: linear;
+  @media (max-width: 1025px) {
+    width: 700px;
+  }
+  @media (max-width: 415px) {
+    width: 270px;
+  }
 `;
 
 const Div = styled.div`
@@ -22,11 +28,11 @@ const Div = styled.div`
   z-index: 1;
   justify-content: space-around;
   transition: linear;
-  @media (max-width: 768px) {
-    left: 425px;
+  @media (max-width: 1025px) {
+    left: 685px;
     width: 340px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     left: 220px;
     width: 200px;
   }
@@ -57,7 +63,6 @@ const Img = styled.img`
   padding-left: 10px;
 `;
 const CloseImg = styled.img`
-  padding-left: 10px;
   cursor: pointer;
 `;
 
@@ -66,6 +71,12 @@ const Line = styled.hr`
   height: 0px;
   width: 350px;
   opacity: 1;
+  @media (max-width: 1025px) {
+    width: 300px;
+  }
+  @media (max-width: 415px) {
+    width: 150px;
+  }
 `;
 
 export default function sideDrawer(props) {
