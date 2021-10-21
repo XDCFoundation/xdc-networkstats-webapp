@@ -26,10 +26,13 @@ const HeaderLabel = styled.span`
   padding-top: 15px;
   color: white;
   padding-left: 10px;
+  font-family: "Inter";
 `;
 const StartGuidedLabel = styled.span`
   padding-top: 5px;
   color: white;
+  font-weight: 400;
+  font-family: "Inter";
   @media (max-width: 425px) {
     display: none;
   }
@@ -49,7 +52,7 @@ const StartGuideTourButton = styled.button`
 `;
 export default function Header(props) {
   return (
-    <> 
+    <>
       <HeaderNav>
         <Row>
           <Column>

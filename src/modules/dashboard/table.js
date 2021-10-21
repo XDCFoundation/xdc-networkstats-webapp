@@ -9,25 +9,37 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
-import Radio from '@mui/material/Radio';
+import Radio from "@mui/material/Radio";
 import { visuallyHidden } from "@mui/utils";
 import TableGraph from "./tableGraph";
 import styled from "styled-components";
+import { withStyles } from "@material-ui/styles";
 
 const TableBox = styled.div`
-width: 1800px;
+  width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 1025px) {
+    width: 910px;
+  }
 
-@media (max-width: 768px) {
-  width: 768px;
-}
-
-@media (max-width: 425px) 
-{
-  width: 425px;
-}
-
+  @media (max-width: 415px) {
+    width: 370px;
+  }
 `;
 
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    height: 65,
+  },
+}))(TableRow);
+
+const StyledTableCell = withStyles((theme) => ({
+  root: {
+    padding: "0px 16px",
+    fontWeight: "900",
+  },
+}))(TableCell);
 
 function createData(
   nodeName,
@@ -59,7 +71,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -69,7 +81,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -79,8 +91,8 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
-    "100%" 
+    <TableGraph />,
+    "100%"
   ),
   createData(
     "Bitrue_22_XF",
@@ -89,7 +101,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -99,7 +111,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -109,7 +121,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -119,7 +131,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -129,7 +141,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -139,7 +151,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -149,7 +161,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -159,7 +171,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
   createData(
@@ -169,7 +181,7 @@ const rows = [
     8,
     0,
     "#526,481",
-    <TableGraph/>,
+    <TableGraph />,
     "100%"
   ),
 ];
@@ -209,7 +221,6 @@ const headCells = [
     id: "nodeName",
     disablePadding: true,
     label: "Node Name",
-    
   },
   {
     id: "type",
@@ -270,8 +281,8 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
-        <TableCell padding="radio">
+      <StyledTableRow>
+        <StyledTableCell padding="radio">
           <Radio
             control={<Radio />}
             color="primary"
@@ -279,19 +290,23 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
-        </TableCell>
+        </StyledTableCell>
         {headCells.map((headCell) => (
-          <TableCell
+          <StyledTableCell
             key={headCell.id}
-            
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{fontWeight: 600}}
+            // style={{fontWeight: 1000}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
+              style={{
+                fontSize: "12px",
+                lineHeight: "15px",
+                fontFamily: "Inter",
+              }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -300,9 +315,9 @@ function EnhancedTableHead(props) {
                 </Box>
               ) : null}
             </TableSortLabel>
-          </TableCell>
+          </StyledTableCell>
         ))}
-      </TableRow>
+      </StyledTableRow>
     </TableHead>
   );
 }
@@ -361,8 +376,8 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
-    <TableBox sx={{ width: "auto" }}>
-      <Paper sx={{ width: "auto"}}>
+    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+      <Paper sx={{ width: "auto" }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -376,12 +391,12 @@ export default function EnhancedTable() {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
-                .map((row, index) => {
+              {stableSort(rows, getComparator(order, orderBy)).map(
+                (row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
                   return (
-                    <TableRow
+                    <StyledTableRow
                       hover
                       onClick={(event) => handleClick(event, row.nodeName)}
                       role="radio"
@@ -390,7 +405,7 @@ export default function EnhancedTable() {
                       key={row.nodeName}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="radio">
+                      <StyledTableCell padding="radio">
                         <Radio
                           control={<Radio />}
                           checked={isItemSelected}
@@ -398,28 +413,98 @@ export default function EnhancedTable() {
                             "aria-labelledby": labelId,
                           }}
                         />
-                      </TableCell>
-                      <TableCell
+                      </StyledTableCell>
+                      <StyledTableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="none"
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
                       >
                         {row.nodeName}
-                      </TableCell>
-                      <TableCell>{row.type}</TableCell>
-                      <TableCell>{row.latency}</TableCell>
-                      <TableCell>{row.peers}</TableCell>
-                      <TableCell>{row.pendingTxn}</TableCell>
-                      <TableCell>{row.lastBlock}</TableCell>
-                      <TableCell>{row.graph}</TableCell> 
-                      <TableCell>{row.upTime}</TableCell>
-                    </TableRow>
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.type}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.latency}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.peers}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.pendingTxn}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.lastBlock}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.graph}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.upTime}
+                      </StyledTableCell>
+                    </StyledTableRow>
                   );
-                })}
+                }
+              )}
             </TableBody>
           </Table>
-        </TableContainer> 
+        </TableContainer>
       </Paper>
     </TableBox>
   );

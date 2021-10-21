@@ -9,15 +9,14 @@ import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
-
-
+import UpTimeTab from "./efficiencyBarTab";
 const HeaderContainer = styled.div`
-  background-color: #1c3c93; 
+  background-color: #1c3c93;
   display: flex;
   width: 100%;
   height: 38px;
   justify-content: space-between;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     display: none;
   }
 `;
@@ -30,8 +29,10 @@ const SectionLabel = styled.div`
   width: 33.33%;
   border-right: 1px solid #274598;
   padding-top: 8px;
+  font-size: 18px;
+  font-family: "Inter";
 
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     justify-content: center;
     :hover {
       background-color: #3c70ff;
@@ -48,12 +49,12 @@ const SecurityMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (max-width: 1025px) {
+    width: 1025px;
     padding-top: 5px;
     font-size: 20px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 10px;
     width: 100%;
     display: none;
@@ -69,7 +70,7 @@ const SpeedTab = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
     font-size: 20px;
@@ -77,7 +78,7 @@ const SpeedTab = styled.div`
   color: white;
   font: normal normal 600 26px/31px Inter;
   font-size: 19px;
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 10px;
     width: 100%;
     display: none;
@@ -89,11 +90,11 @@ const EfficiencyTab = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 10px;
     width: 100%;
     display: none;
@@ -110,11 +111,13 @@ const SecurityLabel = styled.span`
   width: 50%;
   padding-top: 12px;
   padding-left: 1 px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  font-size: 16px;
+  font-family: "Inter";
+  @media (max-width: 1025px) {
     font-size: 20px;
+    padding-left: 40px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 5px;
   }
 `;
@@ -126,11 +129,13 @@ const SecurityLabelMid = styled.span`
   padding-left: 2px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 20px;
+    padding-top: 15px;
+    padding-left: 40px;
   }
-  @media (max-width: 425px) {
-    padding-top: 44px;
+  @media (max-width: 415px) {
+    padding-top: 4px;
     padding-left: 5px;
   }
 `;
@@ -138,15 +143,21 @@ const SecurityLabelRight = styled.span`
   color: #667fc1;
   display: flex;
   padding-top: 12px;
-  margin-left: 130px;
+  margin-left: 40px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
-    padding-left: 120px;
+  @media (max-width: 1025px) {
+    padding-left: 125px;
     font-size: 20px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-top: 23px;
     padding-left: 0px;
+  }
+`;
+
+const TotalNodes = styled.span`
+  @media (max-width: 1025px) {
+    padding-left: 37px;
   }
 `;
 
@@ -155,15 +166,15 @@ const SecurityIcon = styled.img`
   width: 20px;
   margin-top: 28px;
   margin-right: 12px;
-  margin-left: 30px;
-  @media (max-width: 768px) {
+  margin-left: 10px;
+  @media (max-width: 1025px) {
     margin-left: 261px;
     margin-top: 19px;
     height: 23px;
     width: 232;
   }
-  @media (max-width: 425px) {
-    margin-left: 230px;
+  @media (max-width: 415px) {
+    margin-left: 215px;
   }
   cursor: pointer;
 `;
@@ -176,11 +187,11 @@ const SpeedLabel = styled.span`
   padding-left: 13px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 40px;
     font-size: 18px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-top: 20px;
   }
 `;
@@ -192,10 +203,10 @@ const SpeedLabelMid = styled.span`
   padding-left: 15px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 18px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-top: 20px;
   }
 `;
@@ -205,12 +216,13 @@ const SpeedLabelRight = styled.span`
   padding-top: 12px;
   margin-left: 130px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 40px;
     font-size: 18px;
+    padding-left: 115px;
   }
-  @media (max-width: 425px) {
-    margin-left: 93px;
+  @media (max-width: 415px) {
+    margin-left: -15px;
     padding-top: 20px;
   }
 `;
@@ -222,7 +234,7 @@ const EfficiencyLabel = styled.span`
   padding-top: 14px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 35px;
     font-size: 20px;
   }
@@ -234,10 +246,10 @@ const EfficiencyLabelMid = styled.span`
   padding-top: 90px;
   font: normal normal 600 16px/20px Inter;
   white-space: nowrap;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 20px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-top: 20px;
   }
 `;
@@ -245,35 +257,35 @@ const EfficiencyLabelRight = styled.span`
   color: #667fc1;
   display: flex;
   padding-top: 12px;
-  margin-left: 90px;
+  margin-left: 130px;
   font: normal normal 600 16px/20px Inter;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     padding-top: 35px;
-    margin-left: 130px;
+    padding-left: 115px;
     font-size: 20px;
   }
-  @media (max-width: 425px) {
-    padding-left: 20px;
+  @media (max-width: 415px) {
     white-space: nowrap;
+    padding-left: 15px;
   }
 `;
 const Speedbar = styled.div`
   margin-top: 45px;
   margin-left: 110px;
-  @media (max-width: 768px) {
-    margin-left: 170px;
+  @media (max-width: 1025px) {
+    margin-left: 240px;
     margin-top: 20px;
   }
-  @media (max-width: 425px) {
-    margin-left: 20px;
+  @media (max-width: 415px) {
+    margin-left: 10px;
   }
 `;
 const Countries = styled.span`
-  padding-left: 130px;
-  @media (max-width: 768px) {
-    padding-left: 162px;
+  padding-left: 40px;
+  @media (max-width: 1025px) {
+    padding-left: 170px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 45px;
   }
 `;
@@ -282,18 +294,21 @@ const Blocks = styled.span`
 `;
 const LastBlock = styled.span`
   padding-left: 130px;
-  @media (max-width: 425px) {
+  @media (max-width: 1025px) {
+    padding-left: 245px;
+  }
+  @media (max-width: 415px) {
     padding-left: 227px;
   }
 `;
 const BlockBarLeftLabel = styled.span`
   padding-left: 125px;
   font-size: x-small;
-  @media (max-width: 768px) {
-    padding-left: 185px;
+  @media (max-width: 1025px) {
+    padding-left: 253px;
   }
-  @media (max-width: 425px) {
-    padding-left: 37px;
+  @media (max-width: 415px) {
+    padding-left: 30px;
   }
 `;
 const BlockBarLabelColor = styled.span`
@@ -302,96 +317,66 @@ const BlockBarLabelColor = styled.span`
 const BlockBarRightLabel = styled.span`
   padding-left: 270px;
   font-size: x-small;
-  @media (max-width: 768px) {
-    padding-left: 330px;
+  @media (max-width: 1025px) {
+    padding-left: 473px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 306px;
   }
 `;
 const EffiencyBar = styled.div`
-  margin-top: 45px;
-  margin-left: -5px;
-  @media (max-width: 768px) {
-    margin-top: 25px;
-    margin-left: 120px;
+  margin-top: -10px;
+  margin-left: 90px;
+  @media (max-width: 1025px) {
+    margin-top: 5px;
+    margin-left: 230px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     margin-left: 5px;
-    margin-top: 15px;
+    margin-top: -54px;
   }
 `;
 const UpTime = styled.span`
-  padding-left: 90px;
-  @media (max-width: 768px) {
-    padding-left: 130px;
+  padding-left: 130px;
+  @media (max-width: 1025px) {
+    padding-left: 249px;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 415px) {
     padding-left: 279px;
   }
 `;
-const EfficiencyButton1 = styled.button`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  border-radius: 4px;
+
+const ButtonDiv = styled.div`
+  padding-left: 120px;
+  white-space: nowrap;
+  @media (max-width: 1025px) {
+    padding-left: 325px;
+  }
+  @media (max-width: 415px) {
+    padding-left: 165px;
+    padding-top: 10px;
+  }
+`;
+const Button = styled.button`
+  background: #1c3c93;
   opacity: 1;
   border: none;
+  border-radius: 1px;
   color: #3c70ff;
-  margin-left: 210px;
-  white-space: nowrap;
   font-size: 12px;
-  
+  width: 50px;
+  height: 30px;
+
   :hover {
     background-color: #3c70ff;
     color: white;
   }
-  @media (max-width: 768px) {
-    margin-left: 240px;
-    margin-top: -17px;
-  }
-  @media (max-width: 425px) {
-    margin-left: 300px;
-  }
 `;
-const EfficiencyButton2 = styled.button`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  border: none;
-  color: #3c70ff;
-  margin-left: 0px;
-  white-space: nowrap;
-  font-size: 12px;
-  :hover {
-    background-color: #3c70ff;
-    color: white;
-  }
-  @media (max-width: 768px) {
-    margin-top: -17px;
-  }
-`;
-const EfficiencyButton3 = styled.button`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  border: none;
-  color: #3c70ff;
-  margin-left: 0px;
-  white-space: nowrap;
-  font-size: 12px;
-  :hover {
-    background-color: #3c70ff;
-    color: white;
-  }
-  @media (max-width: 768px) {
-    margin-top: -17px;
-  }
-`;
-const TableDiv = styled.table`
-  background-color: "#F8F8F8";
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 80px;
+
+const TableDiv = styled.div`
+  background-color: #f8f8f8;
+  padding-top: 50px;
+  padding-bottom: 90px;
 `;
 
 const Footer = styled.div`
@@ -399,11 +384,11 @@ const Footer = styled.div`
   color: #808080;
   text-align: center;
   padding-bottom: 20px;
+  font-family: "Inter", sans-serif;
 `;
 
 const MapContainer = styled.div`
-  padding-left: 90px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     width: 70px;
     height: 40px;
     padding-left: 30px;
@@ -417,7 +402,7 @@ const SpeedMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     display: none;
   }
@@ -433,7 +418,7 @@ const EfficiencyMain = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     display: none;
   }
@@ -449,7 +434,7 @@ const HeaderCustom = styled.div`
   width: 100%;
   height: 38px;
   justify-content: space-between;
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     display: none;
   }
 `;
@@ -462,7 +447,7 @@ const SecurityMobDiv = styled.div`
   border-right: 1px solid #274598;
   color: white;
   padding-left: 10px;
-  @media (min-width: 425px) {
+  @media (min-width: 415px) {
     width: 100%;
     display: none;
   }
@@ -475,7 +460,7 @@ const SpeedMob = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
     font-size: 20px;
@@ -483,7 +468,7 @@ const SpeedMob = styled.div`
   color: white;
   font: normal normal 600 26px/31px Inter;
   font-size: 19px;
-  @media (min-width: 425px) {
+  @media (min-width: 415px) {
     width: 100%;
     display: none;
   }
@@ -495,7 +480,7 @@ const EfficiencyMob = styled.div`
   display: flex;
   justify-content: space-between;
   border-right: 1px solid #274598;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     border-right: none;
     width: 100%;
   }
@@ -503,7 +488,7 @@ const EfficiencyMob = styled.div`
   padding-left: 15px;
   font: normal normal 600 26px/31px Inter;
   font-size: 19px;
-  @media (min-width: 425px) {
+  @media (min-width: 415px) {
     width: 100%;
     display: none;
   }
@@ -521,48 +506,18 @@ const HeaderMob = styled.span`
     text-decoration: underline;
   }
 `;
-
-const EfficiencyBarLabel = styled.span`
-  color: #667fc1;
-  font-size: 10px;
-  padding-left: 113px;
-  padding-top: 53px;
-  `;
-
-const EfficiencyBarLabelMid = styled.span`
-color: #667fc1;
-font-size: 10px;
-padding-left: 113px;
-padding-top: 10px;
-`;
-
-const EfficiencyBarLabelEnd = styled.span`
-color: #667fc1;
-font-size: 10px;
-padding-left: 113px;
-padding-top: 10px;
-`;
-
 const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "Quis cupidatat voluptate commodo ullamco. Proident elit ullamco ad tempor voluptate non consectetur duis eiusmod nulla.",
+      "Eiusmod deserunt aliquip cupidatat laborum exercitation mollit incididunt cupidatat laboris sint. Fugiat magna dolore consequat in laboris in laboris excepteur. Dolor nostrud quis do elit nulla consequat fugiat amet. Ad occaecat culpa ipsum ipsum tempor reprehenderit commodo magna veniam elit laboris dolor. Consequat laboris nostrud eiusmod incididunt commodo cillum consequat laboris veniam qui.",
     disableBeacon: true,
   },
   {
     target: ".speed",
     content:
-      "Sit ut tempor reprehenderit ullamco pariatur adipisicing laboris consectetur labore aute pariatur labore consequat. m.",
-  },
-  {
-    target: ".efficiency",
-    content:
-      "Esse in velit ad pariatur mollit aute nostrud laborum. Nostrud laboris amet elit Lorem labore sit duis nisi magna adipis.",
-  },
-  {
-    target: ".tour-policy",
-    content: "We accept returns after 14 days max",
+      "Sint esse aute ad Lorem id cillum laborum exercitation ut. Dolore excepteur proident laborum proident consectetur sint ut dolor ex nisi fugiat qui. Sit commodo do est deserunt. Laboris consectetur duis labore aliquip amet enim incididunt ipsum dolor in duis culpa. Quis in ex ad ad non eu aliqua ipsum laboris nostrud id commodo dolore ipsum. Eiusmod incididunt et reprehenderit esse culpa sint dolor. Qui sunt nisi ut dolore occaecat enim ad minim anim.",
+    disableBeacon: true,
   },
 ];
 
@@ -591,10 +546,9 @@ const Dashboard = (props) => {
   return (
     <>
       {/* Header nav bar */}
-      <Joyride
+      <Joyride //Start Guided Tour
         steps={TOUR_STEPS}
         continuous={true}
-        showSkipButton={true}
         styles={{
           tooltipContainer: {
             textAlign: "left",
@@ -604,6 +558,7 @@ const Dashboard = (props) => {
           },
           buttonBack: {
             marginRight: 10,
+            color: "blue",
           },
         }}
         run={joyrideRun}
@@ -612,7 +567,7 @@ const Dashboard = (props) => {
         <Header
           setJoyrideRun={setJoyrideRun}
           changeSide={changeSide}
-          SwitchSide={SwitchSide} 
+          SwitchSide={SwitchSide}
         />
         {Expand === 2 ? <Country expand={setCountry} /> : ""}
       </>
@@ -644,9 +599,10 @@ const Dashboard = (props) => {
                     <Row>
                       <SecurityLabel>Nodes</SecurityLabel>
                     </Row>
-                    <Row>
+                    <TotalNodes>
                       {state.nodes}/{state.totalNodes}
-                    </Row>
+                    </TotalNodes>
+
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
@@ -720,7 +676,7 @@ const Dashboard = (props) => {
                         </Row>
                         <Row>
                           <MapContainer>
-                            <Map/>
+                            <Map />
                           </MapContainer>
                         </Row>
                       </>
@@ -807,6 +763,8 @@ const Dashboard = (props) => {
                     <Speedbar>
                       <LastBlockBar></LastBlockBar>
                     </Speedbar>
+                  </Row>
+                  <Row>
                     <Column>
                       <BlockBarLeftLabel>
                         <BlockBarLabelColor>Min</BlockBarLabelColor>
@@ -828,7 +786,7 @@ const Dashboard = (props) => {
           )}
           {SwitchTab === 3 ? (
             <>
-              <EfficiencyTab className="efficiency">
+              <EfficiencyTab>
                 {/*Efficiency Section for Tab*/}
                 <Row>
                   <Column>
@@ -851,62 +809,54 @@ const Dashboard = (props) => {
                       <UpTime>{state.upTime}%</UpTime>
                       <div>
                         <Row>
-                          <Column>
-                            <EfficiencyButton1>30D</EfficiencyButton1>
-                          </Column>
-                          <Column>
-                            <EfficiencyButton2>7D</EfficiencyButton2>
-                          </Column>
-                          <Column>
-                            <EfficiencyButton3>24H</EfficiencyButton3>
-                          </Column>
+                          <ButtonDiv>
+                            <Button>30D</Button>
+                            <Button>7D</Button>
+                            <Button>24H</Button>
+                          </ButtonDiv>
                         </Row>
                       </div>
                     </Row>
                     <Row>
                       <EffiencyBar>
-                        <UpTimeBar></UpTimeBar>
+                        <UpTimeTab />
                       </EffiencyBar>
                     </Row>
                   </Column>
                 </Row>
               </EfficiencyTab>
-              <EfficiencyMob className="efficiency">
+              <EfficiencyMob>
                 {/*Efficiency Section for Mob*/}
-                <Row>
-                  <Column>
-                    <Row>
-                      <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
-                      <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                    </Row>
-                    <Row>
-                      {state.gasPrice}
-                      <UpTime>{state.upTime}%</UpTime>
-                    </Row>
-                    <Row>
-                      <EfficiencyLabelMid>
-                        Avg Transaction Rate
-                      </EfficiencyLabelMid>
-                    </Row>
-                    <Row>{state.avgTime}TPS</Row>
-                    <Row>
-                      <Column>
-                        <EfficiencyButton1>30D</EfficiencyButton1>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton2>7D</EfficiencyButton2>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton3>24H</EfficiencyButton3>
-                      </Column>
-                    </Row>
-                    <Row>
-                      <EffiencyBar>
-                        <UpTimeBar></UpTimeBar>
-                      </EffiencyBar>
-                    </Row>
-                  </Column>
-                </Row>
+
+                <Column>
+                  <Row>
+                    <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
+                    <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
+                  </Row>
+
+                  <Row>
+                    {state.gasPrice}
+                    <UpTime>{state.upTime}%</UpTime>
+                  </Row>
+                  <Row>
+                    <EfficiencyLabelMid>
+                      Avg Transaction Rate
+                    </EfficiencyLabelMid>
+                  </Row>
+                  <Row>
+                    {state.avgTime}TPS
+                    <ButtonDiv>
+                      <Button>30D</Button>
+                      <Button>7D</Button>
+                      <Button>24H</Button>
+                    </ButtonDiv>
+                  </Row>
+                  <Row>
+                    <EffiencyBar>
+                      <UpTimeBar></UpTimeBar>
+                    </EffiencyBar>
+                  </Row>
+                </Column>
               </EfficiencyMob>
             </>
           ) : (
@@ -957,7 +907,7 @@ const Dashboard = (props) => {
               </Column>
             </Row>
           </SpeedMain>
-          <EfficiencyMain className="efficiency">
+          <EfficiencyMain>
             {/*Efficiency Section for Main*/}
             <Row>
               <Column>
@@ -978,34 +928,19 @@ const Dashboard = (props) => {
                   <UpTime>{state.upTime}%</UpTime>
                   <div>
                     <Row>
-                      <Column>
-                        <EfficiencyButton1>30D</EfficiencyButton1>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton2>7D</EfficiencyButton2>
-                      </Column>
-                      <Column>
-                        <EfficiencyButton3>24H</EfficiencyButton3>
-                      </Column>
+                      <ButtonDiv>
+                        <Button>30D</Button>
+                        <Button>7D</Button>
+                        <Button>24H</Button>
+                      </ButtonDiv>
                     </Row>
                   </div>
                 </Row>
                 <Row>
                   <Column>
-                  <Row>
-                  <EfficiencyBarLabel>100</EfficiencyBarLabel>
-                  </Row>
-                  <Row>
-                  <EfficiencyBarLabelMid>50</EfficiencyBarLabelMid>
-                  </Row>
-                  <Row>
-                  <EfficiencyBarLabelEnd>0</EfficiencyBarLabelEnd>
-                  </Row>
-                  </Column>
-                  <Column>
-                  <EffiencyBar>
-                    <UpTimeBar> </UpTimeBar>
-                  </EffiencyBar>
+                    <EffiencyBar>
+                      <UpTimeBar> </UpTimeBar>
+                    </EffiencyBar>
                   </Column>
                 </Row>
               </Column>

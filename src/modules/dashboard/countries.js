@@ -16,25 +16,26 @@ const DesktopDiv = styled.div`
   transition: linear;
   font-size: 20px;
   padding-left: 10px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     display: none;
   }
 `;
 
-const Label = styled.span`
+const Label1 = styled.span`
   color: #667fc1;
-  display: flex;
-  justify-content: space-between;
   width: 50%;
-  margin-top: 14px;
+  margin-top: 105px;
   padding-left: 45px;
-  font: normal normal 600 16px/20px Inter;
+`;
+const Label2 = styled.span`
+  width: 50%;
+  padding-left: 45px;
 `;
 
 const TabDiv = styled.div`
   background-color: #102e84;
   display: block;
-  width: 768px;
+  width: 1024px;
   color: white;
   height: 2000px;
   position: absolute;
@@ -43,25 +44,24 @@ const TabDiv = styled.div`
   transition: linear;
   font-size: 20px;
   padding-left: 10px;
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     display: none;
   }
-  @media (max-width: 425px) {
-    width: 425px;
+  @media (max-width: 415px) {
+    width: 415px;
   }
 `;
 const Img = styled.img`
-padding-top: 36px;
-padding-left: 846px;
-cursor: pointer;
-@media (max-width: 768px){
-  padding-left: 700px;
-}
-@media (max-width: 425px){
-  padding-left: 370px;
-}
+  padding-top: 36px;
+  padding-left: 1110px;
+  cursor: pointer;
+  @media (max-width: 1025px) {
+    padding-left: 945px;
+  }
+  @media (max-width: 415px) {
+    padding-left: 355px;
+  }
 `;
-
 
 export default function countries(props) {
   return (
@@ -71,19 +71,25 @@ export default function countries(props) {
           <Row>
             <Column>
               <Row>
-                <Label>Nodes</Label>
+                <Label1>Nodes</Label1>
               </Row>
-              <Row>Top 10 Countries</Row>
+              <Label2>Top 10 Countries</Label2>
               <Row>
                 <CountryTable />
               </Row>
             </Column>
             <Column>
-            <Row>
-            <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
-            </Row>
-            <Row>
-              <CountryMap />
+              <Row>
+                <Img
+                  src="/images/Collapse.svg"
+                  alt="close"
+                  onClick={() => {
+                    props.expand(false);
+                  }}
+                />
+              </Row>
+              <Row>
+                <CountryMap />
               </Row>
             </Column>
           </Row>
@@ -91,16 +97,22 @@ export default function countries(props) {
       </DesktopDiv>
       <TabDiv>
         <Column>
-        <Row>
-        <Img src="/images/Collapse.svg" alt="close" onClick={()=>{props.expand(false)}} />
-        </Row>
+          <Row>
+            <Img
+              src="/images/Collapse.svg"
+              alt="close"
+              onClick={() => {
+                props.expand(false);
+              }}
+            />
+          </Row>
           <Row>
             <CountryMap />
           </Row>
           <Row>
-            <Label>Nodes</Label>
+            <Label1>Nodes</Label1>
           </Row>
-          <Row>Top 10 Countries</Row>
+          <Label2>Top 10 Countries</Label2>
           <Row>
             <CountryTable />
           </Row>

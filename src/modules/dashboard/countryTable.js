@@ -12,15 +12,15 @@ import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
 
 const TableBox = styled.div`
-  padding-top: 100px;
-  padding-left: 50px;
-  width: 1000px;
+  padding-top: 41px;
+  padding-left: 38px;
+  width: 700px;
   height: auto;
-  @media (max-width: 768px) {
-    width: 700px;
+  @media (max-width: 1025px) {
+    width: 1000px;
 
-    @media (max-width: 425px) {
-      width: 425px;
+    @media (max-width: 415px) {
+      width: 380px;
     }
   }
 `;
@@ -37,14 +37,14 @@ function createData(id, countries, last24h, last24, last7) {
 
 const rows = [
   createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("2", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("3", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("4", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("5", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("6", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("7", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("8", "USA", "64(25.57%)", "3.56%", "5.56%"),
+  createData("9", "USA", "64(25.57%)", "3.56%", "5.56%"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -120,9 +120,13 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{ color: "white", columnWidth: "70px" }}
+            style={{
+              color: "white",
+              columnWidth: "70px",
+              whiteSpace: "nowrap",
+              alignContent: "start",
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -224,19 +228,17 @@ export default function EnhancedTable() {
                     key={row.id}
                     selected={isItemSelected}
                   >
-                    <TableCell style={{ color: "white" }}>
-                      {row.id}
-                    </TableCell>
+                    <TableCell style={{ color: "white" }}>{row.id}</TableCell>
                     <TableCell style={{ color: "white" }}>
                       {row.countries}
                     </TableCell>
                     <TableCell style={{ color: "white" }}>
                       {row.last24h}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "#3AF219" }}>
                       {row.last24}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "#3AF219" }}>
                       {row.last7}
                     </TableCell>
                   </TableRow>
