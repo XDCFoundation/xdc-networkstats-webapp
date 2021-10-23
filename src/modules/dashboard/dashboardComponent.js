@@ -10,6 +10,11 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket(
+  "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
+);
 
 
 const HeaderContainer = styled.div`
@@ -544,7 +549,103 @@ export default function Dashboard(props) {
   };
 
   const [joyrideRun, setJoyrideRun] = useState(false);
-  
+  const [value, setValue] = useState([]);
+  const [nodes, setNodes] = useState([]);
+  const [gasPrice, setGasPrice] = useState([]);
+  const [Time, setTime] = useState([]);
+  useEffect(() => {
+    getValue();
+  }, []);
+
+  //SocketFunction
+  const getValue = () => {
+    let test = {};
+    client.onopen = () => {
+      console.log("connect");
+    };
+    client.onmessage = async (event) => {
+      
+      var msg = JSON.parse(event.data);
+      if (msg.action === "stats") {
+        if (msg.data.id in test) {
+          return;
+        } else {
+          
+
+          console.log("test", msg)
+          let gasPrice  = msg.data.stats.gasPrice;
+          setGasPrice(gasPrice);
+
+          let upTime = msg.data.stats.uptime;
+          setTime(upTime);
+
+          test[msg.data.id] = msg.data.stats.active;
+          
+          let newarray = Object.keys(test);
+          // console.log("random", newarray)
+          let data = newarray?.filter(
+            (element) =>
+              element !== "BuzzNjay1(45.77.253.122)" &&
+              element !== "FreeWallet-FullNode" &&
+              element !== "VoxoV013" &&
+              element !== "FreeWallet-FullNode" &&
+              element !== "VoxoV012" &&
+              element !== "XF" &&
+              element !== "AnilChinchawale" &&
+              element !== "XDC.BlocksScan.io" &&
+              element !== "AtIndSoft" &&
+              element !== "XDC.Network" &&
+              element !== "xxxddd-Linux-XinFin-Network-One-Click" &&
+              element !==
+                "flux-mac-Workstation-Linux-XinFin-Network-One-Click" &&
+              element !== "M88NPARTNERSLLC(88.99.191.124)" &&
+              element !== "CryptosAndTokens.com" &&
+              element !== "CCNode" &&
+              element !== "NT-XinFin-Network-One-Click" &&
+              element !== "Bella-Linux-XinFin-Network-One-Click" &&
+              element !== "rr3016ub20xdc-Linux-XinFin-Network-One-Click"
+          );
+
+          var arr = [];
+          if (data) {
+            data.map((item) => {
+              let ipFilter = item?.split("_")?.reverse()[0];
+              function ValidateIPaddress() {
+                if (
+                  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+                    ipFilter
+                  )
+                ) {
+                  return true;
+                }
+                // console.log("ip Not found");
+                return false;
+              }
+              if (ValidateIPaddress()) {
+                arr.push(ipFilter);
+              }
+            });
+          }
+          let redundant = Array.from(new Set(arr));
+          setValue(redundant);
+
+          
+          //for socket total nodes ---->
+          let nodecount = Object.keys(test).length;
+          setNodes(nodecount);
+        }
+      }
+    };
+    client.onclose = async (event) => {
+      if (event.wasClean) {
+        // console.log(`Number of Active Nodes = ${Object.keys(test).length}`);
+        setNodes(Object.keys(test).length);
+      } else { 
+        console.log("[close] Connection died");
+      }
+    };
+  };
+  //  console.log("string", value)
   return (
     <>
       {/* Header nav bar */}
@@ -571,7 +672,7 @@ export default function Dashboard(props) {
           changeSide={changeSide}
           SwitchSide={SwitchSide}
         />
-        {Expand === 2 ? <Country expand={setCountry}/> : ""}
+        {Expand === 2 ? <Country expand={setCountry} location={value}/> : ""}
       </>
       {/* Section containers(Graph) */}
       <div>
@@ -603,7 +704,7 @@ export default function Dashboard(props) {
                     </Row>
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>{content.stats.nodes}/{content.stats.totalNodes}</TotalNodes>
+                      <TotalNodes>{ nodes}/200</TotalNodes>
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
@@ -621,7 +722,7 @@ export default function Dashboard(props) {
                         <Countries>{content.stats.countries}</Countries>
                         <Row>
                           <MapContainer>
-                            <Map/>
+                            <Map location={value} />
                           </MapContainer>
                         </Row>
                       </Column>
@@ -654,7 +755,7 @@ export default function Dashboard(props) {
                           <SecurityLabel>Nodes</SecurityLabel>
                         </Row>
                         <Row>
-                        {content.stats.nodes}/{content.stats.totalNodes}
+                        {nodes}/200
                         </Row>
                         <Row>
                           <SecurityLabelMid>
@@ -678,7 +779,7 @@ export default function Dashboard(props) {
                         </Row>
                         <Row>
                           <MapContainer>
-                            <Map/>
+                            <Map location={value}/>
                           </MapContainer>
                         </Row>
                       </>
@@ -795,7 +896,7 @@ export default function Dashboard(props) {
                     <Row>
                       <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                     </Row>
-                    <Row>{content.stats.gasPrice}</Row>
+                    <Row>{gasPrice}</Row>
                     <Row>
                       <EfficiencyLabelMid>
                         Avg Transaction Rate
@@ -808,7 +909,7 @@ export default function Dashboard(props) {
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      <UpTime>{content.stats.upTime}%</UpTime>
+                      <UpTime>{Time}%</UpTime>
                       <div>
                         <Row>
                           <ButtonDiv>
@@ -836,8 +937,8 @@ export default function Dashboard(props) {
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      {content.stats.gasPrice}
-                      <UpTime>{content.stats.upTime}%</UpTime>
+                      {gasPrice}
+                      <UpTime>{Time}%</UpTime>
                     </Row>
                     <Row>
                       <EfficiencyLabelMid>
@@ -916,7 +1017,7 @@ export default function Dashboard(props) {
                 <Row>
                   <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                 </Row>
-                <Row>{content.stats.gasPrice}</Row>
+                <Row>{gasPrice}</Row>
                 <Row>
                   <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
@@ -927,7 +1028,7 @@ export default function Dashboard(props) {
                   <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                 </Row>
                 <Row>
-                  <UpTime>{content.stats.upTime}%</UpTime>
+                  <UpTime>{Time}%</UpTime>
                   <div>
                     <Row>
                       <ButtonDiv>
