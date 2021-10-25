@@ -301,11 +301,12 @@ const Blocks = styled.span`
 `;
 const LastBlock = styled.span`
   padding-left: 130px;
+  white-space: nowrap;
   @media (max-width: 1025px) {
     padding-left: 245px;
   }
   @media (max-width: 415px) {
-    padding-left: 227px;
+    padding-left: 179px;
   }
 `;
 const BlockBarLeftLabel = styled.span`
@@ -349,7 +350,7 @@ const UpTime = styled.span`
     padding-left: 249px;
   }
   @media (max-width: 415px) {
-    padding-left: 279px;
+    padding-left: 196px;
   }
 `;
 
@@ -553,6 +554,10 @@ export default function Dashboard(props) {
   const [nodes, setNodes] = useState([]);
   const [gasPrice, setGasPrice] = useState([]);
   const [Time, setTime] = useState([]);
+  const [tNode, setnode] = useState([]);
+  const [tLatency, setLatency] = useState([]);
+  const [tPeers, setPeers] = useState([]);
+
   useEffect(() => {
     getValue();
   }, []);
@@ -564,25 +569,23 @@ export default function Dashboard(props) {
       console.log("connect");
     };
     client.onmessage = async (event) => {
-      
       var msg = JSON.parse(event.data);
       if (msg.action === "stats") {
         if (msg.data.id in test) {
           return;
         } else {
-          
-
-          console.log("test", msg)
-          let gasPrice  = msg.data.stats.gasPrice;
+          // console.log("test", msg);
+          let gasPrice = msg.data.stats.gasPrice;
           setGasPrice(gasPrice);
 
           let upTime = msg.data.stats.uptime;
           setTime(upTime);
 
           test[msg.data.id] = msg.data.stats.active;
-          
+          // console.log("random", test)
+
           let newarray = Object.keys(test);
-          // console.log("random", newarray)
+          
           let data = newarray?.filter(
             (element) =>
               element !== "BuzzNjay1(45.77.253.122)" &&
@@ -629,18 +632,21 @@ export default function Dashboard(props) {
           let redundant = Array.from(new Set(arr));
           setValue(redundant);
 
-          
           //for socket total nodes ---->
           let nodecount = Object.keys(test).length;
           setNodes(nodecount);
+
+          let tablenode = msg.data.id;
+          setnode(tablenode);
         }
+        
       }
     };
     client.onclose = async (event) => {
       if (event.wasClean) {
         // console.log(`Number of Active Nodes = ${Object.keys(test).length}`);
         setNodes(Object.keys(test).length);
-      } else { 
+      } else {
         console.log("[close] Connection died");
       }
     };
@@ -672,7 +678,7 @@ export default function Dashboard(props) {
           changeSide={changeSide}
           SwitchSide={SwitchSide}
         />
-        {Expand === 2 ? <Country expand={setCountry} location={value}/> : ""}
+        {Expand === 2 ? <Country expand={setCountry} location={value} /> : ""}
       </>
       {/* Section containers(Graph) */}
       <div>
@@ -704,7 +710,7 @@ export default function Dashboard(props) {
                     </Row>
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>{ nodes}/200</TotalNodes>
+                      <TotalNodes>{nodes}/200</TotalNodes>
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
@@ -754,9 +760,7 @@ export default function Dashboard(props) {
                         <Row>
                           <SecurityLabel>Nodes</SecurityLabel>
                         </Row>
-                        <Row>
-                        {nodes}/200
-                        </Row>
+                        <Row>{nodes}/200</Row>
                         <Row>
                           <SecurityLabelMid>
                             Node History (7 Days)
@@ -779,7 +783,7 @@ export default function Dashboard(props) {
                         </Row>
                         <Row>
                           <MapContainer>
-                            <Map location={value}/>
+                            <Map location={value} />
                           </MapContainer>
                         </Row>
                       </>
@@ -945,8 +949,8 @@ export default function Dashboard(props) {
                         Avg Transaction Rate
                       </EfficiencyLabelMid>
                     </Row>
-                    <Row>{content.stats.avgRate}TPS</Row>
-                    <Row>
+                    <Row>{content.stats.avgRate}TPS
+                    
                       <ButtonDiv>
                         <Button>30D</Button>
                         <Button>7D</Button>
@@ -1053,7 +1057,7 @@ export default function Dashboard(props) {
       </div>
       {/* Table view */}
       <TableDiv>
-        <Table />
+        <Table name={tNode} />
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>

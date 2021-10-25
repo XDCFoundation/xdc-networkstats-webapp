@@ -3,9 +3,24 @@ import Utils, {dispatchAction} from "../utility";
 import {eventConstants} from "../constants";
 import _ from 'lodash';
 import store from '../store'
+
+
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket(
+  "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
+);
+client.onmessage = async (event) => {
+    var msg = JSON.parse(event.data);
+    // console.log("testing", msg)
+    socketAction(msg.action, msg.data);
+}
+
 // export default {
 //     connectSocket
 // }
+
+
 let MAX_BINS = 40;
 let nodes = 0;
 let totalNodes = 0;
@@ -77,9 +92,10 @@ let miners = [];
         // $scope.latency = data.latency;
     })
 //}
-
+  
 async function socketAction(action, data){
     // data = xssFilter(data);
+    // console.log("actiontest", data)
     switch(action)
     {
         case "init":

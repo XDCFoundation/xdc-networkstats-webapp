@@ -41,6 +41,9 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+
+export default function EnhancedTable(props) {
+const {content} = props;
 function createData(
   nodeName,
   type,
@@ -65,7 +68,7 @@ function createData(
 
 const rows = [
   createData(
-    "Bitrue_22_XF_161.97.128.20",
+    "{content.name}",
     "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
     "45ms",
     8,
@@ -331,7 +334,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
   const [selected, setSelected] = React.useState([]);
