@@ -530,7 +530,7 @@ const TOUR_STEPS = [
 ];
 
 export default function Dashboard(props) {
-  const { state, content } = props;
+  const { content } = props;
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
     setTab(value);
@@ -554,9 +554,12 @@ export default function Dashboard(props) {
   const [nodes, setNodes] = useState([]);
   const [gasPrice, setGasPrice] = useState([]);
   const [Time, setTime] = useState([]);
-  const [tNode, setnode] = useState([]);
+  const [tNode, setNode] = useState([]);
   const [tLatency, setLatency] = useState([]);
   const [tPeers, setPeers] = useState([]);
+  const [tData, settData] = useState([]);
+  const [tBlock, setBlock] = useState([]);
+
 
   useEffect(() => {
     getValue();
@@ -574,15 +577,24 @@ export default function Dashboard(props) {
         if (msg.data.id in test) {
           return;
         } else {
-          // console.log("test", msg);
+            console.log("random", msg)
+           let tData = msg.action;
+           
+           settData(tData);
           let gasPrice = msg.data.stats.gasPrice;
           setGasPrice(gasPrice);
 
           let upTime = msg.data.stats.uptime;
           setTime(upTime);
 
+          let tLatency = msg.data.stats.latency;
+          setLatency(tLatency);
+
+          let tPeers = msg.data.stats.peers;
+          setPeers(tPeers);
+
           test[msg.data.id] = msg.data.stats.active;
-          // console.log("random", test)
+          
 
           let newarray = Object.keys(test);
           
@@ -636,11 +648,19 @@ export default function Dashboard(props) {
           let nodecount = Object.keys(test).length;
           setNodes(nodecount);
 
-          let tablenode = msg.data.id;
-          setnode(tablenode);
+          let tNode = msg.data.id;
+          setNode(tNode);
+          // console.log("name", tNode)
         }
-        
       }
+      if (msg.action === "block") {
+        
+        let tBlock = msg.data.block.number;
+        setBlock(tBlock);
+        console.log("block", tBlock);
+
+      }
+
     };
     client.onclose = async (event) => {
       if (event.wasClean) {
@@ -1057,7 +1077,15 @@ export default function Dashboard(props) {
       </div>
       {/* Table view */}
       <TableDiv>
-        <Table name={tNode} />
+        <Table 
+        name={tNode} 
+               peers={tPeers}
+               latency={tLatency}
+               uptime={Time}
+               lastblock={tBlock}
+        data={tData}
+               />
+
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>

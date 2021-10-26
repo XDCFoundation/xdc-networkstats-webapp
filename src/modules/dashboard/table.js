@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -42,8 +42,14 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 
+
+
 export default function EnhancedTable(props) {
-const {content} = props;
+
+// const contents = props.content;
+  // console.log("table", props.data)
+//  let name = props.data.id;
+//  console.log("name", name ) 
 function createData(
   nodeName,
   type,
@@ -66,128 +72,158 @@ function createData(
   };
 }
 
+
+// const [, Setrows] = useState([])
+
+
+const [tableRows, setRows] = useState([{
+  nodeName: "",
+  type: "",
+  latency: "",
+    peers: "",
+    pendingTxn: "",
+    lastBlock: "",
+    graph: "",
+    upTime: "",
+  
+}
+]);
 const rows = [
+  
   createData(
-    "{content.name}",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
+    `${props.name}`,
+    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.10",
+    `${props.latency}ms`,
+    `${props.peers}`,
     0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
+    `#${props.lastblock}`,
+    <TableGraph />, 
+    `${props.uptime}%`
   ),
+  
   createData(
-    "Bitrue",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
+    `${props.name}`,
+    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
+    `${props.latency}ms`,
+    `${props.peers}`,
     0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1610",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1618",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.1",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.12",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.128",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.128.2",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-];
+    `#${props.lastblock}`,
+    <TableGraph />,    
+    `${props.uptime}%`
+  ), 
+     ];
+  // createData(
+  //   `${props.name}`,
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
+  //   `${props.latency}ms`,
+  //   `${props.peers}`,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   `${props.uptime}%`
+  // ),
+  
+  // createData(
+  //   "Bitrue_22",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,  
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_1",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_1610",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_1618",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_161.97",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_161.97.1",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_161.97.12",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_161.97.128",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+  // createData(
+  //   "Bitrue_22_XF_161.97.128.2",
+  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
+  //   "45ms",
+  //   8,
+  //   0,
+  //   "#526,481",
+  //   <TableGraph />,
+  //   "100%"
+  // ),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -361,7 +397,7 @@ EnhancedTableHead.propTypes = {
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, nodeName);
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
+      newSelected = newSelected.concat(selected.slice(1)); 
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
@@ -396,12 +432,20 @@ EnhancedTableHead.propTypes = {
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy)).map(
                 (row, index) => {
+                  // console.log("asdfg", row)
+                  
+                  
+                  // let node = row.nodeName;
+                  // let peers = row.peers;
+                  // let latency  = row.latency;
+                  // let time = row.uptime;
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
+                  // if(index!==0)
                   return (
                     <StyledTableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.nodeName)}
+                      hover 
+                      //onClick={(event) => handleClick(event, row.nodeName)}
                       role="radio"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
