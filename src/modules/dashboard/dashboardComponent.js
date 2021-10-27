@@ -10,14 +10,23 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
+import socketClient from "socket.io-client";
+// import Primus from "primus-emit";
+
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 );
 
+// const primus = new Primus('wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0');
 
-const HeaderContainer = styled.div`
+// let client = socketClient("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0", {
+//   transports: ["websocket"],
+// }
+// );
+
+const HeaderContainer = styled.div`   
   background-color: #1c3c93;
   display: flex; 
   width: 100%;
@@ -565,19 +574,27 @@ export default function Dashboard(props) {
     getValue();
   }, []);
 
+
   //SocketFunction
   const getValue = () => {
     let test = {};
     client.onopen = () => {
       console.log("connect");
     };
+    
+    // client.on('data', function(data) {console.log("datatest", data)})
+
     client.onmessage = async (event) => {
       var msg = JSON.parse(event.data);
+    // primus.on('init', function(data) { 
+    //   console.log("Inittest", data) })
+
+    // console.log("testt", msg)
       if (msg.action === "stats") {
         if (msg.data.id in test) {
           return;
         } else {
-            console.log("random", msg)
+            
            let tData = msg.action;
            
            settData(tData);
@@ -651,13 +668,15 @@ export default function Dashboard(props) {
           let tNode = msg.data.id;
           setNode(tNode);
           // console.log("name", tNode)
+
+          
         }
       }
       if (msg.action === "block") {
         
         let tBlock = msg.data.block.number;
         setBlock(tBlock);
-        console.log("block", tBlock);
+        //console.log("block", tBlock);
 
       }
 
@@ -731,7 +750,7 @@ export default function Dashboard(props) {
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
                       <TotalNodes>{nodes}/200</TotalNodes>
-                    </Row>
+                    </Row> 
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
