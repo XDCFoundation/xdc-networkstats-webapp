@@ -10,7 +10,7 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
-import socketClient from "socket.io-client";
+import TableGraph from "./tableGraph";
 // import Primus from "primus-emit";
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
@@ -25,10 +25,11 @@ const client = new W3CWebSocket(
 //   transports: ["websocket"],
 // }
 // );
+let TRows = [];
 
-const HeaderContainer = styled.div`   
+const HeaderContainer = styled.div`
   background-color: #1c3c93;
-  display: flex; 
+  display: flex;
   width: 100%;
   height: 38px;
   justify-content: space-between;
@@ -563,17 +564,10 @@ export default function Dashboard(props) {
   const [nodes, setNodes] = useState([]);
   const [gasPrice, setGasPrice] = useState([]);
   const [Time, setTime] = useState([]);
-  const [tNode, setNode] = useState([]);
-  const [tLatency, setLatency] = useState([]);
-  const [tPeers, setPeers] = useState([]);
-  const [tData, settData] = useState([]);
-  const [tBlock, setBlock] = useState([]);
-
 
   useEffect(() => {
     getValue();
   }, []);
-
 
   //SocketFunction
   const getValue = () => {
@@ -581,40 +575,38 @@ export default function Dashboard(props) {
     client.onopen = () => {
       console.log("connect");
     };
-    
+
     // client.on('data', function(data) {console.log("datatest", data)})
 
     client.onmessage = async (event) => {
       var msg = JSON.parse(event.data);
-    // primus.on('init', function(data) { 
-    //   console.log("Inittest", data) })
-
-    // console.log("testt", msg)
+      console.log("test", msg)
       if (msg.action === "stats") {
         if (msg.data.id in test) {
           return;
         } else {
+            TRows.push({   
+            type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
+            pendingTxn: 0,
+            lastBlock: "#5567889",
+            graph: <TableGraph/>,
+            upTime: msg.data.stats.uptime,
+            latency: `${msg.data.stats.latency}ms`,
+            peers: msg.data.stats.peers,
+            nodeName: msg.data.id,
             
-           let tData = msg.action;
-           
-           settData(tData);
+          });
+
           let gasPrice = msg.data.stats.gasPrice;
           setGasPrice(gasPrice);
 
           let upTime = msg.data.stats.uptime;
           setTime(upTime);
 
-          let tLatency = msg.data.stats.latency;
-          setLatency(tLatency);
-
-          let tPeers = msg.data.stats.peers;
-          setPeers(tPeers);
-
           test[msg.data.id] = msg.data.stats.active;
-          
 
           let newarray = Object.keys(test);
-          
+
           let data = newarray?.filter(
             (element) =>
               element !== "BuzzNjay1(45.77.253.122)" &&
@@ -664,21 +656,10 @@ export default function Dashboard(props) {
           //for socket total nodes ---->
           let nodecount = Object.keys(test).length;
           setNodes(nodecount);
-
-          let tNode = msg.data.id;
-          setNode(tNode);
-          // console.log("name", tNode)
-
-          
         }
       }
-      if (msg.action === "block") {
-        
-        let tBlock = msg.data.block.number;
-        setBlock(tBlock);
-        //console.log("block", tBlock);
-
-      }
+      // if (msg.action === "block") {
+      //   let blockName = msg.data.id; 
 
     };
     client.onclose = async (event) => {
@@ -749,8 +730,10 @@ export default function Dashboard(props) {
                     </Row>
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>{nodes}/200</TotalNodes>
-                    </Row> 
+                      <TotalNodes>
+                        {nodes}/200
+                      </TotalNodes>
+                    </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
@@ -988,8 +971,8 @@ export default function Dashboard(props) {
                         Avg Transaction Rate
                       </EfficiencyLabelMid>
                     </Row>
-                    <Row>{content.stats.avgRate}TPS
-                    
+                    <Row>
+                      {content.stats.avgRate}TPS
                       <ButtonDiv>
                         <Button>30D</Button>
                         <Button>7D</Button>
@@ -1096,15 +1079,15 @@ export default function Dashboard(props) {
       </div>
       {/* Table view */}
       <TableDiv>
-        <Table 
-        name={tNode} 
-               peers={tPeers}
-               latency={tLatency}
-               uptime={Time}
-               lastblock={tBlock}
-        data={tData}
-               />
-
+        <Table
+          // name={tNode}
+          //        peers={tPeers}
+          //        latency={tLatency}
+          //        uptime={Time}
+          //        lastblock={tBlock}
+          data={TRows}
+        />
+        {/* <NewTable/> */}
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>

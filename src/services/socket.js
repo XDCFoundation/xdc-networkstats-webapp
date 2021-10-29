@@ -3,6 +3,8 @@ import Utils, {dispatchAction} from "../utility";
 import {eventConstants} from "../constants";
 import _ from 'lodash';
 import store from '../store'
+import { connect} from "react-redux"
+
 
 
 import { w3cwebsocket as W3CWebSocket } from "websocket";
@@ -26,7 +28,7 @@ client.onmessage = async (event) => {
 //     connectSocket
 // }
 
-
+var tableRowIndex = 0;
 let MAX_BINS = 40;
 let nodes= [];
 let totalNodes = 0;
@@ -53,6 +55,8 @@ let difficultyChart = _.fill(Array(40), 2);
 let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
+let nodesArr = [];
+let updatedRows = [];
 
 // async function connectSocket(){
     // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
@@ -101,7 +105,7 @@ let miners = [];
   
 async function socketAction(action, data){
     // data = xssFilter(data);
-     //console.log("actiontest", action)
+     console.log("actiontest", data)
     switch(action)
     {
         case "init":
@@ -176,35 +180,35 @@ async function socketAction(action, data){
         case "block":
             
             
-            console.log("");
-            let index1 = findIndex({id: data.id});
+            // console.log("");
+            // let index1 = findIndex({id: data.id});
 
-            if( index1 >= 0 && !_.isUndefined(nodes[index1]) && !_.isUndefined(nodes[index1].stats) )
-            {
-                if( nodes[index1].stats.block.number < data.block.number )
-                {
-                    let best = _.max(nodes, function (node) {
-                        return parseInt(node.stats.block.number);
-                    }).stats.block;
+            // if( index1 >= 0 && !_.isUndefined(nodes[index1]) && !_.isUndefined(nodes[index1].stats) )
+            // {
+            //     if( nodes[index1].stats.block.number < data.block.number )
+            //     {
+            //         let best = _.max(nodes, function (node) {
+            //             return parseInt(node.stats.block.number);
+            //         }).stats.block;
 
-                    if (data.block.number > best.number) {
-                        data.block.arrived = _.now();
-                    } else {
-                        data.block.arrived = best.arrived;
-                    }
+            //         if (data.block.number > best.number) {
+            //             data.block.arrived = _.now();
+            //         } else {
+            //             data.block.arrived = best.arrived;
+            //         }
 
-                    nodes[index1].history = data.history;
-                }
+            //         nodes[index1].history = data.history;
+            //     }
 
-                nodes[index1].stats.block = data.block;
-                nodes[index1].stats.propagationAvg = data.propagationAvg;
+            //     nodes[index1].stats.block = data.block;
+            //     nodes[index1].stats.propagationAvg = data.propagationAvg;
 
-                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
+            //     // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+            //     store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
 
-                await updateBestBlock();
-            }
-            break;
+            //     await updateBestBlock();
+            // }
+            // break;
         case "pending":
             console.log("");
             let index2 = findIndex({id: data.id});
@@ -222,42 +226,60 @@ async function socketAction(action, data){
 
             break;
         case "stats":
+            // nodesArr = {"nodeName": data.id, "peers": data.stats.peers}
+            tableRowIndex = parseFloat(tableRowIndex) + 1
+            updatedRows = [...nodesArr]
+            updatedRows[tableRowIndex] = {
+              nodeName: data.id,
+              type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
+              latency: data.stats.latency,
+              peers: data.stats.peers,
+              pendingTxn: 0,
+              lastBlock: "#526,481", 
+              graph: "graph",
+              upTime: data.stats.uptime,
+            };
+            console.log("try", updatedRows) 
+            store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: updatedRows})
             
-            nodes.push(data);
             
-            //console.log("random", data)       
-            console.log("");
-            let index3 = findIndex({id: data. id});
-            console.log("index3", index3)
-            //promise
+            // nodes.push(data);
             
-            if( !_.isUndefined(data.id) && index3 >= 0 )
-            {
-                let node = nodes[index3];
+            // //console.log("random", data)       
+            // console.log("");
+            // let index3 = findIndex({id: data. id});
+            // console.log("index3", index3)
+            // //promise
+            
+            // if( !_.isUndefined(data.id) && index3 >= 0 )
+            // {
+            //     let node = nodes[index3];
                 
 
-                if( !_.isUndefined(node) && !_.isUndefined(node.stats) )
-                {
-                    nodes[index3].stats.active = data.stats.active;
-                    nodes[index3].stats.mining = data.stats.mining;
-                    nodes[index3].stats.hashrate = data.stats.hashrate;
-                    nodes[index3].stats.peers = data.stats.peers;
-                    nodes[index3].stats.gasPrice = data.stats.gasPrice;
-                    nodes[index3].stats.uptime = data.stats.uptime;
+            //     if( !_.isUndefined(node) && !_.isUndefined(node.stats) )
+            //     {
+            //         nodes[index3].stats.active = data.stats.active;
+            //         nodes[index3].stats.mining = data.stats.mining;
+            //         nodes[index3].stats.hashrate = data.stats.hashrate;
+            //         nodes[index3].stats.peers = data.stats.peers;
+            //         nodes[index3].stats.gasPrice = data.stats.gasPrice;
+            //         nodes[index3].stats.uptime = data.stats.uptime;
 
-                    if( !_.isUndefined(data.stats.latency) && _.get(nodes[index3], 'stats.latency', 0) !== data.stats.latency )
-                    {
-                        nodes[index3].stats.latency = data.stats.latency;
+            //         if( !_.isUndefined(data.stats.latency) && _.get(nodes[index3], 'stats.latency', 0) !== data.stats.latency )
+            //         {
+            //             nodes[index3].stats.latency = data.stats.latency;
 
-                        nodes[index3] = await latencyFilter(nodes[index3]);
-                    }
+            //             nodes[index3] = await latencyFilter(nodes[index3]);
+            //         }
                     
-                    // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                    store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
+            //         // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+            //         store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
 
-                    await updateActiveNodes();
-                }
-            }
+            //         await updateActiveNodes();
+            //     }
+            // }
+
+
 
             break;
         case "info":

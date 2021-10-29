@@ -9,7 +9,16 @@ let initialState = {
   gasPrice: 0.007,
   avgRate: 78,
   upTime: 77,
-  nodesArr: [],
+  nodesArr: [{
+    "nodeName": "TempNodes",
+  "type" : "XDC",
+  "latency": "10ms",
+  "peers": "10",
+  "pendingTxn": "8",
+  "lastBlock": "#56782",
+  "graph": "Graph",
+  "upTime": "10ms" 
+  }],
 };
 export default function stats(state = initialState, action) {
   switch (action.type) {

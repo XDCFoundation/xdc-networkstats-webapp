@@ -14,8 +14,7 @@ import { visuallyHidden } from "@mui/utils";
 import TableGraph from "./tableGraph";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-
-const TableBox = styled.div`
+  const TableBox = styled.div`
   width: 1800px;
   margin-left: auto;
   margin-right: auto;
@@ -43,188 +42,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 
 
-
 export default function EnhancedTable(props) {
-
-// const contents = props.content;
-  // console.log("table", props.data)
-//  let name = props.data.id;
-//  console.log("name", name ) 
-function createData(
-  nodeName,
-  type,
-  latency,
-  peers,
-  pendingTxn,
-  lastBlock,
-  graph,
-  upTime
-) {
-  return {
-    nodeName,
-    type,
-    latency,
-    peers,
-    pendingTxn,
-    lastBlock,
-    graph,
-    upTime,
-  };
-}
-
-
-// const [, Setrows] = useState([])
-
-
-const [tableRows, setRows] = useState([{
-  nodeName: "",
-  type: "",
-  latency: "",
-    peers: "",
-    pendingTxn: "",
-    lastBlock: "",
-    graph: "",
-    upTime: "",
-  
-}
-]);
-const rows = [
-  
-  createData(
-    `${props.name}`,
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.10",
-    `${props.latency}ms`,
-    `${props.peers}`,
-    0,
-    `#${props.lastblock}`,
-    <TableGraph />, 
-    `${props.uptime}%`
-  ),
-  
-  createData(
-    `${props.name}`,
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
-    `${props.latency}ms`,
-    `${props.peers}`,
-    0,
-    `#${props.lastblock}`,
-    <TableGraph />,    
-    `${props.uptime}%`
-  ), 
-     ];
-  // createData(
-  //   `${props.name}`,
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
-  //   `${props.latency}ms`,
-  //   `${props.peers}`,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   `${props.uptime}%`
-  // ),
-  
-  // createData(
-  //   "Bitrue_22",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,  
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_1",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_1610",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_1618",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_161.97",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_161.97.1",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_161.97.12",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_161.97.128",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-  // createData(
-  //   "Bitrue_22_XF_161.97.128.2",
-  //   "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-  //   "45ms",
-  //   8,
-  //   0,
-  //   "#526,481",
-  //   <TableGraph />,
-  //   "100%"
-  // ),
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -304,7 +122,6 @@ const headCells = [
     label: "Up Time",
   },
 ];
-
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -383,7 +200,7 @@ EnhancedTableHead.propTypes = {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.nodeName);
+      const newSelecteds = props.data.map((n) => n.nodeName);
       setSelected(newSelecteds);
       return;
     }
@@ -411,46 +228,38 @@ EnhancedTableHead.propTypes = {
   };
 
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-
   return (
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.data.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy)).map(
+              {stableSort(props.data, getComparator(order, orderBy)).map(
                 (row, index) => {
-                  // console.log("asdfg", row)
-                  
-                  
-                  // let node = row.nodeName;
-                  // let peers = row.peers;
-                  // let latency  = row.latency;
-                  // let time = row.uptime;
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
                   // if(index!==0)
                   return (
                     <StyledTableRow
                       hover 
-                      //onClick={(event) => handleClick(event, row.nodeName)}
+                      //onClick={(event) => handleClick(event, row.nodeName)} 
                       role="radio"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.nodeName}
                       selected={isItemSelected}
+                     
                     >
                       <StyledTableCell padding="radio">
                         <Radio
@@ -556,3 +365,4 @@ EnhancedTableHead.propTypes = {
     </TableBox>
   );
 }
+ 
