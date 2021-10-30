@@ -9,15 +9,16 @@ let initialState = {
   gasPrice: 0.007,
   avgRate: 78,
   upTime: 77,
+  map: 0,
   nodesArr: [{
-    "nodeName": "TempNodes",
+    "nodeName": "Null",
   "type" : "XDC",
-  "latency": "10ms",
-  "peers": "10",
-  "pendingTxn": "8",
-  "lastBlock": "#56782",
+  "latency": "0ms",
+  "peers": "0",
+  "pendingTxn": "0",
+  "lastBlock": "Null",
   "graph": "Graph",
-  "upTime": "10ms" 
+  "upTime": "0ms" 
   }],
 };
 export default function stats(state = initialState, action) {
@@ -72,6 +73,11 @@ export default function stats(state = initialState, action) {
         ...state,
         nodesArr: action.data,
       };
+    case eventConstants.UPDATE_MAP:
+        return {
+          ...state,
+          map: action.data,
+        };
     default:
       return state;
   }

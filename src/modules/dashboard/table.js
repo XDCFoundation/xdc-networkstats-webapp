@@ -43,6 +43,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 
 export default function EnhancedTable(props) {
+// console.log("table", props.content.stats.nodesArr)
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -200,32 +201,13 @@ EnhancedTableHead.propTypes = {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = props.data.map((n) => n.nodeName);
+      const newSelecteds = props.content.stats.nodesArr.map((n) => n.nodeName);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, nodeName) => {
-    const selectedIndex = selected.indexOf(nodeName);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nodeName);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1)); 
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
 
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
   return (
@@ -240,12 +222,12 @@ EnhancedTableHead.propTypes = {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={props.data.length}
+              rowCount={props.content.stats.nodesArr.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(props.data, getComparator(order, orderBy)).map(
+              {stableSort(props.content.stats.nodesArr, getComparator(order, orderBy)).map(
                 (row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;

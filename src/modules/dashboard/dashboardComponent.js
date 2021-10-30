@@ -25,7 +25,7 @@ const client = new W3CWebSocket(
 //   transports: ["websocket"],
 // }
 // );
-let TRows = [];
+
 
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
@@ -540,7 +540,9 @@ const TOUR_STEPS = [
 ];
 
 export default function Dashboard(props) {
+
   const { content } = props;
+
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
     setTab(value);
@@ -562,8 +564,7 @@ export default function Dashboard(props) {
   const [joyrideRun, setJoyrideRun] = useState(false);
   const [value, setValue] = useState([]);
   const [nodes, setNodes] = useState([]);
-  const [gasPrice, setGasPrice] = useState([]);
-  const [Time, setTime] = useState([]);
+
 
   useEffect(() => {
     getValue();
@@ -580,29 +581,13 @@ export default function Dashboard(props) {
 
     client.onmessage = async (event) => {
       var msg = JSON.parse(event.data);
-      console.log("test", msg)
+      // console.log("test", msg)
       if (msg.action === "stats") {
         if (msg.data.id in test) {
           return;
         } else {
-            TRows.push({   
-            type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
-            pendingTxn: 0,
-            lastBlock: "#5567889",
-            graph: <TableGraph/>,
-            upTime: msg.data.stats.uptime,
-            latency: `${msg.data.stats.latency}ms`,
-            peers: msg.data.stats.peers,
-            nodeName: msg.data.id,
             
-          });
-
-          let gasPrice = msg.data.stats.gasPrice;
-          setGasPrice(gasPrice);
-
-          let upTime = msg.data.stats.uptime;
-          setTime(upTime);
-
+          
           test[msg.data.id] = msg.data.stats.active;
 
           let newarray = Object.keys(test);
@@ -922,7 +907,7 @@ export default function Dashboard(props) {
                     <Row>
                       <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                     </Row>
-                    <Row>{gasPrice}</Row>
+                    <Row>{content.stats.gasPrice}</Row>
                     <Row>
                       <EfficiencyLabelMid>
                         Avg Transaction Rate
@@ -935,7 +920,7 @@ export default function Dashboard(props) {
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      <UpTime>{Time}%</UpTime>
+                      <UpTime>{content.stats.upTime}%</UpTime>
                       <div>
                         <Row>
                           <ButtonDiv>
@@ -963,8 +948,8 @@ export default function Dashboard(props) {
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
-                      {gasPrice}
-                      <UpTime>{Time}%</UpTime>
+                      {content.stats.gasPrice}
+                      <UpTime>{content.stats.upTime}%</UpTime>
                     </Row>
                     <Row>
                       <EfficiencyLabelMid>
@@ -1043,7 +1028,7 @@ export default function Dashboard(props) {
                 <Row>
                   <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                 </Row>
-                <Row>{gasPrice}</Row>
+                <Row>{content.stats.gasPrice}</Row>
                 <Row>
                   <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
@@ -1054,7 +1039,7 @@ export default function Dashboard(props) {
                   <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                 </Row>
                 <Row>
-                  <UpTime>{Time}%</UpTime>
+                  <UpTime>{content.stats.upTime}%</UpTime>
                   <div>
                     <Row>
                       <ButtonDiv>
@@ -1085,7 +1070,8 @@ export default function Dashboard(props) {
           //        latency={tLatency}
           //        uptime={Time}
           //        lastblock={tBlock}
-          data={TRows}
+          // data={TRows}
+          content={content}
         />
         {/* <NewTable/> */}
       </TableDiv>
@@ -1093,3 +1079,4 @@ export default function Dashboard(props) {
     </>
   );
 }
+ 
