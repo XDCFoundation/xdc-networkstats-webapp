@@ -1,9 +1,9 @@
 import React from "react";
 import BaseComponent from "../baseComponent";
 import DashboardComponent from "./dashboardComponent";
-import openSocket from "socket.io-client";
+// import openSocket from "socket.io-client";
 import io from "socket.io-client";
-import Utils, {dispatchAction} from "../../utility";
+import {dispatchAction} from "../../utility";
 import {connect} from "react-redux";
 // import ConnectSocket from "../../services/socket";
 import "../../services/socket";

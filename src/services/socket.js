@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import React from "react";
 import { eventConstants } from "../constants";
-import _ from "lodash";
+// import _ from "lodash";
 import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
 
@@ -26,33 +26,33 @@ client.onmessage = async (event) => {
 //     connectSocket
 // }
 
-var tableRowIndex = 0;
-let MAX_BINS = 40;
+// var tableRowIndex = 0;
+// let MAX_BINS = 40;
 let nodes = [];
-let totalNodes = 0;
-let countries = 0;
-let bestBlock = 0;
-let avgTime = 0;
-let lastBlock = 0;
+// let totalNodes = 0;
+// let countries = 0;
+// let bestBlock = 0;
+// let avgTime = 0;
+// let lastBlock = 0;
 let gasPrice = 0;
-let avgRate = 0;
+// let avgRate = 0;
 let upTime = 0;
-let bestStats = {};
-let lastDifficulty = 0;
-let nodesActive = 0;
-let blockPropagationChart = [];
-let blockPropagationAvg = 0;
-let uncleCount = 0;
-let uncleCountChart = 0;
-let avgBlockTime = 0;
-let avgTransactionRate = 0;
-let avgHashrate = 0;
-let lastGasLimit = 0;
-let lastBlocksTime = 0;
-let difficultyChart = 0;
-let transactionDensity = 0;
-let gasSpending = 0;
-let miners = [];
+// let bestStats = {};
+// let lastDifficulty = 0;
+// let nodesActive = 0;
+// let blockPropagationChart = [];
+// let blockPropagationAvg = 0;
+// let uncleCount = 0;
+// let uncleCountChart = 0;
+// let avgBlockTime = 0;
+// let avgTransactionRate = 0;
+// let avgHashrate = 0;
+// let lastGasLimit = 0;
+// let lastBlocksTime = 0;
+// let difficultyChart = 0;
+// let transactionDensity = 0;
+// let gasSpending = 0;
+// let miners = [];
 let test = {};
 let updatedRows = [];
 let newarray = [];
@@ -486,125 +486,125 @@ async function socketAction(action, data) {
   }
 }
 
-async function latencyFilter(node) {
-  if (typeof node.readable === "undefined") node.readable = {};
+// async function latencyFilter(node) {
+//   if (typeof node.readable === "undefined") node.readable = {};
 
-  if (typeof node.stats === "undefined") {
-    node.readable.latencyClass = "text-danger";
-    node.readable.latency = "offline";
-  }
+//   if (typeof node.stats === "undefined") {
+//     node.readable.latencyClass = "text-danger";
+//     node.readable.latency = "offline";
+//   }
 
-  if (node.stats.active === false) {
-    node.readable.latencyClass = "text-danger";
-    node.readable.latency = "offline";
-  } else {
-    if (node.stats.latency <= 100) node.readable.latencyClass = "text-success";
+//   if (node.stats.active === false) {
+//     node.readable.latencyClass = "text-danger";
+//     node.readable.latency = "offline";
+//   } else {
+//     if (node.stats.latency <= 100) node.readable.latencyClass = "text-success";
 
-    if (node.stats.latency > 100 && node.stats.latency <= 1000)
-      node.readable.latencyClass = "text-warning";
+//     if (node.stats.latency > 100 && node.stats.latency <= 1000)
+//       node.readable.latencyClass = "text-warning";
 
-    if (node.stats.latency > 1000) node.readable.latencyClass = "text-danger";
+//     if (node.stats.latency > 1000) node.readable.latencyClass = "text-danger";
 
-    node.readable.latency = node.stats.latency + " ms";
-  }
+//     node.readable.latency = node.stats.latency + " ms";
+//   }
 
-  return node;
-}
+//   return node;
+// }
 
-async function updateActiveNodes() {
-  await updateBestBlock();
+// async function updateActiveNodes() {
+//   await updateBestBlock();
 
-  totalNodes = nodes.length;
-  // dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
-  store.dispatch({ type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes });
+//   totalNodes = nodes.length;
+//   // dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
+//   store.dispatch({ type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes });
 
-  nodesActive = _.filter(nodes, function (node) {
-    return node.stats.active === true;
-  }).length;
+//   nodesActive = _.filter(nodes, function (node) {
+//     return node.stats.active === true;
+//   }).length;
 
-  upTime =
-    _.reduce(
-      nodes,
-      function (total, node) {
-        return total + node.stats.uptime;
-      },
-      0
-    ) / nodes.length;
-  // dispatchAction(eventConstants.UPDATE_UP_TIME, upTime);
-  store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+//   upTime =
+//     _.reduce(
+//       nodes,
+//       function (total, node) {
+//         return total + node.stats.uptime;
+//       },
+//       0
+//     ) / nodes.length;
+//   // dispatchAction(eventConstants.UPDATE_UP_TIME, upTime);
+//   store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
 
-  // $scope.map = _.map($scope.nodes, function (node) {
-  //     var fill = $filter('bubbleClass')(node.stats, $scope.bestBlock);
-  //
-  //     if(node.geo != null)
-  //         return {
-  //             radius: 3,
-  //             latitude: node.geo.ll[0],
-  //             longitude: node.geo.ll[1],
-  //             nodeName: node.info.name,
-  //             fillClass: "text-" + fill,
-  //             fillKey: fill,
-  //         };
-  //     else
-  //         return {
-  //             radius: 0,
-  //             latitude: 0,
-  //             longitude: 0
-  //         };
-  // });
-}
+//   // $scope.map = _.map($scope.nodes, function (node) {
+//   //     var fill = $filter('bubbleClass')(node.stats, $scope.bestBlock);
+//   //
+//   //     if(node.geo != null)
+//   //         return {
+//   //             radius: 3,
+//   //             latitude: node.geo.ll[0],
+//   //             longitude: node.geo.ll[1],
+//   //             nodeName: node.info.name,
+//   //             fillClass: "text-" + fill,
+//   //             fillKey: fill,
+//   //         };
+//   //     else
+//   //         return {
+//   //             radius: 0,
+//   //             latitude: 0,
+//   //             longitude: 0
+//   //         };
+//   // });
+// }
 
-async function updateBestBlock() {
-  if (nodes.length) {
-    let chains = {};
-    let maxScore = 0;
+// async function updateBestBlock() {
+//   if (nodes.length) {
+//     // let chains = {};
+//     // let maxScore = 0;
 
-    let bBlock = _.max(nodes, function (node) {
-      return parseInt(node.stats.block.number);
-    }).stats.block.number;
+//     let bBlock = _.max(nodes, function (node) {
+//       return parseInt(node.stats.block.number);
+//     }).stats.block.number;
 
-    if (bBlock !== bestBlock) {
-      bestBlock = bBlock;
-      // dispatchAction(eventConstants.UPDATE_BEST_BLOCK, bestBlock);
-      store.dispatch({
-        type: eventConstants.UPDATE_BEST_BLOCK,
-        data: bestBlock,
-      });
+//     if (bBlock !== bestBlock) {
+//       bestBlock = bBlock;
+//       // dispatchAction(eventConstants.UPDATE_BEST_BLOCK, bestBlock);
+//       store.dispatch({
+//         type: eventConstants.UPDATE_BEST_BLOCK,
+//         data: bestBlock,
+//       });
 
-      bestStats = _.max(nodes, function (node) {
-        return parseInt(node.stats.block.number);
-      }).stats;
+//       bestStats = _.max(nodes, function (node) {
+//         return parseInt(node.stats.block.number);
+//       }).stats;
 
-      lastBlock = bestStats.block.arrived;
-      // dispatchAction(eventConstants.UPDATE_LAST_BLOCK, lastBlock);
-      store.dispatch({
-        type: eventConstants.UPDATE_LAST_BLOCK,
-        data: lastBlock,
-      });
+//       lastBlock = bestStats.block.arrived;
+//       // dispatchAction(eventConstants.UPDATE_LAST_BLOCK, lastBlock);
+//       store.dispatch({
+//         type: eventConstants.UPDATE_LAST_BLOCK,
+//         data: lastBlock,
+//       });
 
-      lastDifficulty = bestStats.block.difficulty;
-    }
-  }
-}
+//       lastDifficulty = bestStats.block.difficulty;
+//     }
+//   }
+// }
 
-async function findIndex(search) {
-  //console.log("testnode", nodes, search)
-  return _.findIndex(nodes, search);
-}
+// async function findIndex(search) {
+//   //console.log("testnode", nodes, search)
+//   return _.findIndex(nodes, search);
+// }
 
-async function getMinersNames() {
-  if (miners.length > 0) {
-    _.forIn(miners, function (value, key) {
-      if (value.name !== false) return;
+// async function getMinersNames() {
+//   if (miners.length > 0) {
+//     _.forIn(miners, function (value, key) {
+//       if (value.name !== false) return;
 
-      if (value.miner === "0x0000000000000000000000000000000000000000") return;
+//       if (value.miner === "0x0000000000000000000000000000000000000000") return;
 
-      let name = _.result(
-        _.find(_.pluck(nodes, "info"), "coinbase", value.miner),
-        "name"
-      );
+//       let name = _.result(
+//         _.find(_.pluck(nodes, "info"), "coinbase", value.miner),
+//         "name"
+//       );
 
-      if (!_.isUndefined(name)) miners[key].name = name;
-    });
-  }
-}
+//       if (!_.isUndefined(name)) miners[key].name = name;
+//     });
+//   }
+// }
