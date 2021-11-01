@@ -53,8 +53,12 @@ let difficultyChart = 0;
 let transactionDensity = 0;
 let gasSpending = 0;
 let miners = [];
-let nodesArr = [];
+let test = {};
 let updatedRows = [];
+let newarray = [];
+let datas = [];
+let arr = [];
+let map = [];
 
 // async function connectSocket(){
 // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
@@ -104,151 +108,187 @@ async function socketAction(action, data) {
   // data = xssFilter(data);
   console.log("actiontest", data);
   switch (action) {
-    case "init":
-      nodes = data;
-      for (let i = 0; i < nodes.length; i++) {
-        if (typeof nodes[i].stats.hashrate === "undefined") {
-          nodes[i].stats.hashrate = 0;
-        }
-
-        nodes[i] = await latencyFilter(nodes[i]);
-
-        if (_.isUndefined(nodes.history)) {
-          nodes.history = new Array(40);
-          _.fill(nodes.history, -1);
-        }
-
-        // Init or recover pin
-        // nodes[i].pinned = ($scope.pinned.indexOf(node.id) >= 0 ? true : false); //this needs to be implemented with correct syntax
-      }
-
-      if (nodes.length > 0) {
-        // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES,
-          data: nodes.length,
-        });
-        await updateActiveNodes(); //all the commented stuff above needs to be implemented in the correct way for this.
-      }
-      break;
-    case "add":
-      console.log("");
-      break;
-    case "update":
-      console.log("");
-      let index = findIndex({ id: data.id });
-      if (
-        index >= 0 &&
-        !_.isUndefined(nodes[index]) &&
-        !_.isUndefined(nodes[index].stats)
-      ) {
-        if (!_.isUndefined(nodes[index].stats.latency))
-          data.stats.latency = nodes[index].stats.latency;
-
-        if (_.isUndefined(data.stats.hashrate)) data.stats.hashrate = 0;
-
-        if (nodes[index].stats.block.number < data.stats.block.number) {
-          let best = _.max(nodes, function (node) {
-            return parseInt(node.stats.block.number);
-          }).stats.block;
-
-          if (data.stats.block.number > best.number) {
-            data.stats.block.arrived = _.now();
-          } else {
-            data.stats.block.arrived = best.arrived;
-          }
-
-          nodes[index].history = data.history;
-
-          nodes[index].stats = data.stats;
-
-          if (
-            !_.isUndefined(data.stats.latency) &&
-            _.get(nodes[index], "stats.latency", 0) !== data.stats.latency
-          ) {
-            nodes[index].stats.latency = data.stats.latency;
-
-            nodes[index] = await latencyFilter(nodes[index]);
-          }
-
-          // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-          store.dispatch({
-            type: eventConstants.UPDATE_NODES,
-            data: nodes.length,
-          });
-
-          await updateBestBlock();
-        }
-      }
-      break;
-    case "block":
-
-    // console.log("");
-    // let index1 = findIndex({id: data.id});
-
-    // if( index1 >= 0 && !_.isUndefined(nodes[index1]) && !_.isUndefined(nodes[index1].stats) )
-    // {
-    //     if( nodes[index1].stats.block.number < data.block.number )
-    //     {
-    //         let best = _.max(nodes, function (node) {
-    //             return parseInt(node.stats.block.number);
-    //         }).stats.block;
-
-    //         if (data.block.number > best.number) {
-    //             data.block.arrived = _.now();
-    //         } else {
-    //             data.block.arrived = best.arrived;
-    //         }
-
-    //         nodes[index1].history = data.history;
+    // case "init":
+    //   nodes = data;
+    //   for (let i = 0; i < nodes.length; i++) {
+    //     if (typeof nodes[i].stats.hashrate === "undefined") {
+    //       nodes[i].stats.hashrate = 0;
     //     }
 
-    //     nodes[index1].stats.block = data.block;
-    //     nodes[index1].stats.propagationAvg = data.propagationAvg;
+    //     nodes[i] = await latencyFilter(nodes[i]);
 
+    //     if (_.isUndefined(nodes.history)) {
+    //       nodes.history = new Array(40);
+    //       _.fill(nodes.history, -1);
+    //     }
+
+    //     // Init or recover pin
+    //     // nodes[i].pinned = ($scope.pinned.indexOf(node.id) >= 0 ? true : false); //this needs to be implemented with correct syntax
+    //   }
+
+    //   if (nodes.length > 0) {
     //     // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-    //     store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
+    //     store.dispatch({
+    //       type: eventConstants.UPDATE_NODES,
+    //       data: nodes.length,
+    //     });
+    //     await updateActiveNodes(); //all the commented stuff above needs to be implemented in the correct way for this.
+    //   }
+    //   break;
+    // case "add":
+    //   console.log("");
+    //   break;
+    // case "update":
+    //   console.log("");
+    //   let index = findIndex({ id: data.id });
+    //   if (
+    //     index >= 0 &&
+    //     !_.isUndefined(nodes[index]) &&
+    //     !_.isUndefined(nodes[index].stats)
+    //   ) {
+    //     if (!_.isUndefined(nodes[index].stats.latency))
+    //       data.stats.latency = nodes[index].stats.latency;
 
-    //     await updateBestBlock();
-    // }
-    // break;
-    case "pending":
-      console.log("");
-      let index2 = findIndex({ id: data.id });
+    //     if (_.isUndefined(data.stats.hashrate)) data.stats.hashrate = 0;
 
-      if (!_.isUndefined(data.id) && index2 >= 0) {
-        let node = nodes[index2];
+    //     if (nodes[index].stats.block.number < data.stats.block.number) {
+    //       let best = _.max(nodes, function (node) {
+    //         return parseInt(node.stats.block.number);
+    //       }).stats.block;
 
-        if (
-          !_.isUndefined(node) &&
-          !_.isUndefined(node.stats.pending) &&
-          !_.isUndefined(data.pending)
-        )
-          nodes[index2].stats.pending = data.pending;
-      }
+    //       if (data.stats.block.number > best.number) {
+    //         data.stats.block.arrived = _.now();
+    //       } else {
+    //         data.stats.block.arrived = best.arrived;
+    //       }
 
-      // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-      store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes.length });
+    //       nodes[index].history = data.history;
 
-      break;
+    //       nodes[index].stats = data.stats;
+
+    //       if (
+    //         !_.isUndefined(data.stats.latency) &&
+    //         _.get(nodes[index], "stats.latency", 0) !== data.stats.latency
+    //       ) {
+    //         nodes[index].stats.latency = data.stats.latency;
+
+    //         nodes[index] = await latencyFilter(nodes[index]);
+    //       }
+
+    //       // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    //       store.dispatch({
+    //         type: eventConstants.UPDATE_NODES,
+    //         data: nodes.length,
+    //       });
+
+    //       await updateBestBlock();
+    //     }
+    //   }
+    //   break;
+    // case "block":
+
+    // // console.log("");
+    // // let index1 = findIndex({id: data.id});
+
+    // // if( index1 >= 0 && !_.isUndefined(nodes[index1]) && !_.isUndefined(nodes[index1].stats) )
+    // // {
+    // //     if( nodes[index1].stats.block.number < data.block.number )
+    // //     {
+    // //         let best = _.max(nodes, function (node) {
+    // //             return parseInt(node.stats.block.number);
+    // //         }).stats.block;
+
+    // //         if (data.block.number > best.number) {
+    // //             data.block.arrived = _.now();
+    // //         } else {
+    // //             data.block.arrived = best.arrived;
+    // //         }
+
+    // //         nodes[index1].history = data.history;
+    // //     }
+
+    // //     nodes[index1].stats.block = data.block;
+    // //     nodes[index1].stats.propagationAvg = data.propagationAvg;
+
+    // //     // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    // //     store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes.length})
+
+    // //     await updateBestBlock();
+    // // }
+    // // break;
+    // case "pending":
+    //   console.log("");
+    //   let index2 = findIndex({ id: data.id });
+
+    //   if (!_.isUndefined(data.id) && index2 >= 0) {
+    //     let node = nodes[index2];
+
+    //     if (
+    //       !_.isUndefined(node) &&
+    //       !_.isUndefined(node.stats.pending) &&
+    //       !_.isUndefined(data.pending)
+    //     )
+    //       nodes[index2].stats.pending = data.pending;
+    //   }
+
+    //   // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    //   store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes.length });
+
+    //   break;
     case "stats":
-      // nodesArr = {"nodeName": data.id, "peers": data.stats.peers}
+      if (data.id in test) {
+        return;
+      } else {
+        test[data.id] = data.stats.active;
+        nodes = Object.keys(test).length;
+        newarray = Object.keys(test);
+        datas = newarray?.filter(
+          (element) =>
+            element !== "BuzzNjay1(45.77.253.122)" &&
+            element !== "FreeWallet-FullNode" &&
+            element !== "VoxoV013" &&
+            element !== "FreeWallet-FullNode" &&
+            element !== "VoxoV012" &&
+            element !== "XF" &&
+            element !== "AnilChinchawale" &&
+            element !== "XDC.BlocksScan.io" &&
+            element !== "AtIndSoft" &&
+            element !== "XDC.Network" &&
+            element !== "xxxddd-Linux-XinFin-Network-One-Click" &&
+            element !== "flux-mac-Workstation-Linux-XinFin-Network-One-Click" &&
+            element !== "M88NPARTNERSLLC(88.99.191.124)" &&
+            element !== "CryptosAndTokens.com" &&
+            element !== "CCNode" &&
+            element !== "NT-XinFin-Network-One-Click" &&
+            element !== "Bella-Linux-XinFin-Network-One-Click" &&
+            element !== "rr3016ub20xdc-Linux-XinFin-Network-One-Click"
+        );
+
+        arr = [];
+        if (datas) {
+          datas.map((item) => {
+            let ipFilter = item?.split("_")?.reverse()[0];
+            function ValidateIPaddress() {
+              if (
+                /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+                  ipFilter
+                )
+              ) {
+                return true;
+              }
+              // console.log("ip Not found");
+              return false;
+            }
+            if (ValidateIPaddress()) {
+              arr.push(ipFilter);
+            }
+          });
+        }
+
+        map = Array.from(new Set(arr));
+      }
       upTime = data.stats.uptime;
       gasPrice = data.stats.gasPrice;
-      console.log("test", upTime, gasPrice);
-      // tableRowIndex = parseFloat(tableRowIndex) + 1
-      // updatedRows = [...nodesArr]
-      // updatedRows[tableRowIndex] = {
-      //   nodeName: data.id,
-      //   type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
-      //   latency: data.stats.latency,
-      //   peers: data.stats.peers,
-      //   pendingTxn: 0,
-      //   lastBlock: "#526,481",
-      //   graph: "graph",
-      //   upTime: data.stats.uptime,
-      // };
-      // console.log("try", updatedRows)
       updatedRows.push({
         type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
         pendingTxn: 0,
@@ -259,10 +299,14 @@ async function socketAction(action, data) {
         peers: data.stats.peers,
         nodeName: data.id,
       });
-      store.dispatch({type: eventConstants.UPDATE_NODES_ARR,data: updatedRows});
-
+      store.dispatch({
+        type: eventConstants.UPDATE_NODES_ARR,
+        data: updatedRows,
+      });
+      store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
       store.dispatch({ type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice });
       store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+      store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
 
       // nodes.push(data);
 
@@ -300,145 +344,145 @@ async function socketAction(action, data) {
       // }
 
       break;
-    case "info":
-      console.log("");
-      let index4 = findIndex({ id: data.id });
+    //     case "info":
+    //       console.log("");
+    //       let index4 = findIndex({ id: data.id });
 
-      if (index4 >= 0) {
-        nodes[index4].info = data.info;
+    //       if (index4 >= 0) {
+    //         nodes[index4].info = data.info;
 
-        if (_.isUndefined(nodes[index4].pinned)) nodes[index4].pinned = false;
+    //         if (_.isUndefined(nodes[index4].pinned)) nodes[index4].pinned = false;
 
-        // Init latency
-        nodes[index4] = await latencyFilter(nodes[index4]);
+    //         // Init latency
+    //         nodes[index4] = await latencyFilter(nodes[index4]);
 
-        // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES,
-          data: nodes.length,
-        });
+    //         // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    //         store.dispatch({
+    //           type: eventConstants.UPDATE_NODES,
+    //           data: nodes.length,
+    //         });
 
-        await updateActiveNodes();
-      }
-      break;
-    case "blockPropagationChart":
-      blockPropagationChart = data.histogram;
-      blockPropagationAvg = data.avg;
+    //         await updateActiveNodes();
+    //       }
+    //       break;
+    //     case "blockPropagationChart":
+    //       blockPropagationChart = data.histogram;
+    //       blockPropagationAvg = data.avg;
 
-      break;
-    case "uncleCount":
-      uncleCount = data[0] + data[1];
-      data.reverse();
-      uncleCountChart = data;
+    //       break;
+    //     case "uncleCount":
+    //       uncleCount = data[0] + data[1];
+    //       data.reverse();
+    //       uncleCountChart = data;
 
-      break;
-    case "charts":
-      if (!_.isEqual(avgBlockTime, data.avgBlocktime))
-        avgBlockTime = data.avgBlocktime;
+    //       break;
+    //     case "charts":
+    //       if (!_.isEqual(avgBlockTime, data.avgBlocktime))
+    //         avgBlockTime = data.avgBlocktime;
 
-      if (!_.isEqual(avgTransactionRate, data.avgTransactionRate))
-        avgTransactionRate = data.avgTransactionRate;
+    //       if (!_.isEqual(avgTransactionRate, data.avgTransactionRate))
+    //         avgTransactionRate = data.avgTransactionRate;
 
-      if (!_.isEqual(avgHashrate, data.avgHashrate))
-        avgHashrate = data.avgHashrate;
+    //       if (!_.isEqual(avgHashrate, data.avgHashrate))
+    //         avgHashrate = data.avgHashrate;
 
-      if (!_.isEqual(lastGasLimit, data.gasLimit) && data.gasLimit.length >= 40)
-        lastGasLimit = data.gasLimit;
+    //       if (!_.isEqual(lastGasLimit, data.gasLimit) && data.gasLimit.length >= 40)
+    //         lastGasLimit = data.gasLimit;
 
-      if (
-        !_.isEqual(lastBlocksTime, data.blocktime) &&
-        data.blocktime.length >= MAX_BINS
-      )
-        lastBlocksTime = data.blocktime;
+    //       if (
+    //         !_.isEqual(lastBlocksTime, data.blocktime) &&
+    //         data.blocktime.length >= MAX_BINS
+    //       )
+    //         lastBlocksTime = data.blocktime;
 
-      if (
-        !_.isEqual(difficultyChart, data.difficulty) &&
-        data.difficulty.length >= MAX_BINS
-      )
-        difficultyChart = data.difficulty;
+    //       if (
+    //         !_.isEqual(difficultyChart, data.difficulty) &&
+    //         data.difficulty.length >= MAX_BINS
+    //       )
+    //         difficultyChart = data.difficulty;
 
-      if (!_.isEqual(blockPropagationChart, data.propagation.histogram)) {
-        blockPropagationChart = data.propagation.histogram;
-        blockPropagationAvg = data.propagation.avg;
-      }
+    //       if (!_.isEqual(blockPropagationChart, data.propagation.histogram)) {
+    //         blockPropagationChart = data.propagation.histogram;
+    //         blockPropagationAvg = data.propagation.avg;
+    //       }
 
-      data.uncleCount.reverse();
+    //       data.uncleCount.reverse();
 
-      if (
-        !_.isEqual(uncleCountChart, data.uncleCount) &&
-        data.uncleCount.length >= MAX_BINS
-      ) {
-        uncleCount =
-          data.uncleCount[data.uncleCount.length - 2] +
-          data.uncleCount[data.uncleCount.length - 1];
-        uncleCountChart = data.uncleCount;
-      }
+    //       if (
+    //         !_.isEqual(uncleCountChart, data.uncleCount) &&
+    //         data.uncleCount.length >= MAX_BINS
+    //       ) {
+    //         uncleCount =
+    //           data.uncleCount[data.uncleCount.length - 2] +
+    //           data.uncleCount[data.uncleCount.length - 1];
+    //         uncleCountChart = data.uncleCount;
+    //       }
 
-      if (
-        !_.isEqual(transactionDensity, data.transactions) &&
-        data.transactions.length >= MAX_BINS
-      )
-        transactionDensity = data.transactions;
+    //       if (
+    //         !_.isEqual(transactionDensity, data.transactions) &&
+    //         data.transactions.length >= MAX_BINS
+    //       )
+    //         transactionDensity = data.transactions;
 
-      if (
-        !_.isEqual(gasSpending, data.gasSpending) &&
-        data.gasSpending.length >= MAX_BINS
-      )
-        gasSpending = data.gasSpending;
+    //       if (
+    //         !_.isEqual(gasSpending, data.gasSpending) &&
+    //         data.gasSpending.length >= MAX_BINS
+    //       )
+    //         gasSpending = data.gasSpending;
 
-      if (!_.isEqual(miners, data.miners)) {
-        miners = data.miners;
-        await getMinersNames();
-      }
+    //       if (!_.isEqual(miners, data.miners)) {
+    //         miners = data.miners;
+    //         await getMinersNames();
+    //       }
 
-      break;
-    case "inactive":
-      let index5 = findIndex({ id: data.id });
+    //       break;
+    //     case "inactive":
+    //       let index5 = findIndex({ id: data.id });
 
-      if (index5 >= 0) {
-        if (!_.isUndefined(data.stats)) nodes[index5].stats = data.stats;
+    //       if (index5 >= 0) {
+    //         if (!_.isUndefined(data.stats)) nodes[index5].stats = data.stats;
 
-        // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES,
-          data: nodes.length,
-        });
+    //         // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    //         store.dispatch({
+    //           type: eventConstants.UPDATE_NODES,
+    //           data: nodes.length,
+    //         });
 
-        await updateActiveNodes();
-      }
-      break;
-    case "latency":
-      if (!_.isUndefined(data.id) && !_.isUndefined(data.latency)) {
-        let index6 = findIndex({ id: data.id });
+    //         await updateActiveNodes();
+    //       }
+    //       break;
+    //     case "latency":
+    //       if (!_.isUndefined(data.id) && !_.isUndefined(data.latency)) {
+    //         let index6 = findIndex({ id: data.id });
 
-        if (index6 >= 0) {
-          let node = nodes[index6];
+    //         if (index6 >= 0) {
+    //           let node = nodes[index6];
 
-          if (
-            !_.isUndefined(node) &&
-            !_.isUndefined(node.stats) &&
-            !_.isUndefined(node.stats.latency) &&
-            node.stats.latency !== data.latency
-          ) {
-            nodes[index6].stats.latency = data.latency;
-            nodes[index6] = await latencyFilter(nodes[index6]);
-          }
-        }
+    //           if (
+    //             !_.isUndefined(node) &&
+    //             !_.isUndefined(node.stats) &&
+    //             !_.isUndefined(node.stats.latency) &&
+    //             node.stats.latency !== data.latency
+    //           ) {
+    //             nodes[index6].stats.latency = data.latency;
+    //             nodes[index6] = await latencyFilter(nodes[index6]);
+    //           }
+    //         }
 
-        // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES,
-          data: nodes.length,
-        });
-      }
+    //         // dispatchAction(eventConstants.UPDATE_NODES, nodes);
+    //         store.dispatch({
+    //           type: eventConstants.UPDATE_NODES,
+    //           data: nodes.length,
+    //         });
+    //       }
 
-      break;
-    case "client-ping":
-      // socket.emit('client-pong', {
-      //     serverTime: data.serverTime,
-      //     clientTime: _.now()
-      // });
-      break;
+    //       break;
+    //     case "client-ping":
+    //       // socket.emit('client-pong', {
+    //       //     serverTime: data.serverTime,
+    //       //     clientTime: _.now()
+    //       // });
+    //       break;
   }
 }
 

@@ -9,7 +9,7 @@ let initialState = {
   gasPrice: 0.007,
   avgRate: 78,
   upTime: 77,
-  map: 0,
+  map: [],
   nodesArr: [{
     "nodeName": "Null",
   "type" : "XDC",
