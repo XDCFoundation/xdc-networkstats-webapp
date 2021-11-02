@@ -1,12 +1,9 @@
 import io from "socket.io-client";
 import React from "react";
 import { eventConstants } from "../constants";
-// import _ from "lodash";
 import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
-
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 );
@@ -18,16 +15,9 @@ client.oninit = (data) => {
 };
 client.onmessage = async (event) => {
   var msg = JSON.parse(event.data);
-  // console.log("testing", msg)
   socketAction(msg.action, msg.data);
 };
 
-// export default {
-//     connectSocket
-// }
-
-// var tableRowIndex = 0;
-// let MAX_BINS = 40;
 let nodes = [];
 // let totalNodes = 0;
 // let countries = 0;
@@ -62,53 +52,41 @@ let map = [];
 
 // async function connectSocket(){
 // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
-
-console.log("line 38383838383838383838383838383838338383838");
-
-const socket = io("wss://stats1.xinfin.network", {
-  path: "/primus/",
-  transports: ["websocket"],
-  query: { _primuscb: "1633499928674-0" },
-  reconnection: true,
-});
-
 // store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: 888888888})
 
-socket.on("open", function open() {
-  socket.emit("ready");
-  console.log("The connection has been opened.");
-});
+// socket.on("open", function open() {
+//   socket.emit("ready");
+// });
 
-socket.on("end", function end() {
-  console.log("Socket connection ended.");
-});
+// socket.on("end", function end() {
+// });
 
-socket.on("error", function error(err) {
-  console.log(err);
-});
+// socket.on("error", function error(err) {
+// });
 
-socket.on("reconnecting", function reconnecting(opts) {
-  console.log("We are scheduling a reconnect operation", opts);
-});
+// socket.on("reconnecting", function reconnecting(opts) {
+// });
 
-socket.on("data", function incoming(data) {
-  socketAction(data.action, data.data);
-});
+// socket.on("data", function incoming(data) {
+//   socketAction(data.action, data.data);
+// });
 
-socket.on("init", function (data) {
-  socketAction("init", data.nodes);
-});
+// socket.on("init", function (data) {
+//   socketAction("init", data.nodes);
+// });
 
-socket.on("client-latency", function (data) {
-  // $scope.latency = data.latency;
-});
-//}
+// socket.on("client-latency", function (data) {
+//   // $scope.latency = data.latency;
+// });
+// //}
 
 async function socketAction(action, data) {
   // data = xssFilter(data);
-  console.log("actiontest", data);
   switch (action) {
     // case "init":
+
+//Need to Implement cases for other actions
+
     //   nodes = data;
     //   for (let i = 0; i < nodes.length; i++) {
     //     if (typeof nodes[i].stats.hashrate === "undefined") {
@@ -276,7 +254,6 @@ async function socketAction(action, data) {
               ) {
                 return true;
               }
-              // console.log("ip Not found");
               return false;
             }
             if (ValidateIPaddress()) {
@@ -310,10 +287,7 @@ async function socketAction(action, data) {
 
       // nodes.push(data);
 
-      // //console.log("random", data)
-      // console.log("");
       // let index3 = findIndex({id: data. id});
-      // console.log("index3", index3)
       // //promise
 
       // if( !_.isUndefined(data.id) && index3 >= 0 )
@@ -588,7 +562,6 @@ async function socketAction(action, data) {
 // }
 
 // async function findIndex(search) {
-//   //console.log("testnode", nodes, search)
 //   return _.findIndex(nodes, search);
 // }
 

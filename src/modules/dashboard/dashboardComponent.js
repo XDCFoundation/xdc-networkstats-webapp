@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 import Map from "./map";
@@ -524,10 +524,7 @@ const TOUR_STEPS = [
 ];
 
 export default function Dashboard(props) {
-  
-
   const { content } = props;
-  console.log("map", content.stats.map);
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
     setTab(value);
@@ -547,7 +544,7 @@ export default function Dashboard(props) {
   };
 
   const [joyrideRun, setJoyrideRun] = useState(false);
-  
+
   return (
     <>
       {/* Header nav bar */}
@@ -606,9 +603,9 @@ export default function Dashboard(props) {
                     </Row>
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>
-                        {content.stats.nodes}/200
-                      </TotalNodes>
+                      <TotalNodes>{content.stats.nodes}/200</TotalNodes>
+
+                      
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
@@ -807,9 +804,7 @@ export default function Dashboard(props) {
                     <Row>{content.stats.avgRate}TPS</Row>
                   </Column>
                   <Column>
-                    <Row>
-                      <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                    </Row>
+                    <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     <Row>
                       <UpTime>{content.stats.upTime}%</UpTime>
                       <div>
@@ -970,4 +965,3 @@ export default function Dashboard(props) {
     </>
   );
 }
- 

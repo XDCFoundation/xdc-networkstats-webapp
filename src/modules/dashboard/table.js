@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -11,7 +11,6 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import { visuallyHidden } from "@mui/utils";
-import TableGraph from "./tableGraph";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
   const TableBox = styled.div`
@@ -43,7 +42,6 @@ const StyledTableCell = withStyles((theme) => ({
 
 
 export default function EnhancedTable(props) {
-// console.log("table", props.content.stats.nodesArr)
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;

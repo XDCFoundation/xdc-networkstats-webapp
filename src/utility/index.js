@@ -57,15 +57,28 @@ const utility = {
     secondsToTime,
     getDateFormat,
     changeDateFormat,
-    getAggregatedPercWercQueryObject
+    getAggregatedPercWercQueryObject,
+    parseResponse
 };
 export default utility;
 
 
 export const dispatchAction = (type, data) => {
-    console.log('data =================', data);
     return dispatch => dispatch({type, data});
 };
+function parseResponse(promise) {
+
+    return promise
+
+        .then((data) => {
+
+            return [null, data];
+
+        })
+
+        .catch((err) => [err]);
+
+}
 
 function trackEvent(event, eventData) {
     // try {
@@ -702,7 +715,6 @@ function changeDateFormat(date, newFormat) {
     let currentFormat = getDateFormat()
     return moment(date, currentFormat).format(newFormat)
 }
-
 function getAggregatedPercWercQueryObject(start, end, skip, id) {
     console.log(start, end, skip, id);
     return [

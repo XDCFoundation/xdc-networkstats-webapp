@@ -6,8 +6,8 @@ import {
   Marker,
 } from "react-simple-maps";
 import styled from "styled-components";
-
-import axios from "axios";
+import utility from "../../utility";
+import { LocationService } from "../../services";
 
 const Div = styled.div`
   fill: #103aaa;
@@ -34,37 +34,25 @@ export default function Map(props) {
   const [node, setNode] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
-     //console.log('ch--',props?.location)
 
     if (props?.location && props?.location?.length >= 1) {
       (props?.location).map((item, index) => {
-        // console.log("prop--", item);
-
         setData(item);
       });
-
-      axios
-
-        .get(process.env.REACT_APP_NODE_LOCATIONS + data)
-
-        .then((res) => {
-          var nodes = node;
-
-          nodes.push({ coords: [res.data.lon, res.data.lat] });
-
-          // console.log("locations....", nodes);
-
-          setNode(nodes);
-        })
-
-        .catch((err) => {
-          console.log(err);
-        });
+      async function fetchData (){
+        const [error, res] = await utility.parseResponse(LocationService.getLocation(data));
+        if (error)
+        return;
+        var nodes = node;
+        nodes.push({ coords: [res.lon, res.lat] });
+        setNode(nodes);
+      }
+      fetchData();
     }
   }, [props?.location]);
  
   return (
-    <>
+  
       <Div>
         <ComposableMap>
           <Geographies geography={geoUrl}>
@@ -82,12 +70,5 @@ export default function Map(props) {
           
         </ComposableMap>
       </Div>
-    </>
   );
 }
-
-// const Map = (props) => (
-
-// );
-
-// export default Map;
