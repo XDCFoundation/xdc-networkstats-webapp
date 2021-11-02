@@ -1,7 +1,6 @@
 import "react-s-alert/dist/s-alert-default.css";
 import {history} from "../managers/history";
 import swal from "sweetalert";
-import Cookies from "universal-cookie";
 import React from "react";
 import ToastService from 'react-material-toast';
 import aws from "aws-sdk";
@@ -12,7 +11,6 @@ const toast = ToastService.new({
     maxCount: 2
 });
 let moment = require('moment');
-const cookies = new Cookies();
 const utility = {
     getHeader,
     apiFailureToast,
@@ -57,7 +55,8 @@ const utility = {
     secondsToTime,
     getDateFormat,
     changeDateFormat,
-    getAggregatedPercWercQueryObject
+    getAggregatedPercWercQueryObject,
+    parseResponse
 };
 export default utility;
 
@@ -65,6 +64,19 @@ export default utility;
 export const dispatchAction = (type, data) => {
     return dispatch => dispatch({type, data});
 };
+function parseResponse(promise) {
+
+    return promise
+
+        .then((data) => {
+
+            return [null, data];
+
+        })
+
+        .catch((err) => [err]);
+
+}
 
 function trackEvent(event, eventData) {
     // try {
@@ -88,23 +100,23 @@ function getDateFormat() {
     var date_parts = [];
 
     // get separator : "-", "/" or " ", format based on toLocaleDateString function
-    if (my_date.toLocaleDateString().split("-").length == 3) {
+    if (my_date.toLocaleDateString().split("-").length === 3) {
         separator = " - ";
         date_parts = my_date.toLocaleDateString().split("-");
     }
-    if (my_date.toLocaleDateString().split("/").length == 3) {
+    if (my_date.toLocaleDateString().split("/").length === 3) {
         separator = " / ";
         date_parts = my_date.toLocaleDateString().split("/");
     }
-    if (my_date.toLocaleDateString().split(" ").length == 3) {
+    if (my_date.toLocaleDateString().split(" ").length === 3) {
         separator = " ";
         date_parts = my_date.toLocaleDateString().split(" ");
     }
 
     // get first part
-    if (date_parts[0] == 2019) {
+    if (date_parts[0] === 2019) {
         first = "YYYY";
-    } else if (date_parts[0] == 31) {
+    } else if (date_parts[0] === 31) {
         first = "DD";
     } else {
         if (date_parts[0].length <= 2) {
@@ -115,9 +127,9 @@ function getDateFormat() {
     }
 
     // get second part
-    if (date_parts[1] == 2019) {
+    if (date_parts[1] === 2019) {
         second = "YYYY";
-    } else if (date_parts[1] == 31) {
+    } else if (date_parts[1] === 31) {
         second = "DD";
     } else {
         if (date_parts[1].length <= 2) {
@@ -128,9 +140,9 @@ function getDateFormat() {
     }
 
     // get third part
-    if (date_parts[2] == 2019) {
+    if (date_parts[2] === 2019) {
         third = "YYYY";
-    } else if (date_parts[2] == 31) {
+    } else if (date_parts[2] === 31) {
         third = "DD";
     } else {
         if (date_parts[2].length <= 2) {
@@ -561,13 +573,13 @@ function epocToPrettyTimeForFuture(seconds) {
 
     interval = Math.floor(seconds / 3600);
     if (interval >= 1) {
-        if (interval == 1)
+        if (interval === 1)
             return interval + " hr";
         return interval + " hrs";
     }
     interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-        if (interval == 1)
+        if (interval === 1)
             return interval + " minute";
         return interval + " minutes";
     } else
@@ -701,7 +713,6 @@ function changeDateFormat(date, newFormat) {
     let currentFormat = getDateFormat()
     return moment(date, currentFormat).format(newFormat)
 }
-
 function getAggregatedPercWercQueryObject(start, end, skip, id) {
     console.log(start, end, skip, id);
     return [

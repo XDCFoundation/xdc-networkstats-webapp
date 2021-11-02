@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -11,11 +11,9 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import { visuallyHidden } from "@mui/utils";
-import TableGraph from "./tableGraph";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-
-const TableBox = styled.div`
+  const TableBox = styled.div`
   width: 1800px;
   margin-left: auto;
   margin-right: auto;
@@ -41,151 +39,9 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function createData(
-  nodeName,
-  type,
-  latency,
-  peers,
-  pendingTxn,
-  lastBlock,
-  graph,
-  upTime
-) {
-  return {
-    nodeName,
-    type,
-    latency,
-    peers,
-    pendingTxn,
-    lastBlock,
-    graph,
-    upTime,
-  };
-}
 
-const rows = [
-  createData(
-    "Bitrue_22_XF_161.97.128.20",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1610",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_1618",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.1",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.12",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.128",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-  createData(
-    "Bitrue_22_XF_161.97.128.2",
-    "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.8",
-    "45ms",
-    8,
-    0,
-    "#526,481",
-    <TableGraph />,
-    "100%"
-  ),
-];
 
+export default function EnhancedTable(props) {
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -265,7 +121,6 @@ const headCells = [
     label: "Up Time",
   },
 ];
-
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -331,7 +186,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
   const [selected, setSelected] = React.useState([]);
@@ -344,66 +199,46 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.nodeName);
+      const newSelecteds = props.content.stats.nodesArr.map((n) => n.nodeName);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, nodeName) => {
-    const selectedIndex = selected.indexOf(nodeName);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nodeName);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
 
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-
   return (
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.content.stats.nodesArr.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy)).map(
+              {stableSort(props.content.stats.nodesArr, getComparator(order, orderBy)).map(
                 (row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
+                  // if(index!==0)
                   return (
                     <StyledTableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.nodeName)}
+                      hover 
                       role="radio"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.nodeName}
                       selected={isItemSelected}
+                     
                     >
                       <StyledTableCell padding="radio">
                         <Radio
@@ -509,3 +344,4 @@ export default function EnhancedTable() {
     </TableBox>
   );
 }
+ 

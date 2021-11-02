@@ -49,11 +49,6 @@ const speedBar = () => (
       enableLabel={false}
       enableGridY={false}
       padding={0.5}
-      //     axisBottom = {{
-      //        legend: 'Min 1s',
-      //        legendPosition: 'start',
-      //       colors: "#FFFFFF"
-      //    }}
     />
   </Div>
 );

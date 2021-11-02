@@ -89,7 +89,7 @@ export default function countries(props) {
                 />
               </Row>
               <Row>
-                <CountryMap />
+                <CountryMap  />
               </Row>
             </Column>
           </Row>

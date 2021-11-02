@@ -10,6 +10,7 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
+
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
   display: flex;
@@ -294,11 +295,12 @@ const Blocks = styled.span`
 `;
 const LastBlock = styled.span`
   padding-left: 130px;
+  white-space: nowrap;
   @media (max-width: 1025px) {
     padding-left: 245px;
   }
   @media (max-width: 415px) {
-    padding-left: 227px;
+    padding-left: 179px;
   }
 `;
 const BlockBarLeftLabel = styled.span`
@@ -342,7 +344,7 @@ const UpTime = styled.span`
     padding-left: 249px;
   }
   @media (max-width: 415px) {
-    padding-left: 279px;
+    padding-left: 196px;
   }
 `;
 
@@ -521,8 +523,8 @@ const TOUR_STEPS = [
   },
 ];
 
-const Dashboard = (props) => {
-  const { state } = props;
+export default function Dashboard(props) {
+  const { content } = props;
   const [SwitchTab, setTab] = React.useState(1);
   const changeTab = (value) => {
     setTab(value);
@@ -569,7 +571,11 @@ const Dashboard = (props) => {
           changeSide={changeSide}
           SwitchSide={SwitchSide}
         />
-        {Expand === 2 ? <Country expand={setCountry} /> : ""}
+        {Expand === 2 ? (
+          <Country expand={setCountry} location={content.stats.map} />
+        ) : (
+          ""
+        )}
       </>
       {/* Section containers(Graph) */}
       <div>
@@ -599,10 +605,10 @@ const Dashboard = (props) => {
                     <Row>
                       <SecurityLabel>Nodes</SecurityLabel>
                     </Row>
-                    <TotalNodes>
-                      {state.nodes}/{state.totalNodes}
-                    </TotalNodes>
-
+                    <Row>
+                      {/* {content.stats.nodes}/{content.stats.totalNodes} */}
+                      <TotalNodes>{content.stats.nodes}/200</TotalNodes>
+                    </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
@@ -616,10 +622,10 @@ const Dashboard = (props) => {
                         <Row>
                           <SecurityLabelRight>Countries</SecurityLabelRight>
                         </Row>
-                        <Countries>{state.countries}</Countries>
+                        <Countries>{content.stats.countries}</Countries>
                         <Row>
                           <MapContainer>
-                            <Map />
+                            <Map location={content.stats.map} />
                           </MapContainer>
                         </Row>
                       </Column>
@@ -651,9 +657,7 @@ const Dashboard = (props) => {
                         <Row>
                           <SecurityLabel>Nodes</SecurityLabel>
                         </Row>
-                        <Row>
-                          {state.nodes}/{state.totalNodes}
-                        </Row>
+                        <Row>{content.stats.nodes}/200</Row>
                         <Row>
                           <SecurityLabelMid>
                             Node History (7 Days)
@@ -672,7 +676,7 @@ const Dashboard = (props) => {
                           <SecurityLabelRight>Countries</SecurityLabelRight>
                         </Row>
                         <Row>
-                          <Countries>{state.countries}</Countries>
+                          <Countries>{content.stats.countries}</Countries>
                         </Row>
                         <Row>
                           <MapContainer>
@@ -705,20 +709,20 @@ const Dashboard = (props) => {
                       <SpeedLabel>Best Block</SpeedLabel>
                     </Row>
                     <Row>
-                      <Blocks>#{state.bestBlock}</Blocks>
+                      <Blocks>#{content.stats.bestBlock}</Blocks>
                     </Row>
                     <Row>
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                     </Row>
                     <Row>
-                      <Blocks>{state.avgTime}Sec</Blocks>
+                      <Blocks>{content.stats.avgTime}Sec</Blocks>
                     </Row>
                   </Column>
                   <Column>
                     <Row>
                       <SpeedLabelRight>Last Block</SpeedLabelRight>
                     </Row>
-                    <LastBlock>{state.lastBlock}s ago</LastBlock>
+                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                     <Row>
                       <Speedbar>
                         <LastBlockBar></LastBlockBar>
@@ -750,14 +754,14 @@ const Dashboard = (props) => {
                     <SpeedLabelRight>Last Block</SpeedLabelRight>
                   </Row>
                   <Row>
-                    <Blocks>#{state.bestBlock}</Blocks>
-                    <LastBlock>{state.lastBlock}s ago</LastBlock>
+                    <Blocks>#{content.stats.bestBlock}</Blocks>
+                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                   </Row>
                   <Row>
                     <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                   </Row>
                   <Row>
-                    <Blocks>{state.avgTime}Sec</Blocks>
+                    <Blocks>{content.stats.avgTime}Sec</Blocks>
                   </Row>
                   <Row>
                     <Speedbar>
@@ -793,20 +797,18 @@ const Dashboard = (props) => {
                     <Row>
                       <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                     </Row>
-                    <Row>{state.gasPrice}</Row>
+                    <Row>{content.stats.gasPrice}</Row>
                     <Row>
                       <EfficiencyLabelMid>
                         Avg Transaction Rate
                       </EfficiencyLabelMid>
                     </Row>
-                    <Row>{state.avgTime}TPS</Row>
+                    <Row>{content.stats.avgRate}TPS</Row>
                   </Column>
                   <Column>
+                    <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     <Row>
-                      <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                    </Row>
-                    <Row>
-                      <UpTime>{state.upTime}%</UpTime>
+                      <UpTime>{content.stats.upTime}%</UpTime>
                       <div>
                         <Row>
                           <ButtonDiv>
@@ -827,36 +829,36 @@ const Dashboard = (props) => {
               </EfficiencyTab>
               <EfficiencyMob>
                 {/*Efficiency Section for Mob*/}
-
-                <Column>
-                  <Row>
-                    <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
-                    <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                  </Row>
-
-                  <Row>
-                    {state.gasPrice}
-                    <UpTime>{state.upTime}%</UpTime>
-                  </Row>
-                  <Row>
-                    <EfficiencyLabelMid>
-                      Avg Transaction Rate
-                    </EfficiencyLabelMid>
-                  </Row>
-                  <Row>
-                    {state.avgTime}TPS
-                    <ButtonDiv>
-                      <Button>30D</Button>
-                      <Button>7D</Button>
-                      <Button>24H</Button>
-                    </ButtonDiv>
-                  </Row>
-                  <Row>
-                    <EffiencyBar>
-                      <UpTimeBar></UpTimeBar>
-                    </EffiencyBar>
-                  </Row>
-                </Column>
+                <Row>
+                  <Column>
+                    <Row>
+                      <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
+                      <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
+                    </Row>
+                    <Row>
+                      {content.stats.gasPrice}
+                      <UpTime>{content.stats.upTime}%</UpTime>
+                    </Row>
+                    <Row>
+                      <EfficiencyLabelMid>
+                        Avg Transaction Rate
+                      </EfficiencyLabelMid>
+                    </Row>
+                    <Row>
+                      {content.stats.avgRate}TPS
+                      <ButtonDiv>
+                        <Button>30D</Button>
+                        <Button>7D</Button>
+                        <Button>24H</Button>
+                      </ButtonDiv>
+                    </Row>
+                    <Row>
+                      <EffiencyBar>
+                        <UpTimeBar></UpTimeBar>
+                      </EffiencyBar>
+                    </Row>
+                  </Column>
+                </Row>
               </EfficiencyMob>
             </>
           ) : (
@@ -871,20 +873,20 @@ const Dashboard = (props) => {
                   <SpeedLabel>Best Block</SpeedLabel>
                 </Row>
                 <Row>
-                  <Blocks>#{state.bestBlock}</Blocks>
+                  <Blocks>#{content.stats.bestBlock}</Blocks>
                 </Row>
                 <Row>
                   <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                 </Row>
                 <Row>
-                  <Blocks>{state.avgTime}Sec</Blocks>
+                  <Blocks>{content.stats.avgTime}Sec</Blocks>
                 </Row>
               </Column>
               <Column>
                 <Row>
                   <SpeedLabelRight>Last Block</SpeedLabelRight>
                 </Row>
-                <LastBlock>{state.lastBlock}s ago</LastBlock>
+                <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                 <Row>
                   <Speedbar>
                     <LastBlockBar></LastBlockBar>
@@ -914,18 +916,18 @@ const Dashboard = (props) => {
                 <Row>
                   <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
                 </Row>
-                <Row>{state.gasPrice}</Row>
+                <Row>{content.stats.gasPrice}</Row>
                 <Row>
                   <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
-                <Row>{state.avgTime}TPS</Row>
+                <Row>{content.stats.avgRate}TPS</Row>
               </Column>
               <Column>
                 <Row>
                   <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                 </Row>
                 <Row>
-                  <UpTime>{state.upTime}%</UpTime>
+                  <UpTime>{content.stats.upTime}%</UpTime>
                   <div>
                     <Row>
                       <ButtonDiv>
@@ -950,11 +952,9 @@ const Dashboard = (props) => {
       </div>
       {/* Table view */}
       <TableDiv>
-        <Table />
+        <Table content={content} />
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>
   );
-};
-
-export default Dashboard;
+}
