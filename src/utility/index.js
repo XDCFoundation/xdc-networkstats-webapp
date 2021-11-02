@@ -1,7 +1,6 @@
 import "react-s-alert/dist/s-alert-default.css";
 import {history} from "../managers/history";
 import swal from "sweetalert";
-// import Cookies from "universal-cookie";
 import React from "react";
 import ToastService from 'react-material-toast';
 import aws from "aws-sdk";
@@ -12,7 +11,6 @@ const toast = ToastService.new({
     maxCount: 2
 });
 let moment = require('moment');
-// const cookies = new Cookies();
 const utility = {
     getHeader,
     apiFailureToast,

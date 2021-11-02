@@ -571,7 +571,11 @@ export default function Dashboard(props) {
           changeSide={changeSide}
           SwitchSide={SwitchSide}
         />
-        {Expand === 2 ? <Country expand={setCountry} location={content.stats.map} /> : ""}
+        {Expand === 2 ? (
+          <Country expand={setCountry} location={content.stats.map} />
+        ) : (
+          ""
+        )}
       </>
       {/* Section containers(Graph) */}
       <div>
@@ -604,8 +608,6 @@ export default function Dashboard(props) {
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
                       <TotalNodes>{content.stats.nodes}/200</TotalNodes>
-
-                      
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
@@ -950,16 +952,7 @@ export default function Dashboard(props) {
       </div>
       {/* Table view */}
       <TableDiv>
-        <Table
-          // name={tNode}
-          //        peers={tPeers}
-          //        latency={tLatency}
-          //        uptime={Time}
-          //        lastblock={tBlock}
-          // data={TRows}
-          content={content}
-        />
-        {/* <NewTable/> */}
+        <Table content={content} />
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </>

@@ -233,7 +233,6 @@ EnhancedTableHead.propTypes = {
                   return (
                     <StyledTableRow
                       hover 
-                      //onClick={(event) => handleClick(event, row.nodeName)} 
                       role="radio"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
