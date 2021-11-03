@@ -715,7 +715,7 @@ export default function Dashboard(props) {
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                     </Row>
                     <Row>
-                      <Blocks>{content.stats.avgTime}Sec</Blocks>
+                      <Blocks>{content.stats.avgBlock}Sec</Blocks>
                     </Row>
                   </Column>
                   <Column>
@@ -761,7 +761,7 @@ export default function Dashboard(props) {
                     <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                   </Row>
                   <Row>
-                    <Blocks>{content.stats.avgTime}Sec</Blocks>
+                    <Blocks>{content.stats.avgBlock}Sec</Blocks>
                   </Row>
                   <Row>
                     <Speedbar>
@@ -795,7 +795,7 @@ export default function Dashboard(props) {
                 <Row>
                   <Column>
                     <Row>
-                      <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
+                      <EfficiencyLabel>Gas Price</EfficiencyLabel>
                     </Row>
                     <Row>{content.stats.gasPrice}</Row>
                     <Row>
@@ -832,7 +832,7 @@ export default function Dashboard(props) {
                 <Row>
                   <Column>
                     <Row>
-                      <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
+                      <EfficiencyLabel>Gas Price</EfficiencyLabel>
                       <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
                     </Row>
                     <Row>
@@ -879,7 +879,7 @@ export default function Dashboard(props) {
                   <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                 </Row>
                 <Row>
-                  <Blocks>{content.stats.avgTime}Sec</Blocks>
+                  <Blocks>{content.stats.avgBlock}Sec</Blocks>
                 </Row>
               </Column>
               <Column>
@@ -914,7 +914,7 @@ export default function Dashboard(props) {
             <Row>
               <Column>
                 <Row>
-                  <EfficiencyLabel>Gas Price (USD)</EfficiencyLabel>
+                  <EfficiencyLabel>Gas Price</EfficiencyLabel>
                 </Row>
                 <Row>{content.stats.gasPrice}</Row>
                 <Row>

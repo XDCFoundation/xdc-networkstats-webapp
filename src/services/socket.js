@@ -27,6 +27,8 @@ let newarray = [];
 let datas = [];
 let arr = [];
 let map = [];
+let bestBlock = 0;
+let avgTime = 0;
 
 async function socketAction(action, data) {
   switch (action) {
@@ -104,5 +106,11 @@ async function socketAction(action, data) {
       store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
 
       break;
-    }}
+
+      case "charts":
+      avgTime = data.avgBlocktime.toFixed(3);
+      store.dispatch({ type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime});
+      break;
+    }
+  }
 
