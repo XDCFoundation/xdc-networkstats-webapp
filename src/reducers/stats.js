@@ -10,16 +10,19 @@ let initialState = {
   avgRate: 78,
   upTime: 77,
   map: [],
-  nodesArr: [{
-    "nodeName": "Null",
-  "type" : "XDC",
-  "latency": "0ms",
-  "peers": "0",
-  "pendingTxn": "0",
-  "lastBlock": "Null",
-  "graph": "Graph",
-  "upTime": "0ms" 
-  }],
+  nodesArr: [
+    {
+      nodeName: "Null",
+      type: "XDC",
+      latency: "0ms",
+      peers: "0",
+      pendingTxn: "0",
+      lastBlock: "Null",
+      graph: "Graph",
+      upTime: "0ms",
+    },
+  ],
+  blockTime: [],
 };
 export default function stats(state = initialState, action) {
   switch (action.type) {
@@ -74,10 +77,15 @@ export default function stats(state = initialState, action) {
         nodesArr: action.data,
       };
     case eventConstants.UPDATE_MAP:
-        return {
-          ...state,
-          map: action.data,
-        };
+      return {
+        ...state,
+        map: action.data,
+      };
+    case eventConstants.UPDATE_BLOCKTIME:
+      return {
+        ...state,
+        blockTime: action.data,
+      };
     default:
       return state;
   }

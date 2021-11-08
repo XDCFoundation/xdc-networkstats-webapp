@@ -10,6 +10,7 @@ import Country from "./countries";
 import Joyride from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
+import NumberFormat from "react-number-format";
 
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
@@ -873,7 +874,14 @@ export default function Dashboard(props) {
                   <SpeedLabel>Best Block</SpeedLabel>
                 </Row>
                 <Row>
-                  <Blocks>#{content.stats.bestBlock}</Blocks>
+                  <Blocks>
+                    #
+                    <NumberFormat
+                      value={content.stats.bestBlock}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                    />
+                  </Blocks>
                 </Row>
                 <Row>
                   <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
@@ -889,7 +897,7 @@ export default function Dashboard(props) {
                 <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                 <Row>
                   <Speedbar>
-                    <LastBlockBar></LastBlockBar>
+                    <LastBlockBar content={content} />
                   </Speedbar>
                 </Row>
                 <Row>
