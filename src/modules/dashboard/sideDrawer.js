@@ -24,7 +24,7 @@ const Div = styled.div`
   color: white;
   height: 1080px;
   position: absolute;
-  left: 1515px;
+  left: 1536px;
   z-index: 1;
   justify-content: space-around;
   transition: linear;

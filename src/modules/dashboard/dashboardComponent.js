@@ -561,7 +561,7 @@ export default function Dashboard(props) {
           },
           buttonBack: {
             marginRight: 10,
-            color: "blue",
+            color: "#2256DF",
           },
         }}
         run={joyrideRun}

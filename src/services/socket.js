@@ -4,6 +4,7 @@ import { eventConstants } from "../constants";
 import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { batch } from "react-redux";
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 );
@@ -30,10 +31,10 @@ let map = [];
 let blockTime = [];
 let avgTime = 0;
 let bestBlock = 0;
+let countries = 0;
 
 async function socketAction(action, data) {
   switch (action) {
-
     case "stats":
       if (data.id in test) {
         return;
@@ -85,40 +86,71 @@ async function socketAction(action, data) {
 
         map = Array.from(new Set(arr));
       }
+
+      countries = Object.keys(map).length;
       upTime = data.stats.uptime;
       gasPrice = data.stats.gasPrice;
-      updatedRows.push({
+      let tableData = {
         type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
         pendingTxn: 0,
         lastBlock: "#5567889",
-        graph: <TableGraph />,
-        upTime: data.stats.uptime,
+        graph: "graph",
+        upTime: `${data.stats.uptime}%`,
         latency: `${data.stats.latency}ms`,
         peers: data.stats.peers,
         nodeName: data.id,
+      };
+
+      if (updatedRows.length >= 20) {
+        updatedRows.pop();
+      }
+
+      updatedRows.unshift(tableData);
+
+      batch(() => {
+        store.dispatch({
+          type: eventConstants.UPDATE_NODES_ARR,
+          data: updatedRows,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
+        store.dispatch({
+          type: eventConstants.UPDATE_GAS_PRICE,
+          data: gasPrice,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+        store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
+        store.dispatch({
+          type: eventConstants.UPDATE_COUNTRIES,
+          data: countries,
+        });
       });
-      store.dispatch({
-        type: eventConstants.UPDATE_NODES_ARR,
-        data: updatedRows,
-      });
-      store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
-      store.dispatch({ type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice });
-      store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
-      store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
 
       break;
 
-      case "charts":
+    case "charts":
       avgTime = data.avgBlocktime.toFixed(3);
-      blockTime  = data.blocktime;
-      store.dispatch({ type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime});
-      store.dispatch({ type: eventConstants.UPDATE_BLOCKTIME, data: blockTime});
+      blockTime = data.blocktime;
+      batch(() => {
+        store.dispatch({
+          type: eventConstants.UPDATE_AVG_BLOCK,
+          data: avgTime,
+        });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: blockTime,
+        });
+      });
+
       break;
 
-      case "block":
+    case "block":
       bestBlock = data.block.number;
-      store.dispatch({ type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock});
+      batch(() => {
+        store.dispatch({
+          type: eventConstants.UPDATE_BEST_BLOCK,
+          data: bestBlock,
+        });
+      });
       break;
-    }
   }
-
+}

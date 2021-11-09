@@ -74,10 +74,16 @@ const theme = {
       },
     },
   },
+  grid: {
+    line: {
+      stroke: "#667FC1",
+      strokeWidth: 0.5,
+      strokeDasharray: "1 1"
+    }
+  }
 };
 
 const NodeGraph = () => (
-  <div>
     <Div>
       <ResponsiveLine
         data={data}
@@ -94,6 +100,7 @@ const NodeGraph = () => (
           stacked: true,
           min: 0,
           max: 200,
+          
         }}
         dotSize={10}
         dotColor="inherit:darker(0.9)"
@@ -103,8 +110,9 @@ const NodeGraph = () => (
         dotLabelYOffset={0}
         enableArea={true}
         enableGridX={false}
-        enableGridY={false}
+        enableGridY={true}
         enableDotLabel={false}
+        gridYValues={["0", "100", "200"]}
         axisLeft={{
           tickSize: 2,
           tickValues: ["0", "100", "200"],
@@ -122,7 +130,6 @@ const NodeGraph = () => (
         fill={[{ match: { id: "Stats" }, id: "gradientA" }]}
       />
     </Div>
-  </div>
 );
 
 export default NodeGraph;

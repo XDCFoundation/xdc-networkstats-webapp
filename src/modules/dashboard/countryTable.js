@@ -14,7 +14,7 @@ import styled from "styled-components";
 const TableBox = styled.div`
   padding-top: 41px;
   padding-left: 38px;
-  width: 700px;
+  width: 550px;
   height: auto;
   @media (max-width: 1025px) {
     width: 1000px;

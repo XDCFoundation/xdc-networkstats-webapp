@@ -7,7 +7,7 @@ import CountryTable from "./countryTable";
 const DesktopDiv = styled.div`
   background-color: #102e84;
   display: block;
-  width: 1900px;
+  width: 1920px;
   color: white;
   height: 2000px;
   position: absolute;
@@ -24,12 +24,13 @@ const DesktopDiv = styled.div`
 const Label1 = styled.span`
   color: #667fc1;
   width: 50%;
-  margin-top: 105px;
+  margin-top: 60px;
   padding-left: 45px;
 `;
 const Label2 = styled.span`
   width: 50%;
   padding-left: 45px;
+  font-size: 30px;
 `;
 
 const TabDiv = styled.div`
@@ -53,7 +54,7 @@ const TabDiv = styled.div`
 `;
 const Img = styled.img`
   padding-top: 36px;
-  padding-left: 1110px;
+  padding-left: 1310px;
   cursor: pointer;
   @media (max-width: 1025px) {
     padding-left: 945px;

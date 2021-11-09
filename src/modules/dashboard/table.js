@@ -28,7 +28,7 @@ import { withStyles } from "@material-ui/styles";
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    height: 65,
+    height: 50,
   },
 }))(TableRow);
 

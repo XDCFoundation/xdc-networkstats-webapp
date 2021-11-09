@@ -229,14 +229,15 @@ input:focus {
   height: 100vh;
 }
 .react-joyride__spotlight {
-  height: 336px !important;
-  top: 56px !important;
-  width: 641px !important;
+  height: 299px !important;
+  top: 94px !important;
+  width: 649px !important;
+  /* left: 2px; */
 }
 
 .__floater__open {
   top: -29px !important;
 }
 .react-joyride__tooltip {
-  width: 450px !important;
+  width: 550px !important;
 }

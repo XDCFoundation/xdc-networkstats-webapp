@@ -21,8 +21,6 @@ const Div = styled.div`
 
 function speedBar(props) {
 
-console.log("time", props.content.stats.blockTime[0])
-
   const data = [
     { time: 1, value: props.content.stats.blockTime[0] },
     { time: 2, value: props.content.stats.blockTime[1] },
@@ -67,6 +65,17 @@ console.log("time", props.content.stats.blockTime[0])
     
   ];
 
+  const theme = {
+    grid: {
+      line: {
+        stroke: "#667FC1",
+        strokeWidth: 0.5,
+        strokeDasharray: "1 1"
+        
+      }
+    }
+  };
+
   return (
   <Div>
     <ResponsiveBar
@@ -75,7 +84,9 @@ console.log("time", props.content.stats.blockTime[0])
       indexBy="time"
       colors={["#0093FF"]}
       enableLabel={false}
-      enableGridY={false}
+      enableGridY={true}
+      gridYValues={["0", "1"]}
+      theme={theme}
       padding={0.5}
     />
   </Div>
