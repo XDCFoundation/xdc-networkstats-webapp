@@ -88,6 +88,19 @@ function speedBar(props) {
       gridYValues={["0", "1"]}
       theme={theme}
       padding={0.5}
+      tooltip={({ id, value, color }) => (
+        <div
+            style={{
+                color,
+                background: "white",
+                fontSize: "15px"
+            }}
+        >
+            <strong>
+                {id}: {value}
+            </strong>
+        </div>
+    )}
     />
   </Div>
 );

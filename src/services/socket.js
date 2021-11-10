@@ -5,6 +5,7 @@ import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { batch } from "react-redux";
+import moment from "moment";
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 );
@@ -32,6 +33,7 @@ let blockTime = [];
 let avgTime = 0;
 let bestBlock = 0;
 let countries = 0;
+let lastBlock = [];
 
 async function socketAction(action, data) {
   switch (action) {
@@ -94,7 +96,7 @@ async function socketAction(action, data) {
         type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
         pendingTxn: 0,
         lastBlock: "#5567889",
-        graph: "graph",
+        graph: <TableGraph />,
         upTime: `${data.stats.uptime}%`,
         latency: `${data.stats.latency}ms`,
         peers: data.stats.peers,
@@ -145,10 +147,24 @@ async function socketAction(action, data) {
 
     case "block":
       bestBlock = data.block.number;
+      let time = data.block.arrived;
+
+      if (lastBlock.length >= 2) {
+        lastBlock.pop();
+      }
+      lastBlock.unshift(time);
+      var time1 = moment(lastBlock[0]).format("ss");
+      var time2 = moment(lastBlock[1]).format("ss");
+      let seconds = time1 - time2;
+      
       batch(() => {
         store.dispatch({
           type: eventConstants.UPDATE_BEST_BLOCK,
           data: bestBlock,
+        });
+        store.dispatch({
+          type: eventConstants.UPDATE_LAST_BLOCK,
+          data: seconds,
         });
       });
       break;

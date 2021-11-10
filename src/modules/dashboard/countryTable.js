@@ -126,6 +126,7 @@ function EnhancedTableHead(props) {
               columnWidth: "70px",
               whiteSpace: "nowrap",
               alignContent: "start",
+              borderColor: "#4E6AB5"
             }}
           >
             <TableSortLabel
@@ -203,7 +204,7 @@ export default function EnhancedTable() {
   return (
     <TableBox sx={{ width: "auto" }}>
       <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle">
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -227,18 +228,19 @@ export default function EnhancedTable() {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
+
                   >
-                    <TableCell style={{ color: "white" }}>{row.id}</TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "white", width: "2px", borderColor: "#4E6AB5"}}>{row.id}</TableCell>
+                    <TableCell style={{ color: "white", width: "20px", borderColor: "#4E6AB5" }}>
                       {row.countries}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "white", width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last24h}
                     </TableCell>
-                    <TableCell style={{ color: "#3AF219" }}>
+                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last24}
                     </TableCell>
-                    <TableCell style={{ color: "#3AF219" }}>
+                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last7}
                     </TableCell>
                   </TableRow>

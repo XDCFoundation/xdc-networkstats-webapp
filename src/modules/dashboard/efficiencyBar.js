@@ -50,6 +50,19 @@ const EfficiencyBar = () => (
           },
         },
       }}
+      tooltip={({ id, value, color }) => (
+        <div
+            style={{
+                color,
+                background: "white",
+                fontSize: "15px"
+            }}
+        >
+            <strong>
+                {id}: {value}
+            </strong>
+        </div>
+    )}
     />
   </div>
 );

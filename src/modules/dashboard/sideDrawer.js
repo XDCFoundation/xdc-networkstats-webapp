@@ -42,7 +42,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
-  padding-bottom: 70px;
+  padding-bottom: 50px;
 `;
 const NavLabel = styled.span`
   display: flex;
@@ -56,11 +56,13 @@ const Content = styled.span`
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: 5px;
 `;
 
 const Img = styled.img`
   padding-left: 10px;
+  margin-bottom: -10px;
 `;
 const CloseImg = styled.img`
   cursor: pointer;
@@ -71,6 +73,7 @@ const Line = styled.hr`
   height: 0px;
   width: 350px;
   opacity: 1;
+  margin-bottom: 5px;
   @media (max-width: 1025px) {
     width: 300px;
   }

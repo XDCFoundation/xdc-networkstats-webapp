@@ -726,7 +726,7 @@ export default function Dashboard(props) {
                     <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
                     <Row>
                       <Speedbar>
-                        <LastBlockBar></LastBlockBar>
+                        <LastBlockBar content={content} />
                       </Speedbar>
                     </Row>
                     <Row>
@@ -766,7 +766,7 @@ export default function Dashboard(props) {
                   </Row>
                   <Row>
                     <Speedbar>
-                      <LastBlockBar></LastBlockBar>
+                      <LastBlockBar content={content} />
                     </Speedbar>
                   </Row>
                   <Row>

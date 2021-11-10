@@ -31,6 +31,7 @@ const Label2 = styled.span`
   width: 50%;
   padding-left: 45px;
   font-size: 30px;
+  margin-bottom: 10px;
 `;
 
 const TabDiv = styled.div`
@@ -90,7 +91,7 @@ export default function countries(props) {
                 />
               </Row>
               <Row>
-                <CountryMap  />
+                <CountryMap marker={props.location} />
               </Row>
             </Column>
           </Row>
