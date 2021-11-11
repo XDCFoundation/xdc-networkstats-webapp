@@ -1,4 +1,3 @@
-import io from "socket.io-client";
 import React from "react";
 import { eventConstants } from "../constants";
 import store from "../store";
@@ -15,6 +14,8 @@ client.onopen = (data) => {
 client.oninit = (data) => {
   console.log("oninit", data);
 };
+
+
 client.onmessage = async (event) => {
   var msg = JSON.parse(event.data);
   socketAction(msg.action, msg.data);
@@ -31,9 +32,11 @@ let arr = [];
 let map = [];
 let blockTime = [];
 let avgTime = 0;
-let bestBlock = 0;
+let bestBlock = [];
 let countries = 0;
 let lastBlock = [];
+let temp = 0;
+
 
 async function socketAction(action, data) {
   switch (action) {
@@ -108,7 +111,6 @@ async function socketAction(action, data) {
       }
 
       updatedRows.unshift(tableData);
-
       batch(() => {
         store.dispatch({
           type: eventConstants.UPDATE_NODES_ARR,
@@ -146,22 +148,30 @@ async function socketAction(action, data) {
       break;
 
     case "block":
-      bestBlock = data.block.number;
+      let block = data.block.number;
       let time = data.block.arrived;
-
       if (lastBlock.length >= 2) {
         lastBlock.pop();
       }
       lastBlock.unshift(time);
+
+      if (bestBlock.length >= 2) {
+        bestBlock.pop();
+      }
+      bestBlock.unshift(block);
+      if(bestBlock[0]>=bestBlock[1])
+      temp = bestBlock[0];
+      
+      console.log("temp", temp)
       var time1 = moment(lastBlock[0]).format("ss");
       var time2 = moment(lastBlock[1]).format("ss");
       let seconds = time1 - time2;
-      
       batch(() => {
         store.dispatch({
           type: eventConstants.UPDATE_BEST_BLOCK,
-          data: bestBlock,
+          data: temp,
         });
+
         store.dispatch({
           type: eventConstants.UPDATE_LAST_BLOCK,
           data: seconds,

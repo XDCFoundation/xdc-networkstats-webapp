@@ -7,7 +7,7 @@ const Blur = styled.div`
   background: rgba(0, 0, 0, 0.7) !important;
   width: 1537px;
   height: 1080px;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   transition: linear;
   @media (max-width: 1025px) {
@@ -23,11 +23,12 @@ const Div = styled.div`
   width: 383px;
   color: white;
   height: 1080px;
-  position: absolute;
-  left: 1536px;
+  position: fixed;
+  left: 1537px;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
+  
   @media (max-width: 1025px) {
     left: 685px;
     width: 340px;
@@ -66,6 +67,8 @@ const Img = styled.img`
 `;
 const CloseImg = styled.img`
   cursor: pointer;
+  padding-right: 15px;
+  padding-top: 15px;
 `;
 
 const Line = styled.hr`

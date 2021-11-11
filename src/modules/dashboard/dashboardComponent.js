@@ -710,7 +710,14 @@ export default function Dashboard(props) {
                       <SpeedLabel>Best Block</SpeedLabel>
                     </Row>
                     <Row>
-                      <Blocks>#{content.stats.bestBlock}</Blocks>
+                    <Blocks>
+                    #
+                    <NumberFormat
+                      value={content.stats.bestBlock}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                    />
+                  </Blocks>
                     </Row>
                     <Row>
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
