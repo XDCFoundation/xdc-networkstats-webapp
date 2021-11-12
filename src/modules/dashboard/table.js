@@ -209,8 +209,7 @@ EnhancedTableHead.propTypes = {
 
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
   return (
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
+    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8"  }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             
@@ -340,7 +339,6 @@ EnhancedTableHead.propTypes = {
             </TableBody>
           </Table>
         </TableContainer>
-      </Paper>
     </TableBox>
   );
 }

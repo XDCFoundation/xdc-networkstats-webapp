@@ -7,7 +7,7 @@ import UpTimeBar from "./efficiencyBar";
 import Table from "./table";
 import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
-import Joyride from "react-joyride";
+import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
@@ -64,7 +64,7 @@ const SecurityMain = styled.div`
   color: white;
   padding-left: 15px;
   font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
+  font-size: 23px;
 `;
 const SpeedTab = styled.div`
   background-color: #102c78;
@@ -318,7 +318,7 @@ const BlockBarLabelColor = styled.span`
   color: #667fc1;
 `;
 const BlockBarRightLabel = styled.span`
-  padding-left: 270px;
+  padding-left: 260px;
   font-size: x-small;
   @media (max-width: 1025px) {
     padding-left: 473px;
@@ -378,8 +378,8 @@ const Button = styled.button`
 
 const TableDiv = styled.div`
   background-color: #f8f8f8;
-  padding-top: 50px;
-  padding-bottom: 90px;
+  padding-top: 40px;
+  padding-bottom: 50px;
 `;
 
 const Footer = styled.div`
@@ -387,6 +387,7 @@ const Footer = styled.div`
   color: #808080;
   text-align: center;
   padding-bottom: 20px;
+  padding-top: 10px;
   font-family: "Inter", sans-serif;
 `;
 
@@ -411,7 +412,7 @@ const SpeedMain = styled.div`
   }
   color: white;
   font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
+  font-size: 23px;
 `;
 
 const EfficiencyMain = styled.div`
@@ -428,7 +429,7 @@ const EfficiencyMain = styled.div`
   color: white;
   padding-left: 15px;
   font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
+  font-size: 23px;
 `;
 
 const HeaderCustom = styled.div`
@@ -509,6 +510,7 @@ const HeaderMob = styled.span`
     text-decoration: underline;
   }
 `;
+
 const TOUR_STEPS = [
   {
     target: ".security",
@@ -518,6 +520,12 @@ const TOUR_STEPS = [
   },
   {
     target: ".speed",
+    content:
+      "Sint esse aute ad Lorem id cillum laborum exercitation ut. Dolore excepteur proident laborum proident consectetur sint ut dolor ex nisi fugiat qui. Sit commodo do est deserunt. Laboris consectetur duis labore aliquip amet enim incididunt ipsum dolor in duis culpa. Quis in ex ad ad non eu aliqua ipsum laboris nostrud id commodo dolore ipsum. Eiusmod incididunt et reprehenderit esse culpa sint dolor. Qui sunt nisi ut dolore occaecat enim ad minim anim.",
+    disableBeacon: true,
+  },
+  {
+    target: ".efficiency",
     content:
       "Sint esse aute ad Lorem id cillum laborum exercitation ut. Dolore excepteur proident laborum proident consectetur sint ut dolor ex nisi fugiat qui. Sit commodo do est deserunt. Laboris consectetur duis labore aliquip amet enim incididunt ipsum dolor in duis culpa. Quis in ex ad ad non eu aliqua ipsum laboris nostrud id commodo dolore ipsum. Eiusmod incididunt et reprehenderit esse culpa sint dolor. Qui sunt nisi ut dolore occaecat enim ad minim anim.",
     disableBeacon: true,
@@ -546,22 +554,36 @@ export default function Dashboard(props) {
 
   const [joyrideRun, setJoyrideRun] = useState(false);
 
+  const handleJoyrideCallback = (data) => {
+    const { status, type } = data;
+    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+    if (finishedStatuses.includes(status)) {
+      setJoyrideRun(false);
+    }
+  };
+
   return (
     <>
       {/* Header nav bar */}
       <Joyride //Start Guided Tour
         steps={TOUR_STEPS}
+        callback={handleJoyrideCallback}
         continuous={true}
         styles={{
           tooltipContainer: {
             textAlign: "left",
           },
           buttonNext: {
-            backgroundColor: "blue",
+            backgroundColor: "#2358E5",
+            border: "none",
+            width: 70,
+            borderRadius: 0,
+            fontSize: 13,
           },
           buttonBack: {
             marginRight: 10,
             color: "#2256DF",
+            fontSize: 13,
           },
         }}
         run={joyrideRun}
@@ -710,14 +732,14 @@ export default function Dashboard(props) {
                       <SpeedLabel>Best Block</SpeedLabel>
                     </Row>
                     <Row>
-                    <Blocks>
-                    #
-                    <NumberFormat
-                      value={content.stats.bestBlock}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                    />
-                  </Blocks>
+                      <Blocks>
+                        #
+                        <NumberFormat
+                          value={content.stats.bestBlock}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                        />
+                      </Blocks>
                     </Row>
                     <Row>
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
@@ -910,13 +932,13 @@ export default function Dashboard(props) {
                 <Row>
                   <Column>
                     <BlockBarLeftLabel>
-                      <BlockBarLabelColor>Min</BlockBarLabelColor>
+                      <BlockBarLabelColor>Min &nbsp;</BlockBarLabelColor>
                       1s
                     </BlockBarLeftLabel>
                   </Column>
                   <Column>
                     <BlockBarRightLabel>
-                      <BlockBarLabelColor>Max</BlockBarLabelColor>
+                      <BlockBarLabelColor>Max &nbsp;</BlockBarLabelColor>
                       26s
                     </BlockBarRightLabel>
                   </Column>
@@ -924,7 +946,7 @@ export default function Dashboard(props) {
               </Column>
             </Row>
           </SpeedMain>
-          <EfficiencyMain>
+          <EfficiencyMain className="efficiency">
             {/*Efficiency Section for Main*/}
             <Row>
               <Column>

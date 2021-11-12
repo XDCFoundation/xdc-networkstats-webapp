@@ -30,7 +30,7 @@ const data = [
 
 const tableBar = () => (
   <div style={styles}>
-    <div style={{ height: "50px", width: "100px" }}>
+    <div style={{ height: "50px", width: "100px", cursor: "pointer" }}>
       <ResponsiveBar
         data={data}
         keys={["value"]}

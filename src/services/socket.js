@@ -15,11 +15,13 @@ client.oninit = (data) => {
   console.log("oninit", data);
 };
 
-
+function connection () {
 client.onmessage = async (event) => {
   var msg = JSON.parse(event.data);
   socketAction(msg.action, msg.data);
 };
+}
+setInterval(connection(), 1000);
 
 let nodes = [];
 let gasPrice = 0;
@@ -111,39 +113,39 @@ async function socketAction(action, data) {
       }
 
       updatedRows.unshift(tableData);
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES_ARR,
-          data: updatedRows,
-        });
-        store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
-        store.dispatch({
-          type: eventConstants.UPDATE_GAS_PRICE,
-          data: gasPrice,
-        });
-        store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
-        store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
-        store.dispatch({
-          type: eventConstants.UPDATE_COUNTRIES,
-          data: countries,
-        });
-      });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_NODES_ARR,
+      //     data: updatedRows,
+      //   });
+      //   store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_GAS_PRICE,
+      //     data: gasPrice,
+      //   });
+      //   store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+      //   store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_COUNTRIES,
+      //     data: countries,
+      //   });
+      // });
 
       break;
 
     case "charts":
       avgTime = data.avgBlocktime.toFixed(3);
       blockTime = data.blocktime;
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_AVG_BLOCK,
-          data: avgTime,
-        });
-        store.dispatch({
-          type: eventConstants.UPDATE_BLOCKTIME,
-          data: blockTime,
-        });
-      });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_AVG_BLOCK,
+      //     data: avgTime,
+      //   });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_BLOCKTIME,
+      //     data: blockTime,
+      //   });
+      // });
 
       break;
 
@@ -161,22 +163,20 @@ async function socketAction(action, data) {
       bestBlock.unshift(block);
       if(bestBlock[0]>=bestBlock[1])
       temp = bestBlock[0];
-      
-      console.log("temp", temp)
       var time1 = moment(lastBlock[0]).format("ss");
       var time2 = moment(lastBlock[1]).format("ss");
       let seconds = time1 - time2;
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_BEST_BLOCK,
-          data: temp,
-        });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_BEST_BLOCK,
+      //     data: temp,
+      //   });
 
-        store.dispatch({
-          type: eventConstants.UPDATE_LAST_BLOCK,
-          data: seconds,
-        });
-      });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_LAST_BLOCK,
+      //     data: seconds,
+      //   });
+      // });
       break;
   }
 }

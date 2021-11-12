@@ -241,3 +241,10 @@ input:focus {
 .react-joyride__tooltip {
   width: 550px !important;
 }
+
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

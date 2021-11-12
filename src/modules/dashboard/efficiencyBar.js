@@ -1,5 +1,13 @@
 import React from "react";
 import { Bar } from "@nivo/bar";
+import styled from "styled-components";
+
+
+
+const Div = styled.div`
+cursor: pointer;
+`;
+
 
 const data = [
   { time: 1, value: 90 },
@@ -24,7 +32,7 @@ const data = [
 ];
 
 const EfficiencyBar = () => (
-  <div>
+  <Div>
     <Bar
       width={350}
       height={200}
@@ -64,7 +72,7 @@ const EfficiencyBar = () => (
         </div>
     )}
     />
-  </div>
+  </Div>
 );
 
 export default EfficiencyBar;

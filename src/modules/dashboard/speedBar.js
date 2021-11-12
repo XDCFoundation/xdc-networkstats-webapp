@@ -9,6 +9,7 @@ const Div = styled.div`
   height: 120px;
   font-family: sans-serif;
   text-align: center;
+  cursor: pointer;
   @media (max-width: 1025px) {
     height: 150px;
     width: 570px;

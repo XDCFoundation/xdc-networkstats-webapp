@@ -59,6 +59,7 @@ const Content = styled.span`
   padding-left: 10px;
   font-size: 18px;
   margin-top: 5px;
+  cursor: pointer;
 `;
 
 const Img = styled.img`
@@ -116,27 +117,27 @@ export default function sideDrawer(props) {
             <Line />
             <Row>
               <Img src="/images/BlockExplorer.svg" alt="Block" />
-              <Content>Block Explorer</Content>
+              <Content onClick={()=> window.location.href="https://xinfin.network/#explorer"}>Block Explorer</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Wallet.svg" alt="Wallet" />
-              <Content>Web Wallet</Content>
+              <Content onClick={()=> window.location.href="https://wallet.apothem.network/#/"}>Web Wallet</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Wallet.svg" alt="Pay" />
-              <Content>XinPay</Content>
+              <Content onClick={()=> window.location.href="https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo"}>XDC Pay</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Android.svg" alt="Android" />
-              <Content>Android Wallet</Content>
+              <Content onClick={()=> window.location.href="https://play.google.com/store/apps/details?id=com.xdcwallet"}>Android Wallet</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Download.svg" alt="Download" />
-              <Content>One Click Installer</Content>
+              <Content onClick={()=> window.location.href="https://xinfin.org/setup-masternode"}>One Click Installer</Content>
             </Row>
             <Line />
             <Row>
@@ -146,7 +147,7 @@ export default function sideDrawer(props) {
             <Line />
             <Row>
               <Img src="/images/APIs.svg" alt="Api" />
-              <Content>XDC API</Content>
+              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/docs/#xinfin-apis"}>XDC API</Content>
             </Row>
             <Line />
             <Row>
