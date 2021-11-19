@@ -515,19 +515,19 @@ const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "Eiusmod deserunt aliquip cupidatat laborum exercitation mollit incididunt cupidatat laboris sint. Fugiat magna dolore consequat in laboris in laboris excepteur. Dolor nostrud quis do elit nulla consequat fugiat amet. Ad occaecat culpa ipsum ipsum tempor reprehenderit commodo magna veniam elit laboris dolor. Consequat laboris nostrud eiusmod incididunt commodo cillum consequat laboris veniam qui.",
+      "View the number of active nodes, their history and geolocation of all the active nodes on the blockchain.",
     disableBeacon: true,
   },
   {
     target: ".speed",
     content:
-      "Sint esse aute ad Lorem id cillum laborum exercitation ut. Dolore excepteur proident laborum proident consectetur sint ut dolor ex nisi fugiat qui. Sit commodo do est deserunt. Laboris consectetur duis labore aliquip amet enim incididunt ipsum dolor in duis culpa. Quis in ex ad ad non eu aliqua ipsum laboris nostrud id commodo dolore ipsum. Eiusmod incididunt et reprehenderit esse culpa sint dolor. Qui sunt nisi ut dolore occaecat enim ad minim anim.",
+      "Explore the best block, average block time, and the last block created on-chain.",
     disableBeacon: true,
   },
   {
     target: ".efficiency",
     content:
-      "Sint esse aute ad Lorem id cillum laborum exercitation ut. Dolore excepteur proident laborum proident consectetur sint ut dolor ex nisi fugiat qui. Sit commodo do est deserunt. Laboris consectetur duis labore aliquip amet enim incididunt ipsum dolor in duis culpa. Quis in ex ad ad non eu aliqua ipsum laboris nostrud id commodo dolore ipsum. Eiusmod incididunt et reprehenderit esse culpa sint dolor. Qui sunt nisi ut dolore occaecat enim ad minim anim.",
+      "Ensure the efficiency of the blockchain with zero downtime, negligible gas price, and average transaction rate displayed transparently.",
     disableBeacon: true,
   },
 ];

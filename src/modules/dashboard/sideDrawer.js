@@ -112,7 +112,7 @@ export default function sideDrawer(props) {
             <Line />
             <Row>
               <Img src="/images/MasterNodes.svg" alt="Master" />
-              <Content>Masternodes</Content>
+              <Content onClick={()=> window.location.href="https://apothem.network/#masternode"}>Masternodes</Content>
             </Row>
             <Line />
             <Row>
@@ -142,17 +142,17 @@ export default function sideDrawer(props) {
             <Line />
             <Row>
               <Img src="/images/Documents.svg" alt="Documents" />
-              <Content>XDC Docs</Content>
+              <Content onClick={()=> window.location.href="https://howto.xinfin.org/"}>XDC Docs</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/APIs.svg" alt="Api" />
-              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/docs/#xinfin-apis"}>XDC API</Content>
+              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/docs/#xinfin-apis"}c>XDC API</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Documents.svg" alt="Api Documents" />
-              <Content>XDC API Docs</Content>
+              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/"}>XDC API Docs</Content>
             </Row>
             <Line />
           </Column>

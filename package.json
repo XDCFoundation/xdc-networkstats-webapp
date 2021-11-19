@@ -5,6 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/primus": "^4.5.11",
+    "@feathersjs/socketio": "^4.5.11",
     "@material-ui/styles": "^5.0.0-beta.5",
     "@mui/material": "^5.0.2",
     "@nivo/bar": "^0.73.1",
@@ -16,7 +19,9 @@
     "history": "^4.9.0",
     "material-ui": "^0.20.2",
     "moment": "^2.29.1",
+    "primus": "^6.0.5",
     "primus-client": "^7.3.4",
+    "primus-emit": "^1.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-joyride": "^2.3.1",
@@ -28,6 +33,7 @@
     "react-s-alert": "^1.4.1",
     "react-scripts": "3.1.1",
     "react-simple-maps": "^2.3.0",
+    "react-use-websocket": "^2.9.1",
     "redux": "latest",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
@@ -35,7 +41,8 @@
     "socket.io-client": "^4.3.2",
     "sweetalert": "^2.1.0",
     "universal-cookie": "^4.0.0",
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "ws": "^8.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
