@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -10,6 +10,9 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
+import utility from "../../utility";
+import { LocationService } from "../../services";
+
 
 const TableBox = styled.div`
   padding-top: 41px;
@@ -24,29 +27,39 @@ const TableBox = styled.div`
     }
   }
 `;
+let rows = [];
 
-function createData(id, countries, last24h, last24, last7) {
-  return {
-    id,
-    countries,
-    last24h,
-    last24,
-    last7,
-  };
-}
+export default function EnhancedTable(props) {
+  console.log("data",)
 
-const rows = [
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("2", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("3", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("4", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("5", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("6", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("7", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("8", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("9", "USA", "64(25.57%)", "3.56%", "5.56%"),
-];
+  const [data, setData] = useState([]);
+  useEffect(() => {
 
+    if (props?.data && props?.data?.length >= 1) {
+      (props?.data).map((item, index) => {
+        setData(item);
+      });
+      async function fetchData (){
+        const [error, res] = await utility.parseResponse(LocationService.getLocation(data));
+        if (error)
+        return;
+        let country = {
+          countries: res.country,
+          id: "1",
+          last24h: "64",
+          last24: "3.56%",
+          last7: "5.56%",
+        }
+        if (rows.length >= 20) {
+          rows.pop();
+        }
+        rows.unshift(country);
+      }
+      fetchData();
+    }
+  }, [props?.data]);
+  
+console.log("rows", rows)
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -157,7 +170,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
   const [selected, setSelected] = React.useState([]);

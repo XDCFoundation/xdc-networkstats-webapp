@@ -586,6 +586,7 @@ export default function Dashboard(props) {
             fontSize: 13,
           },
         }}
+        spotlightPadding = {0}
         run={joyrideRun}
       />
       <>
@@ -595,7 +596,7 @@ export default function Dashboard(props) {
           SwitchSide={SwitchSide}
         />
         {Expand === 2 ? (
-          <Country expand={setCountry} location={content.stats.map} />
+          <Country expand={setCountry} location={content.stats.map} content={content} />
         ) : (
           ""
         )}

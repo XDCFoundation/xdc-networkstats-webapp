@@ -116,7 +116,7 @@ export default function countries(props) {
           </Row>
           <Label2>Top 10 Countries</Label2>
           <Row>
-            <CountryTable />
+            <CountryTable data={props.content.stats.map}  />
           </Row>
         </Column>
       </TabDiv>
