@@ -5,26 +5,58 @@ import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import moment from "moment";
 import { batch } from "react-redux";
-import { LocationService } from "../services";
-import utility from "../utility";
+import { io } from "socket.io-client";
+
+const socket = io("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
 
 
-const client = new W3CWebSocket(
-  "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
-);
-client.onopen = (data) => {
-  console.log("onopen", data);
-};
-client.oninit = (data) => {
-  console.log("oninit", data);
-};
-function connection () {
-client.onmessage = async (event) => {
-  var msg = JSON.parse(event.data);
-  socketAction(msg.action, msg.data);
-};
-}
-setInterval(connection(), 1000);
+socket.onAny('open', function open() {
+  socket.emit('ready');
+  console.log('The connection has been opened.');
+})
+
+
+socket.on('open', function open() {
+  socket.emit('ready');
+  console.log('The connection has been opened.');
+})
+.on('end', function end() {
+  console.log('Socket connection ended.')
+})
+.on('error', function error(err) {
+  console.log(err);
+})
+.on('reconnecting', function reconnecting(opts) {
+  console.log('We are scheduling a reconnect operation', opts);
+})
+.on('data', function incoming(data) {
+ socketAction(data.action, data.data);
+});
+
+socket.on('init', function(data)
+{
+socketAction("init", data.nodes);
+});
+
+// const client = new W3CWebSocket(
+//   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
+// );
+// client.onopen = (data) => {
+//   console.log("onopen", data);
+// };
+// client.oninit = (data) => {
+//   console.log("oninit", data);
+// };
+// function connection () {
+// client.onmessage = async (event) => {
+//   var msg = JSON.parse(event.data);
+//   socketAction(msg.action, msg.data);
+// };
+// }
+// setInterval(connection(), 1000);
+
+
+
 
 let nodes = [];
 let gasPrice = 0;
@@ -42,8 +74,9 @@ let countries = 0;
 let lastBlock = [];
 let temp = 0;
 let mapData = [];
-
-
+const eth = 325236.15; //Price of one ether per USD today.
+const wei = 0.000000000000000001;
+let gasUsd = eth*wei;
 
 
 
@@ -103,7 +136,7 @@ async function socketAction(action, data) {
 
       countries = Object.keys(map).length;
       upTime = data.stats.uptime;
-      gasPrice = data.stats.gasPrice;
+      gasPrice = (data.stats.gasPrice)*gasUsd;
       let tableData = {
         type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
         pendingTxn: 0,
@@ -120,8 +153,6 @@ async function socketAction(action, data) {
       }
 
       updatedRows.unshift(tableData);
-
-
 
       //   if (map && map.length >= 1) {
       //     (map).map((item) => {
@@ -154,12 +185,12 @@ async function socketAction(action, data) {
       //     data: updatedRows,
       //   });
       //   store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_GAS_PRICE,
-      //     data: gasPrice,
-      //   });
+        store.dispatch({
+          type: eventConstants.UPDATE_GAS_PRICE,
+          data: gasPrice,
+        });
       //   store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
-        store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
+        // store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
         
       //   store.dispatch({
       //     type: eventConstants.UPDATE_COUNTRIES,

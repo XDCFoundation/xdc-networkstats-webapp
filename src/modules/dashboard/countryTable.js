@@ -50,7 +50,7 @@ export default function EnhancedTable(props) {
           last24: "3.56%",
           last7: "5.56%",
         }
-        if (rows.length >= 20) {
+        if (rows.length >=9) {
           rows.pop();
         }
         rows.unshift(country);
