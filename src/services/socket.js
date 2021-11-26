@@ -5,35 +5,19 @@ import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import moment from "moment";
 import { batch } from "react-redux";
-import WebSocket from 'ws';
 
 
-const ws = new WebSocket('wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0');
+const client = new W3CWebSocket(
+  "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
+);
 
-ws.onmessage = async (event) => {
- var msg = JSON.parse(event.data);
- console.log("msg", msg)
+function connection () {
+client.onmessage = async (event) => {
+  var msg = JSON.parse(event.data);
+  socketAction(msg.action, msg.data);
+};
 }
-
-// const client = new W3CWebSocket(
-//   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
-// );
-ws.onopen = (data) => {
-  console.log("onopen", data);
-};
-ws.oninit = (data) => {
-  console.log("oninit", data);
-};
-// function connection () {
-// client.onmessage = async (event) => {
-//   var msg = JSON.parse(event.data);
-//   socketAction(msg.action, msg.data);
-// };
-// }
-// setInterval(connection(), 1000);
-
-
-
+setInterval(connection(), 1000);
 
 let nodes = [];
 let gasPrice = 0;
@@ -131,6 +115,7 @@ async function socketAction(action, data) {
 
       updatedRows.unshift(tableData);
 
+      console.log("nodes", nodes)
       //   if (map && map.length >= 1) {
       //     (map).map((item) => {
       //     mapData = item;
@@ -222,4 +207,29 @@ async function socketAction(action, data) {
       // });
       break;
   }
+}
+
+function saveNodes()
+{
+  let data = {nodes}
+  fetch("http://localhost:3000/node", {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  }).then((result)=> {
+    result.json().then((resp)=>{
+      console.log("resp", resp)
+    })
+  })
+}
+
+function getNodes() {
+  fetch("http://localhost:3000/node").then((result)=> {
+    result.json().then((resp)=>{
+      console.log("nodes", resp)
+    })
+  })
 }
