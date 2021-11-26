@@ -5,48 +5,25 @@ import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import moment from "moment";
 import { batch } from "react-redux";
-import { io } from "socket.io-client";
-
-const socket = io("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
+import WebSocket from 'ws';
 
 
-socket.onAny('open', function open() {
-  socket.emit('ready');
-  console.log('The connection has been opened.');
-})
+const ws = new WebSocket('wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0');
 
-
-socket.on('open', function open() {
-  socket.emit('ready');
-  console.log('The connection has been opened.');
-})
-.on('end', function end() {
-  console.log('Socket connection ended.')
-})
-.on('error', function error(err) {
-  console.log(err);
-})
-.on('reconnecting', function reconnecting(opts) {
-  console.log('We are scheduling a reconnect operation', opts);
-})
-.on('data', function incoming(data) {
- socketAction(data.action, data.data);
-});
-
-socket.on('init', function(data)
-{
-socketAction("init", data.nodes);
-});
+ws.onmessage = async (event) => {
+ var msg = JSON.parse(event.data);
+ console.log("msg", msg)
+}
 
 // const client = new W3CWebSocket(
 //   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 // );
-// client.onopen = (data) => {
-//   console.log("onopen", data);
-// };
-// client.oninit = (data) => {
-//   console.log("oninit", data);
-// };
+ws.onopen = (data) => {
+  console.log("onopen", data);
+};
+ws.oninit = (data) => {
+  console.log("oninit", data);
+};
 // function connection () {
 // client.onmessage = async (event) => {
 //   var msg = JSON.parse(event.data);
