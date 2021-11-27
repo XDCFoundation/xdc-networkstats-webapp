@@ -4,8 +4,9 @@ import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import moment from "moment";
+import utility from "../utility";
 import { batch } from "react-redux";
-
+import { Nodes } from "../services";
 
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
@@ -39,7 +40,28 @@ const eth = 325236.15; //Price of one ether per USD today.
 const wei = 0.000000000000000001;
 let gasUsd = eth*wei;
 
+//const {parseResponse} = utility
+// console.log(parseResponse, '...........................')
+// const [error, res] = utility.parseResponse(Nodes.getNodes);
 
+// console.log("out", res)s
+// console.log(Nodes.getNodes(), '...............................');
+
+  // const [error, res] = utility.parseResponse(Nodes.getNodes());
+  // if (res)
+  // {
+  //   alert('Success')
+  // }
+  // if(error){
+  //   alert('error')
+  // }
+  // console.log(Nodes.getNodes(),'...............................data');
+  
+  async function fetchData (){
+    const [error, res] = await utility.parseResponse(Nodes.getNodes());
+   console.log(res, '..............................response');
+  }
+  fetchData();
 
 async function socketAction(action, data) {
   switch (action) {
@@ -115,49 +137,23 @@ async function socketAction(action, data) {
 
       updatedRows.unshift(tableData);
 
-      console.log("nodes", nodes)
-      //   if (map && map.length >= 1) {
-      //     (map).map((item) => {
-      //     mapData = item;
-      //     });}
-      //     const [error, res] = await utility.parseResponse(LocationService.getLocation(mapData));
-      //     if (error)
-      //     return;
-
-      //     let countryData = [{
-      //       countries: res.country,
-      //       last24h: "64(25.57%)",
-      //       last24: "3.56%",
-      //       last7: "5.56%",
-      //     }];
-
-      //     if (mapData.length >= 9) {
-      //       mapData.pop();
-      //     }
-      //     mapData.unshift(countryData);
-
-      // console.log("data", mapData)
-          
-          
-          
-
       batch(() => {
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_NODES_ARR,
-      //     data: updatedRows,
-      //   });
-      //   store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
+        store.dispatch({
+          type: eventConstants.UPDATE_NODES_ARR,
+          data: updatedRows,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
         store.dispatch({
           type: eventConstants.UPDATE_GAS_PRICE,
           data: gasPrice,
         });
-      //   store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
-        // store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
+        store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+        store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
         
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_COUNTRIES,
-      //     data: countries,
-      //   });
+        store.dispatch({
+          type: eventConstants.UPDATE_COUNTRIES,
+          data: countries,
+        });
       });
 
       break;
@@ -165,16 +161,16 @@ async function socketAction(action, data) {
     case "charts":
       avgTime = data.avgBlocktime.toFixed(3);
       blockTime = data.blocktime;
-      // batch(() => {
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_AVG_BLOCK,
-      //     data: avgTime,
-      //   });
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_BLOCKTIME,
-      //     data: blockTime,
-      //   });
-      // });
+      batch(() => {
+        store.dispatch({
+          type: eventConstants.UPDATE_AVG_BLOCK,
+          data: avgTime,
+        });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: blockTime,
+        });
+      });
 
       break;
 
@@ -194,42 +190,33 @@ async function socketAction(action, data) {
       var time1 = moment(lastBlock[0]).format("ss");
       var time2 = moment(lastBlock[1]).format("ss");
       let seconds = time1 - time2;
-      // batch(() => {
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_BEST_BLOCK,
-      //     data: temp,
-      //   });
+      batch(() => {
+        store.dispatch({
+          type: eventConstants.UPDATE_BEST_BLOCK,
+          data: temp,
+        });
 
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_LAST_BLOCK,
-      //     data: seconds,
-      //   });
-      // });
+        store.dispatch({
+          type: eventConstants.UPDATE_LAST_BLOCK,
+          data: seconds,
+        });
+      });
       break;
   }
 }
 
-function saveNodes()
-{
-  let data = {nodes}
-  fetch("http://localhost:3000/node", {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data)
-  }).then((result)=> {
-    result.json().then((resp)=>{
-      console.log("resp", resp)
-    })
-  })
-}
 
-function getNodes() {
-  fetch("http://localhost:3000/node").then((result)=> {
-    result.json().then((resp)=>{
-      console.log("nodes", resp)
-    })
-  })
-}
+  // let data = {nodes}
+  // fetch("http://localhost:3000/node", {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(data)
+  // }).then((result)=> {
+  //   result.json().then((resp)=>{
+  //     console.log("resp", resp)
+  //   })
+  // })
+

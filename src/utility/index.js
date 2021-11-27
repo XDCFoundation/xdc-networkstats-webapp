@@ -64,12 +64,12 @@ export default utility;
 export const dispatchAction = (type, data) => {
     return dispatch => dispatch({type, data});
 };
+
 function parseResponse(promise) {
 
     return promise
 
         .then((data) => {
-
             return [null, data];
 
         })
