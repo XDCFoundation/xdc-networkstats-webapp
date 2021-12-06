@@ -30,7 +30,6 @@ const TableBox = styled.div`
 let rows = [];
 
 export default function EnhancedTable(props) {
-  console.log("data",)
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -59,7 +58,6 @@ export default function EnhancedTable(props) {
     }
   }, [props?.data]);
   
-console.log("rows", rows)
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;

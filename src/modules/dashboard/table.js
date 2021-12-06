@@ -151,7 +151,6 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
-            // style={{fontWeight: 1000}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -228,7 +227,6 @@ EnhancedTableHead.propTypes = {
                 (row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
-                  // if(index!==0)
                   return (
                     <StyledTableRow
                       hover 

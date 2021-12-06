@@ -4,9 +4,7 @@ import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import moment from "moment";
-import utility from "../utility";
 import { batch } from "react-redux";
-import { Nodes } from "../services";
 
 const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
@@ -19,6 +17,7 @@ client.onmessage = async (event) => {
 };
 }
 setInterval(connection(), 1000);
+
 
 let nodes = [];
 let gasPrice = 0;
@@ -40,29 +39,6 @@ const eth = 325236.15; //Price of one ether per USD today.
 const wei = 0.000000000000000001;
 let gasUsd = eth*wei;
 
-//const {parseResponse} = utility
-// console.log(parseResponse, '...........................')
-// const [error, res] = utility.parseResponse(Nodes.getNodes);
-
-// console.log("out", res)s
-// console.log(Nodes.getNodes(), '...............................');
-
-  // const [error, res] = utility.parseResponse(Nodes.getNodes());
-  // if (res)
-  // {
-  //   alert('Success')
-  // }
-  // if(error){
-  //   alert('error')
-  // }
-  // console.log(Nodes.getNodes(),'...............................data');
-  
-  async function fetchData (){
-    const [error, res] = await utility.parseResponse(Nodes.getNodes());
-   console.log(res, '..............................response');
-  }
-  fetchData();
-
 async function socketAction(action, data) {
   switch (action) {
     case "stats":
@@ -72,7 +48,7 @@ async function socketAction(action, data) {
         test[data.id] = data.stats.active;
         nodes = Object.keys(test).length;
         newarray = Object.keys(test);
-        datas = newarray?.filter(
+          datas = newarray?.filter(
           (element) =>
             element !== "BuzzNjay1(45.77.253.122)" &&
             element !== "FreeWallet-FullNode" &&
@@ -115,6 +91,7 @@ async function socketAction(action, data) {
         }
 
         map = Array.from(new Set(arr));
+  
       }
 
       countries = Object.keys(map).length;
@@ -149,7 +126,6 @@ async function socketAction(action, data) {
         });
         store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
         store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
-        
         store.dispatch({
           type: eventConstants.UPDATE_COUNTRIES,
           data: countries,
@@ -206,17 +182,5 @@ async function socketAction(action, data) {
 }
 
 
-  // let data = {nodes}
-  // fetch("http://localhost:3000/node", {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(data)
-  // }).then((result)=> {
-  //   result.json().then((resp)=>{
-  //     console.log("resp", resp)
-  //   })
-  // })
 
+  

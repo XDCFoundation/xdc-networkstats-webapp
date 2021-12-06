@@ -5,4 +5,3 @@
 
 // export * from './user'
 export { default as LocationService } from "./location";
-export { default as Nodes} from "./nodes";

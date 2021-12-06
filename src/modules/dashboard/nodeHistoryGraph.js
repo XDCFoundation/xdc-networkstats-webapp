@@ -3,54 +3,6 @@ import { ResponsiveLine } from "@nivo/line";
 import styled from "styled-components";
 import { linearGradientDef } from "@nivo/core";
 
-const data = [
-  {
-    id: "Stats",
-    data: [
-      {
-        x: "0",
-        y: 150,
-      },
-      {
-        x: "1",
-        y: 160,
-      },
-      {
-        x: "2",
-        y: 140,
-      },
-      {
-        x: "3",
-        y: 130,
-      },
-      {
-        x: "4",
-        y: 150,
-      },
-      {
-        x: "5",
-        y: 180,
-      },
-      {
-        x: "6",
-        y: 160,
-      },
-      {
-        x: "7",
-        y: 140,
-      },
-      {
-        x: "8",
-        y: 170,
-      },
-      {
-        x: "9",
-        y: 190,
-      },
-    ],
-  },
-];
-
 const Div = styled.div`
   width: 250px;
   height: 150px;
@@ -66,24 +18,62 @@ const Div = styled.div`
   }
 `;
 
-const theme = {
-  axis: {
-    ticks: {
-      text: {
-        fill: "#667FC1",
+function NodeGraph(props) {
+
+  const data = [
+    {
+      id: "Stats",
+      data: [
+        {
+          x: "0",
+          y: 150,
+        },
+        {
+          x: "1",
+          y: 160,
+        },
+        {
+          x: "2",
+          y: 140,
+        },
+        {
+          x: "3",
+          y: 130,
+        },
+        {
+          x: "4",
+          y: 150,
+        },
+        {
+          x: "5",
+          y: 180,
+        },
+        {
+          x: "6",
+          y: 160,
+        },
+      ],
+    },
+  ];
+
+  const theme = {
+    axis: {
+      ticks: {
+        text: {
+          fill: "#667FC1",
+        },
       },
     },
-  },
-  grid: {
-    line: {
-      stroke: "#667FC1",
-      strokeWidth: 0.5,
-      strokeDasharray: "1 1"
-    }
-  }
-};
+    grid: {
+      line: {
+        stroke: "#667FC1",
+        strokeWidth: 0.5,
+        strokeDasharray: "1 1",
+      },
+    },
+  };
 
-const NodeGraph = () => (
+  return (
     <Div>
       <ResponsiveLine
         data={data}
@@ -100,7 +90,6 @@ const NodeGraph = () => (
           stacked: true,
           min: 0,
           max: 200,
-          
         }}
         dotSize={10}
         dotColor="inherit:darker(0.9)"
@@ -130,6 +119,7 @@ const NodeGraph = () => (
         fill={[{ match: { id: "Stats" }, id: "gradientA" }]}
       />
     </Div>
-);
+  );
+}
 
 export default NodeGraph;

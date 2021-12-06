@@ -10,6 +10,7 @@ let initialState = {
   avgRate: 78,
   upTime: 77,
   map: [],
+  history: [],
   nodesArr: [
     {
       nodeName: "Null",
@@ -85,6 +86,11 @@ export default function stats(state = initialState, action) {
       return {
         ...state,
         blockTime: action.data,
+      };
+    case eventConstants.UPDATE_NODEHISTORY:
+      return {
+        ...state,
+        history: action.data,
       };
     default:
       return state;

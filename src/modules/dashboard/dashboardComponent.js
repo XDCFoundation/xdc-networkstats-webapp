@@ -12,6 +12,7 @@ import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
 
+
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
   display: flex;
@@ -561,7 +562,7 @@ export default function Dashboard(props) {
       setJoyrideRun(false);
     }
   };
-
+  
   return (
     <>
       {/* Header nav bar */}
@@ -632,12 +633,13 @@ export default function Dashboard(props) {
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
                       <TotalNodes>{content.stats.nodes}/200</TotalNodes>
+                      
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
                     <Row>
-                      <NodeGraph />
+                      <NodeGraph data={content}/>
                     </Row>
                   </Column>
                   <Column>
