@@ -7,7 +7,7 @@ const Blur = styled.div`
   background: rgba(0, 0, 0, 0.7) !important;
   width: 1537px;
   height: 1080px;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   transition: linear;
   @media (max-width: 1025px) {
@@ -23,11 +23,12 @@ const Div = styled.div`
   width: 383px;
   color: white;
   height: 1080px;
-  position: absolute;
-  left: 1515px;
+  position: fixed;
+  left: 1537px;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
+  
   @media (max-width: 1025px) {
     left: 685px;
     width: 340px;
@@ -42,7 +43,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
-  padding-bottom: 70px;
+  padding-bottom: 50px;
 `;
 const NavLabel = styled.span`
   display: flex;
@@ -56,14 +57,19 @@ const Content = styled.span`
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: 5px;
+  cursor: pointer;
 `;
 
 const Img = styled.img`
   padding-left: 10px;
+  margin-bottom: -10px;
 `;
 const CloseImg = styled.img`
   cursor: pointer;
+  padding-right: 15px;
+  padding-top: 15px;
 `;
 
 const Line = styled.hr`
@@ -71,6 +77,7 @@ const Line = styled.hr`
   height: 0px;
   width: 350px;
   opacity: 1;
+  margin-bottom: 5px;
   @media (max-width: 1025px) {
     width: 300px;
   }
@@ -105,47 +112,47 @@ export default function sideDrawer(props) {
             <Line />
             <Row>
               <Img src="/images/MasterNodes.svg" alt="Master" />
-              <Content>Masternodes</Content>
+              <Content onClick={()=> window.location.href="https://apothem.network/#masternode"}>Masternodes</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/BlockExplorer.svg" alt="Block" />
-              <Content>Block Explorer</Content>
+              <Content onClick={()=> window.location.href="https://xinfin.network/#explorer"}>Block Explorer</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Wallet.svg" alt="Wallet" />
-              <Content>Web Wallet</Content>
+              <Content onClick={()=> window.location.href="https://wallet.apothem.network/#/"}>Web Wallet</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Wallet.svg" alt="Pay" />
-              <Content>XinPay</Content>
+              <Content onClick={()=> window.location.href="https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo"}>XDC Pay</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Android.svg" alt="Android" />
-              <Content>Android Wallet</Content>
+              <Content onClick={()=> window.location.href="https://play.google.com/store/apps/details?id=com.xdcwallet"}>Android Wallet</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Download.svg" alt="Download" />
-              <Content>One Click Installer</Content>
+              <Content onClick={()=> window.location.href="https://xinfin.org/setup-masternode"}>One Click Installer</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Documents.svg" alt="Documents" />
-              <Content>XDC Docs</Content>
+              <Content onClick={()=> window.location.href="https://howto.xinfin.org/"}>XDC Docs</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/APIs.svg" alt="Api" />
-              <Content>XDC API</Content>
+              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/docs/#xinfin-apis"}c>XDC API</Content>
             </Row>
             <Line />
             <Row>
               <Img src="/images/Documents.svg" alt="Api Documents" />
-              <Content>XDC API Docs</Content>
+              <Content onClick={()=> window.location.href="https://apidocs.xinfin.network/"}>XDC API Docs</Content>
             </Row>
             <Line />
           </Column>

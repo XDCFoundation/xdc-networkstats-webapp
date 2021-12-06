@@ -4,22 +4,26 @@ let initialState = {
   totalNodes: 176,
   countries: 70,
   bestBlock: 55963787,
-  avgTime: 0.7,
+  avgBlock: 0.7,
   lastBlock: 17,
   gasPrice: 0.007,
   avgRate: 78,
   upTime: 77,
   map: [],
-  nodesArr: [{
-    "nodeName": "Null",
-  "type" : "XDC",
-  "latency": "0ms",
-  "peers": "0",
-  "pendingTxn": "0",
-  "lastBlock": "Null",
-  "graph": "Graph",
-  "upTime": "0ms" 
-  }],
+  history: [],
+  nodesArr: [
+    {
+      nodeName: "Null",
+      type: "XDC",
+      latency: "0ms",
+      peers: "0",
+      pendingTxn: "0",
+      lastBlock: "Null",
+      graph: "Graph",
+      upTime: "0ms",
+    },
+  ],
+  blockTime: [],
 };
 export default function stats(state = initialState, action) {
   switch (action.type) {
@@ -48,10 +52,10 @@ export default function stats(state = initialState, action) {
         ...state,
         bestBlock: action.data,
       };
-    case eventConstants.UPDATE_AVG_TIME:
+    case eventConstants.UPDATE_AVG_BLOCK:
       return {
         ...state,
-        avgTime: action.data,
+        avgBlock: action.data,
       };
     case eventConstants.UPDATE_LAST_BLOCK:
       return {
@@ -74,10 +78,20 @@ export default function stats(state = initialState, action) {
         nodesArr: action.data,
       };
     case eventConstants.UPDATE_MAP:
-        return {
-          ...state,
-          map: action.data,
-        };
+      return {
+        ...state,
+        map: action.data,
+      };
+    case eventConstants.UPDATE_BLOCKTIME:
+      return {
+        ...state,
+        blockTime: action.data,
+      };
+    case eventConstants.UPDATE_NODEHISTORY:
+      return {
+        ...state,
+        history: action.data,
+      };
     default:
       return state;
   }

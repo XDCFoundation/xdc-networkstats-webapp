@@ -28,7 +28,7 @@ import { withStyles } from "@material-ui/styles";
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    height: 65,
+    height: 50,
   },
 }))(TableRow);
 
@@ -151,7 +151,6 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
-            // style={{fontWeight: 1000}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -209,8 +208,7 @@ EnhancedTableHead.propTypes = {
 
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
   return (
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
+    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8"  }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             
@@ -229,7 +227,6 @@ EnhancedTableHead.propTypes = {
                 (row, index) => {
                   const isItemSelected = isSelected(row.nodeName);
                   const labelId = `enhanced-table-radio-button-${index}`;
-                  // if(index!==0)
                   return (
                     <StyledTableRow
                       hover 
@@ -340,7 +337,6 @@ EnhancedTableHead.propTypes = {
             </TableBody>
           </Table>
         </TableContainer>
-      </Paper>
     </TableBox>
   );
 }

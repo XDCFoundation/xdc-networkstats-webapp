@@ -9,6 +9,7 @@ async function getLocation(requestData) {
   return axios.get(url)
   .then((response) => {
     return Promise.resolve(response.data);
+    
   })
   .catch(function (err) {
     return Promise.reject(err);

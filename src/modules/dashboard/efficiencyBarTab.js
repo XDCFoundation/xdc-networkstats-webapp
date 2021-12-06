@@ -1,5 +1,13 @@
 import React from "react";
 import { Bar } from "@nivo/bar";
+import styled from "styled-components";
+
+
+
+const Div = styled.div`
+cursor: pointer;
+`;
+
 
 const data = [
   { time: 1, value: 90 },
@@ -24,7 +32,7 @@ const data = [
 ];
 
 const EfficiencyBarTab = () => (
-  <div>
+  <Div>
     <Bar
       width={540}
       height={210}
@@ -50,8 +58,21 @@ const EfficiencyBarTab = () => (
           },
         },
       }}
+      tooltip={({ id, value, color }) => (
+        <div
+            style={{
+                color,
+                background: "white",
+                fontSize: "15px"
+            }}
+        >
+            <strong>
+                {id}: {value}
+            </strong>
+        </div>
+    )}
     />
-  </div>
+  </Div>
 );
 
 export default EfficiencyBarTab;

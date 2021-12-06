@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -10,11 +10,14 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
+import utility from "../../utility";
+import { LocationService } from "../../services";
+
 
 const TableBox = styled.div`
   padding-top: 41px;
   padding-left: 38px;
-  width: 700px;
+  width: 550px;
   height: auto;
   @media (max-width: 1025px) {
     width: 1000px;
@@ -24,29 +27,37 @@ const TableBox = styled.div`
     }
   }
 `;
+let rows = [];
 
-function createData(id, countries, last24h, last24, last7) {
-  return {
-    id,
-    countries,
-    last24h,
-    last24,
-    last7,
-  };
-}
+export default function EnhancedTable(props) {
 
-const rows = [
-  createData("1", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("2", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("3", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("4", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("5", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("6", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("7", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("8", "USA", "64(25.57%)", "3.56%", "5.56%"),
-  createData("9", "USA", "64(25.57%)", "3.56%", "5.56%"),
-];
+  const [data, setData] = useState([]);
+  useEffect(() => {
 
+    if (props?.data && props?.data?.length >= 1) {
+      (props?.data).map((item, index) => {
+        setData(item);
+      });
+      async function fetchData (){
+        const [error, res] = await utility.parseResponse(LocationService.getLocation(data));
+        if (error)
+        return;
+        let country = {
+          countries: res.country,
+          id: "1",
+          last24h: "64",
+          last24: "3.56%",
+          last7: "5.56%",
+        }
+        if (rows.length >=9) {
+          rows.pop();
+        }
+        rows.unshift(country);
+      }
+      fetchData();
+    }
+  }, [props?.data]);
+  
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -126,6 +137,7 @@ function EnhancedTableHead(props) {
               columnWidth: "70px",
               whiteSpace: "nowrap",
               alignContent: "start",
+              borderColor: "#4E6AB5"
             }}
           >
             <TableSortLabel
@@ -156,7 +168,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
   const [selected, setSelected] = React.useState([]);
@@ -203,7 +215,7 @@ export default function EnhancedTable() {
   return (
     <TableBox sx={{ width: "auto" }}>
       <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle">
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -227,18 +239,19 @@ export default function EnhancedTable() {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
+
                   >
-                    <TableCell style={{ color: "white" }}>{row.id}</TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "white", width: "2px", borderColor: "#4E6AB5"}}>{row.id}</TableCell>
+                    <TableCell style={{ color: "white", width: "20px", borderColor: "#4E6AB5" }}>
                       {row.countries}
                     </TableCell>
-                    <TableCell style={{ color: "white" }}>
+                    <TableCell style={{ color: "white", width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last24h}
                     </TableCell>
-                    <TableCell style={{ color: "#3AF219" }}>
+                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last24}
                     </TableCell>
-                    <TableCell style={{ color: "#3AF219" }}>
+                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
                       {row.last7}
                     </TableCell>
                   </TableRow>
