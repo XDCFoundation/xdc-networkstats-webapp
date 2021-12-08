@@ -557,11 +557,22 @@ export default function Dashboard(props) {
 
   const handleJoyrideCallback = (data) => {
     const { status, type } = data;
+    // console.log(data)
+    // if(data.action && data.action === "next" && data.lifecycle==="complete"){
+    //   if(SwitchTab<3)
+    // setTab(SwitchTab+1);
+    // }
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
     }
   };
+
+  function tour(){
+    setTab(SwitchTab+1);
+    if(SwitchTab>2)
+    setTab(0)
+    }
   
   return (
     <>
@@ -726,7 +737,7 @@ export default function Dashboard(props) {
           )}
           {SwitchTab === 2 ? (
             <>
-              <SpeedTab className="speed">
+              <SpeedTab className="efficiency">
                 {" "}
                 {/*Speed Section for Tab */}
                 <Row>
@@ -823,7 +834,7 @@ export default function Dashboard(props) {
           )}
           {SwitchTab === 3 ? (
             <>
-              <EfficiencyTab>
+              <EfficiencyTab className="speed">
                 {/*Efficiency Section for Tab*/}
                 <Row>
                   <Column>
@@ -860,7 +871,7 @@ export default function Dashboard(props) {
                   </Column>
                 </Row>
               </EfficiencyTab>
-              <EfficiencyMob>
+              <EfficiencyMob className="efficiency">
                 {/*Efficiency Section for Mob*/}
                 <Row>
                   <Column>

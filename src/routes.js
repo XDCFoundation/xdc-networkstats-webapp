@@ -7,25 +7,33 @@ import {connect} from "react-redux";
 import {Dashboard} from "./modules";
 import {history} from "./managers/history";
 import BaseComponent from "./modules/baseComponent";
+import { io } from "socket.io-client";
 
 class Routes extends BaseComponent {
+  Socket = io("http://3.88.252.78:3000/", {
+    path: "/stats-data/",
+    transports: ["websocket"],
+    reconnection: true,
+  });
 
-    componentDidMount() {
+  componentDidMount() {}
 
-    }
-
-    render() {
-        return (
-
-            <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <Router history={history}>
-                    <Switch>
-                        <Route exact path={'/'} component={Dashboard}/>
-                        <Redirect exact from='*' to="/"/>
-                    </Switch>
-                </Router>
-            </MuiThemeProvider>);
-    }
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              exact
+              path={"/"}
+              component={() => <Dashboard socket={this.Socket} />}
+            />
+            <Redirect exact from="*" to="/" />
+          </Switch>
+        </Router>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {

@@ -67,13 +67,13 @@ export default function Header(props) {
         </Row>
         <Row>
           <StartGuideTourButton
-            onClick={() => {
-              props.setJoyrideRun(true);
-            }}
+            
           >
             <Row>
               <Column>
-                <StartLogo>
+                <StartLogo onClick={() => {
+              props.setJoyrideRun(true);
+            }}>
                   <img src="/images/Play.svg" alt="Start" />
                 </StartLogo>
               </Column>
