@@ -643,7 +643,7 @@ export default function Dashboard(props) {
                     </Row>
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>{content.stats.nodes}/200</TotalNodes>
+                      <TotalNodes>{content.stats.nodes}/{content.stats.totalNodes}</TotalNodes>
                       
                     </Row>
                     <Row>
@@ -694,7 +694,7 @@ export default function Dashboard(props) {
                         <Row>
                           <SecurityLabel>Nodes</SecurityLabel>
                         </Row>
-                        <Row>{content.stats.nodes}/200</Row>
+                        <Row>{content.stats.nodes}/{content.stats.totalNodes}</Row>
                         <Row>
                           <SecurityLabelMid>
                             Node History (7 Days)
@@ -766,7 +766,7 @@ export default function Dashboard(props) {
                     <Row>
                       <SpeedLabelRight>Last Block</SpeedLabelRight>
                     </Row>
-                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
+                    <LastBlock>{content.stats.lastBlock}</LastBlock>
                     <Row>
                       <Speedbar>
                         <LastBlockBar content={content} />
@@ -799,7 +799,7 @@ export default function Dashboard(props) {
                   </Row>
                   <Row>
                     <Blocks>#{content.stats.bestBlock}</Blocks>
-                    <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
+                    <LastBlock>{content.stats.lastBlock}</LastBlock>
                   </Row>
                   <Row>
                     <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
@@ -937,7 +937,7 @@ export default function Dashboard(props) {
                 <Row>
                   <SpeedLabelRight>Last Block</SpeedLabelRight>
                 </Row>
-                <LastBlock>{content.stats.lastBlock}s ago</LastBlock>
+                <LastBlock>{content.stats.lastBlock}</LastBlock>
                 <Row>
                   <Speedbar>
                     <LastBlockBar content={content} />

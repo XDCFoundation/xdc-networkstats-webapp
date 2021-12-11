@@ -19,7 +19,6 @@ const Div = styled.div`
 `;
 
 function NodeGraph(props) {
-
   const data = [
     {
       id: "Stats",
@@ -66,9 +65,10 @@ function NodeGraph(props) {
     },
     grid: {
       line: {
-        stroke: "#667FC1",
-        strokeWidth: 0.5,
+        stroke: "#4E6AB580",
+        strokeWidth: 0.9,
         strokeDasharray: "1 1",
+        
       },
     },
   };
@@ -91,23 +91,21 @@ function NodeGraph(props) {
           min: 0,
           max: 200,
         }}
-        dotSize={10}
-        dotColor="inherit:darker(0.9)"
-        dotBorderWidth={1}
-        dotBorderColor="#ffffff"
-        dotLabel="y"
-        dotLabelYOffset={0}
+        pointColor="#7299FF"
+        tickSize
+        pointSize={4}
+        lineWidth="1px"
         enableArea={true}
         enableGridX={false}
         enableGridY={true}
         enableDotLabel={false}
         gridYValues={["0", "100", "200"]}
         axisLeft={{
-          tickSize: 2,
+          tickSize: 0,
           tickValues: ["0", "100", "200"],
         }}
         axisBottom={false}
-        curve="monotoneX"
+        // curve="monotoneX"
         colors={["#275FF5"]}
         areaOpacity={0.3}
         defs={[
