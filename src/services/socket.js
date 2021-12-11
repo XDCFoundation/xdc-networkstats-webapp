@@ -14,6 +14,7 @@ let countries = 0;
 let bestBlock = 0;
 let avgTime = 0;
 let lastBlock = 0;
+let tableRows = [];
 let gasPrice = 0;
 let avgRate = 0;
 let upTime = 0;
@@ -33,6 +34,7 @@ let difficultyChart = _.fill(Array(40), 2);
 let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
+let node = [];
 
 // async function connectSocket(){
     // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
@@ -67,18 +69,20 @@ let miners = [];
 
     socket.on('network-stats-data', function node(data){
          
-         if(data.action === "block"){
-            console.log("block agya");
-        }
+        //  if(data.action === "block"){
+        //     console.log("block agya");
+        // }
         if(data.action === "update"){
             console.log("update agya");
         }
 
-        // socketAction(data.action, data.data);
+        socketAction(data.action, data.data);
     });
 
     socket.on('network-stats-nodes', function node(data){
+        if(!_.isEmpty(data.nodes))
         socketAction("network-stats-nodes", data.nodes);
+        nodes = data.nodes;
         // console.log(data.nodes[0],"..........");
         // data.nodes.map((value)=>{
         // //   console.log(value,"./////gy///////////////");
@@ -100,19 +104,15 @@ async function socketAction(action, data){
         case "network-stats-nodes":
             nodes = data;
             _.forEach(nodes, function (node, index) {
-            console.log(node.stats.hashrate,"........./");
             if( _.isUndefined(data.history) )
 					{
 						data.history = new Array(40);
 						_.fill(data.history, -1);
 					}
-
             });
-
                     if(nodes.length > 0 )
                     {
                     updateActiveNodes(nodes);
-                    // alert("updated");
                     }
             // for(let i=0; i<nodes.length; i++){
             //     if(typeof nodes[i].stats.hashrate === 'undefined'){
@@ -182,9 +182,8 @@ async function socketAction(action, data){
             }
             break;
         case "block":
-            console.log("");
             let index1 = findIndex({id: data.id});
-
+            if(!_.isEmpty(nodes)){
             if( index1 >= 0 && !_.isUndefined(nodes[index1]) && !_.isUndefined(nodes[index1].stats) )
             {
                 if( nodes[index1].stats.block.number < data.block.number )
@@ -204,17 +203,14 @@ async function socketAction(action, data){
 
                 nodes[index1].stats.block = data.block;
                 nodes[index1].stats.propagationAvg = data.propagationAvg;
-
                 // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-
-                await updateBestBlock();
-            }
+                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
+                 updateBestBlock(nodes);
+            }}
             break;
         case "pending":
-            console.log("");
             let index2 = findIndex({id: data.id});
-
+            if(!_.isEmpty(nodes)){
             if( !_.isUndefined(data.id) && index2 >= 0 )
             {
                 let node = nodes[index2];
@@ -222,15 +218,14 @@ async function socketAction(action, data){
                 if( !_.isUndefined(node) && !_.isUndefined(node.stats.pending) && !_.isUndefined(data.pending) )
                     nodes[index2].stats.pending = data.pending;
             }
-
+        }
             // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-            store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
+            // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
             break;
         case "stats":
-            console.log("");
             let index3 = findIndex({id: data.id});
-
+            if(!_.isEmpty(nodes)){
             if( !_.isUndefined(data.id) && index3 >= 0 )
             {
                 let node = nodes[index3];
@@ -250,19 +245,39 @@ async function socketAction(action, data){
 
                         nodes[index3] = await latencyFilter(nodes[index3]);
                     }
-
-                    // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                    store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-
-                    await updateActiveNodes();
+                     upTime = nodes[index3].stats.uptime;
+                    store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
+                     updateActiveNodes(nodes);
                 }
             }
+            node = Object.values(nodes[index3]);
+            console.log("node", node);
+            let tableData = {
+                type: node[2].node,
+                pendingTxn: node[4].pending,
+                lastBlock: node[4].block.number,
+                graph: "graph",
+                upTime: `${node[4].uptime}%`,
+                latency: `${node[4].latency}ms`,
+                peers: node[4].peers,
+                nodeName: node[2].name,
+              };
+            console.log("table", tableData);
+              if (tableRows.length >= 20) {
+                tableRows.pop();
+              }
+              tableRows.unshift(tableData);
+              console.log("length",tableRows);
+
+              store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: tableRows})
+        }
+            
+            
 
             break;
         case "info":
-            console.log("");
             let index4 = findIndex({id: data.id});
-
+            if(!_.isEmpty(nodes)){
             if( index4 >= 0 )
             {
                 nodes[index4].info = data.info;
@@ -274,10 +289,10 @@ async function socketAction(action, data){
                 nodes[index4] = await latencyFilter(nodes[index4]);
 
                 // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
+                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
-                await updateActiveNodes();
-            }
+                // await updateActiveNodes();
+            } }
             break;
         case "blockPropagationChart":
             blockPropagationChart = data.histogram;
@@ -293,44 +308,49 @@ async function socketAction(action, data){
         case "charts":
             if( !_.isEqual(avgBlockTime, data.avgBlocktime) )
                 avgBlockTime = data.avgBlocktime;
-
+                var avgTime = avgBlockTimeFilter(avgBlockTime)
+             store.dispatch({type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime})
+            
             if( !_.isEqual(avgTransactionRate, data.avgTransactionRate) )
-                avgTransactionRate = data.avgTransactionRate;
+                avgTransactionRate = data.transactions;
+                var value = transactions(avgTransactionRate);
+                store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
 
-            if( !_.isEqual(avgHashrate, data.avgHashrate) )
-                avgHashrate = data.avgHashrate;
+            // if( !_.isEqual(avgHashrate, data.avgHashrate) )
+            //     avgHashrate = data.avgHashrate;
 
-            if( !_.isEqual(lastGasLimit, data.gasLimit) && data.gasLimit.length >= 40 )
-                lastGasLimit = data.gasLimit;
+            // if( !_.isEqual(lastGasLimit, data.gasLimit) && data.gasLimit.length >= 40 )
+            //     lastGasLimit = data.gasLimit;
 
             if( !_.isEqual(lastBlocksTime, data.blocktime) && data.blocktime.length >= MAX_BINS )
                 lastBlocksTime = data.blocktime;
+                store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime})
 
             if( !_.isEqual(difficultyChart, data.difficulty) && data.difficulty.length >= MAX_BINS )
                 difficultyChart = data.difficulty;
 
-            if( !_.isEqual(blockPropagationChart, data.propagation.histogram) ) {
-                blockPropagationChart = data.propagation.histogram;
-                blockPropagationAvg = data.propagation.avg;
-            }
+            // if( !_.isEqual(blockPropagationChart, data.propagation.histogram) ) {
+            //     blockPropagationChart = data.propagation.histogram;
+            //     blockPropagationAvg = data.propagation.avg;
+            // }
 
-            data.uncleCount.reverse();
+            // data.uncleCount.reverse();
 
-            if( !_.isEqual(uncleCountChart, data.uncleCount) && data.uncleCount.length >= MAX_BINS ) {
-                uncleCount = data.uncleCount[data.uncleCount.length-2] + data.uncleCount[data.uncleCount.length-1];
-                uncleCountChart = data.uncleCount;
-            }
+            // if( !_.isEqual(uncleCountChart, data.uncleCount) && data.uncleCount.length >= MAX_BINS ) {
+            //     uncleCount = data.uncleCount[data.uncleCount.length-2] + data.uncleCount[data.uncleCount.length-1];
+            //     uncleCountChart = data.uncleCount;
+            // }
 
-            if( !_.isEqual(transactionDensity, data.transactions) && data.transactions.length >= MAX_BINS )
-                transactionDensity = data.transactions;
+            // if( !_.isEqual(transactionDensity, data.transactions) && data.transactions.length >= MAX_BINS )
+            //     transactionDensity = data.transactions;
 
-            if( !_.isEqual(gasSpending, data.gasSpending) && data.gasSpending.length >= MAX_BINS )
-                gasSpending = data.gasSpending;
+            // if( !_.isEqual(gasSpending, data.gasSpending) && data.gasSpending.length >= MAX_BINS )
+            //     gasSpending = data.gasSpending;
 
-            if( !_.isEqual(miners, data.miners) ) {
-                miners = data.miners;
-                await getMinersNames();
-            }
+            // if( !_.isEqual(miners, data.miners) ) {
+            //     miners = data.miners;
+            //     await getMinersNames();
+            // }
 
             break;
         case "inactive":
@@ -342,9 +362,9 @@ async function socketAction(action, data){
                     nodes[index5].stats = data.stats;
 
                 // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
+                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
 
-                await updateActiveNodes();
+                // await updateActiveNodes();
             }
             break;
         case "latency":
@@ -364,7 +384,7 @@ async function socketAction(action, data){
                 }
 
                 // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
+                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
             }
 
             break;
@@ -422,6 +442,32 @@ async function latencyFilter(node)
     return node;
 }
 
+function avgBlockTimeFilter(data) {
+		if(data < 60)
+			return parseFloat(data).toFixed(2);
+
+		return moment.duration(Math.round(data)).humanize();
+	
+}
+function transactions(data){
+    if (data === null)
+			data = 0;
+
+		var result = 0;
+		var unit = '';
+
+		if (data < 10000) {
+			result = data;
+			unit = '';
+		} else if (data < Math.pow(1000, 2)) {
+			result = data / 1000;
+			unit = 'K';
+		} else if (data >= Math.pow(1000, 2)) { // keeping the condition to cover the zero case
+			result = data / Math.pow(1000, 2);
+			unit = 'M';
+		}
+        return (result.toFixed(0) +  unit );
+}
  function updateActiveNodes(data){
     updateBestBlock(data);
 
@@ -495,7 +541,7 @@ function timeFilter(data){
 }
 
 
-async function findIndex(search)
+ function findIndex(search)
 {
     return _.findIndex(nodes, search);
 }
