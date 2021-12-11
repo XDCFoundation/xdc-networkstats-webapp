@@ -24,17 +24,20 @@ const Div = styled.div`
   color: white;
   height: 1080px;
   position: fixed;
-  left: 1537px;
+  left: auto;
+  right: 0;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
   
   @media (max-width: 1025px) {
-    left: 685px;
+    left: auto;
+    right: 0;
     width: 340px;
   }
   @media (max-width: 415px) {
-    left: 220px;
+    left: auto;
+    right: 0;
     width: 200px;
   }
 `;
@@ -46,18 +49,24 @@ const Nav = styled.nav`
   padding-bottom: 50px;
 `;
 const NavLabel = styled.span`
+  @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
   display: flex;
   justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   color: #4666c4;
   padding-left: 10px;
   padding-top: 15px;
 `;
 
 const Content = styled.span`
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
-  font-size: 18px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
   margin-top: 5px;
   cursor: pointer;
 `;

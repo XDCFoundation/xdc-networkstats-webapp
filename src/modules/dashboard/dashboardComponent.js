@@ -11,7 +11,15 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
+import { makeStyles } from "@material-ui/styles"
 
+
+const useStyles = makeStyles({
+  tabActive: {
+    backgrond: "red !important",
+    color: "white"
+  }
+});
 
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
@@ -26,19 +34,19 @@ const HeaderContainer = styled.div`
 
 const SectionLabel = styled.div`
   color: #c8d1f1;
-  padding-left: 12px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   width: 33.33%;
   border-right: 1px solid #274598;
-  padding-top: 8px;
   font-size: 18px;
   font-family: "Inter";
+  background-color:  ${props => props.active ? "#4065CB" : "#1C3C93"};
 
   @media (max-width: 1025px) {
     justify-content: center;
     :hover {
-      background-color: #3c70ff;
+      background-color: #4065CB;
       color: white;
       cursor: pointer;
     }
@@ -573,6 +581,7 @@ export default function Dashboard(props) {
     if(SwitchTab>2)
     setTab(0)
     }
+  const classes = useStyles();
   
   return (
     <>
@@ -618,9 +627,9 @@ export default function Dashboard(props) {
         <Row>
           {/*Header for Tab and Mobile response*/}
           <HeaderCustom>
-            <SectionLabel onClick={() => changeTab(1)}>Security</SectionLabel>
-            <SectionLabel onClick={() => changeTab(2)}>Speed</SectionLabel>
-            <SectionLabel onClick={() => changeTab(3)}>Efficiency</SectionLabel>
+            <SectionLabel active={SwitchTab === 1 ? true : false} onClick={() => changeTab(1)}>Security</SectionLabel>
+            <SectionLabel active={SwitchTab === 2 ? true : false} onClick={() => changeTab(2)}>Speed</SectionLabel>
+            <SectionLabel active={SwitchTab === 3 ? true : false} onClick={() => changeTab(3)}>Efficiency</SectionLabel>
           </HeaderCustom>
           {/*Header for PC view*/}
           <HeaderContainer>
