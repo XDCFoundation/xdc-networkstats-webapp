@@ -135,16 +135,16 @@ async function socketAction(action, data) {
     case "charts":
       avgTime = data.avgBlocktime.toFixed(3);
       blockTime = data.blocktime;
-      // batch(() => {
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_AVG_BLOCK,
-      //     data: avgTime,
-      //   });
-      //   store.dispatch({
-      //     type: eventConstants.UPDATE_BLOCKTIME,
-      //     data: blockTime,
-      //   });
-      // });
+      batch(() => {
+        // store.dispatch({
+        //   type: eventConstants.UPDATE_AVG_BLOCK,
+        //   data: avgTime,
+        // });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: blockTime,
+        });
+      });
 
       break;
 
