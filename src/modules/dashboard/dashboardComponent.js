@@ -65,6 +65,9 @@ const SecurityMain = styled.div`
     padding-top: 5px;
     font-size: 20px;
   }
+  /* @media (min-width: 0px) and (max-width: 490px) {
+    display: none;
+  } */
   @media (max-width: 415px) {
     padding-left: 10px;
     width: 100%;
@@ -617,7 +620,7 @@ export default function Dashboard(props) {
           SwitchSide={SwitchSide}
         />
         {Expand === 2 ? (
-          <Country expand={setCountry} location={content.stats.map} content={content} />
+          <Country expand={setCountry} location={content.stats.markers} content={content} />
         ) : (
           ""
         )}
@@ -659,7 +662,7 @@ export default function Dashboard(props) {
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
                     <Row>
-                      <NodeGraph data={content}/>
+                      <NodeGraph/>
                     </Row>
                   </Column>
                   <Column>
@@ -671,7 +674,7 @@ export default function Dashboard(props) {
                         <Countries>{content.stats.countries}</Countries>
                         <Row>
                           <MapContainer>
-                            <Map location={content.stats.map} />
+                            <Map location={content.stats.markers} />
                           </MapContainer>
                         </Row>
                       </Column>
@@ -768,7 +771,7 @@ export default function Dashboard(props) {
                       <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                     </Row>
                     <Row>
-                      <Blocks>{content.stats.avgBlock}Sec</Blocks>
+                      <Blocks>{content.stats.avgBlock +' '}Sec</Blocks>
                     </Row>
                   </Column>
                   <Column>
@@ -939,7 +942,7 @@ export default function Dashboard(props) {
                   <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
                 </Row>
                 <Row>
-                  <Blocks>{content.stats.avgBlock}Sec</Blocks>
+                  <Blocks>{content.stats.avgBlock + ' '}Sec</Blocks>
                 </Row>
               </Column>
               <Column>
@@ -980,7 +983,7 @@ export default function Dashboard(props) {
                 <Row>
                   <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
                 </Row>
-                <Row>{content.stats.avgRate}TPS</Row>
+                <Row>{content.stats.avgRate+' '}TPS</Row>
               </Column>
               <Column>
                 <Row>

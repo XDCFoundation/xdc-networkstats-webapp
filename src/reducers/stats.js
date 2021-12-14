@@ -11,6 +11,8 @@ let initialState = {
   upTime: 77,
   map: [],
   history: [],
+  markers: [],
+
   nodesArr: [
     {
       nodeName: "Null",
@@ -92,6 +94,11 @@ export default function stats(state = initialState, action) {
         ...state,
         history: action.data,
       };
+      case eventConstants.UPDATE_MARKERS:
+        return {
+          ...state,
+          markers: action.data,
+        };
     default:
       return state;
   }

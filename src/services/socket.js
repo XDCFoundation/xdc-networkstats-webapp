@@ -1,9 +1,14 @@
+import React from 'react';
 import io from "socket.io-client";
 import Utils, {dispatchAction} from "../utility";
 import {eventConstants} from "../constants";
 import _ from 'lodash';
 import store from '../store'
 import moment from 'moment'
+import utility from "../utility";
+import TableGraph from "../modules/dashboard/tableGraph";
+import { NodesService } from "../services";
+import { object } from 'underscore';
 // export default {
 //     connectSocket
 // }
@@ -35,6 +40,7 @@ let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
+let table = [];
 
 // async function connectSocket(){
     // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
@@ -103,6 +109,7 @@ async function socketAction(action, data){
     {
         case "network-stats-nodes":
             nodes = data;
+
             _.forEach(nodes, function (node, index) {
             if( _.isUndefined(data.history) )
 					{
@@ -114,6 +121,9 @@ async function socketAction(action, data){
                     {
                     updateActiveNodes(nodes);
                     }
+
+            
+
             // for(let i=0; i<nodes.length; i++){
             //     if(typeof nodes[i].stats.hashrate === 'undefined'){
             //         nodes[i].stats.hashrate = 0;
@@ -206,6 +216,19 @@ async function socketAction(action, data){
                 // dispatchAction(eventConstants.UPDATE_NODES, nodes);
                 // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
                  updateBestBlock(nodes);
+                 node = nodes[index1]
+                  table = {
+                    type: node.info.node,
+                    pendingTxn: node.stats.pending,
+                    lastBlock: node.stats.block.number,
+                    graph: <TableGraph content={node.history}/>,
+                    upTime: `${node.stats.uptime}%`,
+                    latency: `${node.stats.latency}ms`,
+                    peers: node.stats.peers,
+                    nodeName: node.info.name,
+                  };
+                
+            
             }}
             break;
         case "pending":
@@ -250,26 +273,10 @@ async function socketAction(action, data){
                      updateActiveNodes(nodes);
                 }
             }
-            node = Object.values(nodes[index3]);
-            console.log("node", node);
-            let tableData = {
-                type: node[2].node,
-                pendingTxn: node[4].pending,
-                lastBlock: node[4].block.number,
-                graph: "graph",
-                upTime: `${node[4].uptime}%`,
-                latency: `${node[4].latency}ms`,
-                peers: node[4].peers,
-                nodeName: node[2].name,
-              };
-            console.log("table", tableData);
-              if (tableRows.length >= 20) {
-                tableRows.pop();
-              }
-              tableRows.unshift(tableData);
-              console.log("length",tableRows);
+            
+            //   console.log("tablerows", tableRows);
 
-              store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: tableRows})
+            //   store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: tableRows})
         }
             
             
@@ -470,7 +477,11 @@ function transactions(data){
 }
  function updateActiveNodes(data){
     updateBestBlock(data);
-
+    let marker = [];
+    let country = [];
+    let count = 0;
+    let temp = Array();
+    
     totalNodes = data.length;
     // dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
     store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
@@ -480,6 +491,22 @@ function transactions(data){
     }).length;
     store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
 
+
+    _.forEach(nodes, function(node, index){
+        marker.push({
+          coords: node.geo.ll,
+        })
+        country.push({
+            loc: node.geo.country,
+        })
+    })
+
+    for( let i=0; i<nodes.length; ++i){
+       temp[country[i].loc] = 1;
+    }
+    count = Object.keys(temp).length;
+    store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
+    store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
     // upTime = _.reduce(nodes, function (total, node) {
     //     return total + node.stats.uptime;
     // }, 0) / nodes.length;
@@ -509,7 +536,7 @@ function transactions(data){
 
      function updateBestBlock(data){
     if(data.length){
-        let bBlock = _.max(data, function (node)
+        let bBlock = _.maxBy(data, function (node)
         {
             return parseInt(node.stats.block.number);
         }).stats.block.number;
@@ -518,13 +545,15 @@ function transactions(data){
             bestBlock = bBlock;
             store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
 
-            bestStats = _.max(data, function (node) {
+            bestStats = _.maxBy(data, function (node) {
                 return parseInt(node.stats.block.number);
             }).stats;
 
             lastBlock = bestStats.block.arrived;
             let time = timeFilter(lastBlock);
             store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
+
+            
         }
     }
 }
@@ -545,23 +574,10 @@ function timeFilter(data){
 {
     return _.findIndex(nodes, search);
 }
-
-async function getMinersNames()
-{
-    if( miners.length > 0 )
-    {
-        _.forIn(miners, function (value, key)
-        {
-            if(value.name !== false)
-                return;
-
-            if(value.miner === "0x0000000000000000000000000000000000000000")
-                return;
-
-            let name = _.result(_.find(_.map(nodes, 'info'), 'coinbase', value.miner), 'name');
-
-            if( !_.isUndefined(name) )
-                miners[key].name = name;
-        });
-    }
-}
+setInterval(()=>{
+      if (tableRows.length >= 20) {
+                tableRows.pop();
+              }
+              tableRows.unshift(table);
+              store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: tableRows})
+},2000)

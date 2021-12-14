@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import styled from "styled-components";
 import { linearGradientDef } from "@nivo/core";
+import utility from "../../utility";
+import { NodesService } from "../../services";
 
 const Div = styled.div`
   width: 250px;
@@ -18,38 +20,58 @@ const Div = styled.div`
   }
 `;
 
-function NodeGraph(props) {
+function NodeGraph() {
+  const [node, setNode] = useState([]);
+  const [node1, setNode1] = useState([]);
+  const [node2, setNode2] = useState([]);
+  const [node3, setNode3] = useState([]);
+  const [node4, setNode4] = useState([]);
+  const [node5, setNode5] = useState([]);
+  const [node6, setNode6] = useState([]);
+
+  async function fetchData() {
+    const [error, res] = await utility.parseResponse(NodesService.getNodes());
+    if (error) return;
+    setNode(res.responseData[0].nodes);
+    setNode1(res.responseData[1].nodes);
+    setNode2(res.responseData[2].nodes);
+    setNode3(res.responseData[3].nodes);
+    setNode4(res.responseData[4].nodes);
+    setNode5(res.responseData[5].nodes);
+    // setNode6(res.responseData[6].nodes);
+  }
+  fetchData();
   const data = [
     {
       id: "Stats",
       data: [
         {
           x: "0",
-          y: 150,
+          y: node,
         },
         {
           x: "1",
-          y: 160,
+          y: node1,
         },
         {
           x: "2",
-          y: 140,
+          y: node2,
         },
         {
           x: "3",
-          y: 130,
+          y: node3,
         },
         {
           x: "4",
-          y: 150,
+          y: node4,
         },
         {
           x: "5",
-          y: 180,
+          y: node5,
         },
         {
           x: "6",
-          y: 160,
+          y: node6,
         },
       ],
     },
@@ -68,7 +90,6 @@ function NodeGraph(props) {
         stroke: "#4E6AB580",
         strokeWidth: 0.9,
         strokeDasharray: "1 1",
-        
       },
     },
   };
