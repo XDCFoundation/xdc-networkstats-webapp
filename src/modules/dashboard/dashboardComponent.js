@@ -12,7 +12,6 @@ import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
 
-
 const HeaderContainer = styled.div`
   background-color: #1c3c93;
   display: flex;
@@ -562,7 +561,7 @@ export default function Dashboard(props) {
       setJoyrideRun(false);
     }
   };
-  
+
   return (
     <>
       {/* Header nav bar */}
@@ -587,7 +586,7 @@ export default function Dashboard(props) {
             fontSize: 13,
           },
         }}
-        spotlightPadding = {0}
+        spotlightPadding={0}
         run={joyrideRun}
       />
       <>
@@ -597,13 +596,17 @@ export default function Dashboard(props) {
           SwitchSide={SwitchSide}
         />
         {Expand === 2 ? (
-          <Country expand={setCountry} location={content.stats.map} content={content} />
+          <Country
+            expand={setCountry}
+            location={content.stats.map}
+            content={content}
+          />
         ) : (
           ""
         )}
       </>
       {/* Section containers(Graph) */}
-      <div>
+      <Div>
         <Row>
           {/*Header for Tab and Mobile response*/}
           <HeaderCustom>
@@ -633,13 +636,12 @@ export default function Dashboard(props) {
                     <Row>
                       {/* {content.stats.nodes}/{content.stats.totalNodes} */}
                       <TotalNodes>{content.stats.nodes}/200</TotalNodes>
-                      
                     </Row>
                     <Row>
                       <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
                     </Row>
                     <Row>
-                      <NodeGraph data={content}/>
+                      <NodeGraph data={content} />
                     </Row>
                   </Column>
                   <Column>
@@ -989,7 +991,7 @@ export default function Dashboard(props) {
             </Row>
           </EfficiencyMain>
         </Row>
-      </div>
+      </Div>
       {/* Table view */}
       <TableDiv>
         <Table content={content} />
@@ -998,3 +1000,6 @@ export default function Dashboard(props) {
     </>
   );
 }
+const Div = styled.div`
+  width: 100%;
+`;

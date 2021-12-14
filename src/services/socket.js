@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from "react";
 import { eventConstants } from "../constants";
 import store from "../store";
 import TableGraph from "../modules/dashboard/tableGraph";
@@ -10,14 +10,13 @@ const client = new W3CWebSocket(
   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
 );
 
-function connection () {
-client.onmessage = async (event) => {
-  var msg = JSON.parse(event.data);
-  socketAction(msg.action, msg.data);
-};
+function connection() {
+  client.onmessage = async (event) => {
+    var msg = JSON.parse(event.data);
+    socketAction(msg.action, msg.data);
+  };
 }
 setInterval(connection(), 1000);
-
 
 let nodes = [];
 let gasPrice = 0;
@@ -37,7 +36,7 @@ let temp = 0;
 let mapData = [];
 const eth = 325236.15; //Price of one ether per USD today.
 const wei = 0.000000000000000001;
-let gasUsd = eth*wei;
+let gasUsd = eth * wei;
 
 async function socketAction(action, data) {
   switch (action) {
@@ -48,7 +47,7 @@ async function socketAction(action, data) {
         test[data.id] = data.stats.active;
         nodes = Object.keys(test).length;
         newarray = Object.keys(test);
-          datas = newarray?.filter(
+        datas = newarray?.filter(
           (element) =>
             element !== "BuzzNjay1(45.77.253.122)" &&
             element !== "FreeWallet-FullNode" &&
@@ -91,12 +90,11 @@ async function socketAction(action, data) {
         }
 
         map = Array.from(new Set(arr));
-  
       }
 
       countries = Object.keys(map).length;
       upTime = data.stats.uptime;
-      gasPrice = (data.stats.gasPrice)*gasUsd;
+      gasPrice = data.stats.gasPrice * gasUsd;
       let tableData = {
         type: "XDC/v1.1.0-stable-80827806/linux-amd64/go1.15.6",
         pendingTxn: 0,
@@ -114,39 +112,39 @@ async function socketAction(action, data) {
 
       updatedRows.unshift(tableData);
 
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_NODES_ARR,
-          data: updatedRows,
-        });
-        store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
-        store.dispatch({
-          type: eventConstants.UPDATE_GAS_PRICE,
-          data: gasPrice,
-        });
-        store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
-        store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
-        store.dispatch({
-          type: eventConstants.UPDATE_COUNTRIES,
-          data: countries,
-        });
-      });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_NODES_ARR,
+      //     data: updatedRows,
+      //   });
+      //   store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodes });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_GAS_PRICE,
+      //     data: gasPrice,
+      //   });
+      //   store.dispatch({ type: eventConstants.UPDATE_UP_TIME, data: upTime });
+      //   store.dispatch({ type: eventConstants.UPDATE_MAP, data: map });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_COUNTRIES,
+      //     data: countries,
+      //   });
+      // });
 
       break;
 
     case "charts":
       avgTime = data.avgBlocktime.toFixed(3);
       blockTime = data.blocktime;
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_AVG_BLOCK,
-          data: avgTime,
-        });
-        store.dispatch({
-          type: eventConstants.UPDATE_BLOCKTIME,
-          data: blockTime,
-        });
-      });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_AVG_BLOCK,
+      //     data: avgTime,
+      //   });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_BLOCKTIME,
+      //     data: blockTime,
+      //   });
+      // });
 
       break;
 
@@ -166,21 +164,17 @@ async function socketAction(action, data) {
       var time1 = moment(lastBlock[0]).format("ss");
       var time2 = moment(lastBlock[1]).format("ss");
       let seconds = time1 - time2;
-      batch(() => {
-        store.dispatch({
-          type: eventConstants.UPDATE_BEST_BLOCK,
-          data: temp,
-        });
+      // batch(() => {
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_BEST_BLOCK,
+      //     data: temp,
+      //   });
 
-        store.dispatch({
-          type: eventConstants.UPDATE_LAST_BLOCK,
-          data: seconds,
-        });
-      });
+      //   store.dispatch({
+      //     type: eventConstants.UPDATE_LAST_BLOCK,
+      //     data: seconds,
+      //   });
+      // });
       break;
   }
 }
-
-
-
-  
