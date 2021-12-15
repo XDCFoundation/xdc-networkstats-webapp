@@ -6,20 +6,9 @@ import { linearGradientDef } from "@nivo/core";
 const Div = styled.div`
   width: 250px;
   height: 150px;
-  padding-bottom: 10px;
-  @media (max-width: 1024px) {
-    width: 450px;
-    height: 200px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    width: 300px;
-    height: 170px;
-  }
 `;
 
 function NodeGraph(props) {
-
   const data = [
     {
       id: "Stats",

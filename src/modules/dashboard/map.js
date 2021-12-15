@@ -11,21 +11,9 @@ import { LocationService } from "../../services";
 
 const Div = styled.div`
   fill: #103aaa;
-  margin-top: 20px;
   width: 100%;
-  // width: 300px;
-  // height: 169px;
-  // margin-top: -20px;
-  // @media (max-width: 1024px) {
-  //   width: 365px;
-
-  //   margin-left: 100px;
-  // }
-  // @media (max-width: 415px) {
-  //   height: 150px;
-  //   width: 300px;
-  //   margin-left: 10px;
-  // }
+  max-width: 240px;
+  margin-left: 0px;
 `;
 
 const geoUrl =

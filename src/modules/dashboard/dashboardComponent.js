@@ -12,360 +12,6 @@ import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
 
-const HeaderContainer = styled.div`
-  background-color: #1c3c93;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  justify-content: space-between;
-  @media (max-width: 1025px) {
-    display: none;
-  }
-`;
-
-const SectionLabel = styled.div`
-  color: #c8d1f1;
-  padding-left: 12px;
-  display: flex;
-  justify-content: space-between;
-  width: 33.33%;
-  border-right: 1px solid #274598;
-  padding-top: 8px;
-  font-size: 18px;
-  font-family: "Inter";
-
-  @media (max-width: 1025px) {
-    justify-content: center;
-    :hover {
-      background-color: #3c70ff;
-      color: white;
-      cursor: pointer;
-    }
-  }
-`;
-
-const SecurityMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    width: 1025px;
-    padding-top: 5px;
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-const SpeedTab = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-    font-size: 20px;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-`;
-const EfficiencyTab = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-  }
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-`;
-const SecurityLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 12px;
-  padding-left: 1 px;
-  font-size: 16px;
-  font-family: "Inter";
-  @media (max-width: 1025px) {
-    font-size: 20px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 5px;
-  }
-`;
-const SecurityLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  flex-direction: column;
-  padding-top: 66px;
-  padding-left: 2px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 20px;
-    padding-top: 15px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 4px;
-    padding-left: 5px;
-  }
-`;
-const SecurityLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 40px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-left: 125px;
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 23px;
-    padding-left: 0px;
-  }
-`;
-
-const TotalHeading = styled.span`
-  @media (max-width: 1025px) {
-    padding-left: 37px;
-  }
-`;
-
-const SecurityIcon = styled.img`
-  height: 20px;
-  width: 20px;
-  margin-top: 28px;
-  margin-right: 12px;
-  margin-left: 10px;
-  @media (max-width: 1025px) {
-    margin-left: 261px;
-    margin-top: 19px;
-    height: 23px;
-    width: 232;
-  }
-  @media (max-width: 415px) {
-    margin-left: 215px;
-  }
-  cursor: pointer;
-`;
-const SpeedLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 14px;
-  padding-left: 13px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-top: 40px;
-    font-size: 18px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const SpeedLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 80px;
-  padding-left: 15px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 18px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const SpeedLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 130px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-top: 40px;
-    font-size: 18px;
-    padding-left: 115px;
-  }
-  @media (max-width: 415px) {
-    margin-left: -15px;
-    padding-top: 20px;
-  }
-`;
-const EfficiencyLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 14px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-top: 35px;
-    font-size: 20px;
-  }
-`;
-const EfficiencyLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 90px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const EfficiencyLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 130px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-top: 35px;
-    padding-left: 115px;
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    white-space: nowrap;
-    padding-left: 15px;
-  }
-`;
-
-// const Countries = styled.span`
-//   padding-left: 40px;
-//   @media (max-width: 1025px) {
-//     padding-left: 170px;
-//   }
-//   @media (max-width: 415px) {
-//     padding-left: 45px;
-//   }
-// `;
-const Blocks = styled.span`
-  padding-left: 15px;
-`;
-const LastBlock = styled.span`
-  padding-left: 130px;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-left: 245px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 179px;
-  }
-`;
-const BlockBarLeftLabel = styled.span`
-  padding-left: 125px;
-  font-size: x-small;
-  @media (max-width: 1025px) {
-    padding-left: 253px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 30px;
-  }
-`;
-const BlockBarLabelColor = styled.span`
-  color: #667fc1;
-`;
-const BlockBarRightLabel = styled.span`
-  padding-left: 260px;
-  font-size: x-small;
-  @media (max-width: 1025px) {
-    padding-left: 473px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 306px;
-  }
-`;
-const EffiencyBar = styled.div`
-  margin-top: -10px;
-  margin-left: 90px;
-  @media (max-width: 1025px) {
-    margin-top: 5px;
-    margin-left: 230px;
-  }
-  @media (max-width: 415px) {
-    margin-left: 5px;
-    margin-top: -54px;
-  }
-`;
-const UpTime = styled.span`
-  padding-left: 130px;
-  @media (max-width: 1025px) {
-    padding-left: 249px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 196px;
-  }
-`;
-
-const ButtonDiv = styled.div`
-  padding-left: 120px;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-left: 325px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 165px;
-    padding-top: 10px;
-  }
-`;
-const Button = styled.button`
-  background: #1c3c93;
-  opacity: 1;
-  border: none;
-  border-radius: 1px;
-  color: #3c70ff;
-  font-size: 12px;
-  width: 50px;
-  height: 30px;
-
-  :hover {
-    background-color: #3c70ff;
-    color: white;
-  }
-`;
-
 const Footer = styled.div`
   background-color: white;
   color: #808080;
@@ -373,119 +19,6 @@ const Footer = styled.div`
   padding-bottom: 20px;
   padding-top: 10px;
   font-family: "Inter", sans-serif;
-`;
-
-const SpeedMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    display: none;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-
-const EfficiencyMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-
-const HeaderCustom = styled.div`
-  background-color: #1c3c93;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  justify-content: space-between;
-  @media (min-width: 1025px) {
-    display: none;
-  }
-`;
-
-const SecurityMobDiv = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  width: 100%;
-  display: flex;
-  border-right: 1px solid #274598;
-  color: white;
-  padding-left: 10px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-  font: normal normal 600 20px/35px Inter;
-`;
-
-const SpeedMob = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-    font-size: 20px;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-`;
-
-const EfficiencyMob = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  width: 100%;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-`;
-
-const HeaderMob = styled.span`
-  background-color: #102c78;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  color: #667fc1;
-
-  :hover {
-    color: white;
-    text-decoration: underline;
-  }
 `;
 
 const TOUR_STEPS = [
@@ -537,6 +70,11 @@ export default function Dashboard(props) {
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
     }
+  };
+
+  const [show, setShow] = useState(0);
+  const changeShowTab = (value) => {
+    setShow(value);
   };
 
   return (
@@ -976,7 +514,7 @@ export default function Dashboard(props) {
     //   <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     // </>
     <Div>
-      <Joyride //Start Guided Tour
+      <Joyride
         steps={TOUR_STEPS}
         callback={handleJoyrideCallback}
         continuous={true}
@@ -1005,76 +543,123 @@ export default function Dashboard(props) {
         changeSide={changeSide}
         SwitchSide={SwitchSide}
       />
+      {Expand === 2 ? (
+        <Country
+          expand={setCountry}
+          location={content.stats.map}
+          content={content}
+        />
+      ) : (
+        ""
+      )}
       <MainContainer>
         <Container>
-          <Security>Security</Security>
-          <Speed>Speed</Speed>
-          <Efficiency>Efficiency</Efficiency>
+          <Security
+            onClick={() => {
+              changeShowTab(1);
+            }}
+          >
+            Security
+          </Security>
+          <Speed
+            onClick={() => {
+              changeShowTab(2);
+            }}
+          >
+            Speed
+          </Speed>
+          <Efficiency
+            onClick={() => {
+              changeShowTab(3);
+            }}
+          >
+            Efficiency
+          </Efficiency>
         </Container>
+
         <ContentParent>
-          <Content>
-            <ContentData>
-              <Heading>Nodes</Heading>
-              <DataCount>{content.stats.nodes}/200</DataCount>
-              <NodeHistory>Node History (7 Days)</NodeHistory>
-              <NodeGraph data={content} />
-            </ContentData>
-            <CountryData>
-              <SpaceBetween>
-                <div>
-                  <Countries>Countries</Countries>
-                  <CountriesData>{content.stats.countries}</CountriesData>
-                </div>
-                <Image src="/images/Expand.svg" />
-              </SpaceBetween>
-              <Map />
-            </CountryData>
-          </Content>
-          <Content>
-            <ContentData>
-              <Heading>Best Block</Heading>
-              <DataCount>
-                #{" "}
-                <NumberFormat
-                  value={content.stats.bestBlock}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                />
-              </DataCount>
-              <NodeHistory>Avg Block Time</NodeHistory>
-              <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
-            </ContentData>
-            <CountryData>
-              <SpaceBetween>
-                <div>
-                  <Countries>Last Block</Countries>
-                  <CountriesData>{content.stats.lastBlock}s ago</CountriesData>
-                </div>
-              </SpaceBetween>
-              <Speedbar>
-                <LastBlockBar content={content} />
-              </Speedbar>
-            </CountryData>
-          </Content>
-          <Content>
-            <ContentData>
-              <Heading>Gas Price (USD)</Heading>
-              <DataCount>{content.stats.gasPrice}</DataCount>
-              <NodeHistory>Avg Transaction Rate</NodeHistory>
-              <BlockTime>{content.stats.avgRate}TPS</BlockTime>
-            </ContentData>
-            <CountryData>
-              <SpaceBetween>
-                <div>
-                  <Countries>UP Time</Countries>
-                  <CountriesData>{content.stats.upTime}%</CountriesData>
-                </div>
-              </SpaceBetween>
-              <Speedbar>
-                <LastBlockBar content={content} />
-              </Speedbar>
-            </CountryData>
-          </Content>
+          {show <= 1 ? (
+            <ContentSecurity>
+              <ContentData>
+                <Heading>Nodes</Heading>
+                <DataCount>{content.stats.nodes}/200</DataCount>
+                <NodeHistory>Node History (7 Days)</NodeHistory>
+                <NodeGraph data={content} />
+              </ContentData>
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>Countries</Countries>
+                    <CountriesData>{content.stats.countries}</CountriesData>
+                  </div>
+                  <Image src="/images/Expand.svg" />
+                </SpaceBetween>
+                <Map />
+              </CountryData>
+            </ContentSecurity>
+          ) : (
+            ""
+          )}
+          {show === 2 ? (
+            <ContentSpeed>
+              <ContentData>
+                <Heading>Best Block</Heading>
+                <DataCount>
+                  #{" "}
+                  <NumberFormat
+                    value={content.stats.bestBlock}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                  />
+                </DataCount>
+                <NodeHistory>Avg Block Time</NodeHistory>
+                <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+              </ContentData>
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>Last Block</Countries>
+                    <CountriesData>
+                      {content.stats.lastBlock}s ago
+                    </CountriesData>
+                  </div>
+                </SpaceBetween>
+                <Speedbar>
+                  <LastBlockBar content={content} />
+                </Speedbar>
+              </CountryData>
+            </ContentSpeed>
+          ) : (
+            ""
+          )}
+          {show === 3 ? (
+            <ContentEfficiency>
+              <ContentData>
+                <Heading>Gas Price (USD)</Heading>
+                <DataCount>{content.stats.gasPrice}</DataCount>
+                <NodeHistory>Avg Transaction Rate</NodeHistory>
+                <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+              </ContentData>
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>UP Time</Countries>
+                    <CountriesData>{content.stats.upTime}%</CountriesData>
+                  </div>
+                  <ButtonDiv>
+                    <Button>30D</Button>
+                    <Button>7D</Button>
+                    <Button>24H</Button>
+                  </ButtonDiv>
+                </SpaceBetween>
+                <Speedbar>
+                  <UpTimeBar> </UpTimeBar>
+                </Speedbar>
+              </CountryData>
+            </ContentEfficiency>
+          ) : (
+            ""
+          )}
         </ContentParent>
       </MainContainer>
       <TableDiv>
@@ -1084,6 +669,7 @@ export default function Dashboard(props) {
     </Div>
   );
 }
+
 const Div = styled.div`
   width: 100%;
 `;
@@ -1101,26 +687,61 @@ const Security = styled.div`
   width: 100%;
   font-size: 1rem;
   font-weight: 600;
+  border-right: 1px solid #274598;
 `;
 const Speed = styled.div`
   width: 100%;
   font-size: 1rem;
   font-weight: 600;
+  border-right: 1px solid #274598;
   color: #c8d1f1;
 `;
 const Efficiency = styled.div`
   width: 100%;
   font-size: 1rem;
   font-weight: 600;
+  border-right: 1px solid #274598;
   color: #c8d1f1;
 `;
-const Content = styled.div`
+const ContentSecurity = styled.div`
   background-color: #102c78;
-  height: 250px;
+  height: 300px;
   width: 33.33%;
-  border-color: 1px solid #ffffff;
   padding: 15px;
   display: flex;
+  border-right: 1px solid #274598;
+
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+    /* display: ${(props) => (props.show == 1 ? `block` : `none`)}; */
+  }
+`;
+const ContentSpeed = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+    /* display: ${(props) => (props.show == 2 ? `none` : `block`)}; */
+  }
+`;
+const ContentEfficiency = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+    /* display: ${(props) => (props.show == 3 ? `none` : `block`)}; */
+  }
 `;
 const ContentParent = styled.div`
   display: flex;
@@ -1134,6 +755,11 @@ const Heading = styled.div`
 `;
 const ContentData = styled.div`
   width: 100%;
+
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+    max-width: 478px;
+  }
 `;
 const DataCount = styled.div`
   font-size: 1.5rem;
@@ -1175,10 +801,30 @@ const BlockTime = styled.div`
   color: #ffffff;
 `;
 const Speedbar = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
 `;
 const TableDiv = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 4px;
   margin-top: 40px;
+`;
+
+const ButtonDiv = styled.div`
+  white-space: nowrap;
+  cursor: pointer;
+`;
+const Button = styled.button`
+  background: #1c3c93;
+  opacity: 1;
+  border: none;
+  border-radius: 1px;
+  color: #3c70ff;
+  font-size: 0.8rem;
+  height: 30px;
+  cursor: pointer;
+
+  :hover {
+    background-color: #3c70ff;
+    color: white;
+  }
 `;

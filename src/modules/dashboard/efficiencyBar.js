@@ -2,12 +2,9 @@ import React from "react";
 import { Bar } from "@nivo/bar";
 import styled from "styled-components";
 
-
-
 const Div = styled.div`
-cursor: pointer;
+  cursor: pointer;
 `;
-
 
 const data = [
   { time: 1, value: 90 },
@@ -21,22 +18,23 @@ const data = [
   { time: 9, value: 93 },
   { time: 10, value: 90 },
   { time: 11, value: 85 },
-  { time: 12, value: 90 },
-  { time: 13, value: 90 },
-  { time: 14, value: 90 },
-  { time: 15, value: 90 },
-  { time: 16, value: 90 },
-  { time: 17, value: 90 },
-  { time: 18, value: 90 },
-  { time: 19, value: 90 },
+  // { time: 12, value: 90 },
+  // { time: 13, value: 93 },
+  // { time: 14, value: 90 },
+  // { time: 15, value: 85 },
+  // { time: 16, value: 90 },
+  // { time: 17, value: 90 },
+  // { time: 18, value: 85 },
+  // { time: 19, value: 90 },
 ];
 
 const EfficiencyBar = () => (
   <Div>
     <Bar
-      width={350}
-      height={200}
-      margin={{ top: 60, bottom: 20, left: 40 }}
+      width={300}
+      maxWidth={500}
+      height={150}
+      // margin={{ top: 60, bottom: 20, left: 40 }}
       data={data}
       keys={["value"]}
       indexBy="time"
@@ -44,7 +42,7 @@ const EfficiencyBar = () => (
       enableLabel={false}
       axisBottom={false}
       enableGridY={false}
-      padding={0.2}
+      padding={0.7}
       axisLeft={{
         tickSize: 5,
         tickValues: ["0", "50", "100"],
@@ -60,17 +58,17 @@ const EfficiencyBar = () => (
       }}
       tooltip={({ id, value, color }) => (
         <div
-            style={{
-                color,
-                background: "white",
-                fontSize: "15px"
-            }}
+          style={{
+            color,
+            background: "white",
+            fontSize: "15px",
+          }}
         >
-            <strong>
-                {id}: {value}
-            </strong>
+          <strong>
+            {id}: {value}
+          </strong>
         </div>
-    )}
+      )}
     />
   </Div>
 );

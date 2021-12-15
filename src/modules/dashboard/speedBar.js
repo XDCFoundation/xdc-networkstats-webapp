@@ -2,26 +2,17 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import styled from "styled-components";
 
-
-
 const Div = styled.div`
-  width: 360px;
+  width: 100%;
+  max-width: 560px;
   height: 120px;
+
   font-family: sans-serif;
   text-align: center;
   cursor: pointer;
-  @media (max-width: 1025px) {
-    height: 150px;
-    width: 570px;
-  }
-  @media (max-width: 425px) {
-    height: 100px;
-    width: 400px;
-  }
 `;
 
 function speedBar(props) {
-
   const data = [
     { time: 1, value: props.content.stats.blockTime[0] },
     { time: 2, value: props.content.stats.blockTime[1] },
@@ -63,7 +54,6 @@ function speedBar(props) {
     { time: 38, value: props.content.stats.blockTime[37] },
     { time: 39, value: props.content.stats.blockTime[38] },
     { time: 40, value: props.content.stats.blockTime[39] },
-    
   ];
 
   const theme = {
@@ -71,39 +61,38 @@ function speedBar(props) {
       line: {
         stroke: "#667FC1",
         strokeWidth: 0.5,
-        strokeDasharray: "1 1"
-        
-      }
-    }
+        strokeDasharray: "1 1",
+      },
+    },
   };
 
   return (
-  <Div>
-    <ResponsiveBar
-      data={data}
-      keys={["value"]}
-      indexBy="time"
-      colors={["#0093FF"]}
-      enableLabel={false}
-      enableGridY={true}
-      gridYValues={["0", "1"]}
-      theme={theme}
-      padding={0.5}
-      tooltip={({ id, value, color }) => (
-        <div
+    <Div>
+      <ResponsiveBar
+        data={data}
+        keys={["value"]}
+        indexBy="time"
+        colors={["#0093FF"]}
+        enableLabel={false}
+        enableGridY={true}
+        gridYValues={["0", "1"]}
+        theme={theme}
+        padding={0.5}
+        tooltip={({ id, value, color }) => (
+          <div
             style={{
-                color,
-                background: "white",
-                fontSize: "15px"
+              color,
+              background: "white",
+              fontSize: "15px",
             }}
-        >
+          >
             <strong>
-                {id}: {value}
+              {id}: {value}
             </strong>
-        </div>
-    )}
-    />
-  </Div>
-);
-  }
+          </div>
+        )}
+      />
+    </Div>
+  );
+}
 export default speedBar;
