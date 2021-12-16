@@ -245,91 +245,93 @@ export default function Dashboard(props) {
             </ContentEfficiency>
           </ContentParent>
         </FullScreen>
-        <ContentParent>
-          {tabResponsive <= 1 ? (
-            <ContentSecurity>
-              <ContentData>
-                <Heading>Nodes</Heading>
-                <DataCount>{content.stats.nodes}/200</DataCount>
-                <NodeHistory>Node History (7 Days)</NodeHistory>
-                <NodeGraph data={content} />
-              </ContentData>
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>Countries</Countries>
-                    <CountriesData>{content.stats.countries}</CountriesData>
-                  </div>
-                  <Image src="/images/Expand.svg" />
-                </SpaceBetween>
-                <Map />
-              </CountryData>
-            </ContentSecurity>
-          ) : (
-            ""
-          )}
-          {tabResponsive === 2 ? (
-            <ContentSpeed>
-              <ContentData>
-                <Heading>Best Block</Heading>
-                <DataCount>
-                  #{" "}
-                  <NumberFormat
-                    value={content.stats.bestBlock}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                  />
-                </DataCount>
-                <NodeHistory>Avg Block Time</NodeHistory>
-                <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
-              </ContentData>
+        <TabScreen>
+          <ContentParent>
+            {tabResponsive <= 1 ? (
+              <ContentSecurity>
+                <ContentData>
+                  <Heading>Nodes</Heading>
+                  <DataCount>{content.stats.nodes}/200</DataCount>
+                  <NodeHistory>Node History (7 Days)</NodeHistory>
+                  <NodeGraph data={content} />
+                </ContentData>
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>Countries</Countries>
+                      <CountriesData>{content.stats.countries}</CountriesData>
+                    </div>
+                    <Image src="/images/Expand.svg" />
+                  </SpaceBetween>
+                  <Map />
+                </CountryData>
+              </ContentSecurity>
+            ) : (
+              ""
+            )}
+            {tabResponsive === 2 ? (
+              <ContentSpeed>
+                <ContentData>
+                  <Heading>Best Block</Heading>
+                  <DataCount>
+                    #{" "}
+                    <NumberFormat
+                      value={content.stats.bestBlock}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                    />
+                  </DataCount>
+                  <NodeHistory>Avg Block Time</NodeHistory>
+                  <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+                </ContentData>
 
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>Last Block</Countries>
-                    <CountriesData>
-                      {content.stats.lastBlock}s ago
-                    </CountriesData>
-                  </div>
-                </SpaceBetween>
-                <Speedbar>
-                  <LastBlockBar content={content} />
-                </Speedbar>
-              </CountryData>
-            </ContentSpeed>
-          ) : (
-            ""
-          )}
-          {tabResponsive === 3 ? (
-            <ContentEfficiency>
-              <ContentData>
-                <Heading>Gas Price (USD)</Heading>
-                <DataCount>{content.stats.gasPrice}</DataCount>
-                <NodeHistory>Avg Transaction Rate</NodeHistory>
-                <BlockTime>{content.stats.avgRate}TPS</BlockTime>
-              </ContentData>
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>UP Time</Countries>
-                    <CountriesData>{content.stats.upTime}%</CountriesData>
-                  </div>
-                  <ButtonDiv>
-                    <Button>30D</Button>
-                    <Button>7D</Button>
-                    <Button>24H</Button>
-                  </ButtonDiv>
-                </SpaceBetween>
-                <Speedbar>
-                  <UpTimeBar></UpTimeBar>
-                </Speedbar>
-              </CountryData>
-            </ContentEfficiency>
-          ) : (
-            ""
-          )}
-        </ContentParent>
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>Last Block</Countries>
+                      <CountriesData>
+                        {content.stats.lastBlock}s ago
+                      </CountriesData>
+                    </div>
+                  </SpaceBetween>
+                  <Speedbar>
+                    <LastBlockBar content={content} />
+                  </Speedbar>
+                </CountryData>
+              </ContentSpeed>
+            ) : (
+              ""
+            )}
+            {tabResponsive === 3 ? (
+              <ContentEfficiency>
+                <ContentData>
+                  <Heading>Gas Price (USD)</Heading>
+                  <DataCount>{content.stats.gasPrice}</DataCount>
+                  <NodeHistory>Avg Transaction Rate</NodeHistory>
+                  <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+                </ContentData>
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>UP Time</Countries>
+                      <CountriesData>{content.stats.upTime}%</CountriesData>
+                    </div>
+                    <ButtonDiv>
+                      <Button>30D</Button>
+                      <Button>7D</Button>
+                      <Button>24H</Button>
+                    </ButtonDiv>
+                  </SpaceBetween>
+                  <Speedbar>
+                    <UpTimeBar></UpTimeBar>
+                  </Speedbar>
+                </CountryData>
+              </ContentEfficiency>
+            ) : (
+              ""
+            )}
+          </ContentParent>
+        </TabScreen>
         <MobileContentParent>
           {show <= 1 ? (
             <ContentSecurityMobile>
@@ -536,6 +538,14 @@ const ContentParent = styled.div`
   display: flex;
   width: 100%;
   @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+`;
+const TabScreen = styled.div`
+  @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
