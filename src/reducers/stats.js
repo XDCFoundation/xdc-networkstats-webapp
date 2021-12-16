@@ -12,7 +12,6 @@ let initialState = {
   map: [],
   history: [],
   markers: [],
-
   nodesArr: [
     {
       nodeName: "Null",

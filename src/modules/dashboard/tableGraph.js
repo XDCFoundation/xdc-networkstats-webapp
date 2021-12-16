@@ -57,7 +57,7 @@ const data = [
 
   return (
   <div style={styles}>
-    <div style={{ height: "50px", width: "100px", cursor: "pointer" }}>
+    <div style={{ height: "50px", width: "200px", cursor: "pointer" }}>
       <ResponsiveBar
         data={data}
         keys={["value"]}

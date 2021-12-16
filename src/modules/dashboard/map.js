@@ -17,7 +17,6 @@ const Div = styled.div`
   margin-top: -20px;
   @media (max-width: 1024px) {
     width: 365px;
-
     margin-left: 100px;
   }
   @media (max-width: 415px) {
