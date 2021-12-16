@@ -14,6 +14,12 @@ const Div = styled.div`
   width: 100%;
   max-width: 240px;
   margin-left: 0px;
+
+  @media (min-width: 300px) and (max-width: 767px) {
+    fill: #103aaa;
+    width: 100%;
+    max-width: unset;
+  }
 `;
 
 const geoUrl =

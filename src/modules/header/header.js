@@ -9,7 +9,7 @@ const HeaderNav = styled.nav`
   justify-content: space-between;
   height: 56px;
   color: white;
-  margin-right: 10px;
+
   width: 100%;
 `;
 const HeaderLogoElement = styled.img`
@@ -41,55 +41,101 @@ const NavbarIcon = styled.div`
   margin-right: 12px;
 `;
 const StartGuideTourButton = styled.button`
-  margin-top: 7px;
-  margin-bottom: 7px;
   color: white;
   background: #2a52c1 0% 0% no-repeat padding-box;
   border-radius: 4px;
-  opacity: 1;
+  align-items: center;
+  text-align: center;
+  display: flex;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 `;
 export default function Header(props) {
   return (
-    <>
-      <HeaderNav>
-        <Row>
-          <Column>
-            <div>
-              <HeaderLogoElement src="/images/XDC-Logo.svg" />
-              <HeaderLogoElement src="/images/VerticalLine.svg" />
-            </div>
-          </Column>
-          <Column>
-            <HeaderLabel>Network Stats</HeaderLabel>
-          </Column>
-        </Row>
-        <Row>
+    // <>
+    //   <HeaderNav>
+    //     <Row>
+    //       <Column>
+    //         <div>
+    //           <HeaderLogoElement src="/images/XDC-Logo.svg" />
+    //           <HeaderLogoElement src="/images/VerticalLine.svg" />
+    //         </div>
+    //       </Column>
+    //       <Column>
+    //         <HeaderLabel>Network Stats</HeaderLabel>
+    //       </Column>
+    //     </Row>
+    //     <Row>
+    //       <StartGuideTourButton
+    //         onClick={() => {
+    //           props.setJoyrideRun(true);
+    //         }}
+    //       >
+    //         <Row>
+    //           <Column>
+    //             <StartLogo>
+    //               <img src="/images/Play.svg" alt="Start" />
+    //             </StartLogo>
+    //           </Column>
+    //           <Column>
+    //             <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
+    //           </Column>
+    //         </Row>
+    //       </StartGuideTourButton>
+    //       <Column>
+    //         <NavbarIcon onClick={() => props.changeSide(true)}>
+    //           <HeaderLogoElement src="/images/Hamburger.svg" />
+    //         </NavbarIcon>
+    //       </Column>
+    //     </Row>
+    //     {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
+    //   </HeaderNav>
+    // </>
+
+    <DivRow>
+      <SpaceBetween>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {" "}
+          <img src="/images/XDC-Logo.svg" />
+          <img src="/images/VerticalLine.svg" />
+          <NetworkStats>Network Stats</NetworkStats>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <StartGuideTourButton
             onClick={() => {
               props.setJoyrideRun(true);
             }}
           >
-            <Row>
-              <Column>
-                <StartLogo>
-                  <img src="/images/Play.svg" alt="Start" />
-                </StartLogo>
-              </Column>
-              <Column>
-                <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
-              </Column>
-            </Row>
+            <StartLogo>
+              <img src="/images/Play.svg" alt="Start" />
+            </StartLogo>
+
+            <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
           </StartGuideTourButton>
-          <Column>
-            <NavbarIcon onClick={() => props.changeSide(true)}>
-              <HeaderLogoElement src="/images/Hamburger.svg" />
-            </NavbarIcon>
-          </Column>
-        </Row>
-        {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
-      </HeaderNav>
-    </>
+          <NavbarIcon onClick={() => props.changeSide(true)}>
+            <HeaderLogoElement src="/images/Hamburger.svg" />
+          </NavbarIcon>
+        </div>
+      </SpaceBetween>
+      {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
+    </DivRow>
   );
 }
+const DivRow = styled.div`
+  background: #2149b9 0% 0% no-repeat padding-box;
+  width: 100%;
+  padding: 10px;
+  white-space: nowrap;
+`;
+const NetworkStats = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  white-space: nowrap;
+`;
+const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

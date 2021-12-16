@@ -18,23 +18,22 @@ const data = [
   { time: 9, value: 93 },
   { time: 10, value: 90 },
   { time: 11, value: 85 },
-  // { time: 12, value: 90 },
-  // { time: 13, value: 93 },
-  // { time: 14, value: 90 },
-  // { time: 15, value: 85 },
-  // { time: 16, value: 90 },
-  // { time: 17, value: 90 },
-  // { time: 18, value: 85 },
-  // { time: 19, value: 90 },
+  { time: 12, value: 90 },
+  { time: 13, value: 93 },
+  { time: 14, value: 90 },
+  { time: 15, value: 85 },
+  { time: 16, value: 90 },
+  { time: 17, value: 90 },
+  { time: 18, value: 85 },
+  { time: 19, value: 90 },
 ];
 
 const EfficiencyBar = () => (
   <Div>
     <Bar
-      width={300}
+      width={150}
       maxWidth={500}
-      height={150}
-      // margin={{ top: 60, bottom: 20, left: 40 }}
+      height={120}
       data={data}
       keys={["value"]}
       indexBy="time"

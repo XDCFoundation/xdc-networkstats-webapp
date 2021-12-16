@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { linearGradientDef } from "@nivo/core";
 
 const Div = styled.div`
-  width: 250px;
   height: 150px;
+  width: 100%;
+  max-width: 500px;
 `;
 
 function NodeGraph(props) {
