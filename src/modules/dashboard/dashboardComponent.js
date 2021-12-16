@@ -170,7 +170,7 @@ export default function Dashboard(props) {
         </TabContainer>
         <FullScreen>
           <ContentParent>
-            <ContentSecurity>
+            <ContentSecurity className="security">
               <ContentData>
                 <Heading>Nodes</Heading>
                 <DataCount>{content.stats.nodes}/200</DataCount>
@@ -189,7 +189,7 @@ export default function Dashboard(props) {
               </CountryData>
             </ContentSecurity>
 
-            <ContentSpeed>
+            <ContentSpeed className="speed">
               <ContentData>
                 <Heading>Best Block</Heading>
                 <DataCount>
@@ -219,7 +219,7 @@ export default function Dashboard(props) {
               </CountryData>
             </ContentSpeed>
 
-            <ContentEfficiency>
+            <ContentEfficiency className="efficiency">
               <ContentData>
                 <Heading>Gas Price (USD)</Heading>
                 <DataCount>{content.stats.gasPrice}</DataCount>
@@ -248,7 +248,7 @@ export default function Dashboard(props) {
         <TabScreen>
           <ContentParent>
             {tabResponsive <= 1 ? (
-              <ContentSecurity>
+              <ContentSecurity className="security">
                 <ContentData>
                   <Heading>Nodes</Heading>
                   <DataCount>{content.stats.nodes}/200</DataCount>
@@ -270,7 +270,7 @@ export default function Dashboard(props) {
               ""
             )}
             {tabResponsive === 2 ? (
-              <ContentSpeed>
+              <ContentSpeed className="speed">
                 <ContentData>
                   <Heading>Best Block</Heading>
                   <DataCount>
@@ -303,7 +303,7 @@ export default function Dashboard(props) {
               ""
             )}
             {tabResponsive === 3 ? (
-              <ContentEfficiency>
+              <ContentEfficiency className="efficiency">
                 <ContentData>
                   <Heading>Gas Price (USD)</Heading>
                   <DataCount>{content.stats.gasPrice}</DataCount>
