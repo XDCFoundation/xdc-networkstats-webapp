@@ -183,9 +183,12 @@ export default function Dashboard(props) {
                     <Countries>Countries</Countries>
                     <CountriesData>{content.stats.countries}</CountriesData>
                   </div>
-                  <Image src="/images/Expand.svg" />
+                  <Image
+                    src="/images/Expand.svg"
+                    onClick={() => changeExpand(2)}
+                  />
                 </SpaceBetween>
-                <Map />
+                <Map location={content.stats.markers} />
               </CountryData>
             </ContentSecurity>
 
@@ -261,7 +264,10 @@ export default function Dashboard(props) {
                       <Countries>Countries</Countries>
                       <CountriesData>{content.stats.countries}</CountriesData>
                     </div>
-                    <Image src="/images/Expand.svg" />
+                    <Image
+                      src="/images/Expand.svg"
+                      onClick={() => changeExpand(2)}
+                    />
                   </SpaceBetween>
                   <Map />
                 </CountryData>
@@ -353,7 +359,10 @@ export default function Dashboard(props) {
                     Countries
                   </Countries>
                 </div>
-                <Image src="/images/Expand.svg" />
+                <Image
+                  src="/images/Expand.svg"
+                  onClick={() => changeExpand(2)}
+                />
               </SpaceBetween>
               {mobileTab <= 1 ? (
                 <ContentData>
