@@ -229,9 +229,9 @@ input:focus {
   height: 100vh;
 }
 .react-joyride__spotlight {
-  height: 299px !important;
+  /* height: 299px !important;
   top: 94px !important;
-  width: 639px !important;
+  width: 639px !important; */
 }
 
 .__floater__open {
