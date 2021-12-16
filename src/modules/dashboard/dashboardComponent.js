@@ -13,387 +13,6 @@ import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
 import { makeStyles } from "@material-ui/styles"
 
-
-const useStyles = makeStyles({
-  tabActive: {
-    backgrond: "red !important",
-    color: "white"
-  }
-});
-
-const HeaderContainer = styled.div`
-  background-color: #1c3c93;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  justify-content: space-between;
-  @media (max-width: 1025px) {
-    display: none;
-  }
-`;
-
-const SectionLabel = styled.div`
-  color: #c8d1f1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 33.33%;
-  border-right: 1px solid #274598;
-  font-size: 18px;
-  font-family: "Inter";
-  background-color:  ${props => props.active ? "#4065CB" : "#1C3C93"};
-
-  @media (max-width: 1025px) {
-    justify-content: center;
-    :hover {
-      background-color: #4065CB;
-      color: white;
-      cursor: pointer;
-    }
-  }
-`;
-
-const SecurityMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    width: 1025px;
-    padding-top: 5px;
-    font-size: 20px;
-  }
-  /* @media (min-width: 0px) and (max-width: 490px) {
-    display: none;
-  } */
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-const SpeedTab = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-    font-size: 20px;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-`;
-const EfficiencyTab = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-  }
-  @media (max-width: 415px) {
-    padding-left: 10px;
-    width: 100%;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-`;
-const SecurityLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 12px;
-  padding-left: 1 px;
-  font-size: 16px;
-  font-family: "Inter";
-  @media (max-width: 1025px) {
-    font-size: 20px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 5px;
-  }
-`;
-const SecurityLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  flex-direction: column;
-  padding-top: 66px;
-  padding-left: 2px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 20px;
-    padding-top: 15px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 4px;
-    padding-left: 5px;
-  }
-`;
-const SecurityLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 40px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-left: 125px;
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 23px;
-    padding-left: 0px;
-  }
-`;
-
-const TotalNodes = styled.span`
-  @media (max-width: 1025px) {
-    padding-left: 37px;
-  }
-`;
-
-const SecurityIcon = styled.img`
-  height: 20px;
-  width: 20px;
-  margin-top: 28px;
-  margin-right: 12px;
-  margin-left: 10px;
-  @media (max-width: 1025px) {
-    margin-left: 261px;
-    margin-top: 19px;
-    height: 23px;
-    width: 232;
-  }
-  @media (max-width: 415px) {
-    margin-left: 215px;
-  }
-  cursor: pointer;
-`;
-const SpeedLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 14px;
-  padding-left: 13px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-top: 40px;
-    font-size: 18px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const SpeedLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 80px;
-  padding-left: 15px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 18px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const SpeedLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 130px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-top: 40px;
-    font-size: 18px;
-    padding-left: 115px;
-  }
-  @media (max-width: 415px) {
-    margin-left: -15px;
-    padding-top: 20px;
-  }
-`;
-const EfficiencyLabel = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding-top: 14px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-top: 35px;
-    font-size: 20px;
-  }
-`;
-const EfficiencyLabelMid = styled.span`
-  color: #667fc1;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 90px;
-  font: normal normal 600 16px/20px Inter;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    padding-top: 20px;
-  }
-`;
-const EfficiencyLabelRight = styled.span`
-  color: #667fc1;
-  display: flex;
-  padding-top: 12px;
-  margin-left: 130px;
-  font: normal normal 600 16px/20px Inter;
-  @media (max-width: 1025px) {
-    padding-top: 35px;
-    padding-left: 115px;
-    font-size: 20px;
-  }
-  @media (max-width: 415px) {
-    white-space: nowrap;
-    padding-left: 15px;
-  }
-`;
-const Speedbar = styled.div`
-  margin-top: 45px;
-  margin-left: 110px;
-  @media (max-width: 1025px) {
-    margin-left: 240px;
-    margin-top: 20px;
-  }
-  @media (max-width: 415px) {
-    margin-left: 10px;
-  }
-`;
-const Countries = styled.span`
-  padding-left: 40px;
-  @media (max-width: 1025px) {
-    padding-left: 170px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 45px;
-  }
-`;
-const Blocks = styled.span`
-  padding-left: 15px;
-`;
-const LastBlock = styled.span`
-  padding-left: 130px;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-left: 245px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 179px;
-  }
-`;
-const BlockBarLeftLabel = styled.span`
-  padding-left: 125px;
-  font-size: x-small;
-  @media (max-width: 1025px) {
-    padding-left: 253px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 30px;
-  }
-`;
-const BlockBarLabelColor = styled.span`
-  color: #667fc1;
-`;
-const BlockBarRightLabel = styled.span`
-  padding-left: 260px;
-  font-size: x-small;
-  @media (max-width: 1025px) {
-    padding-left: 473px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 306px;
-  }
-`;
-const EffiencyBar = styled.div`
-  margin-top: -10px;
-  margin-left: 90px;
-  @media (max-width: 1025px) {
-    margin-top: 5px;
-    margin-left: 230px;
-  }
-  @media (max-width: 415px) {
-    margin-left: 5px;
-    margin-top: -54px;
-  }
-`;
-const UpTime = styled.span`
-  padding-left: 130px;
-  @media (max-width: 1025px) {
-    padding-left: 249px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 196px;
-  }
-`;
-
-const ButtonDiv = styled.div`
-  padding-left: 120px;
-  white-space: nowrap;
-  @media (max-width: 1025px) {
-    padding-left: 325px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 165px;
-    padding-top: 10px;
-  }
-`;
-const Button = styled.button`
-  background: #1c3c93;
-  opacity: 1;
-  border: none;
-  border-radius: 1px;
-  color: #3c70ff;
-  font-size: 12px;
-  width: 50px;
-  height: 30px;
-
-  :hover {
-    background-color: #3c70ff;
-    color: white;
-  }
-`;
-
-const TableDiv = styled.div`
-  background-color: #f8f8f8;
-  padding-top: 40px;
-  padding-bottom: 50px;
-`;
-
 const Footer = styled.div`
   background-color: white;
   color: #808080;
@@ -403,131 +22,11 @@ const Footer = styled.div`
   font-family: "Inter", sans-serif;
 `;
 
-const MapContainer = styled.div`
-  @media (max-width: 1025px) {
-    width: 70px;
-    height: 40px;
-    padding-left: 30px;
-  }
-`;
-
-const SpeedMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    display: none;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-
-const EfficiencyMain = styled.div`
-  background-color: #102c78;
-  width: 33.33%;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    display: none;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 23px;
-`;
-
-const HeaderCustom = styled.div`
-  background-color: #1c3c93;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  justify-content: space-between;
-  @media (min-width: 1025px) {
-    display: none;
-  }
-`;
-
-const SecurityMobDiv = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  width: 100%;
-  display: flex;
-  border-right: 1px solid #274598;
-  color: white;
-  padding-left: 10px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-  font: normal normal 600 20px/35px Inter;
-`;
-
-const SpeedMob = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-    font-size: 20px;
-  }
-  color: white;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-`;
-
-const EfficiencyMob = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #274598;
-  @media (max-width: 1025px) {
-    border-right: none;
-    width: 100%;
-  }
-  color: white;
-  padding-left: 15px;
-  font: normal normal 600 26px/31px Inter;
-  font-size: 19px;
-  @media (min-width: 415px) {
-    width: 100%;
-    display: none;
-  }
-`;
-
-const HeaderMob = styled.span`
-  background-color: #102c78;
-  display: flex;
-  width: 100%;
-  height: 38px;
-  color: #667fc1;
-
-  :hover {
-    color: white;
-    text-decoration: underline;
-  }
-`;
-
 const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "View the number of active nodes, their history and geolocation of all the active nodes on the blockchain.",
+      "View the number of active Heading, their history and geolocation of all the active Heading on the blockchain.",
     disableBeacon: true,
   },
   {
@@ -568,28 +67,19 @@ export default function Dashboard(props) {
 
   const handleJoyrideCallback = (data) => {
     const { status, type } = data;
-    // console.log(data)
-    // if(data.action && data.action === "next" && data.lifecycle==="complete"){
-    //   if(SwitchTab<3)
-    // setTab(SwitchTab+1);
-    // }
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
     }
   };
 
-  function tour(){
-    setTab(SwitchTab+1);
-    if(SwitchTab>2)
-    setTab(0)
-    }
-  const classes = useStyles();
-  
+  const [show, setShow] = useState(0);
+
+  const [mobileTab, setMobileTab] = useState(0);
+  const [tabResponsive, setTabResponsive] = useState(0);
   return (
-    <>
-      {/* Header nav bar */}
-      <Joyride //Start Guided Tour
+    <Div>
+      <Joyride
         steps={TOUR_STEPS}
         callback={handleJoyrideCallback}
         continuous={true}
@@ -610,414 +100,639 @@ export default function Dashboard(props) {
             fontSize: 13,
           },
         }}
-        spotlightPadding = {0}
+        spotlightPadding={0}
         run={joyrideRun}
       />
-      <>
-        <Header
-          setJoyrideRun={setJoyrideRun}
-          changeSide={changeSide}
-          SwitchSide={SwitchSide}
+      <Header
+        setJoyrideRun={setJoyrideRun}
+        changeSide={changeSide}
+        SwitchSide={SwitchSide}
+      />
+      {Expand === 2 ? (
+        <Country
+          expand={setCountry}
+          location={content.stats.map}
+          content={content}
         />
-        {Expand === 2 ? (
-          <Country expand={setCountry} location={content.stats.markers} content={content} />
-        ) : (
-          ""
-        )}
-      </>
-      {/* Section containers(Graph) */}
-      <div>
-        <Row>
-          {/*Header for Tab and Mobile response*/}
-          <HeaderCustom>
-            <SectionLabel active={SwitchTab === 1 ? true : false} onClick={() => changeTab(1)}>Security</SectionLabel>
-            <SectionLabel active={SwitchTab === 2 ? true : false} onClick={() => changeTab(2)}>Speed</SectionLabel>
-            <SectionLabel active={SwitchTab === 3 ? true : false} onClick={() => changeTab(3)}>Efficiency</SectionLabel>
-          </HeaderCustom>
-          {/*Header for PC view*/}
-          <HeaderContainer>
-            <SectionLabel>Security</SectionLabel>
-            <SectionLabel>Speed</SectionLabel>
-            <SectionLabel>Efficiency</SectionLabel>
-          </HeaderContainer>
-        </Row>
-        <Row>
-          {/*Switching of Tabs*/}
-          {SwitchTab === 1 ? (
-            <>
-              <SecurityMain className="security">
-                {" "}
-                {/*Security Section for Main,Tab*/}
-                <Row>
-                  <Column>
-                    <Row>
-                      <SecurityLabel>Nodes</SecurityLabel>
-                    </Row>
-                    <Row>
-                      {/* {content.stats.nodes}/{content.stats.totalNodes} */}
-                      <TotalNodes>{content.stats.nodes}/{content.stats.totalNodes}</TotalNodes>
-                      
-                    </Row>
-                    <Row>
-                      <SecurityLabelMid>Node History (7 Days)</SecurityLabelMid>
-                    </Row>
-                    <Row>
-                      <NodeGraph/>
-                    </Row>
-                  </Column>
-                  <Column>
-                    <Row>
-                      <Column>
-                        <Row>
-                          <SecurityLabelRight>Countries</SecurityLabelRight>
-                        </Row>
-                        <Countries>{content.stats.countries}</Countries>
-                        <Row>
-                          <MapContainer>
-                            <Map location={content.stats.markers} />
-                          </MapContainer>
-                        </Row>
-                      </Column>
-                      <Column>
-                        <SecurityIcon
-                          src="/images/Expand.svg"
-                          onClick={() => changeExpand(2)}
-                        />
-                      </Column>
-                    </Row>
-                  </Column>
-                </Row>
-              </SecurityMain>
-              <SecurityMobDiv className="security">
-                <>
-                  <Column>
-                    <Row>
-                      <HeaderMob onClick={() => changeMob(4)}>Nodes</HeaderMob>
-                      <HeaderMob onClick={() => changeMob(5)}>
-                        Countries
-                      </HeaderMob>
-                      <SecurityIcon
-                        src="/images/Expand.svg"
-                        onClick={() => changeExpand(2)}
-                      />
-                    </Row>
-                    {SwitchMob === 4 ? (
-                      <>
-                        <Row>
-                          <SecurityLabel>Nodes</SecurityLabel>
-                        </Row>
-                        <Row>{content.stats.nodes}/{content.stats.totalNodes}</Row>
-                        <Row>
-                          <SecurityLabelMid>
-                            Node History (7 Days)
-                          </SecurityLabelMid>
-                        </Row>
-                        <Row>
-                          <NodeGraph />
-                        </Row>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {SwitchMob === 5 ? (
-                      <>
-                        <Row>
-                          <SecurityLabelRight>Countries</SecurityLabelRight>
-                        </Row>
-                        <Row>
-                          <Countries>{content.stats.countries}</Countries>
-                        </Row>
-                        <Row>
-                          <MapContainer>
-                            <Map />
-                          </MapContainer>
-                        </Row>
-                      </>
-                    ) : (
-                      ""
-                    )}
+      ) : (
+        ""
+      )}
+      <MainContainer>
+        <Container>
+          <Security>Security</Security>
+          <Speed>Speed</Speed>
+          <Efficiency>Efficiency</Efficiency>
+        </Container>
+        <MobileContainer>
+          <Security
+            onClick={() => {
+              setShow(1);
+            }}
+          >
+            Security
+          </Security>
+          <Speed
+            onClick={() => {
+              setShow(2);
+            }}
+          >
+            Speed
+          </Speed>
+          <Efficiency
+            onClick={() => {
+              setShow(3);
+            }}
+          >
+            Efficiency
+          </Efficiency>
+        </MobileContainer>
+        <TabContainer>
+          <Security
+            onClick={() => {
+              setTabResponsive(1);
+            }}
+          >
+            Security
+          </Security>
+          <Speed
+            onClick={() => {
+              setTabResponsive(2);
+            }}
+          >
+            Speed
+          </Speed>
+          <Efficiency
+            onClick={() => {
+              setTabResponsive(3);
+            }}
+          >
+            Efficiency
+          </Efficiency>
+        </TabContainer>
+        <FullScreen>
+          <ContentParent>
+            <ContentSecurity className="security">
+              <ContentData>
+                <Heading>Nodes</Heading>
+                <DataCount>{content.stats.nodes}/200</DataCount>
+                <NodeHistory>Node History (7 Days)</NodeHistory>
+                <NodeGraph data={content} />
+              </ContentData>
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>Countries</Countries>
+                    <CountriesData>{content.stats.countries}</CountriesData>
+                  </div>
+                  <Image
+                    src="/images/Expand.svg"
+                    onClick={() => changeExpand(2)}
+                  />
+                </SpaceBetween>
+                <Map location={content.stats.markers} />
+              </CountryData>
+            </ContentSecurity>
 
-                    {/* <Column>
-                    <SecurityIcon src="/images/Expand.svg" />
-                  </Column> */}
-                  </Column>
-                </>
-              </SecurityMobDiv>
-            </>
-          ) : (
-            ""
-          )}
-          {SwitchTab === 2 ? (
-            <>
-              <SpeedTab className="efficiency">
-                {" "}
-                {/*Speed Section for Tab */}
-                <Row>
-                  <Column>
-                    <Row>
-                      <SpeedLabel>Best Block</SpeedLabel>
-                    </Row>
-                    <Row>
-                      <Blocks>
-                        #
-                        <NumberFormat
-                          value={content.stats.bestBlock}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                        />
-                      </Blocks>
-                    </Row>
-                    <Row>
-                      <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
-                    </Row>
-                    <Row>
-                      <Blocks>{content.stats.avgBlock +' '}Sec</Blocks>
-                    </Row>
-                  </Column>
-                  <Column>
-                    <Row>
-                      <SpeedLabelRight>Last Block</SpeedLabelRight>
-                    </Row>
-                    <LastBlock>{content.stats.lastBlock}</LastBlock>
-                    <Row>
-                      <Speedbar>
-                        <LastBlockBar content={content} />
-                      </Speedbar>
-                    </Row>
-                    <Row>
-                      <Column>
-                        <BlockBarLeftLabel>
-                          <BlockBarLabelColor>Min</BlockBarLabelColor>
-                          1s
-                        </BlockBarLeftLabel>
-                      </Column>
-                      <Column>
-                        <BlockBarRightLabel>
-                          <BlockBarLabelColor>Max</BlockBarLabelColor>
-                          26s
-                        </BlockBarRightLabel>
-                      </Column>
-                    </Row>
-                  </Column>
-                </Row>
-              </SpeedTab>
-              <SpeedMob className="speed">
-                {" "}
-                {/*Speed Section for Mob */}
-                <Column>
-                  <Row>
-                    <SpeedLabel>Best Block</SpeedLabel>
-                    <SpeedLabelRight>Last Block</SpeedLabelRight>
-                  </Row>
-                  <Row>
-                    <Blocks>#{content.stats.bestBlock}</Blocks>
-                    <LastBlock>{content.stats.lastBlock}</LastBlock>
-                  </Row>
-                  <Row>
-                    <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
-                  </Row>
-                  <Row>
-                    <Blocks>{content.stats.avgBlock}Sec</Blocks>
-                  </Row>
-                  <Row>
-                    <Speedbar>
-                      <LastBlockBar content={content} />
-                    </Speedbar>
-                  </Row>
-                  <Row>
-                    <Column>
-                      <BlockBarLeftLabel>
-                        <BlockBarLabelColor>Min</BlockBarLabelColor>
-                        1s
-                      </BlockBarLeftLabel>
-                    </Column>
-                    <Column>
-                      <BlockBarRightLabel>
-                        <BlockBarLabelColor>Max</BlockBarLabelColor>
-                        26s
-                      </BlockBarRightLabel>
-                    </Column>
-                  </Row>
-                </Column>
-              </SpeedMob>
-            </>
-          ) : (
-            ""
-          )}
-          {SwitchTab === 3 ? (
-            <>
-              <EfficiencyTab className="speed">
-                {/*Efficiency Section for Tab*/}
-                <Row>
-                  <Column>
-                    <Row>
-                      <EfficiencyLabel>Gas Price</EfficiencyLabel>
-                    </Row>
-                    <Row>{content.stats.gasPrice}</Row>
-                    <Row>
-                      <EfficiencyLabelMid>
-                        Avg Transaction Rate
-                      </EfficiencyLabelMid>
-                    </Row>
-                    <Row>{content.stats.avgRate}TPS</Row>
-                  </Column>
-                  <Column>
-                    <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                    <Row>
-                      <UpTime>{content.stats.upTime}%</UpTime>
-                      <div>
-                        <Row>
-                          <ButtonDiv>
-                            <Button>30D</Button>
-                            <Button>7D</Button>
-                            <Button>24H</Button>
-                          </ButtonDiv>
-                        </Row>
-                      </div>
-                    </Row>
-                    <Row>
-                      <EffiencyBar>
-                        <UpTimeTab />
-                      </EffiencyBar>
-                    </Row>
-                  </Column>
-                </Row>
-              </EfficiencyTab>
-              <EfficiencyMob className="efficiency">
-                {/*Efficiency Section for Mob*/}
-                <Row>
-                  <Column>
-                    <Row>
-                      <EfficiencyLabel>Gas Price</EfficiencyLabel>
-                      <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                    </Row>
-                    <Row>
-                      {content.stats.gasPrice}
-                      <UpTime>{content.stats.upTime}%</UpTime>
-                    </Row>
-                    <Row>
-                      <EfficiencyLabelMid>
-                        Avg Transaction Rate
-                      </EfficiencyLabelMid>
-                    </Row>
-                    <Row>
-                      {content.stats.avgRate}TPS
-                      <ButtonDiv>
-                        <Button>30D</Button>
-                        <Button>7D</Button>
-                        <Button>24H</Button>
-                      </ButtonDiv>
-                    </Row>
-                    <Row>
-                      <EffiencyBar>
-                        <UpTimeBar></UpTimeBar>
-                      </EffiencyBar>
-                    </Row>
-                  </Column>
-                </Row>
-              </EfficiencyMob>
-            </>
-          ) : (
-            ""
-          )}
-          <SpeedMain className="speed">
-            {" "}
-            {/*Speed Section for Main*/}
-            <Row>
-              <Column>
-                <Row>
-                  <SpeedLabel>Best Block</SpeedLabel>
-                </Row>
-                <Row>
-                  <Blocks>
-                    #
+            <ContentSpeed className="speed">
+              <ContentData>
+                <Heading>Best Block</Heading>
+                <DataCount>
+                  #{" "}
+                  <NumberFormat
+                    value={content.stats.bestBlock}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                  />
+                </DataCount>
+                <NodeHistory>Avg Block Time</NodeHistory>
+                <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+              </ContentData>
+
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>Last Block</Countries>
+                    <CountriesData>
+                      {content.stats.lastBlock}s ago
+                    </CountriesData>
+                  </div>
+                </SpaceBetween>
+                <Speedbar>
+                  <LastBlockBar content={content} />
+                </Speedbar>
+              </CountryData>
+            </ContentSpeed>
+
+            <ContentEfficiency className="efficiency">
+              <ContentData>
+                <Heading>Gas Price (USD)</Heading>
+                <DataCount>{content.stats.gasPrice}</DataCount>
+                <NodeHistory>Avg Transaction Rate</NodeHistory>
+                <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+              </ContentData>
+              <CountryData>
+                <SpaceBetween>
+                  <div>
+                    <Countries>UP Time</Countries>
+                    <CountriesData>{content.stats.upTime}%</CountriesData>
+                  </div>
+                  <ButtonDiv>
+                    <Button>30D</Button>
+                    <Button>7D</Button>
+                    <Button>24H</Button>
+                  </ButtonDiv>
+                </SpaceBetween>
+                <Speedbar>
+                  <UpTimeBar></UpTimeBar>
+                </Speedbar>
+              </CountryData>
+            </ContentEfficiency>
+          </ContentParent>
+        </FullScreen>
+        <TabScreen>
+          <ContentParent>
+            {tabResponsive <= 1 ? (
+              <ContentSecurity className="security">
+                <ContentData>
+                  <Heading>Nodes</Heading>
+                  <DataCount>{content.stats.nodes}/200</DataCount>
+                  <NodeHistory>Node History (7 Days)</NodeHistory>
+                  <NodeGraph data={content} />
+                </ContentData>
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>Countries</Countries>
+                      <CountriesData>{content.stats.countries}</CountriesData>
+                    </div>
+                    <Image
+                      src="/images/Expand.svg"
+                      onClick={() => changeExpand(2)}
+                    />
+                  </SpaceBetween>
+                  <Map />
+                </CountryData>
+              </ContentSecurity>
+            ) : (
+              ""
+            )}
+            {tabResponsive === 2 ? (
+              <ContentSpeed className="speed">
+                <ContentData>
+                  <Heading>Best Block</Heading>
+                  <DataCount>
+                    #{" "}
                     <NumberFormat
                       value={content.stats.bestBlock}
                       displayType={"text"}
                       thousandSeparator={true}
                     />
-                  </Blocks>
-                </Row>
-                <Row>
-                  <SpeedLabelMid>Avg Block Time</SpeedLabelMid>
-                </Row>
-                <Row>
-                  <Blocks>{content.stats.avgBlock + ' '}Sec</Blocks>
-                </Row>
-              </Column>
-              <Column>
-                <Row>
-                  <SpeedLabelRight>Last Block</SpeedLabelRight>
-                </Row>
-                <LastBlock>{content.stats.lastBlock}</LastBlock>
-                <Row>
+                  </DataCount>
+                  <NodeHistory>Avg Block Time</NodeHistory>
+                  <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+                </ContentData>
+
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>Last Block</Countries>
+                      <CountriesData>
+                        {content.stats.lastBlock}s ago
+                      </CountriesData>
+                    </div>
+                  </SpaceBetween>
                   <Speedbar>
                     <LastBlockBar content={content} />
                   </Speedbar>
-                </Row>
-                <Row>
-                  <Column>
-                    <BlockBarLeftLabel>
-                      <BlockBarLabelColor>Min &nbsp;</BlockBarLabelColor>
-                      1s
-                    </BlockBarLeftLabel>
-                  </Column>
-                  <Column>
-                    <BlockBarRightLabel>
-                      <BlockBarLabelColor>Max &nbsp;</BlockBarLabelColor>
-                      26s
-                    </BlockBarRightLabel>
-                  </Column>
-                </Row>
-              </Column>
-            </Row>
-          </SpeedMain>
-          <EfficiencyMain className="efficiency">
-            {/*Efficiency Section for Main*/}
-            <Row>
-              <Column>
-                <Row>
-                  <EfficiencyLabel>Gas Price</EfficiencyLabel>
-                </Row>
-                <Row>{content.stats.gasPrice}</Row>
-                <Row>
-                  <EfficiencyLabelMid>Avg Transaction Rate</EfficiencyLabelMid>
-                </Row>
-                <Row>{content.stats.avgRate+' '}TPS</Row>
-              </Column>
-              <Column>
-                <Row>
-                  <EfficiencyLabelRight>Up Time</EfficiencyLabelRight>
-                </Row>
-                <Row>
-                  <UpTime>{content.stats.upTime}%</UpTime>
-                  <div>
-                    <Row>
-                      <ButtonDiv>
-                        <Button>30D</Button>
-                        <Button>7D</Button>
-                        <Button>24H</Button>
-                      </ButtonDiv>
-                    </Row>
-                  </div>
-                </Row>
-                <Row>
-                  <Column>
-                    <EffiencyBar>
-                      <UpTimeBar> </UpTimeBar>
-                    </EffiencyBar>
-                  </Column>
-                </Row>
-              </Column>
-            </Row>
-          </EfficiencyMain>
-        </Row>
-      </div>
-      {/* Table view */}
+                </CountryData>
+              </ContentSpeed>
+            ) : (
+              ""
+            )}
+            {tabResponsive === 3 ? (
+              <ContentEfficiency className="efficiency">
+                <ContentData>
+                  <Heading>Gas Price (USD)</Heading>
+                  <DataCount>{content.stats.gasPrice}</DataCount>
+                  <NodeHistory>Avg Transaction Rate</NodeHistory>
+                  <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+                </ContentData>
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>UP Time</Countries>
+                      <CountriesData>{content.stats.upTime}%</CountriesData>
+                    </div>
+                    <ButtonDiv>
+                      <Button>30D</Button>
+                      <Button>7D</Button>
+                      <Button>24H</Button>
+                    </ButtonDiv>
+                  </SpaceBetween>
+                  <Speedbar>
+                    <UpTimeBar></UpTimeBar>
+                  </Speedbar>
+                </CountryData>
+              </ContentEfficiency>
+            ) : (
+              ""
+            )}
+          </ContentParent>
+        </TabScreen>
+        <MobileContentParent>
+          {show <= 1 ? (
+            <ContentSecurityMobile>
+              <SpaceBetween>
+                <div style={{ display: "flex", marginBottom: "8px" }}>
+                  <Heading
+                    onClick={() => {
+                      setMobileTab(1);
+                    }}
+                  >
+                    Nodes
+                  </Heading>
+                  &nbsp;&nbsp;&nbsp;
+                  <Countries
+                    onClick={() => {
+                      setMobileTab(2);
+                    }}
+                  >
+                    Countries
+                  </Countries>
+                </div>
+                <Image
+                  src="/images/Expand.svg"
+                  onClick={() => changeExpand(2)}
+                />
+              </SpaceBetween>
+              {mobileTab <= 1 ? (
+                <ContentData>
+                  <Heading>Nodes</Heading>
+                  <DataCount>{content.stats.nodes}/200</DataCount>
+                  <NodeHistory>Node History (7 Days)</NodeHistory>
+                  <MobileGraphDiv>
+                    <NodeGraph data={content} />
+                  </MobileGraphDiv>
+                </ContentData>
+              ) : (
+                ""
+              )}
+              {mobileTab === 2 ? (
+                <CountryData>
+                  <SpaceBetween>
+                    <div>
+                      <Countries>Countries</Countries>
+                      <BestBlockData>{content.stats.countries}</BestBlockData>
+                    </div>
+                  </SpaceBetween>
+                  <MapWidth>
+                    <Map />
+                  </MapWidth>
+                </CountryData>
+              ) : (
+                ""
+              )}
+            </ContentSecurityMobile>
+          ) : (
+            ""
+          )}
+          {show === 2 ? (
+            <MobileSpeedBlock>
+              <SpaceBetween>
+                <div>
+                  <BestBlock>BestBlock</BestBlock>
+                  <BestBlockData>
+                    #{" "}
+                    <NumberFormat
+                      value={content.stats.bestBlock}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                    />
+                  </BestBlockData>
+                </div>
+                <div>
+                  <LastBlock>LastBlock</LastBlock>
+                  <LastBLockData> {content.stats.lastBlock}s ago</LastBLockData>
+                </div>
+              </SpaceBetween>
+              <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
+              <MobileAverageBlockData>
+                {content.stats.avgBlock}Sec
+              </MobileAverageBlockData>
+              <MobileGraphDiv>
+                <LastBlockBar content={content} />
+              </MobileGraphDiv>
+            </MobileSpeedBlock>
+          ) : (
+            ""
+          )}
+          {show === 3 ? (
+            <MobileSpeedBlock>
+              <SpaceBetween>
+                <div>
+                  <BestBlock>Gas Price (USD)</BestBlock>
+                  <BestBlockData>{content.stats.gasPrice}</BestBlockData>
+                </div>
+                <div>
+                  <LastBlock>UP Time</LastBlock>
+                  <LastBLockData> {content.stats.upTime}%</LastBLockData>
+                </div>
+              </SpaceBetween>
+              <SpaceBetween>
+                <div>
+                  <MobileAverageBlock>Avg Transaction Rate</MobileAverageBlock>
+                  <MobileAverageBlockData>
+                    {content.stats.avgRate}TPS
+                  </MobileAverageBlockData>
+                </div>
+                <ButtonDiv>
+                  <Button>30D</Button>
+                  <Button>7D</Button>
+                  <Button>24H</Button>
+                </ButtonDiv>
+              </SpaceBetween>
+              <MobileGraphDiv>
+                <UpTimeBar> </UpTimeBar>
+              </MobileGraphDiv>
+            </MobileSpeedBlock>
+          ) : (
+            ""
+          )}
+        </MobileContentParent>
+      </MainContainer>
       <TableDiv>
         <Table content={content} />
+        <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
       </TableDiv>
-      <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
-    </>
+    </Div>
   );
 }
+
+const Div = styled.div`
+  width: 100%;
+`;
+
+const MainContainer = styled.div`
+  width: 100%;
+`;
+const Security = styled.div`
+  color: #c8d1f1;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 1px solid #274598;
+`;
+const Speed = styled.div`
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 1px solid #274598;
+  color: #c8d1f1;
+`;
+const Efficiency = styled.div`
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 1px solid #274598;
+  color: #c8d1f1;
+`;
+const ContentSecurity = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentSecurityMobile = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 300px;
+  }
+`;
+const ContentSpeed = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentEfficiency = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentParent = styled.div`
+  display: flex;
+  width: 100%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+`;
+const TabScreen = styled.div`
+  @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    display: none;
+  }
+`;
+const MobileContentParent = styled.div`
+  display: flex;
+  width: 100%;
+  @media (min-width: 767px) {
+    display: none;
+  }
+`;
+const Heading = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+`;
+const ContentData = styled.div`
+  width: 50%;
+
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+    /* max-width: 478px; */
+  }
+`;
+const DataCount = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+`;
+const NodeHistory = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 15px;
+  white-space: nowrap;
+`;
+const CountryData = styled.div`
+  width: 50%;
+  /* max-width: 282px; */
+`;
+const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Countries = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  color: #667fc1;
+`;
+const CountriesData = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+`;
+const Image = styled.img`
+  width: 20px;
+`;
+const BlockTime = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+`;
+const Speedbar = styled.div`
+  margin-top: 10px;
+  width: 100%;
+  max-width: 500px;
+`;
+const TableDiv = styled.div`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  margin-top: 40px;
+`;
+
+const ButtonDiv = styled.div`
+  white-space: nowrap;
+  cursor: pointer;
+`;
+const Button = styled.button`
+  background: #1c3c93;
+  opacity: 1;
+  border: none;
+  border-radius: 1px;
+  color: #3c70ff;
+  font-size: 0.8rem;
+  height: 30px;
+  cursor: pointer;
+
+  :hover {
+    background-color: #3c70ff;
+    color: white;
+  }
+`;
+
+const BestBlock = styled.div`
+  font: normal normal 600 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #667fc1;
+  white-space: nowrap;
+`;
+const BestBlockData = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 8px;
+`;
+const MobileSpeedBlock = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 100%;
+  padding: 15px;
+  border-right: 1px solid #274598;
+`;
+const LastBlock = styled.div`
+  color: #667fc1;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Inter;
+`;
+const LastBLockData = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 8px;
+`;
+const MobileAverageBlock = styled.div`
+  color: #667fc1;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Inter;
+`;
+const MobileAverageBlockData = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 8px;
+`;
+const MobileGraphDiv = styled.div`
+  width: 100%;
+`;
+const MapWidth = styled.div`
+  width: 100%;
+`;
+const TabContainer = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: none;
+  padding: 15px;
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    display: flex;
+  }
+`;
+const MobileContainer = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: flex;
+  padding: 15px;
+
+  @media (min-width: 767px) {
+    display: none;
+  }
+`;
+const Container = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: flex;
+  padding: 15px;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+const FullScreen = styled.div`
+  @media (min-width: 100px) and (max-width: 1024px) {
+    display: none;
+  }
+`;

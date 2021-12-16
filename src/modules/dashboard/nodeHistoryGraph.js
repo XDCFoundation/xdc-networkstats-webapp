@@ -6,18 +6,9 @@ import utility from "../../utility";
 import { NodesService } from "../../services";
 
 const Div = styled.div`
-  width: 250px;
   height: 150px;
-  padding-bottom: 10px;
-  @media (max-width: 1024px) {
-    width: 450px;
-    height: 200px;
-    padding-left: 40px;
-  }
-  @media (max-width: 415px) {
-    width: 300px;
-    height: 170px;
-  }
+  width: 100%;
+  max-width: 500px;
 `;
 
 function NodeGraph() {

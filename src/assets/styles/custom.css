@@ -229,13 +229,6 @@ input:focus {
   height: 100vh;
 }
 
-@media (max-width:1025px) {
-  .react-joyride__spotlight {
-    height: 299px !important;
-    top: 94px !important;
-    width: 639px !important;
-  }
-}
 
 .__floater__open {
   top: -29px !important;
