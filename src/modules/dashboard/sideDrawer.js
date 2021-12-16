@@ -5,59 +5,68 @@ import styled from "styled-components";
 
 const Blur = styled.div`
   background: rgba(0, 0, 0, 0.7) !important;
-  /* width: 1537px;
-  height: 1080px; */
+  width: 1537px;
+  height: 1080px;
   position: fixed;
   z-index: 1;
   transition: linear;
-  /* @media (max-width: 1025px) {
+  @media (max-width: 1025px) {
     width: 700px;
   }
   @media (max-width: 415px) {
     width: 270px;
-  } */
+  }
 `;
 
 const Div = styled.div`
   background-color: #102e84;
-  /* width: 383px; */
+  width: 383px;
   color: white;
-  /* height: 1080px; */
+  height: 1080px;
   position: fixed;
-  left: 1537px;
+  left: auto;
+  right: 0;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
 
-  /* @media (max-width: 1025px) {
-    left: 685px;
+  @media (max-width: 1025px) {
+    left: auto;
+    right: 0;
     width: 340px;
   }
   @media (max-width: 415px) {
-    left: 220px;
+    left: auto;
+    right: 0;
     width: 200px;
-  } */
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
-  /* padding-top: 10px;
-  padding-bottom: 50px; */
+  padding-top: 10px;
+  padding-bottom: 50px;
 `;
 const NavLabel = styled.span`
+  @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
   display: flex;
   justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
   color: #4666c4;
-  /* padding-left: 10px;
-  padding-top: 15px; */
+  padding-left: 10px;
+  padding-top: 15px;
 `;
 
 const Content = styled.span`
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
-  font-size: 18px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
   margin-top: 5px;
   cursor: pointer;
 `;
