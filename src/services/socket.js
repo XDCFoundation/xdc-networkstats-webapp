@@ -7,8 +7,7 @@ import store from '../store'
 import moment from 'moment'
 import utility from "../utility";
 import TableGraph from "../modules/dashboard/tableGraph";
-import { NodesService } from "../services";
-import { object } from 'underscore';
+import { NodesService } from "../services/";
 // export default {
 //     connectSocket
 // }
@@ -532,6 +531,7 @@ function transactions(data){
 }
 
      function updateBestBlock(data){
+     const wei = 0.000000000000000001;
     if(data.length){
         let bBlock = _.maxBy(data, function (node)
         {
@@ -547,10 +547,19 @@ function transactions(data){
             }).stats;
 
             lastBlock = bestStats.block.arrived;
+            let GasInit = bestStats.gasPrice;
             let time = timeFilter(lastBlock);
-            store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
+            async function fetchData() {
+                const [error, res] = await utility.parseResponse(NodesService.getGasPrice()); 
+                let price = res.responseData[0].gasPrice.data.ETH.quote.USD.price;
+                let convertedPrice = price*wei;
+                gasPrice = convertedPrice*GasInit;
 
+            }
+            fetchData();
             
+            store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
+            store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
         }
     }
 }
@@ -586,5 +595,5 @@ let table = [];
             nodeName: nodesArr[i].info.name,
           });
     }
-    // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
-},1000)
+    store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
+},2000)

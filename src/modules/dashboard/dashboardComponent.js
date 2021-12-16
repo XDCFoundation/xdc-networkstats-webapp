@@ -11,7 +11,8 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
 import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
-import { makeStyles } from "@material-ui/styles"
+import utility from "../../utility";
+import NodesService from "../../services/nodes";
 
 const Footer = styled.div`
   background-color: white;
@@ -77,6 +78,13 @@ export default function Dashboard(props) {
 
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
+
+  async function fetchTime(value) {
+    const [error, res] = await utility.parseResponse(
+      NodesService.getUpTime(value)
+    );
+    console.log("res", res);
+  }
   return (
     <Div>
       <Joyride
@@ -111,7 +119,7 @@ export default function Dashboard(props) {
       {Expand === 2 ? (
         <Country
           expand={setCountry}
-          location={content.stats.map}
+          location={content.stats.markers}
           content={content}
         />
       ) : (
@@ -174,7 +182,9 @@ export default function Dashboard(props) {
             <ContentSecurity className="security">
               <ContentData>
                 <Heading>Nodes</Heading>
-                <DataCount>{content.stats.nodes}/200</DataCount>
+                <DataCount>
+                  {content.stats.nodes}/{content.stats.totalNodes}
+                </DataCount>
                 <NodeHistory>Node History (7 Days)</NodeHistory>
                 <NodeGraph data={content} />
               </ContentData>
@@ -205,16 +215,14 @@ export default function Dashboard(props) {
                   />
                 </DataCount>
                 <NodeHistory>Avg Block Time</NodeHistory>
-                <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+                <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
               </ContentData>
 
               <CountryData>
                 <SpaceBetween>
                   <div>
                     <Countries>Last Block</Countries>
-                    <CountriesData>
-                      {content.stats.lastBlock}s ago
-                    </CountriesData>
+                    <CountriesData>{content.stats.lastBlock}</CountriesData>
                   </div>
                 </SpaceBetween>
                 <Speedbar>
@@ -222,13 +230,12 @@ export default function Dashboard(props) {
                 </Speedbar>
               </CountryData>
             </ContentSpeed>
-
             <ContentEfficiency className="efficiency">
               <ContentData>
                 <Heading>Gas Price (USD)</Heading>
                 <DataCount>{content.stats.gasPrice}</DataCount>
                 <NodeHistory>Avg Transaction Rate</NodeHistory>
-                <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+                <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
               </ContentData>
               <CountryData>
                 <SpaceBetween>
@@ -237,9 +244,9 @@ export default function Dashboard(props) {
                     <CountriesData>{content.stats.upTime}%</CountriesData>
                   </div>
                   <ButtonDiv>
-                    <Button>30D</Button>
-                    <Button>7D</Button>
-                    <Button>24H</Button>
+                    <Button onClick={() => fetchTime(30)}>30D</Button>
+                    <Button onClick={() => fetchTime(7)}>7D</Button>
+                    <Button onClick={() => fetchTime(1)}>24H</Button>
                   </ButtonDiv>
                 </SpaceBetween>
                 <Speedbar>
@@ -255,7 +262,9 @@ export default function Dashboard(props) {
               <ContentSecurity className="security">
                 <ContentData>
                   <Heading>Nodes</Heading>
-                  <DataCount>{content.stats.nodes}/200</DataCount>
+                  <DataCount>
+                    {content.stats.nodes}/{content.stats.totalNodes}
+                  </DataCount>
                   <NodeHistory>Node History (7 Days)</NodeHistory>
                   <NodeGraph data={content} />
                 </ContentData>
@@ -289,16 +298,14 @@ export default function Dashboard(props) {
                     />
                   </DataCount>
                   <NodeHistory>Avg Block Time</NodeHistory>
-                  <BlockTime>{content.stats.avgBlock}Sec</BlockTime>
+                  <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
                 </ContentData>
 
                 <CountryData>
                   <SpaceBetween>
                     <div>
                       <Countries>Last Block</Countries>
-                      <CountriesData>
-                        {content.stats.lastBlock}s ago
-                      </CountriesData>
+                      <CountriesData>{content.stats.lastBlock}</CountriesData>
                     </div>
                   </SpaceBetween>
                   <Speedbar>
@@ -315,7 +322,7 @@ export default function Dashboard(props) {
                   <Heading>Gas Price (USD)</Heading>
                   <DataCount>{content.stats.gasPrice}</DataCount>
                   <NodeHistory>Avg Transaction Rate</NodeHistory>
-                  <BlockTime>{content.stats.avgRate}TPS</BlockTime>
+                  <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                 </ContentData>
                 <CountryData>
                   <SpaceBetween>
@@ -368,7 +375,9 @@ export default function Dashboard(props) {
               {mobileTab <= 1 ? (
                 <ContentData>
                   <Heading>Nodes</Heading>
-                  <DataCount>{content.stats.nodes}/200</DataCount>
+                  <DataCount>
+                    {content.stats.nodes}/{content.stats.totalNodes}
+                  </DataCount>
                   <NodeHistory>Node History (7 Days)</NodeHistory>
                   <MobileGraphDiv>
                     <NodeGraph data={content} />
@@ -412,12 +421,12 @@ export default function Dashboard(props) {
                 </div>
                 <div>
                   <LastBlock>LastBlock</LastBlock>
-                  <LastBLockData> {content.stats.lastBlock}s ago</LastBLockData>
+                  <LastBLockData> {content.stats.lastBlock}</LastBLockData>
                 </div>
               </SpaceBetween>
               <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
               <MobileAverageBlockData>
-                {content.stats.avgBlock}Sec
+                {content.stats.avgBlock + " "}Sec
               </MobileAverageBlockData>
               <MobileGraphDiv>
                 <LastBlockBar content={content} />
@@ -442,7 +451,7 @@ export default function Dashboard(props) {
                 <div>
                   <MobileAverageBlock>Avg Transaction Rate</MobileAverageBlock>
                   <MobileAverageBlockData>
-                    {content.stats.avgRate}TPS
+                    {content.stats.avgRate + " "}TPS
                   </MobileAverageBlockData>
                 </div>
                 <ButtonDiv>
@@ -462,8 +471,8 @@ export default function Dashboard(props) {
       </MainContainer>
       <TableDiv>
         <Table content={content} />
-        <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
       </TableDiv>
+      <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
     </Div>
   );
 }
@@ -625,9 +634,9 @@ const Speedbar = styled.div`
   max-width: 500px;
 `;
 const TableDiv = styled.div`
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: #f8f8f8;
   border-radius: 4px;
-  margin-top: 40px;
+  padding: 50px;
 `;
 
 const ButtonDiv = styled.div`

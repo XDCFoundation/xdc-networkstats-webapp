@@ -198,6 +198,7 @@ export default function EnhancedTable(props) {
   const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
   return (
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+      <Paper sx={{ width: "auto" }}>
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <EnhancedTableHead
@@ -325,6 +326,7 @@ export default function EnhancedTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
+      </Paper>
     </TableBox>
   );
 }

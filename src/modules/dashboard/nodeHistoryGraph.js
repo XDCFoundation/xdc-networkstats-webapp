@@ -29,7 +29,7 @@ function NodeGraph() {
     setNode3(res.responseData[3].nodes);
     setNode4(res.responseData[4].nodes);
     setNode5(res.responseData[5].nodes);
-    // setNode6(res.responseData[6].nodes);
+    setNode6(res.responseData[6].nodes);
   }
   fetchData();
   const data = [

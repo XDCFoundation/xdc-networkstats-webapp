@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import {
   ComposableMap,
@@ -8,47 +9,27 @@ import {
 import styled from "styled-components";
 
 const Div = styled.div`
-
   fill: #103aaa;
-
   width: 100%;
-
   max-width: 240px;
-
   margin-left: 0px;
-
-
-
   @media (min-width: 300px) and (max-width: 767px) {
-
     fill: #103aaa;
-
     width: 100%;
-
     max-width: unset;
-
   }
-
 `;
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-export default function CountryMap(props) {
+export default function Map(props) {
   const [node, setNode] = useState([]);
-  const [data, setData] = useState([]);
   useEffect(() => {
-    if (props?.marker && props?.marker?.length >= 1) {
-      (props?.marker).map((item, index) => {
-        setData(item);
-      });
-      async function fetchData() {
-        setNode(props.marker);
-      }
-      fetchData();
+    if (!_.isUndefined(props.location) && !_.isEmpty(props.location)) {
+      setNode(props.location);
     }
-  }, [props?.marker]);
-
+  });
   return (
     <Div>
       <ComposableMap>
