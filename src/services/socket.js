@@ -40,10 +40,6 @@ let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
 
-// async function connectSocket(){
-    // const socket = io.connect("wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0");
-
-    console.log('line 38383838383838383838383838383838338383838');
 
     const socket = io("http://3.88.252.78:3000/", {
       path: "/stats-data/",
@@ -51,20 +47,14 @@ let node = [];
       reconnection: true,
     });
 
-
-    // store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: 888888888})
-
     socket.on('open', function open(){
         socket.emit('ready');
-        console.log('The connection has been opened.');
     })
 
     socket.on('end', function end(){
-        console.log('Socket connection ended.')
     })
 
     socket.on('error', function error(err){
-        console.log(err);
     })
 
     socket.on('reconnecting', function reconnecting(opts) {
@@ -72,12 +62,7 @@ let node = [];
     })
 
     socket.on('network-stats-data', function node(data){
-         
-        //  if(data.action === "block"){
-        //     console.log("block agya");
-        // }
         if(data.action === "update"){
-            console.log("update agya");
         }
 
         socketAction(data.action, data.data);
@@ -87,22 +72,12 @@ let node = [];
         if(!_.isEmpty(data.nodes))
         socketAction("network-stats-nodes", data.nodes);
         nodesArr = data.nodes;
-        // console.log(data.nodes[0],"..........");
-        // data.nodes.map((value)=>{
-        // //   console.log(value,"./////gy///////////////");
-        //   var arr = _.chunk(value,100);
-        //   console.log(arr);
-        // })
-        // console.log("./////////////////////////s/", msg);
     });
 
     socket.on('client-latency', function(data) {
-        // $scope.latency = data.latency;
     })
-//}
 
 async function socketAction(action, data){
-    // data = xssFilter(data);
     switch(action)
     {
         case "network-stats-nodes":
@@ -119,37 +94,10 @@ async function socketAction(action, data){
                     {
                     updateActiveNodes(nodesArr);
                     }
-
-            
-
-            // for(let i=0; i<nodesArr.length; i++){
-            //     if(typeof nodesArr[i].stats.hashrate === 'undefined'){
-            //         nodesArr[i].stats.hashrate = 0;
-            //     }
-
-            //     nodesArr[i] = await latencyFilter(nodesArr[i]);
-
-            //     if(_.isUndefined(nodesArr.history)){
-            //         nodesArr.history = new Array(40);
-            //         _.fill(nodesArr.history, -1);
-            //     }
-
-            //     // Init or recover pin
-            //     // nodesArr[i].pinned = ($scope.pinned.indexOf(node.id) >= 0 ? true : false); //this needs to be implemented with correct syntax
-            // }
-
-            // if( nodesArr.length > 0 )
-            // {
-            //     // dispatchAction(eventConstants.UPDATE_NODES, nodesArr);
-            //     store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesArr})
-            //     await updateActiveNodes(); //all the commented stuff above needs to be implemented in the correct way for this.
-            // }
             break;
         case "add":
-            console.log("");
             break;
         case "update":
-            console.log("");
             let index = findIndex({id: data.id});
 
             if( index >= 0 && !_.isUndefined(nodesArr[index]) && !_.isUndefined(nodesArr[index].stats) ){
@@ -182,10 +130,7 @@ async function socketAction(action, data){
                         nodesArr[index] = await latencyFilter(nodesArr[index]);
                     }
 
-                    // dispatchAction(eventConstants.UPDATE_NODES, nodesArr);
-                    // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: nodesArr})
-
-                    await updateBestBlock();
+                     updateBestBlock(nodesArr);
                 }
             }
             break;
@@ -208,16 +153,8 @@ async function socketAction(action, data){
 
                     nodesArr[index1].history = data.history;
                 }
-                console.log("table", nodesArr[index1]);
-                console.log("log", data.block);
-                console.log("prop", data.propagationAvg);
                 nodesArr[index1].stats.block = data.block;
                 nodesArr[index1].stats.propagationAvg = data.propagationAvg;
-                // console.log("qwerty", nodesArr[index1]);
-                console.log("arr", nodesArr);
-                // dispatchAction(eventConstants.UPDATE_NODES, nodesArr);
-                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes[index1]})
-                // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: nodesArr})
 
                  updateBestBlock(nodesArr);
             }}
@@ -233,10 +170,6 @@ async function socketAction(action, data){
                     nodesArr[index2].stats.pending = data.pending;
             }
         }
-            // dispatchAction(eventConstants.UPDATE_NODES, nodesArr);
-            // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-            // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: nodesArr})
-
 
             break;
         case "stats":
@@ -266,11 +199,6 @@ async function socketAction(action, data){
                      updateActiveNodes(nodesArr);
                 }
             }
-            // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: nodesArr})
-            
-            //   console.log("tablerows", tableRows);
-            // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-            //   store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: tableRows})
         }
             
             
@@ -286,14 +214,8 @@ async function socketAction(action, data){
                 if( _.isUndefined(nodesArr[index4].pinned) )
                     nodesArr[index4].pinned = false;
 
-                // Init latency
                 nodesArr[index4] = await latencyFilter(nodesArr[index4]);
 
-                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-        //    store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: nodesArr})
-                // await updateActiveNodes();
-                
             } }
             break;
         case "blockPropagationChart":
@@ -318,41 +240,12 @@ async function socketAction(action, data){
                 var value = transactions(avgTransactionRate);
                 store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
 
-            // if( !_.isEqual(avgHashrate, data.avgHashrate) )
-            //     avgHashrate = data.avgHashrate;
-
-            // if( !_.isEqual(lastGasLimit, data.gasLimit) && data.gasLimit.length >= 40 )
-            //     lastGasLimit = data.gasLimit;
-
             if( !_.isEqual(lastBlocksTime, data.blocktime) && data.blocktime.length >= MAX_BINS )
                 lastBlocksTime = data.blocktime;
                 store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime})
 
             if( !_.isEqual(difficultyChart, data.difficulty) && data.difficulty.length >= MAX_BINS )
                 difficultyChart = data.difficulty;
-
-            // if( !_.isEqual(blockPropagationChart, data.propagation.histogram) ) {
-            //     blockPropagationChart = data.propagation.histogram;
-            //     blockPropagationAvg = data.propagation.avg;
-            // }
-
-            // data.uncleCount.reverse();
-
-            // if( !_.isEqual(uncleCountChart, data.uncleCount) && data.uncleCount.length >= MAX_BINS ) {
-            //     uncleCount = data.uncleCount[data.uncleCount.length-2] + data.uncleCount[data.uncleCount.length-1];
-            //     uncleCountChart = data.uncleCount;
-            // }
-
-            // if( !_.isEqual(transactionDensity, data.transactions) && data.transactions.length >= MAX_BINS )
-            //     transactionDensity = data.transactions;
-
-            // if( !_.isEqual(gasSpending, data.gasSpending) && data.gasSpending.length >= MAX_BINS )
-            //     gasSpending = data.gasSpending;
-
-            // if( !_.isEqual(miners, data.miners) ) {
-            //     miners = data.miners;
-            //     await getMinersNames();
-            // }
 
             break;
         case "inactive":
@@ -363,10 +256,6 @@ async function socketAction(action, data){
                 if( !_.isUndefined(data.stats) )
                     nodesArr[index5].stats = data.stats;
 
-                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
-
-                // await updateActiveNodes();
             }
             break;
         case "latency":
@@ -385,32 +274,14 @@ async function socketAction(action, data){
                     }
                 }
 
-                // dispatchAction(eventConstants.UPDATE_NODES, nodes);
-                // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodes})
             }
 
             break;
         case "client-ping":
-            // socket.emit('client-pong', {
-            //     serverTime: data.serverTime,
-            //     clientTime: _.now()
-            // });
             break;
     }
 }
 
-async function xssFilter(obj){
-    if(_.isArray(obj)) {
-        return _.map(obj, xssFilter);
-
-    } else if(_.isObject(obj)) {
-        return _.mapValues(obj, xssFilter);
-
-    } else if(_.isString(obj)) {
-        return obj.replace(/\< *\/* *script *>*/gi,'').replace(/javascript/gi,'');
-    } else
-        return obj;
-}
 
 async function latencyFilter(node)
 {
@@ -478,7 +349,6 @@ function transactions(data){
     let temp = Array();
     
     totalNodes = data.length;
-    // dispatchAction(eventConstants.UPDATE_TOTAL_NODES, totalNodes);
     store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
 
     nodesActive = _.filter(data, function (node) {
@@ -499,35 +369,9 @@ function transactions(data){
     for( let i=0; i<nodesArr.length; ++i){
        temp[country[i].loc] = 1;
     }
-    console.log("temp", temp);
     count = Object.keys(temp).length;
     store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
     store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
-    // upTime = _.reduce(nodes, function (total, node) {
-    //     return total + node.stats.uptime;
-    // }, 0) / nodes.length;
-    // // dispatchAction(eventConstants.UPDATE_UP_TIME, upTime);
-    // store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
-
-    // $scope.map = _.map($scope.nodes, function (node) {
-    //     var fill = $filter('bubbleClass')(node.stats, $scope.bestBlock);
-    //
-    //     if(node.geo != null)
-    //         return {
-    //             radius: 3,
-    //             latitude: node.geo.ll[0],
-    //             longitude: node.geo.ll[1],
-    //             nodeName: node.info.name,
-    //             fillClass: "text-" + fill,
-    //             fillKey: fill,
-    //         };
-    //     else
-    //         return {
-    //             radius: 0,
-    //             latitude: 0,
-    //             longitude: 0
-    //         };
-    // });
 }
 
      function updateBestBlock(data){
