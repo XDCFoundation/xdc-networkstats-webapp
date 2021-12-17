@@ -29,7 +29,6 @@ const data = [
   { time: 18, value: props.content[17] },
   { time: 19, value: props.content[18] },
   { time: 20, value: props.content[19] },
-
   { time: 21, value: props.content[20] },
   { time: 22, value: props.content[21] },
   { time: 23, value: props.content[22] },
@@ -40,7 +39,6 @@ const data = [
   { time: 28, value: props.content[27] },
   { time: 29, value: props.content[28] },
   { time: 30, value: props.content[29] },
-
   { time: 31, value: props.content[30] },
   { time: 32, value: props.content[31] },
   { time: 33, value: props.content[32] },
@@ -51,13 +49,12 @@ const data = [
   { time: 38, value: props.content[37] },
   { time: 39, value: props.content[38] },
   { time: 40, value: props.content[39] },
-
   
 ];
 
   return (
   <div style={styles}>
-    <div style={{ height: "50px", width: "200px", cursor: "pointer" }}>
+    <div style={{ height: "20px", width: "200px", cursor: "pointer", padding: "0.7px"}}>
       <ResponsiveBar
         data={data}
         keys={["value"]}

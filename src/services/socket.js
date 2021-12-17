@@ -596,4 +596,4 @@ let table = [];
           });
     }
     store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
-},2000)
+},1500)
