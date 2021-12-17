@@ -60,7 +60,7 @@ function speedBar(props) {
     grid: {
       line: {
         stroke: "#667FC1",
-        strokeWidth: 0.5,
+        strokeWidth: 1.2,
         strokeDasharray: "1 1",
       },
     },
