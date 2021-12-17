@@ -3,33 +3,14 @@ import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 import Side from "../dashboard/sideDrawer";
 
-const HeaderNav = styled.nav`
-  background-color: #2149b9;
-  display: flex;
-  justify-content: space-between;
-  height: 56px;
-  color: white;
-
-  width: 100%;
-`;
 const HeaderLogoElement = styled.img`
-  padding-left: 10px;
-  padding-top: 10px;
   cursor: pointer;
 `;
 const StartLogo = styled.div`
   display: inline-flex;
-  margin-top: 3px;
-  margin-right: 5px;
 `;
-const HeaderLabel = styled.span`
-  padding-top: 15px;
-  color: white;
-  padding-left: 10px;
-  font-family: "Inter";
-`;
+
 const StartGuidedLabel = styled.span`
-  padding-top: 5px;
   color: white;
   font-weight: 400;
   font-family: "Inter";
@@ -50,49 +31,11 @@ const StartGuideTourButton = styled.button`
   border: none;
   cursor: pointer;
   white-space: nowrap;
+  width: 100%;
+  max-width: 186px;
 `;
 export default function Header(props) {
   return (
-    // <>
-    //   <HeaderNav>
-    //     <Row>
-    //       <Column>
-    //         <div>
-    //           <HeaderLogoElement src="/images/XDC-Logo.svg" />
-    //           <HeaderLogoElement src="/images/VerticalLine.svg" />
-    //         </div>
-    //       </Column>
-    //       <Column>
-    //         <HeaderLabel>Network Stats</HeaderLabel>
-    //       </Column>
-    //     </Row>
-    //     <Row>
-    //       <StartGuideTourButton
-    //         onClick={() => {
-    //           props.setJoyrideRun(true);
-    //         }}
-    //       >
-    //         <Row>
-    //           <Column>
-    //             <StartLogo>
-    //               <img src="/images/Play.svg" alt="Start" />
-    //             </StartLogo>
-    //           </Column>
-    //           <Column>
-    //             <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
-    //           </Column>
-    //         </Row>
-    //       </StartGuideTourButton>
-    //       <Column>
-    //         <NavbarIcon onClick={() => props.changeSide(true)}>
-    //           <HeaderLogoElement src="/images/Hamburger.svg" />
-    //         </NavbarIcon>
-    //       </Column>
-    //     </Row>
-    //     {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
-    //   </HeaderNav>
-    // </>
-
     <DivRow>
       <SpaceBetween>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -102,18 +45,18 @@ export default function Header(props) {
           <NetworkStats>Network Stats</NetworkStats>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <StartGuideTourButton onClick={() => {
-               props.setJoyrideRun(true);
-             }}
-            
+          <StartGuideTourButton
+            onClick={() => {
+              props.setJoyrideRun(true);
+            }}
           >
             <StartLogo>
               <img src="/images/Play.svg" alt="Start" />
             </StartLogo>
-
-            <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>
+            <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>&nbsp;
           </StartGuideTourButton>
           <NavbarIcon onClick={() => props.changeSide(true)}>
+            &emsp;
             <HeaderLogoElement src="/images/Hamburger.svg" />
           </NavbarIcon>
         </div>
