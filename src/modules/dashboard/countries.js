@@ -1,5 +1,4 @@
 import React from "react";
-import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 import CountryMap from "./countryMap";
 import CountryTable from "./countryTable";
@@ -35,91 +34,144 @@ const Label2 = styled.span`
 `;
 
 const TabDiv = styled.div`
-  background-color: #102e84;
-  display: block;
-  width: 1024px;
-  color: white;
-  height: 2000px;
-  position: absolute;
-  z-index: 1;
-  justify-content: space-around;
-  transition: linear;
-  font-size: 20px;
-  padding-left: 10px;
-  @media (min-width: 1025px) {
+  width: 100%;
+  height: 100%;
+  
+   @media (min-width: 1025px) {
     display: none;
   }
-  @media (max-width: 415px) {
-    width: 415px;
-  }
 `;
-const Img = styled.img`
-  padding-top: 36px;
-  padding-left: 1310px;
-  cursor: pointer;
-  @media (max-width: 1025px) {
-    padding-left: 945px;
-  }
-  @media (max-width: 415px) {
-    padding-left: 355px;
-  }
+const Img = styled.div`
+width: 2%;
+@media (min-width: 300px) and (max-width: 767px) {
+padding-right: 30px;
+}
+@media (min-width: 300px) and (max-width: 1024px) {
+padding-right: 30px;
+}
 `;
 
 export default function countries(props) {
   return (
-    <>
-      <DesktopDiv>
-        <Column>
-          <Row>
-            <Column>
-              <Row>
-                <Label1>Nodes</Label1>
-              </Row>
-              <Label2>Top 10 Countries</Label2>
-              <Row>
-                <CountryTable />
-              </Row>
-            </Column>
-            <Column>
-              <Row>
-                <Img
-                  src="/images/Collapse.svg"
-                  alt="close"
-                  onClick={() => {
-                    props.expand(false);
-                  }}
-                />
-              </Row>
-              <Row>
-                <CountryMap marker={props.location} />
-              </Row>
-            </Column>
-          </Row>
-        </Column>
-      </DesktopDiv>
+    <Div>
+      <Divvv>
+      <SpaceBetween>
+        <LeftDiv>
+          Nodes
+          <Label>Top 10 Countries</Label>
+        </LeftDiv>
+        <div>
+          <img
+            src="/images/Collapse.svg"
+            alt="close"
+            onClick={() => {
+              props.expand(false);
+            }}
+          />
+        </div>
+      </SpaceBetween>
+      <MainContainer>
+      <TableDiv>
+      <CountryTable />
+      </TableDiv>
+      <MapDiv>
+      <CountryMap marker={props.location}/>
+      </MapDiv>
+      </MainContainer>
+      </Divvv>
       <TabDiv>
-        <Column>
-          <Row>
-            <Img
-              src="/images/Collapse.svg"
-              alt="close"
-              onClick={() => {
-                props.expand(false);
-              }}
-            />
-          </Row>
-          <Row>
-            <CountryMap />
-          </Row>
-          <Row>
-            <Label1>Nodes</Label1>
-          </Row>
-          <Label2>Top 10 Countries</Label2>
-          <Row>
-            <CountryTable data={props.content.stats.map}  />
-          </Row>
-        </Column>
+      <SpaceBetween>
+      <MapDiv>
+      <CountryMap marker={props.location}/>
+      </MapDiv>
+      <Img>
+      <img
+            src="/images/Collapse.svg"
+            alt="close"
+            onClick={() => {
+              props.expand(false);
+            }}
+          />
+          </Img>
+      </SpaceBetween>
+      <LeftDiv>
+          Nodes
+          <Label>Top 10 Countries</Label>
+        </LeftDiv>
+      <TableDiv>
+      <CountryTable />
+      </TableDiv>
       </TabDiv>
-    </>
+    </Div>
   );
 }
+
+const Div = styled.div`
+  background-color: #102e84;
+  width: 100%;
+  /* height: 100%;
+   */
+  height: 150vh;
+  position: absolute;
+  z-index: 1;
+  padding: 15px;
+`;
+
+const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LeftDiv = styled.div`
+  padding-left: 47px;
+  padding-top: 57px;
+  color: #667fc1;
+  font-size: 16px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  padding-left: 0px;
+  }
+`;
+
+const Label = styled.div`
+  font-size: 26px;
+  color: white;
+  
+`;
+
+const MainContainer = styled.div`
+height: 100%;
+width: 100%;
+display: flex;
+`;
+
+const TableDiv = styled.div`
+height: 100%;
+width: 40%;
+padding-top: 40px;
+padding-left: 40px;
+@media (min-width: 300px) and (max-width: 1024px) {
+  width: 100%;
+  padding-left: 0px;
+}
+`;
+
+const MapDiv = styled.div`
+height: 100%;
+width: 60%;
+padding-right: 40px;
+@media (min-width: 300px) and (max-width: 1024px) {
+  width: 100%;
+  padding-right: 0px;
+}
+@media (min-width: 300px) and (max-width: 767px) {
+  width: 100%;
+  padding-right: 0px;
+  padding-top: 20px;
+}
+`;
+
+const Divvv = styled.div`
+@media (min-width: 300px) and (max-width: 1024px) {
+  display: none;
+}
+`;

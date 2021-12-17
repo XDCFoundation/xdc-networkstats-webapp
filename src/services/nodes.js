@@ -16,7 +16,7 @@ async function getNodes() {
 
 async function getGasPrice() {
   return axios
-    .get("http://localhost:3000/getGasPrice")
+    .get("http://3.88.252.78:3000/getGasPrice")
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -27,7 +27,7 @@ async function getGasPrice() {
 
 async function getUpTime(data) {
   return axios
-    .get(`http://localhost:3000/uptime/${data}`)
+    .get(`http://3.88.252.78:3000/uptime/${data}`)
     .then((res) => {
       return Promise.resolve(res.data);
     })

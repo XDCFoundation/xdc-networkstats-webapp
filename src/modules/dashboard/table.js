@@ -256,6 +256,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.type}
