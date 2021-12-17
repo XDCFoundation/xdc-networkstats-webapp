@@ -109,7 +109,9 @@ export default function countries(props) {
 const Div = styled.div`
   background-color: #102e84;
   width: 100%;
-  height: 100%;
+  /* height: 100%;
+   */
+  height: 150vh;
   position: absolute;
   z-index: 1;
   padding: 15px;
