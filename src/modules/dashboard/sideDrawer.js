@@ -1,126 +1,121 @@
 import React from "react";
-
-import { Column, Row } from "simple-flexbox";
 import styled from "styled-components";
 
 const Blur = styled.div`
   background: rgba(0, 0, 0, 0.7) !important;
-  width: 1537px;
-  height: 1080px;
+  width: 100%;
+  height: 100vh;
   position: fixed;
   z-index: 1;
   transition: linear;
-  @media (max-width: 1025px) {
-    width: 700px;
-  }
-  @media (max-width: 415px) {
-    width: 270px;
-  }
 `;
 
 const Div = styled.div`
+  height: 100%;
+  max-width: 280px;
   background-color: #102e84;
-  width: 383px;
+  width: 100%;
   color: white;
-  height: 1080px;
   position: fixed;
   left: auto;
   right: 0;
   z-index: 1;
   justify-content: space-around;
   transition: linear;
-
-  @media (max-width: 1025px) {
-    left: auto;
-    right: 0;
-    width: 340px;
-  }
-  @media (max-width: 415px) {
-    left: auto;
-    right: 0;
-    width: 200px;
+  padding: 16px;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+    max-width: 200px;
   }
 `;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 50px;
+  align-items: center;
 `;
 const NavLabel = styled.span`
-  @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
   display: flex;
   justify-content: space-between;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
   color: #4666c4;
-  padding-left: 10px;
-  padding-top: 15px;
+  @media (min-width: 300px) and (max-width: 767px) {
+    font-size: 0.8rem;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Content = styled.span`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
   display: flex;
   justify-content: space-between;
-  padding-left: 10px;
-  font-size: 13px;
-  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-family: "Inter", sans-serif;
   font-weight: 500;
-  margin-top: 5px;
   cursor: pointer;
+  @media (min-width: 300px) and (max-width: 767px) {
+    font-size: 0.8rem;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Img = styled.img`
-  padding-left: 10px;
-  margin-bottom: -10px;
+  width: 100%;
+  max-width: 35px;
 `;
 const CloseImg = styled.img`
   cursor: pointer;
-  padding-right: 15px;
-  padding-top: 15px;
 `;
 
-const Line = styled.hr`
-  border: 1px solid #4867c1;
-  height: 0px;
-  width: 350px;
-  opacity: 1;
-  margin-bottom: 5px;
-  @media (max-width: 1025px) {
-    width: 300px;
-  }
-  @media (max-width: 415px) {
-    width: 150px;
-  }
+const RowDiv = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid #4867c1;
+  height: 50px;
 `;
-
+const ColumnDiv = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+`;
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 30px;
+`;
 export default function sideDrawer(props) {
   return (
-    <>
-      <Blur />
+    <div>
+      <Blur></Blur>
       <Div>
-        <Column>
+        <ColumnDiv>
           <Nav>
-            <NavLabel>Browser</NavLabel>
-            <Column>
-              <CloseImg
-                src="/images/Group 60.svg"
-                alt="close"
-                onClick={() => {
-                  props.close(false);
-                }}
-              />
-            </Column>
+            <NavLabel>Browse</NavLabel>
+
+            <CloseImg
+              src="/images/Group 60.svg"
+              alt="close"
+              onClick={() => {
+                props.close(false);
+              }}
+            />
           </Nav>
-          <Column>
-            <Row>
+          <ColumnContainer>
+            <RowDiv>
               <Img src="/images/NetworkStat.svg" alt="Network" />
+              &nbsp;&nbsp;
               <Content> Network Stats </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/MasterNodes.svg" alt="Master" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/MasterNodes.svg" alt="Master" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://apothem.network/#masternode")
@@ -128,10 +123,10 @@ export default function sideDrawer(props) {
               >
                 Masternodes
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/BlockExplorer.svg" alt="Block" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://xinfin.network/#explorer")
@@ -139,10 +134,10 @@ export default function sideDrawer(props) {
               >
                 Block Explorer
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Wallet.svg" alt="Wallet" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://wallet.apothem.network/#/")
@@ -150,10 +145,10 @@ export default function sideDrawer(props) {
               >
                 Web Wallet
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Wallet.svg" alt="Pay" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Wallet.svg" alt="Pay" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href =
@@ -162,10 +157,10 @@ export default function sideDrawer(props) {
               >
                 XDC Pay
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Android.svg" alt="Android" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Android.svg" alt="Android" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href =
@@ -174,10 +169,10 @@ export default function sideDrawer(props) {
               >
                 Android Wallet
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Download.svg" alt="Download" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Download.svg" alt="Download" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://xinfin.org/setup-masternode")
@@ -185,10 +180,10 @@ export default function sideDrawer(props) {
               >
                 One Click Installer
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Documents.svg" alt="Documents" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://howto.xinfin.org/")
@@ -196,10 +191,10 @@ export default function sideDrawer(props) {
               >
                 XDC Docs
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/APIs.svg" alt="Api" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/APIs.svg" alt="Api" /> &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href =
@@ -209,10 +204,11 @@ export default function sideDrawer(props) {
               >
                 XDC API
               </Content>
-            </Row>
-            <Line />
-            <Row>
-              <Img src="/images/Documents.svg" alt="Api Documents" />
+            </RowDiv>
+
+            <RowDiv>
+              <Img src="/images/Documents.svg" alt="Api Documents" />{" "}
+              &nbsp;&nbsp;
               <Content
                 onClick={() =>
                   (window.location.href = "https://apidocs.xinfin.network/")
@@ -220,11 +216,10 @@ export default function sideDrawer(props) {
               >
                 XDC API Docs
               </Content>
-            </Row>
-            <Line />
-          </Column>
-        </Column>
+            </RowDiv>
+          </ColumnContainer>
+        </ColumnDiv>
       </Div>
-    </>
+    </div>
   );
 }
