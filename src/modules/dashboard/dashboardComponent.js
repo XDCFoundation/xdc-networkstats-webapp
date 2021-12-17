@@ -78,13 +78,16 @@ export default function Dashboard(props) {
 
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
-
+  const [uptime, setUpTime] = useState([]);
   async function fetchTime(value) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
-    console.log("res", res);
+    setUpTime(res);
   }
+
+  console.log("res", uptime.responseData);
+
   return (
     <Div>
       <Joyride
@@ -250,7 +253,7 @@ export default function Dashboard(props) {
                   </ButtonDiv>
                 </SpaceBetween>
                 <Speedbar>
-                  <UpTimeBar></UpTimeBar>
+                  <UpTimeBar data = {uptime.responseData}></UpTimeBar>
                 </Speedbar>
               </CountryData>
             </ContentEfficiency>

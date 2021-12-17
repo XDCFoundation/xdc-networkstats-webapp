@@ -195,7 +195,7 @@ async function socketAction(action, data){
                         nodesArr[index3] = await latencyFilter(nodesArr[index3]);
                     }
                      upTime = nodesArr[index3].stats.uptime;
-                    store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
+                    // store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
                      updateActiveNodes(nodesArr);
                 }
             }
@@ -233,16 +233,16 @@ async function socketAction(action, data){
             if( !_.isEqual(avgBlockTime, data.avgBlocktime) )
                 avgBlockTime = data.avgBlocktime;
                 var avgTime = avgBlockTimeFilter(avgBlockTime)
-             store.dispatch({type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime})
+            //  store.dispatch({type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime})
             
             if( !_.isEqual(avgTransactionRate, data.avgTransactionRate) )
                 avgTransactionRate = data.transactions;
                 var value = transactions(avgTransactionRate);
-                store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
+                // store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
 
             if( !_.isEqual(lastBlocksTime, data.blocktime) && data.blocktime.length >= MAX_BINS )
                 lastBlocksTime = data.blocktime;
-                store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime})
+                // store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime})
 
             if( !_.isEqual(difficultyChart, data.difficulty) && data.difficulty.length >= MAX_BINS )
                 difficultyChart = data.difficulty;
@@ -349,12 +349,12 @@ function transactions(data){
     let temp = Array();
     
     totalNodes = data.length;
-    store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
+    // store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
 
     nodesActive = _.filter(data, function (node) {
         return node.stats.active === true;
     }).length;
-    store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
+    // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
 
 
     _.forEach(nodesArr, function(node, index){
@@ -370,8 +370,8 @@ function transactions(data){
        temp[country[i].loc] = 1;
     }
     count = Object.keys(temp).length;
-    store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
-    store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
+    // store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
+    // store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
 }
 
      function updateBestBlock(data){
@@ -384,7 +384,7 @@ function transactions(data){
         if( bBlock !== bestBlock )
         {
             bestBlock = bBlock;
-            store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
+            // store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
 
             bestStats = _.maxBy(data, function (node) {
                 return parseInt(node.stats.block.number);
@@ -402,8 +402,8 @@ function transactions(data){
             }
             fetchData();
             
-            store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
-            store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
+            // store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
+            // store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
         }
     }
 }
@@ -439,5 +439,5 @@ let table = [];
             nodeName: nodesArr[i].info.name,
           });
     }
-    store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
+    // store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
 },1500)

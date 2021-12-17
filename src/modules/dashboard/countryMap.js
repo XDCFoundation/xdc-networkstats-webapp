@@ -9,16 +9,7 @@ import styled from "styled-components";
 
 const Div = styled.div`
   fill: #103aaa;
-  width: 1150px;
-  height: auto;
-  margin-left: 100px;
-  @media (max-width: 1025px) {
-    margin-left: -40px;
-  }
-  @media (max-width: 415px) {
-    width: 400px;
-    margin-left: -10px;
-  }
+  width: 100%;
 `;
 
 const geoUrl =

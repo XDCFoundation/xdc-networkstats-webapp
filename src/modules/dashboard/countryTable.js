@@ -15,17 +15,9 @@ import { LocationService } from "../../services";
 
 
 const TableBox = styled.div`
-  padding-top: 41px;
-  padding-left: 38px;
-  width: 550px;
-  height: auto;
-  @media (max-width: 1025px) {
-    width: 1000px;
-
-    @media (max-width: 415px) {
-      width: 380px;
-    }
-  }
+  width: 100%;
+  height: 100%;
+  max-width: 550px;
 `;
 let rows = [];
 

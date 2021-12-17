@@ -6,6 +6,8 @@ const Div = styled.div`
   cursor: pointer;
 `;
 
+function EfficiencyBar(props) {
+console.log("note", props.data);
 const data = [
   { time: 1, value: 90 },
   { time: 2, value: 90 },
@@ -28,10 +30,11 @@ const data = [
   { time: 19, value: 90 },
 ];
 
-const EfficiencyBar = () => (
+
+return (
   <Div>
     <Bar
-      width={150}
+      width={300}
       maxWidth={500}
       height={120}
       data={data}
@@ -71,5 +74,5 @@ const EfficiencyBar = () => (
     />
   </Div>
 );
-
+        }
 export default EfficiencyBar;
