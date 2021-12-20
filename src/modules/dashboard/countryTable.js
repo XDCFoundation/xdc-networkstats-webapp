@@ -10,8 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
-import utility from "../../utility";
-import { LocationService } from "../../services";
+import { withStyles } from "@material-ui/styles";
+import _ from "lodash";
 
 
 const TableBox = styled.div`
@@ -19,37 +19,34 @@ const TableBox = styled.div`
   height: 100%;
   max-width: 550px;
 `;
-let rows = [];
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    height: 50,
+  },
+}))(TableRow);
+
+const StyledTableCell = withStyles((theme) => ({
+  root: {
+    padding: "0px 16px",
+    height: "30px",
+  },
+}))(TableCell);
 
 export default function EnhancedTable(props) {
 
-  const [data, setData] = useState([]);
-  useEffect(() => {
+let rows = [];
 
-    if (props?.data && props?.data?.length >= 1) {
-      (props?.data).map((item, index) => {
-        setData(item);
-      });
-      async function fetchData (){
-        const [error, res] = await utility.parseResponse(LocationService.getLocation(data));
-        if (error)
-        return;
-        let country = {
-          countries: res.country,
-          id: "1",
-          last24h: "64",
-          last24: "3.56%",
-          last7: "5.56%",
-        }
-        if (rows.length >=9) {
-          rows.pop();
-        }
-        rows.unshift(country);
-      }
-      fetchData();
-    }
-  }, [props?.data]);
-  
+  if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
+  for( let i=0; i<props.data.length;i++){
+    rows.push({
+      id: 1+i,
+      countries: props.data[i].country,
+      last24h: props.data[i].count
+    })
+  }
+}
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -119,14 +116,14 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <StyledTableRow>
         {headCells.map((headCell) => (
-          <TableCell
+          <StyledTableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
             style={{
               color: "white",
-              columnWidth: "70px",
+              columnWidth: "60px",
               whiteSpace: "nowrap",
               alignContent: "start",
               borderColor: "#4E6AB5"
@@ -144,9 +141,9 @@ function EnhancedTableHead(props) {
                 </Box>
               ) : null}
             </TableSortLabel>
-          </TableCell>
+          </StyledTableCell>
         ))}
-      </TableRow>
+      </StyledTableRow>
     </TableHead>
   );
 }
@@ -224,7 +221,7 @@ EnhancedTableHead.propTypes = {
                 const isItemSelected = isSelected(row.id);
 
                 return (
-                  <TableRow
+                  <StyledTableRow
                     hover
                     onClick={(event) => handleClick(event, row.id)}
                     aria-checked={isItemSelected}
@@ -233,20 +230,20 @@ EnhancedTableHead.propTypes = {
                     selected={isItemSelected}
 
                   >
-                    <TableCell style={{ color: "white", width: "2px", borderColor: "#4E6AB5"}}>{row.id}</TableCell>
-                    <TableCell style={{ color: "white", width: "20px", borderColor: "#4E6AB5" }}>
+                    <StyledTableCell style={{ color: "white", width: "2px", borderColor: "#4E6AB5"}}>{row.id}</StyledTableCell>
+                    <StyledTableCell style={{ color: "white", width: "20px", borderColor: "#4E6AB5" }}>
                       {row.countries}
-                    </TableCell>
-                    <TableCell style={{ color: "white", width: "30px", borderColor: "#4E6AB5" }}>
+                    </StyledTableCell>
+                    <StyledTableCell style={{ color: "white", columnWidth: "5px", borderColor: "#4E6AB5" }}>
                       {row.last24h}
-                    </TableCell>
-                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
+                    </StyledTableCell>
+                    <StyledTableCell style={{ color: "#3AF219",  columnWidth: "5px", borderColor: "#4E6AB5" }}>
                       {row.last24}
-                    </TableCell>
-                    <TableCell style={{ color: "#3AF219",  width: "30px", borderColor: "#4E6AB5" }}>
+                    </StyledTableCell>
+                    <StyledTableCell style={{ color: "#3AF219",  columnWidth: "5px", borderColor: "#4E6AB5" }}>
                       {row.last7}
-                    </TableCell>
-                  </TableRow>
+                    </StyledTableCell>
+                  </StyledTableRow>
                 );
               }
             )}

@@ -13,6 +13,8 @@ import Header from "../header/header";
 import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
+import { eventConstants } from "../../constants";
+import store from "../../store";
 
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
@@ -72,6 +74,7 @@ export default function Dashboard(props) {
   const [showSideDrop, setShowSideDrop] = useState(false);
 
   const [show, setShow] = useState(0);
+  let timeData = [];
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
   const [uptime, setUpTime] = useState([]);
@@ -79,10 +82,8 @@ export default function Dashboard(props) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
-    setUpTime(res);
+    store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
   }
-
-  console.log("res", uptime.responseData);
 
   return (
     <Div>
@@ -259,7 +260,7 @@ export default function Dashboard(props) {
                   </ButtonDiv>
                 </SpaceBetween>
                 <Speedbar>
-                  <UpTimeBar data={uptime.responseData}></UpTimeBar>
+                  <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
                 </Speedbar>
               </CountryData>
             </ContentEfficiency>
@@ -288,7 +289,9 @@ export default function Dashboard(props) {
                       onClick={() => changeExpand(2)}
                     />
                   </SpaceBetween>
-                  <Map />
+                  <MapDiv>
+                    <Map location={content.stats.markers} />
+                  </MapDiv>
                 </CountryData>
               </ContentSecurity>
             ) : (
@@ -340,13 +343,13 @@ export default function Dashboard(props) {
                       <CountriesData>{content.stats.upTime}%</CountriesData>
                     </div>
                     <ButtonDiv>
-                      <Button>30D</Button>
-                      <Button>7D</Button>
-                      <Button>24H</Button>
+                      <Button onClick={() => fetchTime(30)}>30D</Button>
+                      <Button onClick={() => fetchTime(7)}>7D</Button>
+                      <Button onClick={() => fetchTime(1)}>24H</Button>
                     </ButtonDiv>
                   </SpaceBetween>
                   <Speedbar>
-                    <UpTimeBar></UpTimeBar>
+                    <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
                   </Speedbar>
                 </CountryData>
               </ContentEfficiency>
@@ -404,7 +407,7 @@ export default function Dashboard(props) {
                     </div>
                   </SpaceBetween>
                   <MapWidth>
-                    <Map />
+                    <Map location={content.stats.markers} />
                   </MapWidth>
                 </CountryData>
               ) : (
@@ -464,13 +467,13 @@ export default function Dashboard(props) {
                   </MobileAverageBlockData>
                 </div>
                 <ButtonDiv>
-                  <Button>30D</Button>
-                  <Button>7D</Button>
-                  <Button>24H</Button>
+                  <Button onClick={() => fetchTime(30)}>30D</Button>
+                  <Button onClick={() => fetchTime(7)}>7D</Button>
+                  <Button onClick={() => fetchTime(1)}>24H</Button>
                 </ButtonDiv>
               </SpaceBetween>
               <MobileGraphDiv>
-                <UpTimeBar> </UpTimeBar>
+                <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
               </MobileGraphDiv>
             </MobileSpeedBlock>
           ) : (
@@ -793,5 +796,11 @@ const Container = styled.div`
 const FullScreen = styled.div`
   @media (min-width: 100px) and (max-width: 1024px) {
     display: none;
+  }
+`;
+
+const MapDiv = styled.div`
+  @media (min-width: 100px) and (max-width: 1024px) {
+    padding-left: 105px;
   }
 `;
