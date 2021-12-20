@@ -94,6 +94,8 @@ export default function Dashboard(props) {
         styles={{
           tooltipContainer: {
             textAlign: "left",
+            fontSize: 13,
+            fontFamily: "Inter",
           },
           buttonNext: {
             backgroundColor: "#2358E5",
@@ -101,11 +103,13 @@ export default function Dashboard(props) {
             width: 70,
             borderRadius: 0,
             fontSize: 13,
+            fontFamily: "Inter",
           },
           buttonBack: {
             marginRight: 10,
             color: "#2256DF",
             fontSize: 13,
+            fontFamily: "Inter",
           },
         }}
         spotlightPadding={0}
