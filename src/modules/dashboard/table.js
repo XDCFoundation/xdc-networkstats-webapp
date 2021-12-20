@@ -246,6 +246,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.nodeName}
@@ -267,6 +268,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.latency}
@@ -277,6 +279,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.peers}
@@ -287,6 +290,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.pendingTxn}
@@ -297,6 +301,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.lastBlock}
@@ -307,6 +312,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.graph}
@@ -317,6 +323,7 @@ export default function EnhancedTable(props) {
                       color: "#393939",
                       fontFamily: "Inter",
                       fontWeight: "400",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     {row.upTime}

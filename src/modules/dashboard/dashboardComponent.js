@@ -9,12 +9,12 @@ import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
-import UpTimeTab from "./efficiencyBarTab";
 import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
 import {eventConstants} from "../../constants";
 import store from '../../store'
+import _ from "lodash";
 
 const Footer = styled.div`
   background-color: white;
@@ -81,13 +81,12 @@ export default function Dashboard(props) {
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
   const [uptime, setUpTime] = useState([]);
-  async function fetchTime(value) {
+  async function fetchTime(value=1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
     store.dispatch({type: eventConstants.UPDATE_EFFICIENCY, data: res})
-  }
-
+  } 
   return (
     <Div>
       <Joyride
@@ -126,9 +125,8 @@ export default function Dashboard(props) {
           content={content}
         />
       ) : (
-        ""
-      )}
-      <MainContainer>
+        <>
+        <MainContainer>
         <Container>
           <Security>Security</Security>
           <Speed>Speed</Speed>
@@ -478,6 +476,8 @@ export default function Dashboard(props) {
         <Table content={content} />
       </TableDiv>
       <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
+      </>
+      )}
     </Div>
   );
 }
@@ -642,6 +642,10 @@ const TableDiv = styled.div`
   background: #f8f8f8;
   border-radius: 4px;
   padding: 50px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  padding: 30px; }
+  @media (min-width: 300px) and (max-width: 767px) {
+  padding: 15px; }
 `;
 
 const ButtonDiv = styled.div`
