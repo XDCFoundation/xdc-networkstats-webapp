@@ -1,15 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const Blur = styled.div`
-  background: rgba(0, 0, 0, 0.7) !important;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 1;
-  transition: linear;
-`;
-
 const Div = styled.div`
   height: 100%;
   max-width: 280px;
@@ -17,16 +8,11 @@ const Div = styled.div`
   width: 100%;
   color: white;
   position: fixed;
-  /* left: auto;
-  right: 0; */
   z-index: 200;
-  /* justify-content: space-around; */
-  /* transition: linear; */
   padding: 16px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   top: 0;
   right: 0;
-  /* left: 0; */
 
   @media (min-width: 300px) and (max-width: 767px) {
     width: 100%;
@@ -97,8 +83,6 @@ const ColumnContainer = styled.div`
 `;
 export default function SideDrawer(props) {
   return (
-    // <div style={{ height: "100%" }}>
-    //   <Blur></Blur>
     <Div>
       <ColumnDiv>
         <Nav>
@@ -107,9 +91,7 @@ export default function SideDrawer(props) {
           <CloseImg
             src="/images/Group 60.svg"
             alt="close"
-            onClick={() => {
-              props.handleClickDrawerClose(false);
-            }}
+            onClick={() => props.setShowSideDrop(false)}
           />
         </Nav>
         <ColumnContainer>
@@ -224,6 +206,5 @@ export default function SideDrawer(props) {
         </ColumnContainer>
       </ColumnDiv>
     </Div>
-    // </div>
   );
 }

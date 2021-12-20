@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Column, Row } from "simple-flexbox";
+
 import styled from "styled-components";
 import Map from "./map";
 import LastBlockBar from "./speedBar";
@@ -9,7 +9,7 @@ import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
-import UpTimeTab from "./efficiencyBarTab";
+
 import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
@@ -49,14 +49,7 @@ const TOUR_STEPS = [
 
 export default function Dashboard(props) {
   const { content } = props;
-  // const [SwitchTab, setTab] = React.useState(1);
-  // const changeTab = (value) => {
-  //   setTab(value);
-  // };
-  // const [SwitchMob, setMob] = React.useState(4);
-  // const changeMob = (value) => {
-  //   setMob(value);
-  // };
+
   const [SwitchSide, setSide] = React.useState(false);
   const changeSide = (value) => {
     setSide(value);
@@ -77,14 +70,7 @@ export default function Dashboard(props) {
     }
   };
   const [showSideDrop, setShowSideDrop] = useState(false);
-  console.log("deepali", showSideDrop);
-  const handleClickDrawerOpen = () => {
-    setShowSideDrop(true);
-  };
-  const handleClickDrawerClose = () => {
-    setShowSideDrop(false);
-  };
-  const [showBackDrop, setShowBackDrop] = useState(false);
+
   const [show, setShow] = useState(0);
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
@@ -126,14 +112,19 @@ export default function Dashboard(props) {
       />
       <Header
         setJoyrideRun={setJoyrideRun}
-        // changeSide={changeSide}
-        // SwitchSide={SwitchSide}
-      />
-      {/* <SideDrawer
         showSideDrop={showSideDrop}
         setShowSideDrop={setShowSideDrop}
       />
-      <BackDrop /> */}
+      {showSideDrop ? (
+        <div>
+          <SideDrawer
+            showSideDrop={showSideDrop}
+            setShowSideDrop={setShowSideDrop}
+          />
+          <BackDrop />
+        </div>
+      ) : null}
+
       {Expand === 2 ? (
         <Country
           expand={setCountry}
