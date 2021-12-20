@@ -3,35 +3,6 @@ import styled from "styled-components";
 import CountryMap from "./countryMap";
 import CountryTable from "./countryTable";
 
-const DesktopDiv = styled.div`
-  background-color: #102e84;
-  display: block;
-  width: 1920px;
-  color: white;
-  height: 2000px;
-  position: absolute;
-  z-index: 1;
-  justify-content: space-around;
-  transition: linear;
-  font-size: 20px;
-  padding-left: 10px;
-  @media (max-width: 1025px) {
-    display: none;
-  }
-`;
-
-const Label1 = styled.span`
-  color: #667fc1;
-  width: 50%;
-  margin-top: 60px;
-  padding-left: 45px;
-`;
-const Label2 = styled.span`
-  width: 50%;
-  padding-left: 45px;
-  font-size: 30px;
-  margin-bottom: 10px;
-`;
 
 const TabDiv = styled.div`
   width: 100%;
@@ -51,10 +22,11 @@ padding-right: 30px;
 }
 `;
 
-export default function countries(props) {
+export default function Countries(props) {
+
   return (
     <Div>
-      <Divvv>
+      <DesktopDiv>
       <SpaceBetween>
         <LeftDiv>
           Nodes
@@ -72,13 +44,13 @@ export default function countries(props) {
       </SpaceBetween>
       <MainContainer>
       <TableDiv>
-      <CountryTable />
+      <CountryTable data={props.content.stats.expandedCountry} />
       </TableDiv>
       <MapDiv>
       <CountryMap marker={props.location}/>
       </MapDiv>
       </MainContainer>
-      </Divvv>
+      </DesktopDiv>
       <TabDiv>
       <SpaceBetween>
       <MapDiv>
@@ -99,7 +71,7 @@ export default function countries(props) {
           <Label>Top 10 Countries</Label>
         </LeftDiv>
       <TableDiv>
-      <CountryTable />
+      <CountryTable data={props.content.stats.expandedCountry}/>
       </TableDiv>
       </TabDiv>
     </Div>
@@ -128,13 +100,17 @@ const LeftDiv = styled.div`
   color: #667fc1;
   font-size: 16px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  padding-left: 0px;
+  padding-left: 47px;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+  padding-left: 47px;
   }
 `;
 
 const Label = styled.div`
   font-size: 26px;
   color: white;
+  font-family: "Inter";
   
 `;
 
@@ -151,7 +127,7 @@ padding-top: 40px;
 padding-left: 40px;
 @media (min-width: 300px) and (max-width: 1024px) {
   width: 100%;
-  padding-left: 0px;
+  padding: 40px;
 }
 `;
 
@@ -170,7 +146,7 @@ padding-right: 40px;
 }
 `;
 
-const Divvv = styled.div`
+const DesktopDiv = styled.div`
 @media (min-width: 300px) and (max-width: 1024px) {
   display: none;
 }

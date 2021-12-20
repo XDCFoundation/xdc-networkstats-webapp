@@ -10,8 +10,9 @@ let initialState = {
   avgRate: 78,
   upTime: 77,
   map: [],
-  history: [],
+  expandedCountry: [],
   markers: [],
+  efficiency: [],
   nodesArr: [
     {
       nodeName: "Null",
@@ -88,16 +89,21 @@ export default function stats(state = initialState, action) {
         ...state,
         blockTime: action.data,
       };
-    case eventConstants.UPDATE_NODEHISTORY:
+    case eventConstants.UPDATE_EXPANDEDCOUNTRY:
       return {
         ...state,
-        history: action.data,
+        expandedCountry: action.data,
       };
-      case eventConstants.UPDATE_MARKERS:
-        return {
-          ...state,
-          markers: action.data,
-        };
+    case eventConstants.UPDATE_MARKERS:
+      return {
+        ...state,
+        markers: action.data,
+      };
+    case eventConstants.UPDATE_EFFICIENCY:
+      return {
+        ...state,
+        efficiency: action.data,
+      };
     default:
       return state;
   }
