@@ -1,6 +1,7 @@
-import * as React from "react";
-import { Column, Row } from "simple-flexbox";
+import React, { useState } from "react";
+
 import styled from "styled-components";
+import SideDrawer from "../dashboard/sideDrawer";
 import Side from "../dashboard/sideDrawer";
 
 const HeaderLogoElement = styled.img`
@@ -14,6 +15,7 @@ const StartGuidedLabel = styled.span`
   color: white;
   font-weight: 400;
   font-family: "Inter";
+  font-size: 1rem;
   @media (max-width: 425px) {
     display: none;
   }
@@ -33,13 +35,13 @@ const StartGuideTourButton = styled.button`
   white-space: nowrap;
   width: 100%;
   max-width: 186px;
+  padding: 6px 5px 8px 6px;
 `;
 export default function Header(props) {
   return (
     <DivRow>
       <SpaceBetween>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {" "}
           <img src="/images/XDC-Logo.svg" />
           <img src="/images/VerticalLine.svg" />
           <NetworkStats>Network Stats</NetworkStats>
@@ -50,18 +52,24 @@ export default function Header(props) {
               props.setJoyrideRun(true);
             }}
           >
-            <StartLogo>
-              <img src="/images/Play.svg" alt="Start" />
-            </StartLogo>
+            {/* <StartLogo> */}
+            <img src="/images/Play.svg" alt="Start" />
+            {/* </StartLogo> */}
             <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>&nbsp;
           </StartGuideTourButton>
-          <NavbarIcon onClick={() => props.changeSide(true)}>
-            &emsp;
-            <HeaderLogoElement src="/images/Hamburger.svg" />
-          </NavbarIcon>
+          {/* <NavbarIcon
+           onClick={() => props.changeSide(true)}
+          > */}
+          &emsp;
+          {/* {showSideDrop && <SideDrawer click={handleClickDrawerClose} />} */}
+          <HeaderLogoElement
+            src="/images/Hamburger.svg"
+            onClick={props.handleClickDrawerOpen}
+          />
+          {/* </NavbarIcon> */}
         </div>
       </SpaceBetween>
-      {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""}
+      {/* {props.SwitchSide === true ? <Side close={props.changeSide} /> : ""} */}
     </DivRow>
   );
 }

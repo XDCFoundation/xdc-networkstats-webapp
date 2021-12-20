@@ -14,6 +14,9 @@ import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
 
+import SideDrawer from "./sideDrawer";
+import BackDrop from "./backDrop";
+
 const Footer = styled.div`
   background-color: white;
   color: #808080;
@@ -46,14 +49,14 @@ const TOUR_STEPS = [
 
 export default function Dashboard(props) {
   const { content } = props;
-  const [SwitchTab, setTab] = React.useState(1);
-  const changeTab = (value) => {
-    setTab(value);
-  };
-  const [SwitchMob, setMob] = React.useState(4);
-  const changeMob = (value) => {
-    setMob(value);
-  };
+  // const [SwitchTab, setTab] = React.useState(1);
+  // const changeTab = (value) => {
+  //   setTab(value);
+  // };
+  // const [SwitchMob, setMob] = React.useState(4);
+  // const changeMob = (value) => {
+  //   setMob(value);
+  // };
   const [SwitchSide, setSide] = React.useState(false);
   const changeSide = (value) => {
     setSide(value);
@@ -73,9 +76,16 @@ export default function Dashboard(props) {
       setJoyrideRun(false);
     }
   };
-
+  const [showSideDrop, setShowSideDrop] = useState(false);
+  console.log("deepali", showSideDrop);
+  const handleClickDrawerOpen = () => {
+    setShowSideDrop(true);
+  };
+  const handleClickDrawerClose = () => {
+    setShowSideDrop(false);
+  };
+  const [showBackDrop, setShowBackDrop] = useState(false);
   const [show, setShow] = useState(0);
-
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
   const [uptime, setUpTime] = useState([]);
@@ -116,9 +126,14 @@ export default function Dashboard(props) {
       />
       <Header
         setJoyrideRun={setJoyrideRun}
-        changeSide={changeSide}
-        SwitchSide={SwitchSide}
+        // changeSide={changeSide}
+        // SwitchSide={SwitchSide}
       />
+      {/* <SideDrawer
+        showSideDrop={showSideDrop}
+        setShowSideDrop={setShowSideDrop}
+      />
+      <BackDrop /> */}
       {Expand === 2 ? (
         <Country
           expand={setCountry}
@@ -130,55 +145,55 @@ export default function Dashboard(props) {
       )}
       <MainContainer>
         <Container>
-          <Security>Security</Security>
-          <Speed>Speed</Speed>
-          <Efficiency>Efficiency</Efficiency>
+          <Title>Security</Title>
+          <Title>Speed</Title>
+          <Title>Efficiency</Title>
         </Container>
         <MobileContainer>
-          <Security
+          <MobileTitle
             onClick={() => {
               setShow(1);
             }}
           >
             Security
-          </Security>
-          <Speed
+          </MobileTitle>
+          <MobileTitle
             onClick={() => {
               setShow(2);
             }}
           >
             Speed
-          </Speed>
-          <Efficiency
+          </MobileTitle>
+          <MobileTitle
             onClick={() => {
               setShow(3);
             }}
           >
             Efficiency
-          </Efficiency>
+          </MobileTitle>
         </MobileContainer>
         <TabContainer>
-          <Security
+          <TabTitle
             onClick={() => {
               setTabResponsive(1);
             }}
           >
             Security
-          </Security>
-          <Speed
+          </TabTitle>
+          <TabTitle
             onClick={() => {
               setTabResponsive(2);
             }}
           >
             Speed
-          </Speed>
-          <Efficiency
+          </TabTitle>
+          <TabTitle
             onClick={() => {
               setTabResponsive(3);
             }}
           >
             Efficiency
-          </Efficiency>
+          </TabTitle>
         </TabContainer>
         <FullScreen>
           <ContentParent>
@@ -253,7 +268,7 @@ export default function Dashboard(props) {
                   </ButtonDiv>
                 </SpaceBetween>
                 <Speedbar>
-                  <UpTimeBar data = {uptime.responseData}></UpTimeBar>
+                  <UpTimeBar data={uptime.responseData}></UpTimeBar>
                 </Speedbar>
               </CountryData>
             </ContentEfficiency>
@@ -487,27 +502,72 @@ const Div = styled.div`
 const MainContainer = styled.div`
   width: 100%;
 `;
-const Security = styled.div`
+const Title = styled.div`
   color: #c8d1f1;
-  width: 100%;
+  width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
   border-right: 1px solid #274598;
+  padding: 8px 6px 8px 16px;
 `;
-const Speed = styled.div`
-  width: 100%;
+const TabTitle = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
-  border-right: 1px solid #274598;
-  color: #c8d1f1;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
 `;
-const Efficiency = styled.div`
-  width: 100%;
+const MobileTitle = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
-  border-right: 1px solid #274598;
-  color: #c8d1f1;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
 `;
+// const Security = styled.div`
+//   color: #c8d1f1;
+//   width: 33.33%;
+//   font-size: 1rem;
+//   font-weight: 600;
+//   border-right: 1px solid #274598;
+//   padding: 8px 6px 8px 16px;
+// `;
+// const Speed = styled.div`
+//   width: 33.33%;
+//   font-size: 1rem;
+//   font-weight: 600;
+//   border-right: 1px solid #274598;
+//   color: #c8d1f1;
+//   padding: 8px 6px 8px 16px;
+// `;
+// const Efficiency = styled.div`
+//   width: 33.33%;
+//   font-size: 1rem;
+//   font-weight: 600;
+//   border-right: 1px solid #274598;
+//   color: #c8d1f1;
+//   padding: 8px 6px 8px 16px;
+// `;
 const ContentSecurity = styled.div`
   background-color: #102c78;
   height: 300px;
@@ -589,7 +649,6 @@ const ContentData = styled.div`
 
   @media (min-width: 300px) and (max-width: 767px) {
     width: 100%;
-    /* max-width: 478px; */
   }
 `;
 const DataCount = styled.div`
@@ -607,7 +666,6 @@ const NodeHistory = styled.div`
 `;
 const CountryData = styled.div`
   width: 50%;
-  /* max-width: 282px; */
 `;
 const SpaceBetween = styled.div`
   display: flex;
@@ -718,7 +776,6 @@ const TabContainer = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
   width: 100%;
   display: none;
-  padding: 15px;
 
   @media (min-width: 768px) and (max-width: 1024px) {
     display: flex;
@@ -728,7 +785,6 @@ const MobileContainer = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
   width: 100%;
   display: flex;
-  padding: 15px;
 
   @media (min-width: 767px) {
     display: none;
@@ -738,7 +794,7 @@ const Container = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
   width: 100%;
   display: flex;
-  padding: 15px;
+
   @media (max-width: 1024px) {
     display: none;
   }
