@@ -15,8 +15,13 @@ const Div = styled.div`
   margin-left: 0px;
   @media (min-width: 300px) and (max-width: 767px) {
     fill: #103aaa;
-    width: 100%;
-    max-width: unset;
+    width: 70vw;
+    max-width: 300px;
+  }
+  @media (min-width: 300px) and (max-width: 1024px) {
+    fill: #103aaa;
+    width: 100vw;
+    max-width: 240px;
   }
 `;
 
