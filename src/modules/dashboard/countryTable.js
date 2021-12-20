@@ -10,8 +10,6 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
-import utility from "../../utility";
-import { LocationService } from "../../services";
 import { withStyles } from "@material-ui/styles";
 import _ from "lodash";
 
@@ -48,33 +46,7 @@ let rows = [];
     })
   }
 }
-  const [data, setData] = useState([]);
-  // useEffect(() => {
 
-  //   if (props?.data && props?.data?.length >= 1) {
-  //     (props?.data).map((item, index) => {
-  //       setData(item);
-  //     });
-  //     async function fetchData (){
-  //       const [error, res] = await utility.parseResponse(LocationService.getLocation(data));
-  //       if (error)
-  //       return;
-  //       let country = {
-  //         countries: res.country,
-  //         id: "1",
-  //         last24h: "64",
-  //         last24: "3.56%",
-  //         last7: "5.56%",
-  //       }
-  //       if (rows.length >=9) {
-  //         rows.pop();
-  //       }
-  //       rows.unshift(country);
-  //     }
-  //     fetchData();
-  //   }
-  // }, [props?.data]);
-  
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
