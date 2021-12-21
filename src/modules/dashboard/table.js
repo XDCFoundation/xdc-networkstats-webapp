@@ -15,6 +15,10 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 const TableBox = styled.div`
   width: 100%;
+  overflow: scroll;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 `;
 
 const StyledTableRow = withStyles((theme) => ({
@@ -200,141 +204,134 @@ export default function EnhancedTable(props) {
   return (
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
-      <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-          <EnhancedTableHead
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={props.content.stats.nodesArr.length}
-          />
-          <TableBody>
-            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+        <TableContainer>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={props.content.stats.nodesArr.length}
+            />
+            <TableBody>
+              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-            {stableSort(
-              props.content.stats.nodesArr,
-              getComparator(order, orderBy)
-            ).map((row, index) => {
-              const isItemSelected = isSelected(row.nodeName);
-              const labelId = `enhanced-table-radio-button-${index}`;
-              return (
-                <StyledTableRow
-                  hover
-                  role="radio"
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  key={row.nodeName}
-                  selected={isItemSelected}
-                >
-                  <StyledTableCell padding="radio">
-                    <Radio
-                      control={<Radio />}
-                      checked={isItemSelected}
-                      inputProps={{
-                        "aria-labelledby": labelId,
+              {stableSort(
+                props.content.stats.nodesArr,
+                getComparator(order, orderBy)
+              ).map((row, index) => {
+                const isItemSelected = isSelected(row.nodeName);
+                const labelId = `enhanced-table-radio-button-${index}`;
+                return (
+                  <StyledTableRow
+                    hover
+                    role="radio"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.nodeName}
+                    selected={isItemSelected}
+                  >
+                    <StyledTableCell padding="radio">
+                      <Radio
+                        control={<Radio />}
+                        checked={isItemSelected}
+                        inputProps={{
+                          "aria-labelledby": labelId,
+                        }}
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
                       }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell
-                    component="th"
-                    id={labelId}
-                    scope="row"
-                    padding="none"
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.nodeName}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.type}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.latency}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.peers}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.pendingTxn}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.lastBlock}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.graph}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    style={{
-                      fontSize: "12px",
-                      color: "#393939",
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {row.upTime}
-                  </StyledTableCell>
-                </StyledTableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    >
+                      {row.nodeName}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {row.type}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.latency}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.peers}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.pendingTxn}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.lastBlock}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.graph}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        fontSize: "12px",
+                        color: "#393939",
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {row.upTime}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Paper>
     </TableBox>
   );

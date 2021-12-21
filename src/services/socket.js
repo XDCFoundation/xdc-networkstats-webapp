@@ -199,7 +199,10 @@ let index1 = findIndex({ id: data.id });
               nodesArr[index3] = await latencyFilter(nodesArr[index3]);
             }
             upTime = nodesArr[index3].stats.uptime;
-            store.dispatch({type: eventConstants.UPDATE_UP_TIME, data: upTime})
+            store.dispatch({
+              type: eventConstants.UPDATE_UP_TIME,
+              data: upTime,
+            });
             updateActiveNodes(nodesArr);
           }
         }
@@ -381,7 +384,7 @@ function updateActiveNodes(data) {
       count: value,
     });
   }
-   countryArray = sorter.sort(countryArray).desc("count")
+  countryArray = sorter.sort(countryArray).desc("count");
   count = Object.keys(temp).length;
   batch(() => {
   store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
@@ -454,5 +457,5 @@ setInterval(() => {
       nodeName: nodesArr[i].info.name,
     });
   }
-  store.dispatch({type: eventConstants.UPDATE_NODES_ARR, data: table})
+  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
 }, 1500);
