@@ -85,6 +85,8 @@ export default function Dashboard(props) {
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
   }
 
+  const [ showTabJoyRide , setShowTabJoyRide] = React.useState(true)
+
   return (
     <Div>
       <Joyride
@@ -115,6 +117,22 @@ export default function Dashboard(props) {
         spotlightPadding={0}
         run={joyrideRun}
       />
+      {showTabJoyRide && 
+      <CustomerJoyRide>
+        <JoyrideTextContainer>
+          <CrossButton onClick={() => setShowTabJoyRide(false)}>
+            X
+          </CrossButton>
+        {TOUR_STEPS[0].content}
+          <JoyrideNextButton onClick={() => setShow(2)}>
+            Next
+          </JoyrideNextButton>
+          {/* {true &&
+          <JoyrideNextButton onClick={() => setShowTabJoyRide(false)}>
+            close
+          </JoyrideNextButton> } */}
+        </JoyrideTextContainer>
+      </CustomerJoyRide> }
       <Header
         setJoyrideRun={setJoyrideRun}
         showSideDrop={showSideDrop}
@@ -496,6 +514,51 @@ export default function Dashboard(props) {
 const Div = styled.div`
   width: 100%;
 `;
+
+const CustomerJoyRide = styled.div`
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content:center;
+    @media (min-width : 768px) and (max-width: 450px){
+      display: none;
+    }
+`;
+
+const JoyrideTextContainer = styled.div`
+    top: 50%;
+    /* left: 20%; */
+    /* right: 0; */
+    position: absolute;
+    background: white;
+    width: 80%;
+    height: 200px;
+    z-index: 100;
+    border-radius: 10px;
+    padding: 15px 45px 15px 15px;
+    
+`
+
+const JoyrideNextButton = styled.button`
+  background-color: #007bff;
+    outline: none;
+    border: none;
+    position: absolute;
+    bottom: 7px;
+    right: 12px;
+    width: 85px;
+    color: white;
+`
+const CrossButton = styled.div`
+  position: absolute;
+  right: 15px;
+    top: 5px;
+`
 
 const MainContainer = styled.div`
   width: 100%;
