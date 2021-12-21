@@ -1,15 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const Blur = styled.div`
-  background: rgba(0, 0, 0, 0.7) !important;
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  z-index: 1;
-  transition: linear;
-`;
-
 const Div = styled.div`
   height: 100%;
   max-width: 280px;
@@ -17,12 +8,12 @@ const Div = styled.div`
   width: 100%;
   color: white;
   position: fixed;
-  left: auto;
-  right: 0;
-  z-index: 1;
-  justify-content: space-around;
-  transition: linear;
+  z-index: 200;
   padding: 16px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+
   @media (min-width: 300px) and (max-width: 767px) {
     width: 100%;
     max-width: 200px;
@@ -90,136 +81,130 @@ const ColumnContainer = styled.div`
   flex-flow: column nowrap;
   margin-top: 30px;
 `;
-export default function sideDrawer(props) {
+export default function SideDrawer(props) {
   return (
-    <div>
-      <Blur></Blur>
-      <Div>
-        <ColumnDiv>
-          <Nav>
-            <NavLabel>Browse</NavLabel>
+    <Div>
+      <ColumnDiv>
+        <Nav>
+          <NavLabel>Browse</NavLabel>
 
-            <CloseImg
-              src="/images/Group 60.svg"
-              alt="close"
-              onClick={() => {
-                props.close(false);
-              }}
-            />
-          </Nav>
-          <ColumnContainer>
-            <RowDiv>
-              <Img src="/images/NetworkStat.svg" alt="Network" />
-              &nbsp;&nbsp;
-              <Content> Network Stats </Content>
-            </RowDiv>
+          <CloseImg
+            src="/images/Group 60.svg"
+            alt="close"
+            onClick={() => props.setShowSideDrop(false)}
+          />
+        </Nav>
+        <ColumnContainer>
+          <RowDiv>
+            <Img src="/images/NetworkStat.svg" alt="Network" />
+            &nbsp;&nbsp;
+            <Content> Network Stats </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/MasterNodes.svg" alt="Master" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://apothem.network/#masternode")
-                }
-              >
-                Masternodes
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/MasterNodes.svg" alt="Master" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://apothem.network/#masternode")
+              }
+            >
+              Masternodes
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://xinfin.network/#explorer")
-                }
-              >
-                Block Explorer
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://xinfin.network/#explorer")
+              }
+            >
+              Block Explorer
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://wallet.apothem.network/#/")
-                }
-              >
-                Web Wallet
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://wallet.apothem.network/#/")
+              }
+            >
+              Web Wallet
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Wallet.svg" alt="Pay" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href =
-                    "https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo")
-                }
-              >
-                XDC Pay
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/Wallet.svg" alt="Pay" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href =
+                  "https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo")
+              }
+            >
+              XDC Pay
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Android.svg" alt="Android" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href =
-                    "https://play.google.com/store/apps/details?id=com.xdcwallet")
-                }
-              >
-                Android Wallet
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/Android.svg" alt="Android" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href =
+                  "https://play.google.com/store/apps/details?id=com.xdcwallet")
+              }
+            >
+              Android Wallet
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Download.svg" alt="Download" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://xinfin.org/setup-masternode")
-                }
-              >
-                One Click Installer
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/Download.svg" alt="Download" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://xinfin.org/setup-masternode")
+              }
+            >
+              One Click Installer
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://howto.xinfin.org/")
-                }
-              >
-                XDC Docs
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://howto.xinfin.org/")
+              }
+            >
+              XDC Docs
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/APIs.svg" alt="Api" /> &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href =
-                    "https://apidocs.xinfin.network/docs/#xinfin-apis")
-                }
-                c
-              >
-                XDC API
-              </Content>
-            </RowDiv>
+          <RowDiv>
+            <Img src="/images/APIs.svg" alt="Api" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href =
+                  "https://apidocs.xinfin.network/docs/#xinfin-apis")
+              }
+              c
+            >
+              XDC API
+            </Content>
+          </RowDiv>
 
-            <RowDiv>
-              <Img src="/images/Documents.svg" alt="Api Documents" />{" "}
-              &nbsp;&nbsp;
-              <Content
-                onClick={() =>
-                  (window.location.href = "https://apidocs.xinfin.network/")
-                }
-              >
-                XDC API Docs
-              </Content>
-            </RowDiv>
-          </ColumnContainer>
-        </ColumnDiv>
-      </Div>
-    </div>
+          <RowDiv>
+            <Img src="/images/Documents.svg" alt="Api Documents" /> &nbsp;&nbsp;
+            <Content
+              onClick={() =>
+                (window.location.href = "https://apidocs.xinfin.network/")
+              }
+            >
+              XDC API Docs
+            </Content>
+          </RowDiv>
+        </ColumnContainer>
+      </ColumnDiv>
+    </Div>
   );
 }
