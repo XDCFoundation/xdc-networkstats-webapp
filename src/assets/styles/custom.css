@@ -239,8 +239,8 @@ input:focus {
 }
 
 .react-joyride__spotlight {
-  height: 354px !important;
-  top: 57px !important;
+  height: 341px !important ;
+  top: 61px !important ;
 }
 *{
   -ms-overflow-style: none;
