@@ -65,22 +65,77 @@ export default function Dashboard(props) {
   const changeExpand = (value) => {
     setCountry(value);
   };
-
   const [joyrideRun, setJoyrideRun] = useState(false);
-
+  const [joyrideStyle, setJoyrideStyle] = useState({});
+  const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
-    const { status, type } = data;
+    const { status, type, action, index } = data;
+    console.log("state", data);
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+    if (action === 'close') {
+      setJoyrideRun(false);
+      setStep(0);
+    }
+    if(index===2){
+      setJoyrideStyle({
+        tooltipContainer: {
+          textAlign: "left",
+        },
+        buttonNext: {
+          display: 'none'
+        },
+        buttonBack: {
+          marginRight: 10,
+          color: "#2256DF",
+          fontSize: 13,
+        },
+        buttonClose: {
+          size: 1,
+          padding: 10
+        },
+        buttonLast: {
+          display: 'none',
+        }
+      })
+    }
+    else{
+      setJoyrideStyle({
+        tooltipContainer: {
+          textAlign: "left",
+        },
+        buttonNext: {
+          backgroundColor: "#2358E5",
+          border: "none",
+          width: 70,
+          borderRadius: 0,
+          fontSize: 13,
+        },
+        buttonBack: {
+          marginRight: 10,
+          color: "#2256DF",
+          fontSize: 13,
+        },
+        buttonClose: {
+          size: 1,
+          padding: 10
+        },
+        buttonLast: {
+          display: 'none',
+        }
+      })
+    }
+    if(action === 'update') {
+      console.log("now");
+    }
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
     }
   };
 
   const [show, setShow] = useState(0);
-  let timeData = [];
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
-  const [uptime, setUpTime] = useState([]);
+
   async function fetchTime(value=1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
@@ -93,25 +148,10 @@ export default function Dashboard(props) {
         steps={TOUR_STEPS}
         callback={handleJoyrideCallback}
         continuous={true}
-        styles={{
-          tooltipContainer: {
-            textAlign: "left",
-          },
-          buttonNext: {
-            backgroundColor: "#2358E5",
-            border: "none",
-            width: 70,
-            borderRadius: 0,
-            fontSize: 13,
-          },
-          buttonBack: {
-            marginRight: 10,
-            color: "#2256DF",
-            fontSize: 13,
-          },
-        }}
+        styles={joyrideStyle}
         spotlightPadding={0}
         run={joyrideRun}
+        stepIndex={step}
       />
       <Header
         setJoyrideRun={setJoyrideRun}
