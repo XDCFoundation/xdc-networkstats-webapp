@@ -231,13 +231,17 @@ input:focus {
 }
 
 
-.__floater__open {
-  top: -29px !important;
+.__floater__arrow {
+  top: 26px ;
 }
 .react-joyride__tooltip {
-  width: 550px !important;
+  width: 530px !important;
 }
 
+.react-joyride__spotlight {
+  height: 341px !important ;
+  top: 61px !important ;
+}
 *{
   -ms-overflow-style: none;
 }

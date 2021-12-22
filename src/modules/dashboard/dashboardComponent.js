@@ -13,8 +13,9 @@ import utility from "../../utility";
 import NodesService from "../../services/nodes";
 import { eventConstants } from "../../constants";
 import store from "../../store";
-import Tooltip from "@mui/material/Tooltip";
+import _ from "lodash";
 import SideDrawer from "./sideDrawer";
+import Tooltip from "@mui/material/Tooltip";
 import BackDrop from "./backDrop";
 // import { withStyles } from "@mui/styles";
 import { makeStyles } from "@material-ui/styles";
@@ -98,12 +99,67 @@ export default function Dashboard(props) {
   const changeExpand = (value) => {
     setCountry(value);
   };
-
   const [joyrideRun, setJoyrideRun] = useState(false);
-
+  const [joyrideStyle, setJoyrideStyle] = useState({});
+  const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
-    const { status, type } = data;
+    const { status, type, action, index } = data;
+    console.log("state", data);
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+    if (action === "close") {
+      setJoyrideRun(false);
+      setStep(0);
+    }
+    if (index === 2) {
+      setJoyrideStyle({
+        tooltipContainer: {
+          textAlign: "left",
+        },
+        buttonNext: {
+          display: "none",
+        },
+        buttonBack: {
+          marginRight: 10,
+          color: "#2256DF",
+          fontSize: 13,
+        },
+        buttonClose: {
+          size: 1,
+          padding: 10,
+        },
+        buttonLast: {
+          display: "none",
+        },
+      });
+    } else {
+      setJoyrideStyle({
+        tooltipContainer: {
+          textAlign: "left",
+        },
+        buttonNext: {
+          backgroundColor: "#2358E5",
+          border: "none",
+          width: 70,
+          borderRadius: 0,
+          fontSize: 13,
+        },
+        buttonBack: {
+          marginRight: 10,
+          color: "#2256DF",
+          fontSize: 13,
+        },
+        buttonClose: {
+          size: 1,
+          padding: 10,
+        },
+        buttonLast: {
+          display: "none",
+        },
+      });
+    }
+    if (action === "update") {
+      console.log("now");
+    }
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
     }
@@ -114,8 +170,8 @@ export default function Dashboard(props) {
   let timeData = [];
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
-  const [uptime, setUpTime] = useState([]);
-  async function fetchTime(value) {
+
+  async function fetchTime(value = 1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
@@ -152,29 +208,10 @@ export default function Dashboard(props) {
         steps={TOUR_STEPS}
         callback={handleJoyrideCallback}
         continuous={true}
-        styles={{
-          tooltipContainer: {
-            textAlign: "left",
-            fontSize: 13,
-            fontFamily: "Inter",
-          },
-          buttonNext: {
-            backgroundColor: "#2358E5",
-            border: "none",
-            width: 70,
-            borderRadius: 0,
-            fontSize: 13,
-            fontFamily: "Inter",
-          },
-          buttonBack: {
-            marginRight: 10,
-            color: "#2256DF",
-            fontSize: 13,
-            fontFamily: "Inter",
-          },
-        }}
+        styles={joyrideStyle}
         spotlightPadding={0}
         run={joyrideRun}
+        stepIndex={step}
       />
 
       {showTabJoyRide && (
@@ -217,226 +254,357 @@ export default function Dashboard(props) {
           content={content}
         />
       ) : (
-        ""
-      )}
-      <MainContainer>
-        <Container>
-          <Title>Security</Title>
-          <Title>Speed</Title>
-          <Title>Efficiency</Title>
-        </Container>
-        <MobileContainer>
-          <MobileTitle
-            // id="security"
-            // style={{
-            //   backgroundColor: activeButton === "security" ? "red" : "blue",
-            // }}
-            onClick={() => {
-              setShow(1);
-            }}
-          >
-            Security
-          </MobileTitle>
-          <MobileTitle
-            // id="speed"
-            // style={{
-            //   backgroundColor: activeButton === "speed" ? "red" : "blue",
-            // }}
-            onClick={() => {
-              setShow(2);
-            }}
-          >
-            Speed
-          </MobileTitle>
-          <MobileTitle
-            // id="efficiency"
-            // style={{
-            //   backgroundColor: activeButton === "efficiency" ? "red" : "blue",
-            // }}
-            onClick={() => {
-              setShow(3);
-            }}
-          >
-            Efficiency
-          </MobileTitle>
-        </MobileContainer>
-        <TabContainer>
-          <TabTitle
-            onClick={() => {
-              setTabResponsive(1);
-            }}
-          >
-            Security
-          </TabTitle>
-          <TabTitle
-            onClick={() => {
-              setTabResponsive(2);
-            }}
-          >
-            Speed
-          </TabTitle>
-          <TabTitle
-            onClick={() => {
-              setTabResponsive(3);
-            }}
-          >
-            Efficiency
-          </TabTitle>
-        </TabContainer>
-        <FullScreen>
-          <ContentParent>
-            <ContentSecurity className="security">
-              <ContentData>
-                <Heading>Nodes</Heading>
-                <DataCount>
-                  {content.stats.nodes}/{content.stats.totalNodes}
-                </DataCount>
-                <NodeHistory>Node History (7 Days)</NodeHistory>
-                <NodeGraph data={content} />
-              </ContentData>
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>Countries</Countries>
-                    <CountriesData>{content.stats.countries}</CountriesData>
-                  </div>
-                  <Image
-                    src="/images/Expand.svg"
-                    onClick={() => changeExpand(2)}
-                  />
-                </SpaceBetween>
-                <Map location={content.stats.markers} />
-              </CountryData>
-            </ContentSecurity>
+        <>
+          <MainContainer>
+            <Container>
+              <Title>Security</Title>
+              <Title>Speed</Title>
+              <Title>Efficiency</Title>
+            </Container>
+            <MobileContainer>
+              <MobileTitle
+                // id="security"
+                // style={{
+                //   backgroundColor: activeButton === "security" ? "red" : "blue",
+                // }}
+                onClick={() => {
+                  setShow(1);
+                }}
+              >
+                Security
+              </MobileTitle>
+              <MobileTitle
+                // id="speed"
+                // style={{
+                //   backgroundColor: activeButton === "speed" ? "red" : "blue",
+                // }}
+                onClick={() => {
+                  setShow(2);
+                }}
+              >
+                Speed
+              </MobileTitle>
+              <MobileTitle
+                // id="efficiency"
+                // style={{
+                //   backgroundColor: activeButton === "efficiency" ? "red" : "blue",
+                // }}
+                onClick={() => {
+                  setShow(3);
+                }}
+              >
+                Efficiency
+              </MobileTitle>
+            </MobileContainer>
+            <TabContainer>
+              <TabTitle
+                onClick={() => {
+                  setTabResponsive(1);
+                }}
+              >
+                Security
+              </TabTitle>
+              <TabTitle
+                onClick={() => {
+                  setTabResponsive(2);
+                }}
+              >
+                Speed
+              </TabTitle>
+              <TabTitle
+                onClick={() => {
+                  setTabResponsive(3);
+                }}
+              >
+                Efficiency
+              </TabTitle>
+            </TabContainer>
+            <FullScreen>
+              <ContentParent>
+                <ContentSecurity className="security">
+                  <ContentData>
+                    <Heading>Nodes</Heading>
+                    <DataCount>
+                      {content.stats.nodes}/{content.stats.totalNodes}
+                    </DataCount>
+                    <NodeHistory>Node History (7 Days)</NodeHistory>
+                    <NodeGraph data={content} />
+                  </ContentData>
+                  <CountryData>
+                    <SpaceBetween>
+                      <div>
+                        <Countries>Countries</Countries>
+                        <CountriesData>{content.stats.countries}</CountriesData>
+                      </div>
+                      <Image
+                        src="/images/Expand.svg"
+                        onClick={() => changeExpand(2)}
+                      />
+                    </SpaceBetween>
+                    <Map location={content.stats.markers} />
+                  </CountryData>
+                </ContentSecurity>
 
-            <ContentSpeed className="speed">
-              <ContentData>
-                <Heading>Best Block</Heading>
-                <DataCount>
-                  #{" "}
-                  <NumberFormat
-                    value={content.stats.bestBlock}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                  />
-                </DataCount>
-                <NodeHistory>Avg Block Time</NodeHistory>
-                <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
-              </ContentData>
+                <ContentSpeed className="speed">
+                  <ContentData>
+                    <Heading>Best Block</Heading>
+                    <DataCount>
+                      #{" "}
+                      <NumberFormat
+                        value={content.stats.bestBlock}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                      />
+                    </DataCount>
+                    <NodeHistory>Avg Block Time</NodeHistory>
+                    <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
+                  </ContentData>
 
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>Last Block</Countries>
-                    <CountriesData>{content.stats.lastBlock}</CountriesData>
-                  </div>
-                </SpaceBetween>
-                <Speedbar>
-                  <LastBlockBar content={content} />
-                </Speedbar>
-              </CountryData>
-            </ContentSpeed>
-            <ContentEfficiency className="efficiency">
-              <ContentData>
-                <Heading>Gas Price (USD)</Heading>
-                <DataCount>{content.stats.gasPrice}</DataCount>
-                <NodeHistory>Avg Transaction Rate</NodeHistory>
-                <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
-              </ContentData>
-              <CountryData>
-                <SpaceBetween>
-                  <div>
-                    <Countries>UP Time</Countries>
-                    <CountriesData>{content.stats.upTime}%</CountriesData>
-                  </div>
-                  <ButtonDiv>
-                    <Button onClick={() => fetchTime(30)}>30D</Button>
-                    <Button onClick={() => fetchTime(7)}>7D</Button>
-                    <Button onClick={() => fetchTime(1)}>24H</Button>
-                  </ButtonDiv>
-                </SpaceBetween>
-                <Speedbar>
-                  <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
-                </Speedbar>
-              </CountryData>
-            </ContentEfficiency>
-          </ContentParent>
-        </FullScreen>
-        <TabScreen>
-          <ContentParent>
-            {tabResponsive <= 1 ? (
-              <ContentSecurity className="security">
-                <ContentData>
-                  <Heading>Nodes</Heading>
-                  <DataCount>
-                    {content.stats.nodes}/{content.stats.totalNodes}
-                  </DataCount>
-                  <NodeHistory>Node History (7 Days)</NodeHistory>
-                  <NodeGraph data={content} />
-                </ContentData>
-                <CountryData>
+                  <CountryData>
+                    <SpaceBetween>
+                      <div>
+                        <Countries>Last Block</Countries>
+                        <CountriesData>{content.stats.lastBlock}</CountriesData>
+                      </div>
+                    </SpaceBetween>
+                    <Speedbar>
+                      <LastBlockBar content={content} />
+                    </Speedbar>
+                  </CountryData>
+                </ContentSpeed>
+                <ContentEfficiency className="efficiency">
+                  <ContentData>
+                    <Heading>Gas Price (USD)</Heading>
+                    <DataCount>{content.stats.gasPrice}</DataCount>
+                    <NodeHistory>Avg Transaction Rate</NodeHistory>
+                    <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
+                  </ContentData>
+                  <CountryData>
+                    <SpaceBetween>
+                      <div>
+                        <Countries>UP Time</Countries>
+                        <CountriesData>{content.stats.upTime}%</CountriesData>
+                      </div>
+                      <ButtonDiv>
+                        <Button onClick={() => fetchTime(30)}>30D</Button>
+                        <Button onClick={() => fetchTime(7)}>7D</Button>
+                        <Button onClick={() => fetchTime(1)}>24H</Button>
+                      </ButtonDiv>
+                    </SpaceBetween>
+                    <Speedbar>
+                      <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                    </Speedbar>
+                  </CountryData>
+                </ContentEfficiency>
+              </ContentParent>
+            </FullScreen>
+            <TabScreen>
+              <ContentParent>
+                {tabResponsive <= 1 ? (
+                  <ContentSecurity className="security">
+                    <ContentData>
+                      <Heading>Nodes</Heading>
+                      <DataCount>
+                        {content.stats.nodes}/{content.stats.totalNodes}
+                      </DataCount>
+                      <NodeHistory>Node History (7 Days)</NodeHistory>
+                      <NodeGraph data={content} />
+                    </ContentData>
+                    <CountryData>
+                      <SpaceBetween>
+                        <div>
+                          <Countries>Countries</Countries>
+                          <CountriesData>
+                            {content.stats.countries}
+                          </CountriesData>
+                        </div>
+                        <Image
+                          src="/images/Expand.svg"
+                          onClick={() => changeExpand(2)}
+                        />
+                      </SpaceBetween>
+                      <MapDiv>
+                        <Map location={content.stats.markers} />
+                      </MapDiv>
+                    </CountryData>
+                  </ContentSecurity>
+                ) : (
+                  ""
+                )}
+                {tabResponsive === 2 ? (
+                  <ContentSpeed className="speed">
+                    <ContentData>
+                      <Heading>Best Block</Heading>
+                      <DataCount>
+                        #{" "}
+                        <NumberFormat
+                          value={content.stats.bestBlock}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                        />
+                      </DataCount>
+                      <NodeHistory>Avg Block Time</NodeHistory>
+                      <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
+                    </ContentData>
+
+                    <CountryData>
+                      <SpaceBetween>
+                        <div>
+                          <Countries>Last Block</Countries>
+                          <CountriesData>
+                            {content.stats.lastBlock}
+                          </CountriesData>
+                        </div>
+                      </SpaceBetween>
+                      <Speedbar>
+                        <LastBlockBar content={content} />
+                      </Speedbar>
+                    </CountryData>
+                  </ContentSpeed>
+                ) : (
+                  ""
+                )}
+                {tabResponsive === 3 ? (
+                  <ContentEfficiency className="efficiency">
+                    <ContentData>
+                      <Heading>Gas Price (USD)</Heading>
+                      <DataCount>{content.stats.gasPrice}</DataCount>
+                      <NodeHistory>Avg Transaction Rate</NodeHistory>
+                      <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
+                    </ContentData>
+                    <CountryData>
+                      <SpaceBetween>
+                        <div>
+                          <Countries>UP Time</Countries>
+                          <CountriesData>{content.stats.upTime}%</CountriesData>
+                        </div>
+                        <ButtonDiv>
+                          <Button onClick={() => fetchTime(30)}>30D</Button>
+                          <Button onClick={() => fetchTime(7)}>7D</Button>
+                          <Button onClick={() => fetchTime(1)}>24H</Button>
+                        </ButtonDiv>
+                      </SpaceBetween>
+                      <Speedbar>
+                        <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      </Speedbar>
+                    </CountryData>
+                  </ContentEfficiency>
+                ) : (
+                  ""
+                )}
+              </ContentParent>
+            </TabScreen>
+            <MobileContentParent>
+              {show <= 1 ? (
+                <ContentSecurityMobile>
                   <SpaceBetween>
-                    <div>
-                      <Countries>Countries</Countries>
-                      <CountriesData>{content.stats.countries}</CountriesData>
+                    <div style={{ display: "flex", marginBottom: "8px" }}>
+                      <Heading
+                        onClick={() => {
+                          setMobileTab(1);
+                        }}
+                      >
+                        Nodes
+                      </Heading>
+                      &nbsp;&nbsp;&nbsp;
+                      <Countries
+                        onClick={() => {
+                          setMobileTab(2);
+                        }}
+                      >
+                        Countries
+                      </Countries>
                     </div>
                     <Image
                       src="/images/Expand.svg"
                       onClick={() => changeExpand(2)}
                     />
                   </SpaceBetween>
-                  <MapDiv>
-                    <Map location={content.stats.markers} />
-                  </MapDiv>
-                </CountryData>
-              </ContentSecurity>
-            ) : (
-              ""
-            )}
-            {tabResponsive === 2 ? (
-              <ContentSpeed className="speed">
-                <ContentData>
-                  <Heading>Best Block</Heading>
-                  <DataCount>
-                    #{" "}
-                    <NumberFormat
-                      value={content.stats.bestBlock}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                    />
-                  </DataCount>
-                  <NodeHistory>Avg Block Time</NodeHistory>
-                  <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
-                </ContentData>
-
-                <CountryData>
+                  {mobileTab <= 1 ? (
+                    <ContentData>
+                      <Heading>Nodes</Heading>
+                      <DataCount>
+                        {content.stats.nodes}/{content.stats.totalNodes}
+                      </DataCount>
+                      <NodeHistory>Node History (7 Days)</NodeHistory>
+                      <MobileGraphDiv>
+                        <NodeGraph data={content} />
+                      </MobileGraphDiv>
+                    </ContentData>
+                  ) : (
+                    ""
+                  )}
+                  {mobileTab === 2 ? (
+                    <CountryData>
+                      <SpaceBetween>
+                        <div>
+                          <Countries>Countries</Countries>
+                          <BestBlockData>
+                            {content.stats.countries}
+                          </BestBlockData>
+                        </div>
+                      </SpaceBetween>
+                      <MapWidth>
+                        <Map location={content.stats.markers} />
+                      </MapWidth>
+                    </CountryData>
+                  ) : (
+                    ""
+                  )}
+                </ContentSecurityMobile>
+              ) : (
+                ""
+              )}
+              {show === 2 ? (
+                <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <Countries>Last Block</Countries>
-                      <CountriesData>{content.stats.lastBlock}</CountriesData>
+                      <BestBlock>BestBlock</BestBlock>
+                      <BestBlockData>
+                        #{" "}
+                        <NumberFormat
+                          value={content.stats.bestBlock}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                        />
+                      </BestBlockData>
+                    </div>
+                    <div>
+                      <LastBlock>LastBlock</LastBlock>
+                      <LastBLockData> {content.stats.lastBlock}</LastBLockData>
                     </div>
                   </SpaceBetween>
-                  <Speedbar>
+                  <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
+                  <MobileAverageBlockData>
+                    {content.stats.avgBlock + " "}Sec
+                  </MobileAverageBlockData>
+                  <MobileGraphDiv>
                     <LastBlockBar content={content} />
-                  </Speedbar>
-                </CountryData>
-              </ContentSpeed>
-            ) : (
-              ""
-            )}
-            {tabResponsive === 3 ? (
-              <ContentEfficiency className="efficiency">
-                <ContentData>
-                  <Heading>Gas Price (USD)</Heading>
-                  <DataCount>{content.stats.gasPrice}</DataCount>
-                  <NodeHistory>Avg Transaction Rate</NodeHistory>
-                  <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
-                </ContentData>
-                <CountryData>
+                  </MobileGraphDiv>
+                </MobileSpeedBlock>
+              ) : (
+                ""
+              )}
+              {show === 3 ? (
+                <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <Countries>UP Time</Countries>
-                      <CountriesData>{content.stats.upTime}%</CountriesData>
+                      <BestBlock>Gas Price (USD)</BestBlock>
+                      <BestBlockData>{content.stats.gasPrice}</BestBlockData>
+                    </div>
+                    <div>
+                      <LastBlock>UP Time</LastBlock>
+                      <LastBLockData> {content.stats.upTime}%</LastBLockData>
+                    </div>
+                  </SpaceBetween>
+                  <SpaceBetween>
+                    <div>
+                      <MobileAverageBlock>
+                        Avg Transaction Rate
+                      </MobileAverageBlock>
+                      <MobileAverageBlockData>
+                        {content.stats.avgRate + " "}TPS
+                      </MobileAverageBlockData>
                     </div>
                     <ButtonDiv>
                       <Button onClick={() => fetchTime(30)}>30D</Button>
@@ -444,143 +612,21 @@ export default function Dashboard(props) {
                       <Button onClick={() => fetchTime(1)}>24H</Button>
                     </ButtonDiv>
                   </SpaceBetween>
-                  <Speedbar>
-                    <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
-                  </Speedbar>
-                </CountryData>
-              </ContentEfficiency>
-            ) : (
-              ""
-            )}
-          </ContentParent>
-        </TabScreen>
-        <MobileContentParent>
-          {show <= 1 ? (
-            <ContentSecurityMobile>
-              <SpaceBetween>
-                <div style={{ display: "flex", marginBottom: "8px" }}>
-                  <Heading
-                    onClick={() => {
-                      setMobileTab(1);
-                    }}
-                  >
-                    Nodes
-                  </Heading>
-                  &nbsp;&nbsp;&nbsp;
-                  <Countries
-                    onClick={() => {
-                      setMobileTab(2);
-                    }}
-                  >
-                    Countries
-                  </Countries>
-                </div>
-                <Image
-                  src="/images/Expand.svg"
-                  onClick={() => changeExpand(2)}
-                />
-              </SpaceBetween>
-              {mobileTab <= 1 ? (
-                <ContentData>
-                  <Heading>Nodes</Heading>
-                  <DataCount>
-                    {content.stats.nodes}/{content.stats.totalNodes}
-                  </DataCount>
-                  <NodeHistory>Node History (7 Days)</NodeHistory>
                   <MobileGraphDiv>
-                    <NodeGraph data={content} />
+                    <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
                   </MobileGraphDiv>
-                </ContentData>
+                </MobileSpeedBlock>
               ) : (
                 ""
               )}
-              {mobileTab === 2 ? (
-                <CountryData>
-                  <SpaceBetween>
-                    <div>
-                      <Countries>Countries</Countries>
-                      <BestBlockData>{content.stats.countries}</BestBlockData>
-                    </div>
-                  </SpaceBetween>
-                  <MapWidth>
-                    <Map location={content.stats.markers} />
-                  </MapWidth>
-                </CountryData>
-              ) : (
-                ""
-              )}
-            </ContentSecurityMobile>
-          ) : (
-            ""
-          )}
-          {show === 2 ? (
-            <MobileSpeedBlock>
-              <SpaceBetween>
-                <div>
-                  <BestBlock>BestBlock</BestBlock>
-                  <BestBlockData>
-                    #{" "}
-                    <NumberFormat
-                      value={content.stats.bestBlock}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                    />
-                  </BestBlockData>
-                </div>
-                <div>
-                  <LastBlock>LastBlock</LastBlock>
-                  <LastBLockData> {content.stats.lastBlock}</LastBLockData>
-                </div>
-              </SpaceBetween>
-              <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
-              <MobileAverageBlockData>
-                {content.stats.avgBlock + " "}Sec
-              </MobileAverageBlockData>
-              <MobileGraphDiv>
-                <LastBlockBar content={content} />
-              </MobileGraphDiv>
-            </MobileSpeedBlock>
-          ) : (
-            ""
-          )}
-          {show === 3 ? (
-            <MobileSpeedBlock>
-              <SpaceBetween>
-                <div>
-                  <BestBlock>Gas Price (USD)</BestBlock>
-                  <BestBlockData>{content.stats.gasPrice}</BestBlockData>
-                </div>
-                <div>
-                  <LastBlock>UP Time</LastBlock>
-                  <LastBLockData> {content.stats.upTime}%</LastBLockData>
-                </div>
-              </SpaceBetween>
-              <SpaceBetween>
-                <div>
-                  <MobileAverageBlock>Avg Transaction Rate</MobileAverageBlock>
-                  <MobileAverageBlockData>
-                    {content.stats.avgRate + " "}TPS
-                  </MobileAverageBlockData>
-                </div>
-                <ButtonDiv>
-                  <Button onClick={() => fetchTime(30)}>30D</Button>
-                  <Button onClick={() => fetchTime(7)}>7D</Button>
-                  <Button onClick={() => fetchTime(1)}>24H</Button>
-                </ButtonDiv>
-              </SpaceBetween>
-              <MobileGraphDiv>
-                <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
-              </MobileGraphDiv>
-            </MobileSpeedBlock>
-          ) : (
-            ""
-          )}
-        </MobileContentParent>
-      </MainContainer>
-      <TableDiv>
-        <Table content={content} />
-      </TableDiv>
-      <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
+            </MobileContentParent>
+          </MainContainer>
+          <TableDiv>
+            <Table content={content} />
+          </TableDiv>
+          <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
+        </>
+      )}
     </Div>
   );
 }
@@ -834,6 +880,12 @@ const TableDiv = styled.div`
   background: #f8f8f8;
   border-radius: 4px;
   padding: 50px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    padding: 30px;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+    padding: 15px;
+  }
 `;
 
 const ButtonDiv = styled.div`
