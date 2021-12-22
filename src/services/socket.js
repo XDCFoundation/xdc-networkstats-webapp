@@ -389,13 +389,13 @@ function updateActiveNodes(data) {
   countryArray = sorter.sort(countryArray).desc("count");
 
 
-  async function fetchData() {
-    const [error, res] = await utility.parseResponse(
-      NodesService.getCountryInit()
-    );
-    console.log("qwertyu", res);
-  }
-  fetchData();
+  // async function fetchData() {
+  //   const [error, res] = await utility.parseResponse(
+  //     NodesService.getCountryInit()
+  //   );
+  //   console.log("qwertyu", res);
+  // }
+  // fetchData();
 
 
   count = Object.keys(temp).length;
