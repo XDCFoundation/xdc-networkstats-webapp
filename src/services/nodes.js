@@ -35,3 +35,15 @@ async function getUpTime(data) {
       return Promise.reject(err);
     });
 }
+
+
+// async function getCountryInit() {
+//   return axios
+//     .get(`http://localhost:3000/getInit`)
+//     .then((res) => {
+//       return Promise.resolve(res.data);
+//     })
+//     .catch(function (err) {
+//       return Promise.reject(err);
+//     });
+// }

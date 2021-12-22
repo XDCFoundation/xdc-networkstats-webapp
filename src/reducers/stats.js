@@ -1,14 +1,14 @@
 import { eventConstants } from "../constants";
 let initialState = {
-  nodes: 172,
-  totalNodes: 176,
-  countries: 70,
-  bestBlock: 55963787,
-  avgBlock: 0.7,
-  lastBlock: 17,
-  gasPrice: 0.007,
-  avgRate: 78,
-  upTime: 77,
+  nodes: 0,
+  totalNodes: 0,
+  countries: 0,
+  bestBlock: 0,
+  avgBlock: 0,
+  lastBlock: 0,
+  gasPrice: 0,
+  avgRate: 0,
+  upTime: 0,
   map: [],
   expandedCountry: [],
   markers: [],
@@ -16,7 +16,7 @@ let initialState = {
   nodesArr: [
     {
       nodeName: "Null",
-      type: "XDC",
+      type: "Null",
       latency: "0ms",
       peers: "0",
       pendingTxn: "0",
