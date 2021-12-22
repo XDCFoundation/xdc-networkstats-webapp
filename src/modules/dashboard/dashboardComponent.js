@@ -110,7 +110,7 @@ export default function Dashboard(props) {
   };
   const [showSideDrop, setShowSideDrop] = useState(false);
 
-  const [show, setShow] = useState(0);
+  const [show, setShow] = useState(1);
   let timeData = [];
   const [mobileTab, setMobileTab] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
@@ -128,10 +128,24 @@ export default function Dashboard(props) {
     setShow(show + 1);
     showSetText(setText + 1);
     if (show > 2) setShow(0);
-    if (setText > 2) showSetText(0);
+    if (setText > 1) showSetText(0);
+    console.log("setText", setText);
+    console.log("show", show);
   };
 
   const [setText, showSetText] = useState(0);
+  const [showBackButton, setShowBackButton] = useState(true);
+  const [showBackCount, setShowBackCount] = useState(0);
+
+  const backButtonTour = () => {
+    setShow(show - 1);
+    showSetText(setText - 1);
+    console.log("showBackCount", showBackCount);
+  };
+  const [activeButton, setActiveButton] = React.useState("General");
+  const handleViewClick = (e) => {
+    setActiveButton(e.target.id);
+  };
   return (
     <Div>
       <Joyride
@@ -165,20 +179,18 @@ export default function Dashboard(props) {
 
       {showTabJoyRide && (
         <CustomerJoyRide>
+          <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
           <JoyrideTextContainer>
-            <CrossButton onClick={() => setShowTabJoyRide(false)}>
-              X
-            </CrossButton>
             {TOUR_STEPS[setText].content}
-            <JoyrideNextButton onClick={() => buttonTour()}>
-              Next
-            </JoyrideNextButton>
-            {/* {true && ( */}
-            <JoyrideBackButton onClick={() => setShowTabJoyRide(false)}>
+          </JoyrideTextContainer>
+          <JoyrideNextButton onClick={() => buttonTour()}>
+            Next
+          </JoyrideNextButton>
+          {showBackButton && (
+            <JoyrideBackButton onClick={() => backButtonTour()}>
               Back
             </JoyrideBackButton>
-            {/* )} */}
-          </JoyrideTextContainer>
+          )}
         </CustomerJoyRide>
       )}
       <Header
@@ -215,6 +227,10 @@ export default function Dashboard(props) {
         </Container>
         <MobileContainer>
           <MobileTitle
+            // id="security"
+            // style={{
+            //   backgroundColor: activeButton === "security" ? "red" : "blue",
+            // }}
             onClick={() => {
               setShow(1);
             }}
@@ -222,6 +238,10 @@ export default function Dashboard(props) {
             Security
           </MobileTitle>
           <MobileTitle
+            // id="speed"
+            // style={{
+            //   backgroundColor: activeButton === "speed" ? "red" : "blue",
+            // }}
             onClick={() => {
               setShow(2);
             }}
@@ -229,6 +249,10 @@ export default function Dashboard(props) {
             Speed
           </MobileTitle>
           <MobileTitle
+            // id="efficiency"
+            // style={{
+            //   backgroundColor: activeButton === "efficiency" ? "red" : "blue",
+            // }}
             onClick={() => {
               setShow(3);
             }}
@@ -589,27 +613,49 @@ const JoyrideTextContainer = styled.div`
   z-index: 100;
   border-radius: 10px;
   padding: 15px 45px 15px 15px;
+  display: flex;
 `;
 
 const JoyrideNextButton = styled.button`
   background-color: #007bff;
   outline: none;
   border: none;
-  position: absolute;
-  bottom: 7px;
-  right: 12px;
-  width: 85px;
+  width: 100%;
+  max-width: 63px;
   color: white;
+  border-radius: 4px;
+  padding: 4px;
+  z-index: 200;
+  position: absolute;
+  bottom: 30%;
+  right: 13%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const JoyrideBackButton = styled.div`
   font-size: 1rem;
   font-family: Inter;
   font-weight: 600;
   color: #2256df;
+  border-radius: 4px;
+  padding: 4px;
+  z-index: 200;
+  position: absolute;
+  bottom: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 27%;
+  @media (min-width: 300px) and (max-width: 560px) {
+    margin-right: 20px;
+  }
 `;
 const CrossButton = styled.div`
   position: absolute;
-  right: 15px;
+  z-index: 200;
+  left: 86%;
+  top: 50%;
 `;
 
 const MainContainer = styled.div`
