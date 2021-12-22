@@ -343,6 +343,8 @@ function transactions(data) {
   }
   return parseInt(result).toFixed(0) + unit;
 }
+
+
 function updateActiveNodes(data) {
   updateBestBlock(data);
   let marker = [];
@@ -385,6 +387,17 @@ function updateActiveNodes(data) {
     });
   }
   countryArray = sorter.sort(countryArray).desc("count");
+
+
+  async function fetchData() {
+    const [error, res] = await utility.parseResponse(
+      NodesService.getCountryInit()
+    );
+    console.log("qwertyu", res);
+  }
+  fetchData();
+
+
   count = Object.keys(temp).length;
   batch(() => {
   store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
