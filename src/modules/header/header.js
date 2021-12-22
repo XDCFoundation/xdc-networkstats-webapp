@@ -32,6 +32,9 @@ const StartGuideTourButton = styled.button`
   width: 100%;
   max-width: 186px;
   padding: 6px 5px 8px 6px;
+  @media (min-width: 100px) and (max-width: 1024px) {
+    display: none;
+  }
 `;
 export default function Header(props) {
   return (
@@ -51,6 +54,13 @@ export default function Header(props) {
             <img src="/images/Play.svg" alt="Start" />
             <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>&nbsp;
           </StartGuideTourButton>
+          <StartGuideTourButtonTab
+            onClick={() => {
+              props.setShowTabJoyRide(true);
+            }}
+          >
+            <img src="/images/Play.svg" alt="Start" />
+          </StartGuideTourButtonTab>
           &emsp;
           <HeaderLogoElement
             src="/images/Hamburger.svg"
@@ -77,4 +87,21 @@ const NetworkStats = styled.div`
 const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+const StartGuideTourButtonTab = styled.div`
+  color: white;
+  background: #2a52c1 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 186px;
+  padding: 6px 5px 8px 6px;
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;

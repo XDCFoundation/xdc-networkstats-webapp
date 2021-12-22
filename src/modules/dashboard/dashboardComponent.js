@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
 import Map from "./map";
 import LastBlockBar from "./speedBar";
@@ -9,15 +8,17 @@ import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Header from "../header/header";
-
 import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
 import { eventConstants } from "../../constants";
 import store from "../../store";
-
+import Tooltip from "@mui/material/Tooltip";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
+// import { withStyles } from "@mui/styles";
+import { makeStyles } from "@material-ui/styles";
+// import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 const Footer = styled.div`
   background-color: white;
@@ -48,9 +49,45 @@ const TOUR_STEPS = [
     disableBeacon: true,
   },
 ];
-
+// const useStyles = withStyles({
+//   arrow: {
+//     "&:before": {
+//       backgroundColor: "white",
+//     },
+//   },
+//   tooltip: {
+//     color: "#2a2a2a",
+//     backgroundColor: "white",
+//     padding: "9px",
+//     fontSize: "12px",
+//     fontWeight: "normal",
+//     fontStretch: "normal",
+//     fontStyle: "normal",
+//     lineHeight: "1.42",
+//     letterSpacing: "0.46px",
+//   },
+// })(Tooltip);
+const use = makeStyles(() => ({
+  arrow: {
+    "&:before": {
+      backgroundColor: "white",
+    },
+  },
+  tooltip: {
+    color: "#2a2a2a",
+    backgroundColor: "white",
+    padding: "9px",
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.42",
+    letterSpacing: "0.46px",
+  },
+}));
 export default function Dashboard(props) {
   const { content } = props;
+  const classes = use();
 
   const [SwitchSide, setSide] = React.useState(false);
   const changeSide = (value) => {
@@ -85,8 +122,16 @@ export default function Dashboard(props) {
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
   }
 
-  const [ showTabJoyRide , setShowTabJoyRide] = React.useState(true)
+  const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
+  const buttonTour = () => {
+    setShow(show + 1);
+    showSetText(setText + 1);
+    if (show > 2) setShow(0);
+    if (setText > 2) showSetText(0);
+  };
+
+  const [setText, showSetText] = useState(0);
   return (
     <Div>
       <Joyride
@@ -117,24 +162,29 @@ export default function Dashboard(props) {
         spotlightPadding={0}
         run={joyrideRun}
       />
-      {showTabJoyRide && 
-      <CustomerJoyRide>
-        <JoyrideTextContainer>
-          <CrossButton onClick={() => setShowTabJoyRide(false)}>
-            X
-          </CrossButton>
-        {TOUR_STEPS[0].content}
-          <JoyrideNextButton onClick={() => setShow(2)}>
-            Next
-          </JoyrideNextButton>
-          {/* {true &&
-          <JoyrideNextButton onClick={() => setShowTabJoyRide(false)}>
-            close
-          </JoyrideNextButton> } */}
-        </JoyrideTextContainer>
-      </CustomerJoyRide> }
+
+      {showTabJoyRide && (
+        <CustomerJoyRide>
+          <JoyrideTextContainer>
+            <CrossButton onClick={() => setShowTabJoyRide(false)}>
+              X
+            </CrossButton>
+            {TOUR_STEPS[setText].content}
+            <JoyrideNextButton onClick={() => buttonTour()}>
+              Next
+            </JoyrideNextButton>
+            {/* {true && ( */}
+            <JoyrideBackButton onClick={() => setShowTabJoyRide(false)}>
+              Back
+            </JoyrideBackButton>
+            {/* )} */}
+          </JoyrideTextContainer>
+        </CustomerJoyRide>
+      )}
       <Header
         setJoyrideRun={setJoyrideRun}
+        setShowTabJoyRide={setShowTabJoyRide}
+        showTabJoyRide={showTabJoyRide}
         showSideDrop={showSideDrop}
         setShowSideDrop={setShowSideDrop}
       />
@@ -518,47 +568,49 @@ const Div = styled.div`
 const CustomerJoyRide = styled.div`
   width: 100%;
   position: absolute;
-  background-color: rgba(0,0,0,0.5);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content:center;
-    @media (min-width : 768px) and (max-width: 450px){
-      display: none;
-    }
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;
 
 const JoyrideTextContainer = styled.div`
-    top: 50%;
-    /* left: 20%; */
-    /* right: 0; */
-    position: absolute;
-    background: white;
-    width: 80%;
-    height: 200px;
-    z-index: 100;
-    border-radius: 10px;
-    padding: 15px 45px 15px 15px;
-    
-`
+  top: 48%;
+  position: absolute;
+  background: white;
+  width: 80%;
+  height: 200px;
+  z-index: 100;
+  border-radius: 10px;
+  padding: 15px 45px 15px 15px;
+`;
 
 const JoyrideNextButton = styled.button`
   background-color: #007bff;
-    outline: none;
-    border: none;
-    position: absolute;
-    bottom: 7px;
-    right: 12px;
-    width: 85px;
-    color: white;
-`
+  outline: none;
+  border: none;
+  position: absolute;
+  bottom: 7px;
+  right: 12px;
+  width: 85px;
+  color: white;
+`;
+const JoyrideBackButton = styled.div`
+  font-size: 1rem;
+  font-family: Inter;
+  font-weight: 600;
+  color: #2256df;
+`;
 const CrossButton = styled.div`
   position: absolute;
   right: 15px;
-    top: 5px;
-`
+`;
 
 const MainContainer = styled.div`
   width: 100%;
@@ -605,30 +657,7 @@ const MobileTitle = styled.div`
     cursor: pointer;
   }
 `;
-// const Security = styled.div`
-//   color: #c8d1f1;
-//   width: 33.33%;
-//   font-size: 1rem;
-//   font-weight: 600;
-//   border-right: 1px solid #274598;
-//   padding: 8px 6px 8px 16px;
-// `;
-// const Speed = styled.div`
-//   width: 33.33%;
-//   font-size: 1rem;
-//   font-weight: 600;
-//   border-right: 1px solid #274598;
-//   color: #c8d1f1;
-//   padding: 8px 6px 8px 16px;
-// `;
-// const Efficiency = styled.div`
-//   width: 33.33%;
-//   font-size: 1rem;
-//   font-weight: 600;
-//   border-right: 1px solid #274598;
-//   color: #c8d1f1;
-//   padding: 8px 6px 8px 16px;
-// `;
+
 const ContentSecurity = styled.div`
   background-color: #102c78;
   height: 300px;

@@ -197,10 +197,10 @@ async function socketAction(action, data) {
               nodesArr[index3] = await latencyFilter(nodesArr[index3]);
             }
             upTime = nodesArr[index3].stats.uptime;
-            store.dispatch({
-              type: eventConstants.UPDATE_UP_TIME,
-              data: upTime,
-            });
+            // store.dispatch({
+            //   type: eventConstants.UPDATE_UP_TIME,
+            //   data: upTime,
+            // });
             updateActiveNodes(nodesArr);
           }
         }
