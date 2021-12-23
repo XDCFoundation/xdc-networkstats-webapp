@@ -280,7 +280,7 @@ export default function Dashboard(props) {
               <ContentData>
                 <Heading>Gas Price (USD)</Heading>
                 <DataCount>{content.stats.gasPrice}</DataCount>
-                <NodeHistory>Avg Transaction Rate</NodeHistory>
+                <NodeHistory>Avg transaction Price</NodeHistory>
                 <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
               </ContentData>
               <CountryData>
@@ -369,7 +369,7 @@ export default function Dashboard(props) {
                 <ContentData>
                   <Heading>Gas Price (USD)</Heading>
                   <DataCount>{content.stats.gasPrice}</DataCount>
-                  <NodeHistory>Avg Transaction Rate</NodeHistory>
+                  <NodeHistory>Avg transaction Price</NodeHistory>
                   <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                 </ContentData>
                 <CountryData>
@@ -497,7 +497,7 @@ export default function Dashboard(props) {
               </SpaceBetween>
               <SpaceBetween>
                 <div>
-                  <MobileAverageBlock>Avg Transaction Rate</MobileAverageBlock>
+                  <MobileAverageBlock>Avg transaction Price</MobileAverageBlock>
                   <MobileAverageBlockData>
                     {content.stats.avgRate + " "}TPS
                   </MobileAverageBlockData>

@@ -37,10 +37,12 @@ export default function EnhancedTable(props) {
 
   if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
     for (let i = 0; i < props.data.length; i++) {
+      console.log("loop.", props.data[i].last24diff);
       rows.push({
         id: 1 + i,
         countries: props.data[i].country,
         last24h: props.data[i].count,
+        last24: props.data[i].last24diff,
       });
     }
   }

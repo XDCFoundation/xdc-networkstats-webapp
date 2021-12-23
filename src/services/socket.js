@@ -75,7 +75,7 @@ async function socketAction(action, data) {
   switch (action) {
     case "network-stats-nodes":
       nodesArr = data;
-
+      
       _.forEach(nodesArr, function (node, index) {
         if (_.isUndefined(data.history)) {
           data.history = new Array(40);
@@ -385,39 +385,49 @@ function updateActiveNodes(data) {
     countryArray.push({
       country: key,
       count: value,
+      last24diff : '',
+      last7diff : ''
     });
   }
 
   countryArray = sorter.sort(countryArray).desc("count");
   
-  // async function fetchData() {
-  //   const [error, res] = await utility.parseResponse(
-  //     NodesService.getCountryInit()
-  //   );
+  async function fetchData() {
+    const [error, res] = await utility.parseResponse(
+      NodesService.getCountryInit()
+    );
 
-  //   for( let i = 0; i<countryArray.length; i++){
-  //     console.log("first", countryArray[i].country);
-  //     for ( let j = 0; j<res.responseData.last24; j++){
-  //       console.log("second", res.responseData.last24[j].country);
-  //       if((countryArray[i].country) === (res.responseData.last24[j].country)){
-  //         if((countryArray[i].count) > (res.responseData.last24[j].count)){
-  //           console.log("pop");
-  //         }
-  //         else if ((countryArray[i].count) < (res.responseData.last24[j].count)){
-  //           console.log("push");
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // fetchData();
-  countryArray.forEach((country) => {
-    country.count = country.count.toString() + `(${((country.count/nodesArr.length)*100).toFixed(2)})%`
-});
+    for( let i = 0; i<countryArray.length; i++){
+      for ( let j = 0; j<res.responseData.last24.length; j++){
+        if((countryArray[i].country) === (res.responseData.last24[j].country)){
+          if(countryArray[i].count === (res.responseData.last24[j].count)/24){
+            countryArray[i].last24diff = `${(((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2)}%`;   
+          }
+          else if(countryArray[i].count > (res.responseData.last24[j].count)/24){
+            countryArray[i].last24diff= `${((countryArray[i].count-(res.responseData.last24[j].count)/24)/(res.responseData.last24[j].count/24)*100).toFixed(2)}%`;
+          console.log("pop", countryArray[i].count, (res.responseData.last24[j].count)/24 );
+          }
+          else
+          {
+            countryArray[i].last24diff= `${(((res.responseData.last24[j].count/24)-countryArray[i].count/countryArray[i].count)*100).toFixed(2)}%`;
+            console.log("pop", countryArray[i].count, (res.responseData.last24[j].count)/24 );
+          }
+        }
+      }
+    }
+    
+    console.log("value", countryArray );
+    store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
+  }
+
+  fetchData();
+  console.log("res", countryArray);
+//   countryArray.forEach((country) => {
+//     country.count = country.count.toString() + ' ' + `(${((country.count/nodesArr.length)*100).toFixed(2)})%`
+// });
   
   count = Object.keys(temp).length;
   batch(() => {
-  store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
   store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
   store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
   store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
@@ -448,7 +458,7 @@ function updateBestBlock(data) {
         const [error, res] = await utility.parseResponse(
           NodesService.getGasPrice()
         );
-        if (!_.isUndefined(res.responseData[0])) {
+        if (!_.isUndefined(res.responseData[0].gasPrice.data.ETH.quote.USD.price) && !_.isEmpty(res.responseData[0].gasPrice.data.ETH.quote.USD.price)) {
           let price = res.responseData[0].gasPrice.data.ETH.quote.USD.price;
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit;
@@ -499,12 +509,12 @@ async function getInitNodes(){
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
 }
-
 getInitNodes();
 
 
 setInterval(() => {
   let table = [];
+  if(!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
   for (let i = 0; i < nodesArr.length; i++) {
     table.push({
       type: nodesArr[i].info.node,
@@ -517,5 +527,5 @@ setInterval(() => {
       nodeName: nodesArr[i].info.name,
     });
   }
-  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
+  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table }); }
 }, 1000);
