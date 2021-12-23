@@ -373,6 +373,7 @@ function updateActiveNodes(data) {
   }
   let hs = {};
   let countryArray = [];
+  
   for (let i = 0; i < country.length; i++) {
     if (hs.hasOwnProperty(country[i].loc)) {
       hs[country[i].loc] = hs[country[i].loc] + 1;
@@ -386,18 +387,34 @@ function updateActiveNodes(data) {
       count: value,
     });
   }
+
   countryArray = sorter.sort(countryArray).desc("count");
+  
+  // async function fetchData() {
+  //   const [error, res] = await utility.parseResponse(
+  //     NodesService.getCountryInit()
+  //   );
 
-
-  async function fetchData() {
-    const [error, res] = await utility.parseResponse(
-      NodesService.getCountryInit()
-    );
-    console.log("qwertyu", res.responseData.last24);
-  }
-  fetchData();
-
-
+  //   for( let i = 0; i<countryArray.length; i++){
+  //     console.log("first", countryArray[i].country);
+  //     for ( let j = 0; j<res.responseData.last24; j++){
+  //       console.log("second", res.responseData.last24[j].country);
+  //       if((countryArray[i].country) === (res.responseData.last24[j].country)){
+  //         if((countryArray[i].count) > (res.responseData.last24[j].count)){
+  //           console.log("pop");
+  //         }
+  //         else if ((countryArray[i].count) < (res.responseData.last24[j].count)){
+  //           console.log("push");
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // fetchData();
+  countryArray.forEach((country) => {
+    country.count = country.count.toString() + `(${((country.count/nodesArr.length)*100).toFixed(2)})%`
+});
+  
   count = Object.keys(temp).length;
   batch(() => {
   store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
@@ -407,6 +424,9 @@ function updateActiveNodes(data) {
   store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
   })
 }
+
+
+
 
 function updateBestBlock(data) {
   const wei = 0.000000000000000001;
@@ -456,6 +476,33 @@ function timeFilter(data) {
 function findIndex(search) {
   return _.findIndex(nodesArr, search);
 }
+
+async function getInitNodes(){
+  const [err, res] = await utility.parseResponse(
+      NodesService.getInitNodes()
+  );
+  let initNodes = res.responseData[0].nodes;
+  console.log("res res res res res initNodes ======", initNodes);
+  let table = [];
+  for (let i = 0; i < initNodes.length; i++) {
+    table.push({
+      type: initNodes[i].info.node,
+      pendingTxn: initNodes[i].stats.pending,
+      lastBlock: initNodes[i].stats.block.number,
+      // graph: <TableGraph content={initNodes[i].history} />,
+      // graph: initNodes[i].history,
+      upTime: `${initNodes[i].stats.uptime}%`,
+      latency: `${initNodes[i].stats.latency}ms`,
+      peers: initNodes[i].stats.peers,
+      nodeName: initNodes[i].info.name,
+    });
+  }
+  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
+}
+
+getInitNodes();
+
+
 setInterval(() => {
   let table = [];
   for (let i = 0; i < nodesArr.length; i++) {
@@ -471,4 +518,4 @@ setInterval(() => {
     });
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
-}, 1500);
+}, 1000);

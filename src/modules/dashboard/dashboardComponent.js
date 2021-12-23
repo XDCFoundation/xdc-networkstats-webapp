@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
 import Map from "./map";
 import LastBlockBar from "./speedBar";
