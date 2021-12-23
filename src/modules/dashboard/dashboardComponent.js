@@ -223,10 +223,12 @@ export default function Dashboard(props) {
           <JoyrideNextButton onClick={() => buttonTour()}>
             Next
           </JoyrideNextButton>
-          {showBackButton && (
+          {showBackButton && showBackCount >= 1 ? (
             <JoyrideBackButton onClick={() => backButtonTour()}>
               Back
             </JoyrideBackButton>
+          ) : (
+            ""
           )}
         </CustomerJoyRide>
       )}
@@ -891,6 +893,7 @@ const TableDiv = styled.div`
 const ButtonDiv = styled.div`
   white-space: nowrap;
   cursor: pointer;
+  border-radius: 6px;
 `;
 const Button = styled.button`
   background: #1c3c93;

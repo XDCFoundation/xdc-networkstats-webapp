@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Div = styled.div`
   height: 100%;
-  max-width: 280px;
+  max-width: 336px;
   background-color: #102e84;
   width: 100%;
   color: white;
@@ -70,7 +70,7 @@ const RowDiv = styled.div`
   align-items: center;
   text-align: center;
   border-bottom: 1px solid #4867c1;
-  height: 50px;
+  height: 56px;
 `;
 const ColumnDiv = styled.div`
   display: flex;
@@ -79,7 +79,7 @@ const ColumnDiv = styled.div`
 const ColumnContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  margin-top: 30px;
+  margin-top: 50px;
 `;
 export default function SideDrawer(props) {
   return (
