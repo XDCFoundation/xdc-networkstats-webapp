@@ -50,24 +50,7 @@ const TOUR_STEPS = [
     disableBeacon: true,
   },
 ];
-// const useStyles = withStyles({
-//   arrow: {
-//     "&:before": {
-//       backgroundColor: "white",
-//     },
-//   },
-//   tooltip: {
-//     color: "#2a2a2a",
-//     backgroundColor: "white",
-//     padding: "9px",
-//     fontSize: "12px",
-//     fontWeight: "normal",
-//     fontStretch: "normal",
-//     fontStyle: "normal",
-//     lineHeight: "1.42",
-//     letterSpacing: "0.46px",
-//   },
-// })(Tooltip);
+
 const use = makeStyles(() => ({
   arrow: {
     "&:before": {
@@ -922,7 +905,7 @@ const BestBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 `;
 const MobileSpeedBlock = styled.div`
   background-color: #102c78;
@@ -942,7 +925,7 @@ const LastBLockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 `;
 const MobileAverageBlock = styled.div`
   color: #667fc1;
@@ -955,7 +938,7 @@ const MobileAverageBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 `;
 const MobileGraphDiv = styled.div`
   width: 100%;
