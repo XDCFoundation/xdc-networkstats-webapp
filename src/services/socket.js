@@ -198,10 +198,10 @@ async function socketAction(action, data) {
               nodesArr[index3] = await latencyFilter(nodesArr[index3]);
             }
             upTime = nodesArr[index3].stats.uptime;
-            // store.dispatch({
-            //   type: eventConstants.UPDATE_UP_TIME,
-            //   data: upTime,
-            // });
+            store.dispatch({
+              type: eventConstants.UPDATE_UP_TIME,
+              data: upTime,
+            });
             updateActiveNodes(nodesArr);
           }
         }
@@ -248,9 +248,15 @@ async function socketAction(action, data) {
         lastBlocksTime = data.blocktime;
 
       batch(() => {
-        // store.dispatch({type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime})
-        // store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
-        // store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime})
+        store.dispatch({
+          type: eventConstants.UPDATE_AVG_BLOCK,
+          data: avgTime,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_AVG_RATE, data: value });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: lastBlocksTime,
+        });
       });
       if (
         !_.isEqual(difficultyChart, data.difficulty) &&
@@ -393,11 +399,17 @@ function updateActiveNodes(data) {
 
   count = Object.keys(temp).length;
   batch(() => {
-    // store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
-    // store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
-    // store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
-    // store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
-    // store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
+    store.dispatch({
+      type: eventConstants.UPDATE_EXPANDEDCOUNTRY,
+      data: countryArray,
+    });
+    // store.dispatch({ type: eventConstants.UPDATE_COUNTRIES, data: count });
+    // store.dispatch({ type: eventConstants.UPDATE_MARKERS, data: marker });
+    // store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodesActive });
+    // store.dispatch({
+    //   type: eventConstants.UPDATE_TOTAL_NODES,
+    //   data: totalNodes,
+    // });
   });
 }
 
@@ -429,9 +441,15 @@ function updateBestBlock(data) {
       }
       fetchData();
       batch(() => {
-        // store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
-        // store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
-        // store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
+        store.dispatch({
+          type: eventConstants.UPDATE_GAS_PRICE,
+          data: gasPrice.toFixed(6),
+        });
+        store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: time });
+        store.dispatch({
+          type: eventConstants.UPDATE_BEST_BLOCK,
+          data: bestBlock,
+        });
       });
     }
   }

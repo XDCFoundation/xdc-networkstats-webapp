@@ -125,6 +125,7 @@ export default function Dashboard(props) {
           width: 70,
           borderRadius: 0,
           fontSize: 13,
+          borderRadius: "3px",
         },
         buttonBack: {
           marginRight: 10,
@@ -151,8 +152,8 @@ export default function Dashboard(props) {
 
   const [show, setShow] = useState(1);
   let timeData = [];
-  const [mobileTab, setMobileTab] = useState(0);
-  const [tabResponsive, setTabResponsive] = useState(0);
+  const [mobileTab, setMobileTab] = useState(1);
+  const [tabResponsive, setTabResponsive] = useState(1);
 
   async function fetchTime(value = 1) {
     const [error, res] = await utility.parseResponse(
@@ -247,62 +248,56 @@ export default function Dashboard(props) {
               <Title>Efficiency</Title>
             </Container>
             <MobileContainer>
-              <MobileTitle
-                // id="security"
-                // style={{
-                //   backgroundColor: activeButton === "security" ? "red" : "blue",
-                // }}
+              <MobileTitleSecurity
+                show={show}
                 onClick={() => {
                   setShow(1);
                 }}
               >
                 Security
-              </MobileTitle>
-              <MobileTitle
-                // id="speed"
-                // style={{
-                //   backgroundColor: activeButton === "speed" ? "red" : "blue",
-                // }}
+              </MobileTitleSecurity>
+              <MobileTitleSpeed
+                show={show}
                 onClick={() => {
                   setShow(2);
                 }}
               >
                 Speed
-              </MobileTitle>
-              <MobileTitle
-                // id="efficiency"
-                // style={{
-                //   backgroundColor: activeButton === "efficiency" ? "red" : "blue",
-                // }}
+              </MobileTitleSpeed>
+              <MobileTitleEfficiency
+                show={show}
                 onClick={() => {
                   setShow(3);
                 }}
               >
                 Efficiency
-              </MobileTitle>
+              </MobileTitleEfficiency>
             </MobileContainer>
             <TabContainer>
-              <TabTitle
+              <TabSecurity
+                show={tabResponsive}
                 onClick={() => {
                   setTabResponsive(1);
                 }}
               >
                 Security
-              </TabTitle>
-              <TabTitle
+              </TabSecurity>
+              <TabSpeed
+                show={tabResponsive}
                 onClick={() => {
                   setTabResponsive(2);
                 }}
               >
                 Speed
-              </TabTitle>
-              <TabTitle
+              </TabSpeed>
+              <TabEfficiency
+                show={tabResponsive}
                 onClick={() => {
                   setTabResponsive(3);
                 }}
               >
                 Efficiency
-              </TabTitle>
+              </TabEfficiency>
             </TabContainer>
             <FullScreen>
               <ContentParent>
@@ -355,6 +350,14 @@ export default function Dashboard(props) {
                     <Speedbar>
                       <LastBlockBar content={content} />
                     </Speedbar>
+                    <DisplayFlex>
+                      <FlexStyled>
+                        Min &nbsp;<Span>1s</Span>
+                      </FlexStyled>
+                      <FlexStyledOne>
+                        Max &nbsp;<Span>26s</Span>
+                      </FlexStyledOne>
+                    </DisplayFlex>
                   </CountryData>
                 </ContentSpeed>
                 <ContentEfficiency className="efficiency">
@@ -444,6 +447,14 @@ export default function Dashboard(props) {
                       <Speedbar>
                         <LastBlockBar content={content} />
                       </Speedbar>
+                      <DisplayFlex>
+                        <FlexStyled>
+                          Min &nbsp;<Span>1s</Span>
+                        </FlexStyled>
+                        <FlexStyledOne>
+                          Max &nbsp;<Span>26s</Span>
+                        </FlexStyledOne>
+                      </DisplayFlex>
                     </CountryData>
                   </ContentSpeed>
                 ) : (
@@ -484,21 +495,23 @@ export default function Dashboard(props) {
                 <ContentSecurityMobile>
                   <SpaceBetween>
                     <div style={{ display: "flex", marginBottom: "8px" }}>
-                      <Heading
+                      <ColorDivNodes
+                        mobileTab={mobileTab}
                         onClick={() => {
                           setMobileTab(1);
                         }}
                       >
                         Nodes
-                      </Heading>
+                      </ColorDivNodes>
                       &nbsp;&nbsp;&nbsp;
-                      <Countries
+                      <ColorDivCountries
+                        mobileTab={mobileTab}
                         onClick={() => {
                           setMobileTab(2);
                         }}
                       >
                         Countries
-                      </Countries>
+                      </ColorDivCountries>
                     </div>
                     <Image
                       src="/images/Expand.svg"
@@ -566,6 +579,14 @@ export default function Dashboard(props) {
                   <MobileGraphDiv>
                     <LastBlockBar content={content} />
                   </MobileGraphDiv>
+                  <DisplayFlex>
+                    <FlexStyled>
+                      Min &nbsp;<Span>1s</Span>
+                    </FlexStyled>
+                    <FlexStyledOne>
+                      Max &nbsp;<Span>26s</Span>
+                    </FlexStyledOne>
+                  </DisplayFlex>
                 </MobileSpeedBlock>
               ) : (
                 ""
@@ -700,34 +721,85 @@ const Title = styled.div`
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
 `;
-const TabTitle = styled.div`
+const Span = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+`;
+const DisplayFlex = styled.div`
+  display: flex;
+  color: #ffffff;
+  align-items: center;
+  text-align: center;
+  margin-top: 8px;
+`;
+const FlexStyled = styled.div`
+  flex: 1;
+  font-size: 12px;
+  color: #c8d1f1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
+const FlexStyledOne = styled.div`
+  color: #c8d1f1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  text-align: center;
+`;
+const TabSecurity = styled.div`
   color: #c8d1f1;
   width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
   border-right: 2px solid #274598;
+  border: none;
   padding: 8px 6px 8px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
     color: white;
     cursor: pointer;
   }
 `;
-const MobileTitle = styled.div`
+const TabSpeed = styled.div`
   color: #c8d1f1;
   width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
   border-right: 2px solid #274598;
+  border: none;
   padding: 8px 6px 8px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
+`;
+const TabEfficiency = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 2px solid #274598;
+  border: none;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
     color: white;
@@ -735,6 +807,63 @@ const MobileTitle = styled.div`
   }
 `;
 
+const MobileTitleSecurity = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: none;
+  background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
+`;
+const MobileTitleSpeed = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: none;
+  background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
+`;
+const MobileTitleEfficiency = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
+  font-size: 1rem;
+  font-weight: 600;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: none;
+  background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
+  :hover {
+    background-color: #4065cb;
+    color: white;
+    cursor: pointer;
+  }
+`;
 const ContentSecurity = styled.div`
   background-color: #102c78;
   height: 300px;
@@ -754,6 +883,7 @@ const ContentSecurityMobile = styled.div`
   width: 33.33%;
   padding: 15px;
   border-right: 1px solid #274598;
+
   @media (min-width: 300px) and (max-width: 1024px) {
     width: 100%;
     height: 300px;
@@ -811,9 +941,24 @@ const Heading = styled.div`
   font-weight: 600;
   white-space: nowrap;
 `;
+const ColorDivNodes = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: ${(props) =>
+    props.mobileTab === 1 ? "2px solid #ffffff" : ""};
+`;
+const ColorDivCountries = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: ${(props) =>
+    props.mobileTab === 2 ? "2px solid #ffffff" : ""};
+`;
 const ContentData = styled.div`
   width: 50%;
-
   @media (min-width: 300px) and (max-width: 767px) {
     width: 100%;
   }
@@ -823,6 +968,9 @@ const DataCount = styled.div`
   font-weight: 600;
   color: #ffffff;
   white-space: nowrap;
+  @media (min-width: 300px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 const NodeHistory = styled.div`
   color: #667fc1;
