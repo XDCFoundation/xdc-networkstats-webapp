@@ -10,13 +10,20 @@ import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-import TextField from "material-ui/TextField";
+import Tooltip from '@mui/material/Tooltip';
+
 const TableBox = styled.div`
   width: 100%;
   overflow: scroll;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+`;
+
+const Label = styled.span`
+font-size: 12px;
+line-height: 15px;
+font-family: 'Inter';
 `;
 
 const StyledTableRow = withStyles((theme) => ({
@@ -43,7 +50,7 @@ export default function EnhancedTable(props) {
     {
       id: "nodeName",
       disablePadding: true,
-      label: "Node Name",
+      label: <><Label>Node Name</Label><Tooltip title="qwert"><img src="/images/HelpSelected.svg" alt=" " /></Tooltip></>
     },
     {
       id: "type",

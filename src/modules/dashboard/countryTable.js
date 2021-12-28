@@ -18,7 +18,19 @@ const TableBox = styled.div`
   height: 100%;
   max-width: 550px;
 `;
+const Flex = styled.div`
+display: flex;
+align-items: center;
+text-align: center;
+`;
 
+const Up = styled.div`
+color: #3AF219;
+`;
+
+const Down = styled.div`
+color: #E62806;
+`;
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
@@ -41,20 +53,39 @@ const StyledTableCell = withStyles((theme) => ({
 
 export default function EnhancedTable(props) {
   let rows = [];
-
-  if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
-    for (let i = 0; i < props.data.length; i++) {
-      console.log("loop.", props.data[i].last24diff);
-      rows.push({
-        id: 1 + i,
-        countries: props.data[i].country,
-        last24h: props.data[i].count,
-        last24: props.data[i].last24diff,
-        last7: props.data[i].last7diff,
-      });
-    }
-  }
-
+    if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
+      for (let i = 0; i < props.data.length; i++) {
+        if(parseInt(props.data[i].last24diff)>0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last24diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
+        });
+      }
+      else if(parseInt(props.data[i].last24diff)<0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last24diff+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last7diff+"%"}</Down></Flex>
+        });
+      }
+      else{
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: props.data[i].last24diff+"%",
+          last7: props.data[i].last7diff+"%",
+        });
+      }
+  
+      }}
+  
+  
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -266,16 +297,16 @@ export default function EnhancedTable(props) {
                     </StyledTableCell>
                     <StyledTableCell
                       style={{
-                        color: "#3AF219",
                         borderColor: "#4E6AB5",
+                        color: "white",
                       }}
                     >
                       {row.last24}
                     </StyledTableCell>
                     <StyledTableCell
                       style={{
-                        color: "#3AF219",
                         borderColor: "#4E6AB5",
+                        color: "white",
                       }}
                     >
                       {row.last7}

@@ -165,6 +165,7 @@ export default function Dashboard(props) {
 
   const [show, setShow] = useState(1);
   const [mobileTab, setMobileTab] = useState(0);
+  const [gasUsd, setGasUsd] = useState(0);
   const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
 
@@ -177,11 +178,12 @@ export default function Dashboard(props) {
     const [err, resp] = await utility.parseResponse(
       NodesService.getEth()
     );
-    let Eth = `${(resp.normal.usd-(parseInt(content.stats.gasPrice).toFixed(5)))/resp.normal.usd*100}%`;
-    setEth(Eth)
+    let EthVal = `${Math.round(((resp.normal.usd-content.stats.gasPrice)/resp.normal.usd*100)*100000)/100000}%`;
+    setEth(EthVal)
   }
  useEffect(() => {
    fetchTime();
+   setGasUsd((content.stats.gasPrice).toFixed(6))
  }, [content.stats.gasPrice])
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
@@ -382,7 +384,7 @@ export default function Dashboard(props) {
                 <ContentEfficiency className="efficiency">
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
-                    <DataCount>{content.stats.gasPrice}</DataCount>
+                    <DataCount>{gasUsd}</DataCount>
                     <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>

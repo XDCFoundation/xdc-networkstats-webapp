@@ -407,7 +407,7 @@ function updateActiveNodes(data) {
       for ( let j = 0; j<res.responseData.last24.length; j++){
         if((countryArray[i].country) === (res.responseData.last24[j].country)){
           if(countryArray[i].count === (res.responseData.last24[j].count)/24){
-            countryArray[i].last24diff =  `${(((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2)}%`;   
+            countryArray[i].last24diff =  (((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2);   
           }
           else if(countryArray[i].count > (res.responseData.last24[j].count)/24){
             countryArray[i].last24diff= `${((countryArray[i].count-(res.responseData.last24[j].count)/24)/(res.responseData.last24[j].count/24)*100).toFixed(2)}%`;
@@ -426,7 +426,7 @@ function updateActiveNodes(data) {
       for ( let j = 0; j<res.responseData.last7.length; j++){
         if((countryArray[i].country) === (res.responseData.last7[j].country)){
           if(countryArray[i].count === (res.responseData.last7[j].count)/168){
-            countryArray[i].last7diff = `${(((countryArray[i].count-(res.responseData.last7[j].count/168))/(res.responseData.last7[j].count)/168)*100).toFixed(2)}%`;   
+            countryArray[i].last7diff = (((countryArray[i].count-(res.responseData.last7[j].count/168))/(res.responseData.last7[j].count)/168)*100).toFixed(2);   
           }
           else if(countryArray[i].count > (res.responseData.last7[j].count)/168){
             countryArray[i].last7diff= `${((countryArray[i].count-(res.responseData.last7[j].count)/168)/(res.responseData.last7[j].count/168)*100).toFixed(2)}%`;
@@ -485,9 +485,9 @@ function updateBestBlock(data) {
           gasPrice = convertedPrice * GasInit;
         }
       }
-      // fetchData();
+      fetchData();
       batch(() => {
-      store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
+      store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice})
       store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
       store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
       })
@@ -512,7 +512,6 @@ async function getInitNodes(){
   const [res] = await utility.parseResponse(
       NodesService.getInitNodes()
   );
-  if(res.responseData!==null){
   let initNodes = res.responseData[0].nodes;
   console.log("res res res res res initNodes ======", initNodes);
   let table = [];
@@ -530,8 +529,8 @@ async function getInitNodes(){
     });
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
-}}
-getInitNodes();
+}
+// getInitNodes();
 
 setInterval(() => {
   let table = [];
