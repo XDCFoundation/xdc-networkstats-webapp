@@ -41,7 +41,7 @@ let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
 
-const socket = io("http://3.88.252.78:3000/", {
+const socket = io("http://3.88.252.78:3000", {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -358,17 +358,22 @@ function updateActiveNodes(data) {
     return node.stats.active === true;
   }).length;
   
-
-  _.forEach(nodesArr, function (node, index) {
+  nodesArr.forEach((node)=> {
+    function swap(x, y) {
+      return [y, x]
+    }
+    if(node.geo!== null){
     marker.push({
-      coords: node.geo.ll,
+      coords: swap(node.geo.ll[0], node.geo.ll[1]),
     });
     country.push({
       loc: node.geo.country,
-    });
+    }); 
+  }
   });
-
-  for (let i = 0; i < nodesArr.length; ++i) {
+  
+  
+  for (let i = 0; i < country.length; i++) {
     temp[country[i].loc] = 1;
   }
   let hs = {};
@@ -398,30 +403,46 @@ function updateActiveNodes(data) {
     );
 
     for( let i = 0; i<countryArray.length; i++){
+      if (!_.isUndefined(res.responseData.last24) && !_.isEmpty(res.responseData.last24)) {
       for ( let j = 0; j<res.responseData.last24.length; j++){
         if((countryArray[i].country) === (res.responseData.last24[j].country)){
           if(countryArray[i].count === (res.responseData.last24[j].count)/24){
-            countryArray[i].last24diff = `${(((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2)}%`;   
+            countryArray[i].last24diff =  `${(((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2)}%`;   
           }
           else if(countryArray[i].count > (res.responseData.last24[j].count)/24){
             countryArray[i].last24diff= `${((countryArray[i].count-(res.responseData.last24[j].count)/24)/(res.responseData.last24[j].count/24)*100).toFixed(2)}%`;
-          console.log("pop", countryArray[i].count, (res.responseData.last24[j].count)/24 );
           }
           else
           {
             countryArray[i].last24diff= `${(((res.responseData.last24[j].count/24)-countryArray[i].count/countryArray[i].count)*100).toFixed(2)}%`;
-            console.log("pop", countryArray[i].count, (res.responseData.last24[j].count)/24 );
           }
         }
-      }
+      } }
     }
-    
-    console.log("value", countryArray );
+
+
+    for( let i = 0; i<countryArray.length; i++){
+      if (!_.isUndefined(res.responseData.last7) && !_.isEmpty(res.responseData.last7)) { 
+      for ( let j = 0; j<res.responseData.last7.length; j++){
+        if((countryArray[i].country) === (res.responseData.last7[j].country)){
+          if(countryArray[i].count === (res.responseData.last7[j].count)/168){
+            countryArray[i].last7diff = `${(((countryArray[i].count-(res.responseData.last7[j].count/168))/(res.responseData.last7[j].count)/168)*100).toFixed(2)}%`;   
+          }
+          else if(countryArray[i].count > (res.responseData.last7[j].count)/168){
+            countryArray[i].last7diff= `${((countryArray[i].count-(res.responseData.last7[j].count)/168)/(res.responseData.last7[j].count/168)*100).toFixed(2)}%`;
+          }
+          else
+          {
+            countryArray[i].last7diff= `${(((res.responseData.last7[j].count/168)-countryArray[i].count/countryArray[i].count)*100).toFixed(2)}%`;
+          }
+        }
+      } }
+    }
+    console.log("asdfghjkl", countryArray);
     store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
   }
 
   fetchData();
-  console.log("res", countryArray);
 //   countryArray.forEach((country) => {
 //     country.count = country.count.toString() + ' ' + `(${((country.count/nodesArr.length)*100).toFixed(2)})%`
 // });
@@ -458,13 +479,13 @@ function updateBestBlock(data) {
         const [error, res] = await utility.parseResponse(
           NodesService.getGasPrice()
         );
-        if (!_.isUndefined(res.responseData[0].gasPrice.data.ETH.quote.USD.price) && !_.isEmpty(res.responseData[0].gasPrice.data.ETH.quote.USD.price)) {
+        if (typeof(res.responseData[0].gasPrice)!=='undefined') {
           let price = res.responseData[0].gasPrice.data.ETH.quote.USD.price;
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit;
         }
       }
-      fetchData();
+      // fetchData();
       batch(() => {
       store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice.toFixed(6)})
       store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
@@ -488,9 +509,10 @@ function findIndex(search) {
 }
 
 async function getInitNodes(){
-  const [err, res] = await utility.parseResponse(
+  const [res] = await utility.parseResponse(
       NodesService.getInitNodes()
   );
+  if(res.responseData!==null){
   let initNodes = res.responseData[0].nodes;
   console.log("res res res res res initNodes ======", initNodes);
   let table = [];
@@ -508,9 +530,8 @@ async function getInitNodes(){
     });
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
-}
+}}
 getInitNodes();
-
 
 setInterval(() => {
   let table = [];

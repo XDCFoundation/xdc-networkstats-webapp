@@ -22,13 +22,20 @@ const TableBox = styled.div`
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
+    tableBottomBorder: {
+        borderWidth: 0,
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        borderStyle: 'solid',
+    },
+    padding: "0px 40px",
   },
 }))(TableRow);
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 16px",
     height: "30px",
+    padding: "0px 40px",
   },
 }))(TableCell);
 
@@ -43,6 +50,7 @@ export default function EnhancedTable(props) {
         countries: props.data[i].country,
         last24h: props.data[i].count,
         last24: props.data[i].last24diff,
+        last7: props.data[i].last7diff,
       });
     }
   }
@@ -123,7 +131,7 @@ export default function EnhancedTable(props) {
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
                 color: "white",
-                columnWidth: "60px",
+                columnWidth: "70px",
                 whiteSpace: "nowrap",
                 alignContent: "start",
                 borderColor: "#4E6AB5",
@@ -251,7 +259,6 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -260,7 +267,6 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "#3AF219",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -269,7 +275,6 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "#3AF219",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >

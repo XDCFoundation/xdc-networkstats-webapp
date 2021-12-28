@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Map from "./map";
 import LastBlockBar from "./speedBar";
@@ -15,11 +15,8 @@ import { eventConstants } from "../../constants";
 import store from "../../store";
 import _ from "lodash";
 import SideDrawer from "./sideDrawer";
-import Tooltip from "@mui/material/Tooltip";
 import BackDrop from "./backDrop";
-// import { withStyles } from "@mui/styles";
 import { makeStyles } from "@material-ui/styles";
-// import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 const Footer = styled.div`
   background-color: white;
@@ -167,8 +164,8 @@ export default function Dashboard(props) {
   const [showSideDrop, setShowSideDrop] = useState(false);
 
   const [show, setShow] = useState(1);
-  let timeData = [];
   const [mobileTab, setMobileTab] = useState(0);
+  const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
 
   async function fetchTime(value = 1) {
@@ -176,8 +173,16 @@ export default function Dashboard(props) {
       NodesService.getUpTime(value)
     );
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
-  }
 
+    const [err, resp] = await utility.parseResponse(
+      NodesService.getEth()
+    );
+    let Eth = `${(resp.normal.usd-(parseInt(content.stats.gasPrice).toFixed(5)))/resp.normal.usd*100}%`;
+    setEth(Eth)
+  }
+ useEffect(() => {
+   fetchTime();
+ }, [content.stats.gasPrice])
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
   const buttonTour = () => {
@@ -212,6 +217,8 @@ export default function Dashboard(props) {
         spotlightPadding={0}
         run={joyrideRun}
         stepIndex={step}
+        disableScrolling={true}
+        floaterProps={{disableAnimation: true}}
       />
 
       {showTabJoyRide && (
@@ -376,6 +383,7 @@ export default function Dashboard(props) {
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{content.stats.gasPrice}</DataCount>
+                    <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
@@ -469,6 +477,7 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{content.stats.gasPrice}</DataCount>
+                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
@@ -591,6 +600,7 @@ export default function Dashboard(props) {
                     <div>
                       <BestBlock>Gas Price (USD)</BestBlock>
                       <BestBlockData>{content.stats.gasPrice}</BestBlockData>
+                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                     </div>
                     <div>
                       <LastBlock>UP Time</LastBlock>
@@ -997,4 +1007,9 @@ const MapDiv = styled.div`
   @media (min-width: 100px) and (max-width: 1024px) {
     padding-left: 105px;
   }
+`;
+const EthDiv = styled.div`
+font-size: 14px;
+font-family: 'Inter';
+color: #3AF219;
 `;
