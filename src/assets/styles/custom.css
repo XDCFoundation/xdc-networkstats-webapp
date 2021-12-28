@@ -236,6 +236,12 @@ input:focus {
 }
 .react-joyride__tooltip {
   width: 530px !important;
+  text-align: left !important;
+  font-size:1rem !important;
+  font-weight: 600 !important;
+  font-family: Inter !important;
+  color: #1F1F1F !important;
+  padding: 25px 28px 23px 20px !important;
 }
 
 .react-joyride__spotlight {

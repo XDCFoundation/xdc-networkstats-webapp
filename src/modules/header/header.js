@@ -59,7 +59,7 @@ export default function Header(props) {
               props.setShowTabJoyRide(true);
             }}
           >
-            <img src="/images/Play.svg" alt="Start" />
+            <PlayImage src="/images/Play.svg" alt="Start" />
           </StartGuideTourButtonTab>
           &emsp;
           <HeaderLogoElement
@@ -104,4 +104,11 @@ const StartGuideTourButtonTab = styled.div`
   @media (min-width: 1024px) {
     display: none;
   }
+  @media (min-width: 300px) and (max-width: 1024px) {
+    margin-right: -12px;
+    padding: 4px;
+  }
+`;
+const PlayImage = styled.img`
+  width: 20px;
 `;
