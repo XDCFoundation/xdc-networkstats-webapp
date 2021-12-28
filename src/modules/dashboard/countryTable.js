@@ -17,6 +17,9 @@ const TableBox = styled.div`
   width: 100%;
   height: 100%;
   max-width: 550px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  max-width: 1024px
+  }
 `;
 const Flex = styled.div`
 display: flex;
@@ -162,7 +165,7 @@ export default function EnhancedTable(props) {
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
                 color: "white",
-                columnWidth: "70px",
+                columnWidth: "90px",
                 whiteSpace: "nowrap",
                 alignContent: "start",
                 borderColor: "#4E6AB5",
@@ -272,7 +275,7 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        width: "2px",
+                        width: "20px",
                         borderColor: "#4E6AB5",
                       }}
                     >
