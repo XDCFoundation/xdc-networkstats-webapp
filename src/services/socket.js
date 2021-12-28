@@ -248,15 +248,15 @@ async function socketAction(action, data) {
         lastBlocksTime = data.blocktime;
 
       batch(() => {
-        // store.dispatch({
-        //   type: eventConstants.UPDATE_AVG_BLOCK,
-        //   data: avgTime,
-        // });
-        // store.dispatch({ type: eventConstants.UPDATE_AVG_RATE, data: value });
-        // store.dispatch({
-        //   type: eventConstants.UPDATE_BLOCKTIME,
-        //   data: lastBlocksTime,
-        // });
+        store.dispatch({
+          type: eventConstants.UPDATE_AVG_BLOCK,
+          data: avgTime,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_AVG_RATE, data: value });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: lastBlocksTime,
+        });
       });
       if (
         !_.isEqual(difficultyChart, data.difficulty) &&
