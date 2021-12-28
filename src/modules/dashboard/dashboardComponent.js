@@ -738,6 +738,7 @@ const Span = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
+  margin-top: 4px;
 `;
 const DisplayFlex = styled.div`
   display: flex;
@@ -1010,6 +1011,10 @@ const CountriesData = styled.div`
 `;
 const Image = styled.img`
   width: 20px;
+  padding-bottom: 25px;
+  @media (min-width: 767px) and (max-width: 1024px) {
+    width: 25px;
+  }
 `;
 const BlockTime = styled.div`
   font-size: 1.5rem;
