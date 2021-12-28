@@ -17,9 +17,8 @@ import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import Tooltip from "@mui/material/Tooltip";
 import BackDrop from "./backDrop";
-// import { withStyles } from "@mui/styles";
+
 import { makeStyles } from "@material-ui/styles";
-// import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 const Footer = styled.div`
   background-color: white;
@@ -726,6 +725,7 @@ const Span = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
+  margin-top: 4px;
 `;
 const DisplayFlex = styled.div`
   display: flex;
@@ -998,6 +998,10 @@ const CountriesData = styled.div`
 `;
 const Image = styled.img`
   width: 20px;
+  padding-bottom: 25px;
+  @media (min-width: 767px) and (max-width: 1024px) {
+    width: 25px;
+  }
 `;
 const BlockTime = styled.div`
   font-size: 1.5rem;

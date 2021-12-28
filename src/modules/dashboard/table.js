@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,9 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
-import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+
 const TableBox = styled.div`
   width: 100%;
   overflow: scroll;
@@ -21,135 +20,172 @@ const TableBox = styled.div`
   white-space: nowrap;
 `;
 
+const Label = styled.div`
+  font-size: 12px;
+  line-height: 15px;
+  font-family: "Inter";
+`;
+const DisplayFlex = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
+const Img = styled.img`
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
   },
 }))(TableRow);
 
+const CustomiseTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "white",
+    color: "pink",
+    background: "#FFFFFF 0% 0% no-repeat padding-box",
+    boxShadow: "0px 3px 6px #00000029",
+    border: "1px solid #F2F2F2",
+    fontSize: 11,
+    fontWeight: 600,
+    fontFamily: "Inter",
+    color: "#1F1F1F",
+    justifyContent: "center",
+    display: "flex",
+    whiteSpace: "nowrap",
+  },
+}));
+
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 16px",
+    padding: "0px 8px",
     fontWeight: "400",
   },
 }))(TableCell);
 
-
 export default function EnhancedTable(props) {
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  // This method is created for cross-browser compatibility, if you don't
-  // need to support IE11, you can use Array.prototype.sort() directly
-  function stableSort(array, comparator) {
+  function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
     return stabilizedThis.map((el) => el[0]);
   }
 
   const headCells = [
     {
       id: "nodeName",
+
       disablePadding: true,
-      label: "Node Name",
+
+      label: (
+        <DisplayFlex>
+          <Label>Node Name</Label>&nbsp;
+          <CustomiseTooltip title="Name of the specified node">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "type",
-      numeric: true,
+
       disablePadding: false,
-      label: "Type",
+      label: (
+        <DisplayFlex>
+          <Label>Type</Label>&nbsp;
+          <CustomiseTooltip title="Type of node with the architecture and version details">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "latency",
       numeric: true,
       disablePadding: false,
-      label: "Latency",
+      label: (
+        <DisplayFlex>
+          <Label>Latency</Label>&nbsp;
+          <CustomiseTooltip title="Delay in acceptance of a transaction">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "peers",
       numeric: true,
       disablePadding: false,
-      label: "Peers",
+      label: (
+        <DisplayFlex>
+          <Label>Peers</Label>&nbsp;
+          <CustomiseTooltip title="Number of peers sharing the ledger">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "pendingTxn",
       numeric: true,
       disablePadding: false,
-      label: "Pending Txn",
+      label: (
+        <DisplayFlex>
+          <Label>Pending Txn</Label>&nbsp;
+          <CustomiseTooltip title="Number of incomplete transactions">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "lastBlock",
       numeric: true,
       disablePadding: false,
-      label: "Last Block",
+      label: (
+        <DisplayFlex>
+          <Label>Last Block</Label>&nbsp;
+          <CustomiseTooltip title="Latest block associated with the node">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "graph",
       numeric: true,
       disablePadding: false,
-      label: " ",
     },
     {
       id: "upTime",
       numeric: true,
       disablePadding: false,
-      label: "Up Time",
+      label: (
+        <DisplayFlex>
+          <Label>Up Time</Label>&nbsp;
+          <CustomiseTooltip title="Total available and working time of the network">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
   ];
-  function EnhancedTableHead(props) {
-    const {
-      onSelectAllClick,
-      order,
-      orderBy,
-      numSelected,
-      rowCount,
-      onRequestSort,
-    } = props;
-    const createSortHandler = (property) => (event) => {
-      onRequestSort(event, property);
-    };
 
+  function EnhancedTableHead() {
     return (
       <TableHead>
         <StyledTableRow>
-          <StyledTableCell padding="radio">
-            <Radio
-              control={<Radio />}
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
-          </StyledTableCell>
+          <StyledTableCell />
           {headCells.map((headCell) => (
             <StyledTableCell
               key={headCell.id}
               padding={headCell.disablePadding ? "none" : "normal"}
-              sortDirection={orderBy === headCell.id ? order : false}
             >
               <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
+                active={false}
+                hideSortIcon={true}
                 style={{
                   fontSize: "12px",
                   lineHeight: "15px",
@@ -157,13 +193,6 @@ export default function EnhancedTable(props) {
                 }}
               >
                 {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
               </TableSortLabel>
             </StyledTableCell>
           ))}
@@ -172,78 +201,20 @@ export default function EnhancedTable(props) {
     );
   }
 
-  EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-  };
-
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState(" ");
-  const [selected, setSelected] = React.useState([]);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = props.content.stats.nodesArr.map((n) => n.nodeName);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const isSelected = (nodeName) => selected.indexOf(nodeName) !== -1;
   return (
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={props.content.stats.nodesArr.length}
-            />
+            <EnhancedTableHead />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(
-                props.content.stats.nodesArr,
-                getComparator(order, orderBy)
-              ).map((row, index) => {
-                const isItemSelected = isSelected(row.nodeName);
-                const labelId = `enhanced-table-radio-button-${index}`;
+              {stableSort(props.content.stats.nodesArr).map((row) => {
                 return (
-                  <StyledTableRow
-                    hover
-                    role="radio"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.nodeName}
-                    selected={isItemSelected}
-                  >
+                  <StyledTableRow>
                     <StyledTableCell padding="radio">
-                      <Radio
-                        control={<Radio />}
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
+                      <Radio control={<Radio />} />
                     </StyledTableCell>
                     <StyledTableCell
-                      component="th"
-                      id={labelId}
                       scope="row"
                       padding="none"
                       style={{
@@ -272,6 +243,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        columnWidth: "70px",
                       }}
                     >
                       {row.latency}
@@ -282,6 +254,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        columnWidth: "70px",
                       }}
                     >
                       {row.peers}
@@ -292,6 +265,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        columnWidth: "70px",
                       }}
                     >
                       {row.pendingTxn}
@@ -302,6 +276,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        columnWidth: "70px",
                       }}
                     >
                       {row.lastBlock}
@@ -322,6 +297,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        columnWidth: "50px",
                       }}
                     >
                       {row.upTime}
