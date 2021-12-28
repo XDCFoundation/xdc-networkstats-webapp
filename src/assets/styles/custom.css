@@ -28,9 +28,9 @@ select {
     "Arial", "sans-serif" !important;
 }
 
-input:focus {
+/* input:focus {
   border: solid 1px #0099ff;
-}
+} */
 
 .display-none {
   display: none !important;

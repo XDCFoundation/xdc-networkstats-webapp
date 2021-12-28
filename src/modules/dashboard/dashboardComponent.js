@@ -159,16 +159,20 @@ export default function Dashboard(props) {
     );
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
-    const [err, resp] = await utility.parseResponse(
-      NodesService.getEth()
-    );
-    let EthVal = `${Math.round(((resp.normal.usd-content.stats.gasPrice)/resp.normal.usd*100)*100000)/100000}%`;
-    setEth(EthVal)
+    const [err, resp] = await utility.parseResponse(NodesService.getEth());
+    let EthVal = `${
+      Math.round(
+        ((resp.normal.usd - content.stats.gasPrice) / resp.normal.usd) *
+          100 *
+          100000
+      ) / 100000
+    }%`;
+    setEth(EthVal);
   }
- useEffect(() => {
-   fetchTime();
-   setGasUsd((content.stats.gasPrice).toFixed(6))
- }, [content.stats.gasPrice])
+  useEffect(() => {
+    fetchTime();
+    setGasUsd(content.stats.gasPrice.toFixed(6));
+  }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
   const buttonTour = () => {
@@ -204,7 +208,7 @@ export default function Dashboard(props) {
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
-        floaterProps={{disableAnimation: true}}
+        floaterProps={{ disableAnimation: true }}
       />
 
       {showTabJoyRide && (
@@ -373,7 +377,10 @@ export default function Dashboard(props) {
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
-                    <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                    <EthDiv>
+                      <img src="/images/DownArrow.svg" alt=" " />
+                      {" " + Eth} than Ethereum
+                    </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
@@ -475,7 +482,10 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{gasUsd}</DataCount>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
@@ -608,7 +618,10 @@ export default function Dashboard(props) {
                     <div>
                       <BestBlock>Gas Price (USD)</BestBlock>
                       <BestBlockData>{gasUsd}</BestBlockData>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                     </div>
                     <div>
                       <LastBlock>UP Time</LastBlock>
@@ -640,6 +653,7 @@ export default function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
+            <SearchBox placeholder="Search" />
             <Table content={content} />
           </TableDiv>
           <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
@@ -652,6 +666,26 @@ export default function Dashboard(props) {
 const Div = styled.div`
   width: 100%;
 `;
+const SearchBox = styled.input`
+  background-image: url("/images/DownArrow.svg");
+  background-repeat: no-repeat;
+  background-position: 0.5rem;
+  padding-left: 2rem;
+  background-size: 0.875rem;
+  position: relative;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 17.75rem;
+  white-space: nowrap;
+  height: 2.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+  outline: none;
+  color: #BEBEBE;
+`;
+
 
 const CustomerJoyRide = styled.div`
   width: 100%;
@@ -1145,8 +1179,8 @@ const MapDiv = styled.div`
   }
 `;
 const EthDiv = styled.div`
-font-size: 14px;
-font-family: 'Inter';
-color: #3AF219;
-margin-bottom: 45px;
+  font-size: 14px;
+  font-family: "Inter";
+  color: #3af219;
+  margin-bottom: 45px;
 `;

@@ -410,6 +410,13 @@ function updateActiveNodes(data) {
       ) {
         for (let j = 0; j < res.responseData.last24.length; j++) {
           if (countryArray[i].country === res.responseData.last24[j].country) {
+            countryArray[i].last24diff = (
+              ((countryArray[i].count -
+                res.responseData.last24[j].count / 24) /
+                (res.responseData.last24[j].count / 24)) *
+              100
+            ).toFixed(2);
+            /*
             if (
               countryArray[i].count ===
               res.responseData.last24[j].count / 24
@@ -438,6 +445,7 @@ function updateActiveNodes(data) {
                 100
               ).toFixed(2)}%`;
             }
+            */
           }
         }
       }
