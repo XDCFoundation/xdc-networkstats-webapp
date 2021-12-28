@@ -10,7 +10,7 @@ import TableGraph from "../modules/dashboard/tableGraph";
 import { NodesService } from "../services/";
 import { object } from "underscore";
 import sorter from "sort-nested-json";
-import { batch } from 'react-redux'
+import { batch } from "react-redux";
 
 let MAX_BINS = 40;
 let nodesArr = [];
@@ -59,10 +59,9 @@ socket.on("reconnecting", function reconnecting(opts) {
   console.log("We are scheduling a reconnect operation", opts);
 });
 
-  socket.on("network-stats-data", function node(data) {
-    socketAction(data.action, data.data);
-  });
-
+socket.on("network-stats-data", function node(data) {
+  socketAction(data.action, data.data);
+});
 
 socket.on("network-stats-nodes", function node(data) {
   if (!_.isEmpty(data.nodes)) socketAction("network-stats-nodes", data.nodes);
@@ -75,7 +74,7 @@ async function socketAction(action, data) {
   switch (action) {
     case "network-stats-nodes":
       nodesArr = data;
-      
+
       _.forEach(nodesArr, function (node, index) {
         if (_.isUndefined(data.history)) {
           data.history = new Array(40);
@@ -131,7 +130,7 @@ async function socketAction(action, data) {
       break;
     case "block":
       // setInterval(()=>{
-let index1 = findIndex({ id: data.id });
+      let index1 = findIndex({ id: data.id });
       if (!_.isEmpty(nodesArr)) {
         if (
           index1 >= 0 &&
@@ -158,7 +157,7 @@ let index1 = findIndex({ id: data.id });
         }
       }
       // })
-      
+
       break;
     case "pending":
       let index2 = findIndex({ id: data.id });
@@ -237,24 +236,28 @@ let index1 = findIndex({ id: data.id });
       if (!_.isEqual(avgBlockTime, data.avgBlocktime))
         avgBlockTime = data.avgBlocktime;
       var avgTime = avgBlockTimeFilter(avgBlockTime);
-       
 
       if (!_.isEqual(avgTransactionRate, data.avgTransactionRate))
         avgTransactionRate = data.transactions;
       var value = transactions(avgTransactionRate);
-      
 
       if (
         !_.isEqual(lastBlocksTime, data.blocktime) &&
         data.blocktime.length >= MAX_BINS
       )
         lastBlocksTime = data.blocktime;
-      
+
       batch(() => {
-        store.dispatch({type: eventConstants.UPDATE_AVG_BLOCK, data: avgTime})
-        store.dispatch({type: eventConstants.UPDATE_AVG_RATE, data: value})
-        store.dispatch({type: eventConstants.UPDATE_BLOCKTIME, data: lastBlocksTime}) 
-      })
+        store.dispatch({
+          type: eventConstants.UPDATE_AVG_BLOCK,
+          data: avgTime,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_AVG_RATE, data: value });
+        store.dispatch({
+          type: eventConstants.UPDATE_BLOCKTIME,
+          data: lastBlocksTime,
+        });
+      });
       if (
         !_.isEqual(difficultyChart, data.difficulty) &&
         data.difficulty.length >= MAX_BINS
@@ -344,7 +347,6 @@ function transactions(data) {
   return parseInt(result).toFixed(0) + unit;
 }
 
-
 function updateActiveNodes(data) {
   updateBestBlock(data);
   let marker = [];
@@ -357,28 +359,27 @@ function updateActiveNodes(data) {
   nodesActive = _.filter(data, function (node) {
     return node.stats.active === true;
   }).length;
-  
-  nodesArr.forEach((node)=> {
+
+  nodesArr.forEach((node) => {
     function swap(x, y) {
-      return [y, x]
+      return [y, x];
     }
-    if(node.geo!== null){
-    marker.push({
-      coords: swap(node.geo.ll[0], node.geo.ll[1]),
-    });
-    country.push({
-      loc: node.geo.country,
-    }); 
-  }
+    if (node.geo !== null) {
+      marker.push({
+        coords: swap(node.geo.ll[0], node.geo.ll[1]),
+      });
+      country.push({
+        loc: node.geo.country,
+      });
+    }
   });
-  
-  
+
   for (let i = 0; i < country.length; i++) {
     temp[country[i].loc] = 1;
   }
   let hs = {};
   let countryArray = [];
-  
+
   for (let i = 0; i < country.length; i++) {
     if (hs.hasOwnProperty(country[i].loc)) {
       hs[country[i].loc] = hs[country[i].loc] + 1;
@@ -390,74 +391,122 @@ function updateActiveNodes(data) {
     countryArray.push({
       country: key,
       count: value,
-      last24diff : '',
-      last7diff : ''
+      last24diff: "",
+      last7diff: "",
     });
   }
 
   countryArray = sorter.sort(countryArray).desc("count");
-  
+
   async function fetchData() {
     const [error, res] = await utility.parseResponse(
       NodesService.getCountryInit()
     );
 
-    for( let i = 0; i<countryArray.length; i++){
-      if (!_.isUndefined(res.responseData.last24) && !_.isEmpty(res.responseData.last24)) {
-      for ( let j = 0; j<res.responseData.last24.length; j++){
-        if((countryArray[i].country) === (res.responseData.last24[j].country)){
-          if(countryArray[i].count === (res.responseData.last24[j].count)/24){
-            countryArray[i].last24diff =  (((countryArray[i].count-(res.responseData.last24[j].count/24))/(res.responseData.last24[j].count)/24)*100).toFixed(2);   
-          }
-          else if(countryArray[i].count > (res.responseData.last24[j].count)/24){
-            countryArray[i].last24diff= `${((countryArray[i].count-(res.responseData.last24[j].count)/24)/(res.responseData.last24[j].count/24)*100).toFixed(2)}%`;
-          }
-          else
-          {
-            countryArray[i].last24diff= `${(((res.responseData.last24[j].count/24)-countryArray[i].count/countryArray[i].count)*100).toFixed(2)}%`;
+    for (let i = 0; i < countryArray.length; i++) {
+      if (
+        !_.isUndefined(res.responseData.last24) &&
+        !_.isEmpty(res.responseData.last24)
+      ) {
+        for (let j = 0; j < res.responseData.last24.length; j++) {
+          if (countryArray[i].country === res.responseData.last24[j].country) {
+            if (
+              countryArray[i].count ===
+              res.responseData.last24[j].count / 24
+            ) {
+              countryArray[i].last24diff = (
+                ((countryArray[i].count -
+                  res.responseData.last24[j].count / 24) /
+                  res.responseData.last24[j].count /
+                  24) *
+                100
+              ).toFixed(2);
+            } else if (
+              countryArray[i].count >
+              res.responseData.last24[j].count / 24
+            ) {
+              countryArray[i].last24diff = `${(
+                ((countryArray[i].count -
+                  res.responseData.last24[j].count / 24) /
+                  (res.responseData.last24[j].count / 24)) *
+                100
+              ).toFixed(2)}%`;
+            } else {
+              countryArray[i].last24diff = `${(
+                (res.responseData.last24[j].count / 24 -
+                  countryArray[i].count / countryArray[i].count) *
+                100
+              ).toFixed(2)}%`;
+            }
           }
         }
-      } }
+      }
     }
 
-
-    for( let i = 0; i<countryArray.length; i++){
-      if (!_.isUndefined(res.responseData.last7) && !_.isEmpty(res.responseData.last7)) { 
-      for ( let j = 0; j<res.responseData.last7.length; j++){
-        if((countryArray[i].country) === (res.responseData.last7[j].country)){
-          if(countryArray[i].count === (res.responseData.last7[j].count)/168){
-            countryArray[i].last7diff = (((countryArray[i].count-(res.responseData.last7[j].count/168))/(res.responseData.last7[j].count)/168)*100).toFixed(2);   
-          }
-          else if(countryArray[i].count > (res.responseData.last7[j].count)/168){
-            countryArray[i].last7diff= `${((countryArray[i].count-(res.responseData.last7[j].count)/168)/(res.responseData.last7[j].count/168)*100).toFixed(2)}%`;
-          }
-          else
-          {
-            countryArray[i].last7diff= `${(((res.responseData.last7[j].count/168)-countryArray[i].count/countryArray[i].count)*100).toFixed(2)}%`;
+    for (let i = 0; i < countryArray.length; i++) {
+      if (
+        !_.isUndefined(res.responseData.last7) &&
+        !_.isEmpty(res.responseData.last7)
+      ) {
+        for (let j = 0; j < res.responseData.last7.length; j++) {
+          if (countryArray[i].country === res.responseData.last7[j].country) {
+            if (
+              countryArray[i].count ===
+              res.responseData.last7[j].count / 168
+            ) {
+              countryArray[i].last7diff = (
+                ((countryArray[i].count -
+                  res.responseData.last7[j].count / 168) /
+                  res.responseData.last7[j].count /
+                  168) *
+                100
+              ).toFixed(2);
+            } else if (
+              countryArray[i].count >
+              res.responseData.last7[j].count / 168
+            ) {
+              countryArray[i].last7diff = `${(
+                ((countryArray[i].count -
+                  res.responseData.last7[j].count / 168) /
+                  (res.responseData.last7[j].count / 168)) *
+                100
+              ).toFixed(2)}%`;
+            } else {
+              countryArray[i].last7diff = `${(
+                (res.responseData.last7[j].count / 168 -
+                  countryArray[i].count / countryArray[i].count) *
+                100
+              ).toFixed(2)}%`;
+            }
           }
         }
-      } }
+      }
     }
-    console.log("asdfghjkl", countryArray);
-    store.dispatch({type: eventConstants.UPDATE_EXPANDEDCOUNTRY, data: countryArray})
+    countryArray.forEach((country) => {
+      country.count =
+        country.count.toString() +
+        " " +
+        `(${((country.count / nodesArr.length) * 100).toFixed(2)})%`;
+    });
+    store.dispatch({
+      type: eventConstants.UPDATE_EXPANDEDCOUNTRY,
+      data: countryArray,
+    });
   }
 
   fetchData();
-//   countryArray.forEach((country) => {
-//     country.count = country.count.toString() + ' ' + `(${((country.count/nodesArr.length)*100).toFixed(2)})%`
-// });
-  
+
   count = Object.keys(temp).length;
   batch(() => {
-  store.dispatch({type: eventConstants.UPDATE_COUNTRIES, data: count})
-  store.dispatch({type: eventConstants.UPDATE_MARKERS, data: marker})
-  store.dispatch({type: eventConstants.UPDATE_NODES, data: nodesActive})
-  store.dispatch({type: eventConstants.UPDATE_TOTAL_NODES, data: totalNodes})
-  })
+    store.dispatch({ type: eventConstants.UPDATE_COUNTRIES, data: count });
+    store.dispatch({ type: eventConstants.UPDATE_MARKERS, data: marker });
+    store.dispatch({ type: eventConstants.UPDATE_NODES, data: nodesActive });
+    store.dispatch({
+      type: eventConstants.UPDATE_TOTAL_NODES,
+      data: totalNodes,
+    });
+  });
 }
-
-
-
 
 function updateBestBlock(data) {
   const wei = 0.000000000000000001;
@@ -479,7 +528,7 @@ function updateBestBlock(data) {
         const [error, res] = await utility.parseResponse(
           NodesService.getGasPrice()
         );
-        if (typeof(res.responseData[0].gasPrice)!=='undefined') {
+        if (typeof res.responseData[0].gasPrice !== "undefined") {
           let price = res.responseData[0].gasPrice.data.ETH.quote.USD.price;
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit;
@@ -487,10 +536,16 @@ function updateBestBlock(data) {
       }
       fetchData();
       batch(() => {
-      store.dispatch({type: eventConstants.UPDATE_GAS_PRICE, data: gasPrice})
-      store.dispatch({type: eventConstants.UPDATE_LAST_BLOCK, data: time})
-      store.dispatch({type: eventConstants.UPDATE_BEST_BLOCK, data: bestBlock})
-      })
+        store.dispatch({
+          type: eventConstants.UPDATE_GAS_PRICE,
+          data: gasPrice,
+        });
+        store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: time });
+        store.dispatch({
+          type: eventConstants.UPDATE_BEST_BLOCK,
+          data: bestBlock,
+        });
+      });
     }
   }
 }
@@ -508,10 +563,8 @@ function findIndex(search) {
   return _.findIndex(nodesArr, search);
 }
 
-async function getInitNodes(){
-  const [res] = await utility.parseResponse(
-      NodesService.getInitNodes()
-  );
+async function getInitNodes() {
+  const [res] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = res.responseData[0].nodes;
   console.log("res res res res res initNodes ======", initNodes);
   let table = [];
@@ -534,18 +587,19 @@ async function getInitNodes(){
 
 setInterval(() => {
   let table = [];
-  if(!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
-  for (let i = 0; i < nodesArr.length; i++) {
-    table.push({
-      type: nodesArr[i].info.node,
-      pendingTxn: nodesArr[i].stats.pending,
-      lastBlock: nodesArr[i].stats.block.number,
-      // graph: <TableGraph content={nodesArr[i].history} />,
-      upTime: `${nodesArr[i].stats.uptime}%`,
-      latency: `${nodesArr[i].stats.latency}ms`,
-      peers: nodesArr[i].stats.peers,
-      nodeName: nodesArr[i].info.name,
-    });
+  if (!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
+    for (let i = 0; i < nodesArr.length; i++) {
+      table.push({
+        type: nodesArr[i].info.node,
+        pendingTxn: nodesArr[i].stats.pending,
+        lastBlock: nodesArr[i].stats.block.number,
+        // graph: <TableGraph content={nodesArr[i].history} />,
+        upTime: `${nodesArr[i].stats.uptime}%`,
+        latency: `${nodesArr[i].stats.latency}ms`,
+        peers: nodesArr[i].stats.peers,
+        nodeName: nodesArr[i].info.name,
+      });
+    }
+    store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table }); }
 }, 1000);
