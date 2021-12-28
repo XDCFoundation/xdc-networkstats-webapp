@@ -174,141 +174,145 @@ export default function EnhancedTable(props) {
   ];
 
   function EnhancedTableHead() {
-    return (
-      <TableHead>
-        <StyledTableRow>
-          <StyledTableCell />
-          {headCells.map((headCell) => (
-            <StyledTableCell
-              key={headCell.id}
-              padding={headCell.disablePadding ? "none" : "normal"}
-            >
-              <TableSortLabel
-                active={false}
-                hideSortIcon={true}
-                style={{
-                  fontSize: "12px",
-                  lineHeight: "15px",
-                  fontFamily: "Inter",
-                }}
+    function EnhancedTableHead() {
+      return (
+        <TableHead>
+          <StyledTableRow>
+            <StyledTableCell />
+            {headCells.map((headCell) => (
+              <StyledTableCell
+                key={headCell.id}
+                padding={headCell.disablePadding ? "none" : "normal"}
               >
-                {headCell.label}
-              </TableSortLabel>
-            </StyledTableCell>
-          ))}
-        </StyledTableRow>
-      </TableHead>
+                <TableSortLabel
+                  active={false}
+                  hideSortIcon={true}
+                  style={{
+                    fontSize: "12px",
+                    lineHeight: "15px",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {headCell.label}
+                </TableSortLabel>
+              </StyledTableCell>
+            ))}
+          </StyledTableRow>
+        </TableHead>
+      );
+    }
+
+    return (
+      <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+        <Paper sx={{ width: "auto" }}>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead />
+              <TableBody>
+                {stableSort(props.content.stats.nodesArr).map((row) => {
+                  return (
+                    <StyledTableRow>
+                      <StyledTableCell padding="radio">
+                        <Radio control={<Radio />} />
+                      </StyledTableCell>
+                      <StyledTableCell
+                        scope="row"
+                        padding="none"
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          width: "450px",
+                        }}
+                      >
+                        {row.nodeName}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          whiteSpace: "nowrap",
+                          width: "450px",
+                        }}
+                      >
+                        {row.type}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.latency}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.peers}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.pendingTxn}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.lastBlock}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.graph}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "50px",
+                        }}
+                      >
+                        {row.upTime}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </TableBox>
     );
   }
-
-  return (
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead />
-            <TableBody>
-              {stableSort(props.content.stats.nodesArr).map((row) => {
-                return (
-                  <StyledTableRow>
-                    <StyledTableCell padding="radio">
-                      <Radio control={<Radio />} />
-                    </StyledTableCell>
-                    <StyledTableCell
-                      scope="row"
-                      padding="none"
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {row.nodeName}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {row.type}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.latency}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.peers}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.pendingTxn}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.lastBlock}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {row.graph}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "50px",
-                      }}
-                    >
-                      {row.upTime}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </TableBox>
-  );
 }

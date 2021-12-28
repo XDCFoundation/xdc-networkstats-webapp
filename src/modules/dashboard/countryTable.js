@@ -17,34 +17,78 @@ const TableBox = styled.div`
   width: 100%;
   height: 100%;
   max-width: 550px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  max-width: 1024px
+  }
+`;
+const Flex = styled.div`
+display: flex;
+align-items: center;
+text-align: center;
 `;
 
+const Up = styled.div`
+color: #3AF219;
+`;
+
+const Down = styled.div`
+color: #E62806;
+`;
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
+    tableBottomBorder: {
+        borderWidth: 0,
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        borderStyle: 'solid',
+    },
+    padding: "0px 40px",
   },
 }))(TableRow);
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 16px",
     height: "30px",
+    padding: "0px 40px",
   },
 }))(TableCell);
 
 export default function EnhancedTable(props) {
   let rows = [];
-
-  if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
-    for (let i = 0; i < props.data.length; i++) {
-      rows.push({
-        id: 1 + i,
-        countries: props.data[i].country,
-        last24h: props.data[i].count,
-      });
-    }
-  }
-
+    if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
+      for (let i = 0; i < props.data.length; i++) {
+        if(parseInt(props.data[i].last24diff)>0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last24diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
+        });
+      }
+      else if(parseInt(props.data[i].last24diff)<0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last24diff+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last7diff+"%"}</Down></Flex>
+        });
+      }
+      else{
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: props.data[i].last24diff+"%",
+          last7: props.data[i].last7diff+"%",
+        });
+      }
+  
+      }}
+  
+  
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -121,7 +165,7 @@ export default function EnhancedTable(props) {
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
                 color: "white",
-                columnWidth: "60px",
+                columnWidth: "90px",
                 whiteSpace: "nowrap",
                 alignContent: "start",
                 borderColor: "#4E6AB5",
@@ -231,7 +275,7 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        width: "2px",
+                        width: "20px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -249,7 +293,6 @@ export default function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -257,18 +300,16 @@ export default function EnhancedTable(props) {
                     </StyledTableCell>
                     <StyledTableCell
                       style={{
-                        color: "#3AF219",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
+                        color: "white",
                       }}
                     >
                       {row.last24}
                     </StyledTableCell>
                     <StyledTableCell
                       style={{
-                        color: "#3AF219",
-                        columnWidth: "5px",
                         borderColor: "#4E6AB5",
+                        color: "white",
                       }}
                     >
                       {row.last7}

@@ -96,10 +96,10 @@ const LeftDiv = styled.div`
   color: #667fc1;
   font-size: 16px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  padding-left: 47px;
+  padding-left: 10px;
   }
   @media (min-width: 300px) and (max-width: 767px) {
-  padding-left: 47px;
+  padding-left: 10px;
   }
 `;
 
@@ -125,6 +125,8 @@ padding-left: 40px;
   width: 100%;
   padding: 40px;
 }
+@media (min-width: 300px) and (max-width: 767px) {
+  padding: 10px;
 `;
 
 const MapDiv = styled.div`
