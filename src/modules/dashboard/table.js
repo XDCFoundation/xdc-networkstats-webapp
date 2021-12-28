@@ -50,7 +50,7 @@ export default function EnhancedTable(props) {
     {
       id: "nodeName",
       disablePadding: true,
-      label: <><Label>Node Name</Label><Tooltip title="qwert"><img src="/images/HelpSelected.svg" alt=" " /></Tooltip></>
+      label: <Label>Node Name</Label>
     },
     {
       id: "type",
@@ -150,6 +150,7 @@ export default function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
+                        width: "450px"
                       }}
                     >
                       {row.nodeName}
@@ -161,6 +162,8 @@ export default function EnhancedTable(props) {
                         fontFamily: "Inter",
                         fontWeight: "400",
                         whiteSpace: "nowrap",
+                        width: "450px"
+
                       }}
                     >
                       {row.type}

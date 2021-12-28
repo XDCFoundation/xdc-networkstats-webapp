@@ -474,7 +474,7 @@ export default function Dashboard(props) {
                   <ContentEfficiency className="efficiency">
                     <ContentData>
                       <Heading>Gas Price (USD)</Heading>
-                      <DataCount>{content.stats.gasPrice}</DataCount>
+                      <DataCount>{gasUsd}</DataCount>
                       <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
@@ -607,7 +607,7 @@ export default function Dashboard(props) {
                   <SpaceBetween>
                     <div>
                       <BestBlock>Gas Price (USD)</BestBlock>
-                      <BestBlockData>{content.stats.gasPrice}</BestBlockData>
+                      <BestBlockData>{gasUsd}</BestBlockData>
                       <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
                     </div>
                     <div>
@@ -1148,4 +1148,5 @@ const EthDiv = styled.div`
 font-size: 14px;
 font-family: 'Inter';
 color: #3AF219;
+margin-bottom: 45px;
 `;
