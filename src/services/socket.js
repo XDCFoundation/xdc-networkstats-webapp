@@ -402,7 +402,6 @@ function updateActiveNodes(data) {
     const [error, res] = await utility.parseResponse(
       NodesService.getCountryInit()
     );
-
     for (let i = 0; i < countryArray.length; i++) {
       if (
         !_.isUndefined(res.responseData.last24) &&
@@ -442,6 +441,7 @@ function updateActiveNodes(data) {
         " " +
         `(${((country.count / nodesArr.length) * 100).toFixed(2)})%`;
     });
+    
     store.dispatch({
       type: eventConstants.UPDATE_EXPANDEDCOUNTRY,
       data: countryArray,
@@ -500,6 +500,7 @@ function updateBestBlock(data) {
           type: eventConstants.UPDATE_BEST_BLOCK,
           data: bestBlock,
         });
+        
       });
     }
   }

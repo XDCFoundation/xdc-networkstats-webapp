@@ -175,6 +175,19 @@ export default function Dashboard(props) {
   }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
+
+  // useEffect(()=>{
+  //   // if(content.stats.bestBlock!==0){
+  //   setInterval(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: content.stats.lastBlock+1 });
+  //   },1000)
+  // })
+
+  // useEffect(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: 0 });
+  // },[content.stats.bestBlock])
+
+
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
@@ -377,7 +390,7 @@ export default function Dashboard(props) {
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
                     <EthDiv>
-                      <img src="/images/DownArrow.svg" alt=" " />
+                      <img src="/images/Down arrow.svg" alt=" " />
                       {" " + Eth} than Ethereum
                     </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
