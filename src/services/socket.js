@@ -566,7 +566,6 @@ function findIndex(search) {
 async function getInitNodes() {
   const [error, res] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = res.responseData[0].nodes;
-  console.log("res res res res res initNodes ======", initNodes);
   let table = [];
   for (let i = 0; i < initNodes.length; i++) {
     table.push({
