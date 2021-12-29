@@ -39,7 +39,7 @@ async function getUpTime(data) {
 
 async function getCountryInit() {
   return axios
-    .get(`http://3.88.252.78:3000/getInit`)
+    .get(`http://52.15.80.60:3000/getInit`)
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -50,7 +50,7 @@ async function getCountryInit() {
 
 async function getInitNodes() {
   return axios
-      .get(`http://3.88.252.78:3000/get-table-nodes`)
+      .get(`http://52.15.80.60:3000/get-table-nodes`)
       .then((res) => {
           return Promise.resolve(res.data);
       })
