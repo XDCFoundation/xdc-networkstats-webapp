@@ -564,7 +564,7 @@ function findIndex(search) {
 }
 
 async function getInitNodes() {
-  const [res] = await utility.parseResponse(NodesService.getInitNodes());
+  const [error, res] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = res.responseData[0].nodes;
   console.log("res res res res res initNodes ======", initNodes);
   let table = [];
@@ -583,7 +583,7 @@ async function getInitNodes() {
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
 }
-// getInitNodes();
+getInitNodes();
 
 setInterval(() => {
   let table = [];
