@@ -168,6 +168,17 @@ export default function Dashboard(props) {
   }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
+  // useEffect(()=>{
+  //   // if(content.stats.bestBlock!==0){
+  //   setInterval(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: content.stats.lastBlock+1 });
+  //   },1000)
+  // })
+
+  // useEffect(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: 0 });
+  // },[content.stats.bestBlock])
+
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
@@ -237,11 +248,7 @@ export default function Dashboard(props) {
       ) : null}
 
       {Expand === 2 ? (
-        <Country
-          expand={setCountry}
-          location={content.stats.markers}
-          content={content}
-        />
+        <Country expand={setCountry} />
       ) : (
         <>
           <MainContainer>
@@ -311,7 +318,7 @@ export default function Dashboard(props) {
                       {content.stats.nodes}/{content.stats.totalNodes}
                     </DataCount>
                     <NodeHistory>Node History (7 Days)</NodeHistory>
-                    <NodeGraph data={content} />
+                    <NodeGraph />
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
@@ -324,7 +331,7 @@ export default function Dashboard(props) {
                         onClick={() => changeExpand(2)}
                       />
                     </SpaceBetween>
-                    <Map location={content.stats.markers} />
+                    <Map />
                   </CountryData>
                 </ContentSecurity>
 
@@ -351,7 +358,7 @@ export default function Dashboard(props) {
                       </div>
                     </SpaceBetween>
                     <Speedbar>
-                      <LastBlockBar content={content} />
+                      <LastBlockBar />
                     </Speedbar>
                     <DisplayFlex>
                       <FlexStyled>
@@ -363,12 +370,13 @@ export default function Dashboard(props) {
                     </DisplayFlex>
                   </CountryData>
                 </ContentSpeed>
+
                 <ContentEfficiency className="efficiency">
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
                     <EthDiv>
-                      <img src="/images/DownArrow.svg" alt=" " />
+                      <img src="/images/Down arrow.svg" alt=" " />
                       {" " + Eth} than Ethereum
                     </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
@@ -403,7 +411,11 @@ export default function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      {content.stats.efficiency.length !== 0 ? (
+                        <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      ) : (
+                        <div></div>
+                      )}
                     </Speedbar>
                   </CountryData>
                 </ContentEfficiency>
@@ -689,7 +701,7 @@ export default function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            <Table content={content} />
+            <Table />
           </TableDiv>
           <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
         </>

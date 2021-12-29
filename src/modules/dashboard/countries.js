@@ -44,17 +44,17 @@ export default function Countries(props) {
       </SpaceBetween>
       <MainContainer>
       <TableDiv>
-      <CountryTable data={props.content.stats.expandedCountry} />
+      <CountryTable/>
       </TableDiv>
       <MapDiv>
-      <CountryMap marker={props.location}/>
+      <CountryMap/>
       </MapDiv>
       </MainContainer>
       </DesktopDiv>
       <TabDiv>
       <SpaceBetween>
       <MapDiv>
-      <CountryMap marker={props.location}/>
+      <CountryMap/>
       </MapDiv>
       <Img>
       <img
@@ -71,7 +71,7 @@ export default function Countries(props) {
           <Label>Top 10 Countries</Label>
         </LeftDiv>
       <TableDiv>
-      <CountryTable data={props.content.stats.expandedCountry}/>
+      <CountryTable/>
       </TableDiv>
       </TabDiv>
     </Div>
