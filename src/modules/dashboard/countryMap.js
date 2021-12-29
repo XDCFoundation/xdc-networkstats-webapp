@@ -6,6 +6,8 @@ import {
   Marker,
 } from "react-simple-maps";
 import styled from "styled-components";
+import {dispatchAction} from "../../utility";
+import {connect} from "react-redux";
 
 const Div = styled.div`
   fill: #103aaa;
@@ -15,20 +17,20 @@ const Div = styled.div`
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-export default function CountryMap(props) {
+function CountryMap(props) {
   const [node, setNode] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
-    if (props?.marker && props?.marker?.length >= 1) {
-      (props?.marker).map((item, index) => {
+    if (props?.stats.markers && props?.stats.markers?.length >= 1) {
+      (props?.stats.markers).map((item, index) => {
         setData(item);
       });
       async function fetchData() {
-        setNode(props.marker);
+        setNode(props.stats.markers);
       }
       fetchData();
     }
-  }, [props?.marker]);
+  }, [props?.stats.markers]);
 
   return (
     <Div>
@@ -49,3 +51,10 @@ export default function CountryMap(props) {
     </Div>
   );
 }
+
+
+const mapStateToProps = (state) => {
+  return {stats: state.stats}
+};
+
+export default connect(mapStateToProps, {dispatchAction})(CountryMap);

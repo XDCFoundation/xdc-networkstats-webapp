@@ -90,7 +90,7 @@ function EfficiencyBar(props) {
   return (
     <Div>
       <Bar
-        width={300}
+        width={280}
         maxWidth={500}
         height={120}
         data={data}

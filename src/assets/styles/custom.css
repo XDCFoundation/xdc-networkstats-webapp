@@ -28,9 +28,9 @@ select {
     "Arial", "sans-serif" !important;
 }
 
-input:focus {
+/* input:focus {
   border: solid 1px #0099ff;
-}
+} */
 
 .display-none {
   display: none !important;
@@ -268,3 +268,7 @@ input:focus {
   height: 10px !important;
   }
 
+
+#react-joyride-step-0>div>div>div{
+  top:-20px !important;
+}
