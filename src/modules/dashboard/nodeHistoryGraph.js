@@ -9,6 +9,7 @@ const Div = styled.div`
   height: 150px;
   width: 100%;
   max-width: 500px;
+  margin-left: -5px;
 `;
 
 function NodeGraph() {

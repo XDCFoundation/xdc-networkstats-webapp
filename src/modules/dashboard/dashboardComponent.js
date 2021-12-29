@@ -17,6 +17,7 @@ import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
 import { makeStyles } from "@material-ui/styles";
+import MappleToolTip from "reactjs-mappletooltip";
 
 const Footer = styled.div`
   background-color: white;
@@ -69,11 +70,6 @@ const use = makeStyles(() => ({
 export default function Dashboard(props) {
   const { content } = props;
   const classes = use();
-
-  const [SwitchSide, setSide] = React.useState(false);
-  const changeSide = (value) => {
-    setSide(value);
-  };
 
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
@@ -146,7 +142,6 @@ export default function Dashboard(props) {
     }
   };
   const [showSideDrop, setShowSideDrop] = useState(false);
-
   const [show, setShow] = useState(1);
   const [mobileTab, setMobileTab] = useState(0);
   const [gasUsd, setGasUsd] = useState(0);
@@ -159,16 +154,20 @@ export default function Dashboard(props) {
     );
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
-    const [err, resp] = await utility.parseResponse(
-      NodesService.getEth()
-    );
-    let EthVal = `${Math.round(((resp.normal.usd-content.stats.gasPrice)/resp.normal.usd*100)*100000)/100000}%`;
-    setEth(EthVal)
+    const [err, resp] = await utility.parseResponse(NodesService.getEth());
+    let EthVal = `${
+      Math.round(
+        ((resp.normal.usd - content.stats.gasPrice) / resp.normal.usd) *
+          100 *
+          100000
+      ) / 100000
+    }%`;
+    setEth(EthVal);
   }
- useEffect(() => {
-   fetchTime();
-   setGasUsd((content.stats.gasPrice).toFixed(6))
- }, [content.stats.gasPrice])
+  useEffect(() => {
+    fetchTime();
+    setGasUsd(content.stats.gasPrice.toFixed(6));
+  }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
   const buttonTour = () => {
@@ -189,10 +188,7 @@ export default function Dashboard(props) {
     showSetText(setText - 1);
     console.log("showBackCount", showBackCount);
   };
-  const [activeButton, setActiveButton] = React.useState("General");
-  const handleViewClick = (e) => {
-    setActiveButton(e.target.id);
-  };
+
   return (
     <Div>
       <Joyride
@@ -204,27 +200,30 @@ export default function Dashboard(props) {
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
-        floaterProps={{disableAnimation: true}}
+        floaterProps={{ disableAnimation: true }}
       />
-
-      {showTabJoyRide && (
-        <CustomerJoyRide>
-          <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
-          <JoyrideTextContainer>
-            {TOUR_STEPS[setText].content}
-          </JoyrideTextContainer>
-          <JoyrideNextButton onClick={() => buttonTour()}>
-            Next
-          </JoyrideNextButton>
-          {showBackButton && showBackCount >= 1 ? (
-            <JoyrideBackButton onClick={() => backButtonTour()}>
-              Back
-            </JoyrideBackButton>
-          ) : (
-            ""
-          )}
-        </CustomerJoyRide>
-      )}
+      <MappleToolTip float={true} direction={"bottom"} mappleType={"warning"}>
+        {showTabJoyRide && (
+          <CustomerJoyRide>
+            <CrossButton onClick={() => setShowTabJoyRide(false)}>
+              X
+            </CrossButton>
+            <JoyrideTextContainer>
+              {TOUR_STEPS[setText].content}
+            </JoyrideTextContainer>
+            <JoyrideNextButton onClick={() => buttonTour()}>
+              Next
+            </JoyrideNextButton>
+            {showBackButton && showBackCount >= 1 ? (
+              <JoyrideBackButton onClick={() => backButtonTour()}>
+                Back
+              </JoyrideBackButton>
+            ) : (
+              ""
+            )}
+          </CustomerJoyRide>
+        )}
+      </MappleToolTip>
       <Header
         setJoyrideRun={setJoyrideRun}
         setShowTabJoyRide={setShowTabJoyRide}
@@ -345,7 +344,7 @@ export default function Dashboard(props) {
                         thousandSeparator={true}
                       />
                     </DataCount>
-                    <NodeHistory>Avg Block Time</NodeHistory>
+                    <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
                     <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
                   </ContentData>
 
@@ -373,7 +372,10 @@ export default function Dashboard(props) {
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
-                    <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                    <EthDiv>
+                      <img src="/images/DownArrow.svg" alt=" " />
+                      {" " + Eth} than Ethereum
+                    </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
@@ -383,11 +385,27 @@ export default function Dashboard(props) {
                         <Countries>UP Time</Countries>
                         <CountriesData>{content.stats.upTime}%</CountriesData>
                       </div>
-                      <ButtonDiv>
-                        <Button onClick={() => fetchTime(30)}>30D</Button>
-                        <Button onClick={() => fetchTime(7)}>7D</Button>
-                        <Button onClick={() => fetchTime(1)}>24H</Button>
-                      </ButtonDiv>
+
+                      <SelectionDiv>
+                        <SelectionDivStyle onClick={() => fetchTime(30)}>
+                          30D
+                        </SelectionDivStyle>
+                        <SelectionDivStyle
+                          onClick={() => fetchTime(7)}
+                          style={{ borderRadius: "0px" }}
+                        >
+                          7D
+                        </SelectionDivStyle>
+                        <SelectionDivStyle
+                          onClick={() => fetchTime(1)}
+                          style={{
+                            borderRight: "none",
+                            borderRadius: "0px 4px 4px 0px",
+                          }}
+                        >
+                          24H
+                        </SelectionDivStyle>
+                      </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
                       <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
@@ -475,7 +493,10 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{gasUsd}</DataCount>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
@@ -485,11 +506,26 @@ export default function Dashboard(props) {
                           <Countries>UP Time</Countries>
                           <CountriesData>{content.stats.upTime}%</CountriesData>
                         </div>
-                        <ButtonDiv>
-                          <Button onClick={() => fetchTime(30)}>30D</Button>
-                          <Button onClick={() => fetchTime(7)}>7D</Button>
-                          <Button onClick={() => fetchTime(1)}>24H</Button>
-                        </ButtonDiv>
+                        <SelectionDiv>
+                          <SelectionDivStyle onClick={() => fetchTime(30)}>
+                            30D
+                          </SelectionDivStyle>
+                          <SelectionDivStyle
+                            onClick={() => fetchTime(7)}
+                            style={{ borderRadius: "0px" }}
+                          >
+                            7D
+                          </SelectionDivStyle>
+                          <SelectionDivStyle
+                            onClick={() => fetchTime(1)}
+                            style={{
+                              borderRight: "none",
+                              borderRadius: "0px 4px 4px 0px",
+                            }}
+                          >
+                            24H
+                          </SelectionDivStyle>
+                        </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
                         <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
@@ -608,7 +644,10 @@ export default function Dashboard(props) {
                     <div>
                       <BestBlock>Gas Price (USD)</BestBlock>
                       <BestBlockData>{gasUsd}</BestBlockData>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                     </div>
                     <div>
                       <LastBlock>UP Time</LastBlock>
@@ -624,11 +663,26 @@ export default function Dashboard(props) {
                         {content.stats.avgRate + " "}TPS
                       </MobileAverageBlockData>
                     </div>
-                    <ButtonDiv>
-                      <Button onClick={() => fetchTime(30)}>30D</Button>
-                      <Button onClick={() => fetchTime(7)}>7D</Button>
-                      <Button onClick={() => fetchTime(1)}>24H</Button>
-                    </ButtonDiv>
+                    <SelectionDiv>
+                      <SelectionDivStyle onClick={() => fetchTime(30)}>
+                        30D
+                      </SelectionDivStyle>
+                      <SelectionDivStyle
+                        onClick={() => fetchTime(7)}
+                        style={{ borderRadius: "0px" }}
+                      >
+                        7D
+                      </SelectionDivStyle>
+                      <SelectionDivStyle
+                        onClick={() => fetchTime(1)}
+                        style={{
+                          borderRight: "none",
+                          borderRadius: "0px 4px 4px 0px",
+                        }}
+                      >
+                        24H
+                      </SelectionDivStyle>
+                    </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
                     <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
@@ -992,6 +1046,13 @@ const NodeHistory = styled.div`
   margin-top: 15px;
   white-space: nowrap;
 `;
+const DesktopAvgBlockTime = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 68px;
+  white-space: nowrap;
+`;
 const CountryData = styled.div`
   width: 50%;
 `;
@@ -1022,9 +1083,10 @@ const BlockTime = styled.div`
   color: #ffffff;
 `;
 const Speedbar = styled.div`
-  margin-top: 10px;
+  margin-top: 40px;
   width: 100%;
   max-width: 500px;
+  margin-left: -4px;
 `;
 const TableDiv = styled.div`
   background: #f8f8f8;
@@ -1070,7 +1132,6 @@ const BestBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileSpeedBlock = styled.div`
   background-color: #102c78;
@@ -1090,7 +1151,6 @@ const LastBLockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileAverageBlock = styled.div`
   color: #667fc1;
@@ -1103,7 +1163,6 @@ const MobileAverageBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileGraphDiv = styled.div`
   width: 100%;
@@ -1145,13 +1204,39 @@ const FullScreen = styled.div`
 `;
 
 const MapDiv = styled.div`
-  @media (min-width: 100px) and (max-width: 1024px) {
+  /* @media (min-width: 100px) and (max-width: 1024px) {
     padding-left: 105px;
-  }
+  } */
+  margin-left: -38px;
 `;
 const EthDiv = styled.div`
-font-size: 14px;
-font-family: 'Inter';
-color: #3AF219;
-margin-bottom: 45px;
+  font-size: 14px;
+  font-family: "Inter";
+  color: #3af219;
+  margin-bottom: 45px;
+`;
+const SelectionDiv = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 108px;
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  height: 30px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+const SelectionDivStyle = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #3c70ff;
+  cursor: pointer;
+  :hover {
+    background-color: #3c70ff;
+  }
 `;
