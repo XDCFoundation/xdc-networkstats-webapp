@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import styled from "styled-components";
 import { linearGradientDef } from "@nivo/core";
@@ -31,7 +31,9 @@ function NodeGraph() {
     setNode5(res.responseData[5].nodes);
     setNode6(res.responseData[6].nodes);
   }
-  fetchData();
+  useEffect(()=>{
+    fetchData();
+  },[])
   const data = [
     {
       id: "Stats",

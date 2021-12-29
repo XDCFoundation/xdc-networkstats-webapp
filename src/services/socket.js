@@ -521,7 +521,6 @@ function findIndex(search) {
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = resp.responseData[0].nodes;
-  console.log("res res res res res initNodes ======", initNodes);
   let table = [];
   for (let i = 0; i < initNodes.length; i++) {
     table.push({
@@ -546,7 +545,6 @@ setInterval(() => {
         type: nodesArr[i].info.node,
         pendingTxn: nodesArr[i].stats.pending,
         lastBlock: nodesArr[i].stats.block.number,
-        // graph: <TableGraph content={nodesArr[i].history} />,
         upTime: `${nodesArr[i].stats.uptime}%`,
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,

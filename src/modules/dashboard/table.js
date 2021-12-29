@@ -10,7 +10,8 @@ import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-import Tooltip from '@mui/material/Tooltip';
+import {dispatchAction} from "../../utility";
+import {connect} from "react-redux";
 
 const TableBox = styled.div`
   width: 100%;
@@ -60,7 +61,7 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 
-export default function EnhancedTable(props) {
+ function EnhancedTable(props) {
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
@@ -68,10 +69,10 @@ export default function EnhancedTable(props) {
 
   const [rows, setRows] = useState([]);
   useEffect(()=>{
-   setRows(props.content.stats.nodesArr)
-  },[props.content.stats.nodesArr]);
+   setRows(props.stats.nodesArr)
+  },[props.stats.nodesArr]);
   const requestSearch = (searchedVal) => {
-    const filteredRows = props.content.stats.nodesArr.filter((row) => {
+    const filteredRows = props.stats.nodesArr.filter((row) => {
       return row.nodeName.toLowerCase().includes(searchedVal);
     });
     setRows(filteredRows);
@@ -284,3 +285,9 @@ export default function EnhancedTable(props) {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {stats: state.stats}
+};
+
+export default connect(mapStateToProps, {dispatchAction})(EnhancedTable);
