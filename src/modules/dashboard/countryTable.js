@@ -58,7 +58,7 @@ export default function EnhancedTable(props) {
   let rows = [];
     if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
       for (let i = 0; i < props.data.length; i++) {
-        if(parseInt(props.data[i].last24diff)>0){
+        if(parseFloat(props.data[i].last24diff)>0 && parseFloat(props.data[i].last7diff)>0){
         rows.push({
           id: 1 + i,
           countries: props.data[i].country,
@@ -67,25 +67,76 @@ export default function EnhancedTable(props) {
           last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
         });
       }
-      else if(parseInt(props.data[i].last24diff)<0){
+      else if(parseFloat(props.data[i].last24diff)>0 && parseFloat(props.data[i].last7diff)<0){
         rows.push({
           id: 1 + i,
           countries: props.data[i].country,
           last24h: props.data[i].count,
-          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last24diff+"%"}</Down></Flex>,
-          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last7diff+"%"}</Down></Flex>
+          last24: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{Math.abs(props.data[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+        });
+      }else if(parseFloat(props.data[i].last24diff)>0 && parseFloat(props.data[i].last7diff)===0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{Math.abs(props.data[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
+          last7: props.data[i].last7diff+"%"
         });
       }
-      else{
+      else if(parseFloat(props.data[i].last24diff)<0 && parseFloat(props.data[i].last7diff)>0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
+        });
+      }
+      else if(parseFloat(props.data[i].last24diff)<0 && parseFloat(props.data[i].last7diff)<0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+        });
+      }else if(parseFloat(props.data[i].last24diff)<0 && parseFloat(props.data[i].last7diff)===0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: props.data[i].last7diff+"%"
+        });
+      }
+
+      else if(parseFloat(props.data[i].last24diff)===0 && parseFloat(props.data[i].last7diff)>0){
         rows.push({
           id: 1 + i,
           countries: props.data[i].country,
           last24h: props.data[i].count,
           last24: props.data[i].last24diff+"%",
-          last7: props.data[i].last7diff+"%",
+          last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
         });
       }
-  
+      else if(parseFloat(props.data[i].last24diff)===0 && parseFloat(props.data[i].last7diff)<0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: props.data[i].last24diff+"%",
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{Math.abs(props.data[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+        });
+      }else if(parseFloat(props.data[i].last24diff)===0 && parseFloat(props.data[i].last7diff)===0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: props.data[i].last24diff+"%",
+          last7: props.data[i].last7diff+"%"
+        });
+      }
       }}
   
   

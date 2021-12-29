@@ -410,42 +410,11 @@ function updateActiveNodes(data) {
       ) {
         for (let j = 0; j < res.responseData.last24.length; j++) {
           if (countryArray[i].country === res.responseData.last24[j].country) {
-            countryArray[i].last24diff = (
-              ((countryArray[i].count -
-                res.responseData.last24[j].count / 24) /
-                (res.responseData.last24[j].count / 24)) *
+            countryArray[i].last24diff = (((countryArray[i].count -
+            res.responseData.last24[j].count / 24) /
+            (res.responseData.last24[j].count / 24)) *
               100
             ).toFixed(2);
-            /*
-            if (
-              countryArray[i].count ===
-              res.responseData.last24[j].count / 24
-            ) {
-              countryArray[i].last24diff = (
-                ((countryArray[i].count -
-                  res.responseData.last24[j].count / 24) /
-                  res.responseData.last24[j].count /
-                  24) *
-                100
-              ).toFixed(2);
-            } else if (
-              countryArray[i].count >
-              res.responseData.last24[j].count / 24
-            ) {
-              countryArray[i].last24diff = `${(
-                ((countryArray[i].count -
-                  res.responseData.last24[j].count / 24) /
-                  (res.responseData.last24[j].count / 24)) *
-                100
-              ).toFixed(2)}%`;
-            } else {
-              countryArray[i].last24diff = `${(
-                (res.responseData.last24[j].count / 24 -
-                  countryArray[i].count / countryArray[i].count) *
-                100
-              ).toFixed(2)}%`;
-            }
-            */
           }
         }
       }
@@ -458,35 +427,12 @@ function updateActiveNodes(data) {
       ) {
         for (let j = 0; j < res.responseData.last7.length; j++) {
           if (countryArray[i].country === res.responseData.last7[j].country) {
-            if (
-              countryArray[i].count ===
-              res.responseData.last7[j].count / 168
-            ) {
-              countryArray[i].last7diff = (
-                ((countryArray[i].count -
-                  res.responseData.last7[j].count / 168) /
-                  res.responseData.last7[j].count /
-                  168) *
-                100
-              ).toFixed(2);
-            } else if (
-              countryArray[i].count >
-              res.responseData.last7[j].count / 168
-            ) {
-              countryArray[i].last7diff = `${(
-                ((countryArray[i].count -
-                  res.responseData.last7[j].count / 168) /
-                  (res.responseData.last7[j].count / 168)) *
-                100
-              ).toFixed(2)}%`;
-            } else {
-              countryArray[i].last7diff = `${(
-                (res.responseData.last7[j].count / 168 -
-                  countryArray[i].count / countryArray[i].count) *
-                100
-              ).toFixed(2)}%`;
+            countryArray[i].last7diff = (((countryArray[i].count -
+            res.responseData.last7[j].count / 168) /
+            (res.responseData.last7[j].count / 168)) *
+              100
+            ).toFixed(2);
             }
-          }
         }
       }
     }
@@ -500,6 +446,7 @@ function updateActiveNodes(data) {
       type: eventConstants.UPDATE_EXPANDEDCOUNTRY,
       data: countryArray,
     });
+    
   }
 
   fetchData();
@@ -572,8 +519,8 @@ function findIndex(search) {
 }
 
 async function getInitNodes() {
-  const [res] = await utility.parseResponse(NodesService.getInitNodes());
-  let initNodes = res.responseData[0].nodes;
+  const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
+  let initNodes = resp.responseData[0].nodes;
   console.log("res res res res res initNodes ======", initNodes);
   let table = [];
   for (let i = 0; i < initNodes.length; i++) {
@@ -581,8 +528,6 @@ async function getInitNodes() {
       type: initNodes[i].info.node,
       pendingTxn: initNodes[i].stats.pending,
       lastBlock: initNodes[i].stats.block.number,
-      // graph: <TableGraph content={initNodes[i].history} />,
-      // graph: initNodes[i].history,
       upTime: `${initNodes[i].stats.uptime}%`,
       latency: `${initNodes[i].stats.latency}ms`,
       peers: initNodes[i].stats.peers,
@@ -591,7 +536,7 @@ async function getInitNodes() {
   }
   store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
 }
-// getInitNodes();
+getInitNodes();
 
 setInterval(() => {
   let table = [];

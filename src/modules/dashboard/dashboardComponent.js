@@ -653,7 +653,6 @@ export default function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            <SearchBox placeholder="Search" />
             <Table content={content} />
           </TableDiv>
           <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
@@ -666,26 +665,6 @@ export default function Dashboard(props) {
 const Div = styled.div`
   width: 100%;
 `;
-const SearchBox = styled.input`
-  background-image: url("/images/DownArrow.svg");
-  background-repeat: no-repeat;
-  background-position: 0.5rem;
-  padding-left: 2rem;
-  background-size: 0.875rem;
-  position: relative;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  width: 100%;
-  max-width: 17.75rem;
-  white-space: nowrap;
-  height: 2.5rem;
-  font-size: 0.875rem;
-  margin-bottom: 20px;
-  outline: none;
-  color: #BEBEBE;
-`;
-
 
 const CustomerJoyRide = styled.div`
   width: 100%;
