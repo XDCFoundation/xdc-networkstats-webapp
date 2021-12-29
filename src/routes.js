@@ -10,7 +10,7 @@ import BaseComponent from "./modules/baseComponent";
 import { io } from "socket.io-client";
 
 class Routes extends BaseComponent {
-  Socket = io("http://3.88.252.78:3000/", {
+  Socket = io("http://52.15.80.60:3000/", {
     path: "/stats-data/",
     transports: ["websocket"],
     reconnection: true,

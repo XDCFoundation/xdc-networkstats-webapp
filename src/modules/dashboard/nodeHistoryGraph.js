@@ -23,13 +23,27 @@ function NodeGraph() {
   async function fetchData() {
     const [error, res] = await utility.parseResponse(NodesService.getNodes());
     if (error) return;
-    setNode(res.responseData[0].nodes);
-    setNode1(res.responseData[1].nodes);
-    setNode2(res.responseData[2].nodes);
-    setNode3(res.responseData[3].nodes);
-    setNode4(res.responseData[4].nodes);
-    setNode5(res.responseData[5].nodes);
-    setNode6(res.responseData[6].nodes);
+    if (res.responseData.length === 1) {
+      setNode(res.responseData[0].nodes);
+    }
+    if (res.responseData.length === 2) {
+      setNode1(res.responseData[1].nodes);
+    }
+    if (res.responseData.length === 3) {
+      setNode2(res.responseData[2].nodes);
+    }
+    if (res.responseData.length === 4) {
+      setNode3(res.responseData[3].nodes);
+    }
+    if (res.responseData.length === 5) {
+      setNode4(res.responseData[4].nodes);
+    }
+    if (res.responseData.length === 6) {
+      setNode5(res.responseData[5].nodes);
+    }
+    if (res.responseData.length === 7) {
+      setNode6(res.responseData[6].nodes);
+    }
   }
   useEffect(()=>{
     fetchData();

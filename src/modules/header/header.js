@@ -83,6 +83,7 @@ const NetworkStats = styled.div`
   font-family: Inter;
   color: #ffffff;
   white-space: nowrap;
+  margin-left: 9px;
 `;
 const SpaceBetween = styled.div`
   display: flex;

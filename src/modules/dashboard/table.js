@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 import {dispatchAction} from "../../utility";
 import {connect} from "react-redux";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const TableBox = styled.div`
   width: 100%;
@@ -41,17 +42,48 @@ const SearchBox = styled.input`
   color: #BEBEBE;
 `;
 
-const Label = styled.span`
-font-size: 12px;
-line-height: 15px;
-font-family: 'Inter';
-`;
 
+const Label = styled.div`
+  font-size: 12px;
+  line-height: 15px;
+  font-family: "Inter";
+  color: #393939;
+  font-weight: 600;
+`;
+const DisplayFlex = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
+const Img = styled.img`
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
   },
 }))(TableRow);
+
+const CustomiseTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "white",
+    color: "pink",
+    background: "#FFFFFF 0% 0% no-repeat padding-box",
+    boxShadow: "0px 3px 6px #00000029",
+    border: "1px solid #F2F2F2",
+    fontSize: 11,
+    fontWeight: 600,
+    fontFamily: "Inter",
+    color: "#1F1F1F",
+    justifyContent: "center",
+    display: "flex",
+    whiteSpace: "nowrap",
+  },
+}));
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
@@ -81,59 +113,108 @@ const StyledTableCell = withStyles((theme) => ({
   const headCells = [
     {
       id: "nodeName",
+
       disablePadding: true,
-      label: <Label>Node Name</Label>
+
+      label: (
+        <DisplayFlex>
+          <Label>Node Name</Label>&nbsp;
+          <CustomiseTooltip title="Name of the specified node">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "type",
-      numeric: true,
+
       disablePadding: false,
-      label: "Type",
+      label: (
+        <DisplayFlex>
+          <Label>Type</Label>&nbsp;
+          <CustomiseTooltip title="Type of node with the architecture and version details">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "latency",
       numeric: true,
       disablePadding: false,
-      label: "Latency",
+      label: (
+        <DisplayFlex>
+          <Label>Latency</Label>&nbsp;
+          <CustomiseTooltip title="Delay in acceptance of a transaction">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "peers",
       numeric: true,
       disablePadding: false,
-      label: "Peers",
+      label: (
+        <DisplayFlex>
+          <Label>Peers</Label>&nbsp;
+          <CustomiseTooltip title="Number of peers sharing the ledger">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "pendingTxn",
       numeric: true,
       disablePadding: false,
-      label: "Pending Txn",
+      label: (
+        <DisplayFlex>
+          <Label>Pending Txn</Label>&nbsp;
+          <CustomiseTooltip title="Number of incomplete transactions">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "lastBlock",
       numeric: true,
       disablePadding: false,
-      label: "Last Block",
+      label: (
+        <DisplayFlex>
+          <Label>Last Block</Label>&nbsp;
+          <CustomiseTooltip title="Latest block associated with the node">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
     {
       id: "graph",
       numeric: true,
       disablePadding: false,
-      label: " ",
     },
     {
       id: "upTime",
       numeric: true,
       disablePadding: false,
-      label: "Up Time",
+      label: (
+        <DisplayFlex>
+          <Label>Up Time</Label>&nbsp;
+          <CustomiseTooltip title="Total available and working time of the network">
+            <Img src="/images/Help.svg" alt=" " />
+          </CustomiseTooltip>
+        </DisplayFlex>
+      ),
     },
   ];
 
   function EnhancedTableHead() {
-
     return (
       <TableHead>
         <StyledTableRow>
-          <StyledTableCell/>
+          <StyledTableCell />
           {headCells.map((headCell) => (
             <StyledTableCell
               key={headCell.id}
@@ -166,22 +247,14 @@ const StyledTableCell = withStyles((theme) => ({
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
         <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle"
-          options={{
-            search: true
-          }}
-          >
-            <EnhancedTableHead
-            />
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            <EnhancedTableHead />
             <TableBody>
-              {stableSort(
-                rows).map((row) => {
+              {stableSort(rows).map((row) => {
                 return (
                   <StyledTableRow>
                     <StyledTableCell padding="radio">
-                      <Radio
-                        control={<Radio />}
-                      />
+                      <Radio control={<Radio />} />
                     </StyledTableCell>
                     <StyledTableCell
                       scope="row"
@@ -191,7 +264,7 @@ const StyledTableCell = withStyles((theme) => ({
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
-                        width: "450px"
+                        width: "450px",
                       }}
                     >
                       {row.nodeName}
@@ -203,8 +276,7 @@ const StyledTableCell = withStyles((theme) => ({
                         fontFamily: "Inter",
                         fontWeight: "400",
                         whiteSpace: "nowrap",
-                        width: "450px"
-
+                        width: "450px",
                       }}
                     >
                       {row.type}

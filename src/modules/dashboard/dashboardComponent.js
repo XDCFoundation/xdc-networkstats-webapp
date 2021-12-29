@@ -84,7 +84,6 @@ export default function Dashboard(props) {
   const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
     const { status, type, action, index } = data;
-    console.log("state", data);
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (action === "close") {
       setJoyrideRun(false);
@@ -139,7 +138,6 @@ export default function Dashboard(props) {
       });
     }
     if (action === "update") {
-      console.log("now");
     }
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
@@ -193,8 +191,6 @@ export default function Dashboard(props) {
     showSetText(setText + 1);
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
-    console.log("setText", setText);
-    console.log("show", show);
   };
 
   const [setText, showSetText] = useState(0);
@@ -204,7 +200,6 @@ export default function Dashboard(props) {
   const backButtonTour = () => {
     setShow(show - 1);
     showSetText(setText - 1);
-    console.log("showBackCount", showBackCount);
   };
   const [activeButton, setActiveButton] = React.useState("General");
   const handleViewClick = (e) => {
@@ -763,6 +758,7 @@ const Span = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
+  margin-top: 4px;
 `;
 const DisplayFlex = styled.div`
   display: flex;
@@ -1035,6 +1031,10 @@ const CountriesData = styled.div`
 `;
 const Image = styled.img`
   width: 20px;
+  padding-bottom: 25px;
+  @media (min-width: 767px) and (max-width: 1024px) {
+    width: 25px;
+  }
 `;
 const BlockTime = styled.div`
   font-size: 1.5rem;
