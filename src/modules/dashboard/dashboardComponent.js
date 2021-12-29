@@ -17,6 +17,7 @@ import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
 import { makeStyles } from "@material-ui/styles";
+import MappleToolTip from "reactjs-mappletooltip";
 
 const Footer = styled.div`
   background-color: white;
@@ -69,11 +70,6 @@ const use = makeStyles(() => ({
 export default function Dashboard(props) {
   const { content } = props;
   const classes = use();
-
-  const [SwitchSide, setSide] = React.useState(false);
-  const changeSide = (value) => {
-    setSide(value);
-  };
 
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
@@ -144,7 +140,6 @@ export default function Dashboard(props) {
     }
   };
   const [showSideDrop, setShowSideDrop] = useState(false);
-
   const [show, setShow] = useState(1);
   const [mobileTab, setMobileTab] = useState(0);
   const [gasUsd, setGasUsd] = useState(0);
@@ -173,7 +168,6 @@ export default function Dashboard(props) {
   }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
-
   // useEffect(()=>{
   //   // if(content.stats.bestBlock!==0){
   //   setInterval(()=>{
@@ -184,7 +178,6 @@ export default function Dashboard(props) {
   // useEffect(()=>{
   //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: 0 });
   // },[content.stats.bestBlock])
-
 
   const buttonTour = () => {
     setShow(show + 1);
@@ -201,10 +194,7 @@ export default function Dashboard(props) {
     setShow(show - 1);
     showSetText(setText - 1);
   };
-  const [activeButton, setActiveButton] = React.useState("General");
-  const handleViewClick = (e) => {
-    setActiveButton(e.target.id);
-  };
+
   return (
     <Div>
       <Joyride
@@ -218,25 +208,28 @@ export default function Dashboard(props) {
         disableScrolling={true}
         floaterProps={{ disableAnimation: true }}
       />
-
-      {showTabJoyRide && (
-        <CustomerJoyRide>
-          <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
-          <JoyrideTextContainer>
-            {TOUR_STEPS[setText].content}
-          </JoyrideTextContainer>
-          <JoyrideNextButton onClick={() => buttonTour()}>
-            Next
-          </JoyrideNextButton>
-          {showBackButton && showBackCount >= 1 ? (
-            <JoyrideBackButton onClick={() => backButtonTour()}>
-              Back
-            </JoyrideBackButton>
-          ) : (
-            ""
-          )}
-        </CustomerJoyRide>
-      )}
+      <MappleToolTip float={true} direction={"bottom"} mappleType={"warning"}>
+        {showTabJoyRide && (
+          <CustomerJoyRide>
+            <CrossButton onClick={() => setShowTabJoyRide(false)}>
+              X
+            </CrossButton>
+            <JoyrideTextContainer>
+              {TOUR_STEPS[setText].content}
+            </JoyrideTextContainer>
+            <JoyrideNextButton onClick={() => buttonTour()}>
+              Next
+            </JoyrideNextButton>
+            {showBackButton && showBackCount >= 1 ? (
+              <JoyrideBackButton onClick={() => backButtonTour()}>
+                Back
+              </JoyrideBackButton>
+            ) : (
+              ""
+            )}
+          </CustomerJoyRide>
+        )}
+      </MappleToolTip>
       <Header
         setJoyrideRun={setJoyrideRun}
         setShowTabJoyRide={setShowTabJoyRide}
@@ -255,9 +248,7 @@ export default function Dashboard(props) {
       ) : null}
 
       {Expand === 2 ? (
-        <Country
-          expand={setCountry}
-        />
+        <Country expand={setCountry} />
       ) : (
         <>
           <MainContainer>
@@ -327,7 +318,7 @@ export default function Dashboard(props) {
                       {content.stats.nodes}/{content.stats.totalNodes}
                     </DataCount>
                     <NodeHistory>Node History (7 Days)</NodeHistory>
-                    <NodeGraph/>
+                    <NodeGraph />
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
@@ -340,7 +331,7 @@ export default function Dashboard(props) {
                         onClick={() => changeExpand(2)}
                       />
                     </SpaceBetween>
-                    <Map/>
+                    <Map />
                   </CountryData>
                 </ContentSecurity>
 
@@ -355,7 +346,7 @@ export default function Dashboard(props) {
                         thousandSeparator={true}
                       />
                     </DataCount>
-                    <NodeHistory>Avg Block Time</NodeHistory>
+                    <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
                     <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
                   </ContentData>
 
@@ -367,7 +358,7 @@ export default function Dashboard(props) {
                       </div>
                     </SpaceBetween>
                     <Speedbar>
-                    <LastBlockBar/>
+                      <LastBlockBar />
                     </Speedbar>
                     <DisplayFlex>
                       <FlexStyled>
@@ -397,14 +388,34 @@ export default function Dashboard(props) {
                         <Countries>UP Time</Countries>
                         <CountriesData>{content.stats.upTime}%</CountriesData>
                       </div>
-                      <ButtonDiv>
-                        <Button onClick={() => fetchTime(30)}>30D</Button>
-                        <Button onClick={() => fetchTime(7)}>7D</Button>
-                        <Button onClick={() => fetchTime(1)}>24H</Button>
-                      </ButtonDiv>
+
+                      <SelectionDiv>
+                        <SelectionDivStyle onClick={() => fetchTime(30)}>
+                          30D
+                        </SelectionDivStyle>
+                        <SelectionDivStyle
+                          onClick={() => fetchTime(7)}
+                          style={{ borderRadius: "0px" }}
+                        >
+                          7D
+                        </SelectionDivStyle>
+                        <SelectionDivStyle
+                          onClick={() => fetchTime(1)}
+                          style={{
+                            borderRight: "none",
+                            borderRadius: "0px 4px 4px 0px",
+                          }}
+                        >
+                          24H
+                        </SelectionDivStyle>
+                      </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {content.stats.efficiency.length!==0 ? <UpTimeBar data={content.stats.efficiency}></UpTimeBar> : <div></div> }
+                      {content.stats.efficiency.length !== 0 ? (
+                        <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      ) : (
+                        <div></div>
+                      )}
                     </Speedbar>
                   </CountryData>
                 </ContentEfficiency>
@@ -502,11 +513,26 @@ export default function Dashboard(props) {
                           <Countries>UP Time</Countries>
                           <CountriesData>{content.stats.upTime}%</CountriesData>
                         </div>
-                        <ButtonDiv>
-                          <Button onClick={() => fetchTime(30)}>30D</Button>
-                          <Button onClick={() => fetchTime(7)}>7D</Button>
-                          <Button onClick={() => fetchTime(1)}>24H</Button>
-                        </ButtonDiv>
+                        <SelectionDiv>
+                          <SelectionDivStyle onClick={() => fetchTime(30)}>
+                            30D
+                          </SelectionDivStyle>
+                          <SelectionDivStyle
+                            onClick={() => fetchTime(7)}
+                            style={{ borderRadius: "0px" }}
+                          >
+                            7D
+                          </SelectionDivStyle>
+                          <SelectionDivStyle
+                            onClick={() => fetchTime(1)}
+                            style={{
+                              borderRight: "none",
+                              borderRadius: "0px 4px 4px 0px",
+                            }}
+                          >
+                            24H
+                          </SelectionDivStyle>
+                        </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
                         <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
@@ -644,11 +670,26 @@ export default function Dashboard(props) {
                         {content.stats.avgRate + " "}TPS
                       </MobileAverageBlockData>
                     </div>
-                    <ButtonDiv>
-                      <Button onClick={() => fetchTime(30)}>30D</Button>
-                      <Button onClick={() => fetchTime(7)}>7D</Button>
-                      <Button onClick={() => fetchTime(1)}>24H</Button>
-                    </ButtonDiv>
+                    <SelectionDiv>
+                      <SelectionDivStyle onClick={() => fetchTime(30)}>
+                        30D
+                      </SelectionDivStyle>
+                      <SelectionDivStyle
+                        onClick={() => fetchTime(7)}
+                        style={{ borderRadius: "0px" }}
+                      >
+                        7D
+                      </SelectionDivStyle>
+                      <SelectionDivStyle
+                        onClick={() => fetchTime(1)}
+                        style={{
+                          borderRight: "none",
+                          borderRadius: "0px 4px 4px 0px",
+                        }}
+                      >
+                        24H
+                      </SelectionDivStyle>
+                    </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
                     <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
@@ -660,7 +701,7 @@ export default function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            <Table/>
+            <Table />
           </TableDiv>
           <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
         </>
@@ -1012,6 +1053,13 @@ const NodeHistory = styled.div`
   margin-top: 15px;
   white-space: nowrap;
 `;
+const DesktopAvgBlockTime = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 68px;
+  white-space: nowrap;
+`;
 const CountryData = styled.div`
   width: 50%;
 `;
@@ -1042,9 +1090,10 @@ const BlockTime = styled.div`
   color: #ffffff;
 `;
 const Speedbar = styled.div`
-  margin-top: 10px;
+  margin-top: 40px;
   width: 100%;
   max-width: 500px;
+  margin-left: -4px;
 `;
 const TableDiv = styled.div`
   background: #f8f8f8;
@@ -1090,7 +1139,6 @@ const BestBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileSpeedBlock = styled.div`
   background-color: #102c78;
@@ -1110,7 +1158,6 @@ const LastBLockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileAverageBlock = styled.div`
   color: #667fc1;
@@ -1123,7 +1170,6 @@ const MobileAverageBlockData = styled.div`
   font-weight: 600;
   font-family: Inter;
   color: #ffffff;
-  /* margin-top: 8px; */
 `;
 const MobileGraphDiv = styled.div`
   width: 100%;
@@ -1165,13 +1211,39 @@ const FullScreen = styled.div`
 `;
 
 const MapDiv = styled.div`
-  @media (min-width: 100px) and (max-width: 1024px) {
+  /* @media (min-width: 100px) and (max-width: 1024px) {
     padding-left: 105px;
-  }
+  } */
+  margin-left: -38px;
 `;
 const EthDiv = styled.div`
   font-size: 14px;
   font-family: "Inter";
   color: #3af219;
   margin-bottom: 45px;
+`;
+const SelectionDiv = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 108px;
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  height: 30px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+const SelectionDivStyle = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #3c70ff;
+  cursor: pointer;
+  :hover {
+    background-color: #3c70ff;
+  }
 `;

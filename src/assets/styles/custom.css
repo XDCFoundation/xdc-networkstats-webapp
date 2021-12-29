@@ -268,3 +268,7 @@ select {
   height: 10px !important;
   }
 
+
+#react-joyride-step-0>div>div>div{
+  top:-20px !important;
+}
