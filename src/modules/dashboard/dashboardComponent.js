@@ -376,7 +376,7 @@ export default function Dashboard(props) {
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
                     <EthDiv>
-                      <img src="/images/Down arrow.svg" alt=" " />
+                      <img src="/images/Down.svg" alt=" " />
                       {" " + Eth} than Ethereum
                     </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
@@ -431,7 +431,7 @@ export default function Dashboard(props) {
                         {content.stats.nodes}/{content.stats.totalNodes}
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
-                      <NodeGraph data={content} />
+                      <NodeGraph/>
                     </ContentData>
                     <CountryData>
                       <SpaceBetween>
@@ -447,7 +447,7 @@ export default function Dashboard(props) {
                         />
                       </SpaceBetween>
                       <MapDiv>
-                        <Map location={content.stats.markers} />
+                        <Map/>
                       </MapDiv>
                     </CountryData>
                   </ContentSecurity>
@@ -480,7 +480,7 @@ export default function Dashboard(props) {
                         </div>
                       </SpaceBetween>
                       <Speedbar>
-                        <LastBlockBar content={content} />
+                        <LastBlockBar/>
                       </Speedbar>
                       <DisplayFlex>
                         <FlexStyled>
@@ -501,7 +501,7 @@ export default function Dashboard(props) {
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{gasUsd}</DataCount>
                       <EthDiv>
-                        <img src="/images/DownArrow.svg" alt=" " />
+                        <img src="/images/Down.svg" alt=" " />
                         {" " + Eth} than Ethereum
                       </EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
@@ -580,7 +580,7 @@ export default function Dashboard(props) {
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <MobileGraphDiv>
-                        <NodeGraph data={content} />
+                        <NodeGraph/>
                       </MobileGraphDiv>
                     </ContentData>
                   ) : (
@@ -597,7 +597,7 @@ export default function Dashboard(props) {
                         </div>
                       </SpaceBetween>
                       <MapWidth>
-                        <Map location={content.stats.markers} />
+                        <Map/>
                       </MapWidth>
                     </CountryData>
                   ) : (
@@ -652,7 +652,7 @@ export default function Dashboard(props) {
                       <BestBlock>Gas Price (USD)</BestBlock>
                       <BestBlockData>{gasUsd}</BestBlockData>
                       <EthDiv>
-                        <img src="/images/DownArrow.svg" alt=" " />
+                        <img src="/images/Down.svg" alt=" " />
                         {" " + Eth} than Ethereum
                       </EthDiv>
                     </div>
@@ -692,7 +692,7 @@ export default function Dashboard(props) {
                     </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
-                    <UpTimeBar data={content.stats.efficiency}> </UpTimeBar>
+                    <UpTimeBar> </UpTimeBar>
                   </MobileGraphDiv>
                 </MobileSpeedBlock>
               ) : (
