@@ -80,7 +80,6 @@ export default function Dashboard(props) {
   const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
     const { status, type, action, index } = data;
-    console.log("state", data);
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (action === "close") {
       setJoyrideRun(false);
@@ -135,7 +134,6 @@ export default function Dashboard(props) {
       });
     }
     if (action === "update") {
-      console.log("now");
     }
     if (finishedStatuses.includes(status)) {
       setJoyrideRun(false);
@@ -175,8 +173,6 @@ export default function Dashboard(props) {
     showSetText(setText + 1);
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
-    console.log("setText", setText);
-    console.log("show", show);
   };
 
   const [setText, showSetText] = useState(0);
@@ -186,7 +182,6 @@ export default function Dashboard(props) {
   const backButtonTour = () => {
     setShow(show - 1);
     showSetText(setText - 1);
-    console.log("showBackCount", showBackCount);
   };
 
   return (

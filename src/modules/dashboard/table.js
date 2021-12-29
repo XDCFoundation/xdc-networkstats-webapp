@@ -24,6 +24,8 @@ const Label = styled.div`
   font-size: 12px;
   line-height: 15px;
   font-family: "Inter";
+  color: #393939;
+  font-weight: 600;
 `;
 const DisplayFlex = styled.div`
   display: flex;
