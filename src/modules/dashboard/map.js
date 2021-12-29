@@ -7,6 +7,8 @@ import {
   Marker,
 } from "react-simple-maps";
 import styled from "styled-components";
+import {dispatchAction} from "../../utility";
+import {connect} from "react-redux";
 
 const Div = styled.div`
   fill: #103aaa;
@@ -28,11 +30,11 @@ const Div = styled.div`
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-export default function Map(props) {
+function Map(props) {
   const [node, setNode] = useState([]);
   useEffect(() => {
-    if (!_.isUndefined(props.location) && !_.isEmpty(props.location)) {
-      setNode(props.location);
+    if (!_.isUndefined(props.stats.markers) && !_.isEmpty(props.stats.markers)) {
+      setNode(props.stats.markers);
     }
   });
   return (
@@ -54,3 +56,9 @@ export default function Map(props) {
     </Div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {stats: state.stats}
+};
+
+export default connect(mapStateToProps, {dispatchAction})(Map);

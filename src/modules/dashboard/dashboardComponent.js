@@ -157,17 +157,34 @@ export default function Dashboard(props) {
     );
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
-    const [err, resp] = await utility.parseResponse(
-      NodesService.getEth()
-    );
-    let EthVal = `${Math.round(((resp.normal.usd-content.stats.gasPrice)/resp.normal.usd*100)*100000)/100000}%`;
-    setEth(EthVal)
+    const [err, resp] = await utility.parseResponse(NodesService.getEth());
+    let EthVal = `${
+      Math.round(
+        ((resp.normal.usd - content.stats.gasPrice) / resp.normal.usd) *
+          100 *
+          100000
+      ) / 100000
+    }%`;
+    setEth(EthVal);
   }
- useEffect(() => {
-   fetchTime();
-   setGasUsd((content.stats.gasPrice).toFixed(6))
- }, [content.stats.gasPrice])
+  useEffect(() => {
+    fetchTime();
+    setGasUsd(content.stats.gasPrice.toFixed(6));
+  }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
+
+
+  // useEffect(()=>{
+  //   // if(content.stats.bestBlock!==0){
+  //   setInterval(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: content.stats.lastBlock+1 });
+  //   },1000)
+  // })
+
+  // useEffect(()=>{
+  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: 0 });
+  // },[content.stats.bestBlock])
+
 
   const buttonTour = () => {
     setShow(show + 1);
@@ -199,7 +216,7 @@ export default function Dashboard(props) {
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
-        floaterProps={{disableAnimation: true}}
+        floaterProps={{ disableAnimation: true }}
       />
 
       {showTabJoyRide && (
@@ -240,8 +257,6 @@ export default function Dashboard(props) {
       {Expand === 2 ? (
         <Country
           expand={setCountry}
-          location={content.stats.markers}
-          content={content}
         />
       ) : (
         <>
@@ -312,7 +327,7 @@ export default function Dashboard(props) {
                       {content.stats.nodes}/{content.stats.totalNodes}
                     </DataCount>
                     <NodeHistory>Node History (7 Days)</NodeHistory>
-                    <NodeGraph data={content} />
+                    <NodeGraph/>
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
@@ -325,7 +340,7 @@ export default function Dashboard(props) {
                         onClick={() => changeExpand(2)}
                       />
                     </SpaceBetween>
-                    <Map location={content.stats.markers} />
+                    <Map/>
                   </CountryData>
                 </ContentSecurity>
 
@@ -352,7 +367,7 @@ export default function Dashboard(props) {
                       </div>
                     </SpaceBetween>
                     <Speedbar>
-                      <LastBlockBar content={content} />
+                    <LastBlockBar/>
                     </Speedbar>
                     <DisplayFlex>
                       <FlexStyled>
@@ -364,11 +379,15 @@ export default function Dashboard(props) {
                     </DisplayFlex>
                   </CountryData>
                 </ContentSpeed>
+
                 <ContentEfficiency className="efficiency">
                   <ContentData>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
-                    <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                    <EthDiv>
+                      <img src="/images/Down arrow.svg" alt=" " />
+                      {" " + Eth} than Ethereum
+                    </EthDiv>
                     <NodeHistory>Avg Transaction Rate</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
@@ -385,7 +404,7 @@ export default function Dashboard(props) {
                       </ButtonDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      {content.stats.efficiency.length!==0 ? <UpTimeBar data={content.stats.efficiency}></UpTimeBar> : <div></div> }
                     </Speedbar>
                   </CountryData>
                 </ContentEfficiency>
@@ -470,7 +489,10 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{gasUsd}</DataCount>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                       <NodeHistory>Avg Transaction Rate</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
@@ -603,7 +625,10 @@ export default function Dashboard(props) {
                     <div>
                       <BestBlock>Gas Price (USD)</BestBlock>
                       <BestBlockData>{gasUsd}</BestBlockData>
-                      <EthDiv><img src="/images/DownArrow.svg" alt=" "/>{" " + Eth} than Ethereum</EthDiv>
+                      <EthDiv>
+                        <img src="/images/DownArrow.svg" alt=" " />
+                        {" " + Eth} than Ethereum
+                      </EthDiv>
                     </div>
                     <div>
                       <LastBlock>UP Time</LastBlock>
@@ -635,7 +660,7 @@ export default function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            <Table content={content} />
+            <Table/>
           </TableDiv>
           <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
         </>
@@ -1145,8 +1170,8 @@ const MapDiv = styled.div`
   }
 `;
 const EthDiv = styled.div`
-font-size: 14px;
-font-family: 'Inter';
-color: #3AF219;
-margin-bottom: 45px;
+  font-size: 14px;
+  font-family: "Inter";
+  color: #3af219;
+  margin-bottom: 45px;
 `;

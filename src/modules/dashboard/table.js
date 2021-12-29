@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,6 +10,8 @@ import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
+import {dispatchAction} from "../../utility";
+import {connect} from "react-redux";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const TableBox = styled.div`
@@ -19,6 +21,27 @@ const TableBox = styled.div`
   overflow-x: auto;
   white-space: nowrap;
 `;
+
+const SearchBox = styled.input`
+  background-image: url("/images/DownArrow.svg");
+  background-repeat: no-repeat;
+  background-position: 0.5rem;
+  padding-left: 2rem;
+  background-size: 0.875rem;
+  position: relative;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 17.75rem;
+  white-space: nowrap;
+  height: 2.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+  outline: none;
+  color: #BEBEBE;
+`;
+
 
 const Label = styled.div`
   font-size: 12px;
@@ -69,11 +92,23 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-export default function EnhancedTable(props) {
+
+ function EnhancedTable(props) {
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
   }
+
+  const [rows, setRows] = useState([]);
+  useEffect(()=>{
+   setRows(props.stats.nodesArr)
+  },[props.stats.nodesArr]);
+  const requestSearch = (searchedVal) => {
+    const filteredRows = props.stats.nodesArr.filter((row) => {
+      return row.nodeName.toLowerCase().includes(searchedVal);
+    });
+    setRows(filteredRows);
+  };
 
   const headCells = [
     {
@@ -204,13 +239,18 @@ export default function EnhancedTable(props) {
   }
 
   return (
+    <>
+    <SearchBox placeholder="Search"  
+    // value={searched}
+    onChange={(searchVal) => requestSearch(searchVal)}
+    />
     <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
       <Paper sx={{ width: "auto" }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead />
             <TableBody>
-              {stableSort(props.content.stats.nodesArr).map((row) => {
+              {stableSort(rows).map((row) => {
                 return (
                   <StyledTableRow>
                     <StyledTableCell padding="radio">
@@ -314,5 +354,12 @@ export default function EnhancedTable(props) {
         </TableContainer>
       </Paper>
     </TableBox>
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {stats: state.stats}
+};
+
+export default connect(mapStateToProps, {dispatchAction})(EnhancedTable);
