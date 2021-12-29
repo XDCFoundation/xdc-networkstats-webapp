@@ -13,150 +13,193 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 import _ from "lodash";
 
-
 const TableBox = styled.div`
   width: 100%;
   height: 100%;
   max-width: 550px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  max-width: 1024px
+  }
+`;
+const Flex = styled.div`
+display: flex;
+align-items: center;
+text-align: center;
 `;
 
+const Up = styled.div`
+color: #3AF219;
+`;
+
+const Down = styled.div`
+color: #E62806;
+`;
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
+    tableBottomBorder: {
+        borderWidth: 0,
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        borderStyle: 'solid',
+    },
+    padding: "0px 40px",
   },
 }))(TableRow);
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 16px",
     height: "30px",
+    padding: "0px 40px",
   },
 }))(TableCell);
 
 export default function EnhancedTable(props) {
-
-let rows = [];
-
-  if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
-  for( let i=0; i<props.data.length;i++){
-    rows.push({
-      id: 1+i,
-      countries: props.data[i].country,
-      last24h: props.data[i].count
-    })
-  }
-}
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
+  let rows = [];
+    if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
+      for (let i = 0; i < props.data.length; i++) {
+        if(parseInt(props.data[i].last24diff)>0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last24diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/UpArrow.svg" />&nbsp;<Up>{props.data[i].last7diff+"%"}</Up></Flex>,
+        });
+      }
+      else if(parseInt(props.data[i].last24diff)<0){
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last24diff+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/DownArrow.svg" />&nbsp;<Down>{props.data[i].last7diff+"%"}</Down></Flex>
+        });
+      }
+      else{
+        rows.push({
+          id: 1 + i,
+          countries: props.data[i].country,
+          last24h: props.data[i].count,
+          last24: props.data[i].last24diff+"%",
+          last7: props.data[i].last7diff+"%",
+        });
+      }
+  
+      }}
+  
+  
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
     }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
 
-const headCells = [
-  {
-    id: "id",
-    disablePadding: true,
-    label: "#",
-  },
-  {
-    id: "countries",
-    disablePadding: true,
-    label: "Countries",
-  },
-  {
-    id: "last24h",
-    numeric: true,
-    disablePadding: true,
-    label: "Last 24 Hrs",
-  },
-  {
-    id: "last24",
-    numeric: true,
-    disablePadding: true,
-    label: "Last 24 Hrs",
-  },
-  {
-    id: "last7",
-    numeric: true,
-    disablePadding: true,
-    label: "Last 7 Days",
-  },
-];
+  function getComparator(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  // This method is created for cross-browser compatibility, if you don't
+  // need to support IE11, you can use Array.prototype.sort() directly
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
 
-  return (
-    <TableHead>
-      <StyledTableRow>
-        {headCells.map((headCell) => (
-          <StyledTableCell
-            key={headCell.id}
-            sortDirection={orderBy === headCell.id ? order : false}
-            style={{
-              color: "white",
-              columnWidth: "60px",
-              whiteSpace: "nowrap",
-              alignContent: "start",
-              borderColor: "#4E6AB5"
-            }}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+  const headCells = [
+    {
+      id: "id",
+      disablePadding: true,
+      label: "#",
+    },
+    {
+      id: "countries",
+      disablePadding: true,
+      label: "Countries",
+    },
+    {
+      id: "last24h",
+      numeric: true,
+      disablePadding: true,
+      label: "Last 24 Hrs",
+    },
+    {
+      id: "last24",
+      numeric: true,
+      disablePadding: true,
+      label: "Last 24 Hrs",
+    },
+    {
+      id: "last7",
+      numeric: true,
+      disablePadding: true,
+      label: "Last 7 Days",
+    },
+  ];
+
+  function EnhancedTableHead(props) {
+    const { order, orderBy, onRequestSort } = props;
+    const createSortHandler = (property) => (event) => {
+      onRequestSort(event, property);
+    };
+
+    return (
+      <TableHead>
+        <StyledTableRow>
+          {headCells.map((headCell) => (
+            <StyledTableCell
+              key={headCell.id}
+              sortDirection={orderBy === headCell.id ? order : false}
+              style={{
+                color: "white",
+                columnWidth: "90px",
+                whiteSpace: "nowrap",
+                alignContent: "start",
+                borderColor: "#4E6AB5",
+              }}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </StyledTableCell>
-        ))}
-      </StyledTableRow>
-    </TableHead>
-  );
-}
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </StyledTableCell>
+          ))}
+        </StyledTableRow>
+      </TableHead>
+    );
+  }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
+  EnhancedTableHead.propTypes = {
+    numSelected: PropTypes.number.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    onSelectAllClick: PropTypes.func.isRequired,
+    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired,
+  };
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(" ");
@@ -228,19 +271,47 @@ EnhancedTableHead.propTypes = {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-
                   >
-                    <StyledTableCell style={{ color: "white", width: "2px", borderColor: "#4E6AB5"}}>{row.id}</StyledTableCell>
-                    <StyledTableCell style={{ color: "white", width: "20px", borderColor: "#4E6AB5" }}>
+                    <StyledTableCell
+                      style={{
+                        color: "white",
+                        width: "20px",
+                        borderColor: "#4E6AB5",
+                      }}
+                    >
+                      {row.id}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{
+                        color: "white",
+                        width: "20px",
+                        borderColor: "#4E6AB5",
+                      }}
+                    >
                       {row.countries}
                     </StyledTableCell>
-                    <StyledTableCell style={{ color: "white", columnWidth: "5px", borderColor: "#4E6AB5" }}>
+                    <StyledTableCell
+                      style={{
+                        color: "white",
+                        borderColor: "#4E6AB5",
+                      }}
+                    >
                       {row.last24h}
                     </StyledTableCell>
-                    <StyledTableCell style={{ color: "#3AF219",  columnWidth: "5px", borderColor: "#4E6AB5" }}>
+                    <StyledTableCell
+                      style={{
+                        borderColor: "#4E6AB5",
+                        color: "white",
+                      }}
+                    >
                       {row.last24}
                     </StyledTableCell>
-                    <StyledTableCell style={{ color: "#3AF219",  columnWidth: "5px", borderColor: "#4E6AB5" }}>
+                    <StyledTableCell
+                      style={{
+                        borderColor: "#4E6AB5",
+                        color: "white",
+                      }}
+                    >
                       {row.last7}
                     </StyledTableCell>
                   </StyledTableRow>

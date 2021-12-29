@@ -3,6 +3,7 @@
 
 body {
   background-color: #ffffff;
+  height:100%;
 }
 
 button,
@@ -230,16 +231,40 @@ input:focus {
 }
 
 
-.__floater__open {
-  top: -29px !important;
+.__floater__arrow {
+  top: 26px ;
 }
 .react-joyride__tooltip {
-  width: 550px !important;
+  width: 530px !important;
+  text-align: left !important;
+  font-size:1rem !important;
+  font-weight: 600 !important;
+  font-family: Inter !important;
+  color: #1F1F1F !important;
+  padding: 25px 28px 23px 20px !important;
 }
 
+.react-joyride__spotlight {
+  height: 341px !important ;
+  top: 61px !important ;
+}
 *{
   -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
   display: none;
 }
+
+
+.MuiTableCell-root {
+  height: 10px !important;
+  padding: 0px !important; 
+  /* border-bottom: 0.5px solid #E8E8E8 !important; */
+  }
+
+  
+  
+  .MuiButtonBase-root{
+  height: 10px !important;
+  }
+

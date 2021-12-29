@@ -81,11 +81,7 @@ export default function Countries(props) {
 const Div = styled.div`
   background-color: #102e84;
   width: 100%;
-  /* height: 100%;
-   */
-  height: 150vh;
-  position: absolute;
-  z-index: 1;
+  height: 120%;
   padding: 15px;
 `;
 
@@ -100,10 +96,10 @@ const LeftDiv = styled.div`
   color: #667fc1;
   font-size: 16px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  padding-left: 47px;
+  padding-left: 10px;
   }
   @media (min-width: 300px) and (max-width: 767px) {
-  padding-left: 47px;
+  padding-left: 10px;
   }
 `;
 
@@ -129,6 +125,8 @@ padding-left: 40px;
   width: 100%;
   padding: 40px;
 }
+@media (min-width: 300px) and (max-width: 767px) {
+  padding: 10px;
 `;
 
 const MapDiv = styled.div`
