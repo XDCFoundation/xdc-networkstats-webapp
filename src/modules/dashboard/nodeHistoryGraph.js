@@ -95,6 +95,7 @@ function NodeGraph() {
         data={data}
         theme={theme}
         key={"Stats"}
+        isInteractive={true}
         margin={{
           top: 30,
           right: 30,
