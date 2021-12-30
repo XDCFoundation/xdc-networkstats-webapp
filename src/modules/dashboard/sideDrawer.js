@@ -95,12 +95,7 @@ export default function SideDrawer(props) {
           />
         </Nav>
         <ColumnContainer>
-          <RowDiv>
-            <Img src="/images/NetworkStat.svg" alt="Network" />
-            &nbsp;&nbsp;
-            <Content> Network Stats </Content>
-          </RowDiv>
-
+          
           <RowDiv>
             <Img src="/images/MasterNodes.svg" alt="Master" /> &nbsp;&nbsp;
             <Content
@@ -116,7 +111,7 @@ export default function SideDrawer(props) {
             <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
             <Content
               onClick={() =>
-                (window.location.href = "https://xinfin.network/#explorer")
+                (window.location.href = "https://betaexplorer.xdcroadmap.net/")
               }
             >
               Block Explorer
@@ -131,18 +126,6 @@ export default function SideDrawer(props) {
               }
             >
               Web Wallet
-            </Content>
-          </RowDiv>
-
-          <RowDiv>
-            <Img src="/images/Wallet.svg" alt="Pay" /> &nbsp;&nbsp;
-            <Content
-              onClick={() =>
-                (window.location.href =
-                  "https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo")
-              }
-            >
-              XDC Pay
             </Content>
           </RowDiv>
 
@@ -173,7 +156,7 @@ export default function SideDrawer(props) {
             <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp;
             <Content
               onClick={() =>
-                (window.location.href = "https://howto.xinfin.org/")
+                (window.location.href = "http://docs.xdcfoundation.org/")
               }
             >
               XDC Docs

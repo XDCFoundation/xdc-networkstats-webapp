@@ -41,7 +41,7 @@ let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
 
-const socket = io("http://52.15.80.60:3000", {
+const socket = io("http://3.88.252.78:3000", {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -475,7 +475,7 @@ function updateBestBlock(data) {
       bestStats = _.maxBy(data, function (node) {
         return parseInt(node.stats.block.number);
       }).stats;
-
+      
       lastBlock = bestStats.block.arrived;
       let GasInit = bestStats.gasPrice;
       let time = timeFilter(lastBlock);
@@ -495,7 +495,7 @@ function updateBestBlock(data) {
           type: eventConstants.UPDATE_GAS_PRICE,
           data: gasPrice,
         });
-        store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: time });
+        
         store.dispatch({
           type: eventConstants.UPDATE_BEST_BLOCK,
           data: bestBlock,
@@ -508,7 +508,7 @@ function updateBestBlock(data) {
 
 function timeFilter(data) {
   var timestamp = data;
-  if (timestamp === 0) return "∞";
+  if (timestamp === 0) return '∞';
   var time = new Date().getTime();
   var diff = Math.floor((time - timestamp) / 1000);
   if (diff < 60) return Math.round(diff) + "s ago";
@@ -518,6 +518,14 @@ function timeFilter(data) {
 function findIndex(search) {
   return _.findIndex(nodesArr, search);
 }
+
+
+setInterval(()=>{
+  let val = timeFilter(lastBlock);
+  if(val!=='∞'){
+  store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: val});
+  }
+},1000)
 
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());

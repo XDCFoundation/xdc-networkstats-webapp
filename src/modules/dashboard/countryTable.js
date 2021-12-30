@@ -14,6 +14,7 @@ import { withStyles } from "@material-ui/styles";
 import _ from "lodash";
 import {dispatchAction} from "../../utility";
 import {connect} from "react-redux";
+import TablePagination from '@mui/material/TablePagination';
 
 const TableBox = styled.div`
   width: 100%;
@@ -300,7 +301,9 @@ function EnhancedTable(props) {
   return (
     <TableBox sx={{ width: "auto" }}>
       <TableContainer>
-        <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle">
+        <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle"
+         rowsPerPage={10}
+        >
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -312,7 +315,7 @@ function EnhancedTable(props) {
           <TableBody>
             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-            {stableSort(rows, getComparator(order, orderBy)).map(
+            {stableSort(rows.slice(0,10), getComparator(order, orderBy)).map(
               (row, index) => {
                 const isItemSelected = isSelected(row.id);
 
