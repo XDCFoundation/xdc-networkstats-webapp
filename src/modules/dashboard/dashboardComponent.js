@@ -379,7 +379,7 @@ export default function Dashboard(props) {
                       <img src="/images/Down.svg" alt=" " />
                       {" " + Eth} than Ethereum
                     </EthDiv>
-                    <NodeHistory>Avg Transaction Rate</NodeHistory>
+                    <NodeHistory>Avg Transaction Speed</NodeHistory>
                     <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
                   <CountryData>
@@ -504,7 +504,7 @@ export default function Dashboard(props) {
                         <img src="/images/Down.svg" alt=" " />
                         {" " + Eth} than Ethereum
                       </EthDiv>
-                      <NodeHistory>Avg Transaction Rate</NodeHistory>
+                      <NodeHistory>Avg Transaction Speed</NodeHistory>
                       <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
                     <CountryData>
@@ -664,7 +664,7 @@ export default function Dashboard(props) {
                   <SpaceBetween>
                     <div>
                       <MobileAverageBlock>
-                        Avg Transaction Rate
+                        Avg Transaction Speed
                       </MobileAverageBlock>
                       <MobileAverageBlockData>
                         {content.stats.avgRate + " "}TPS
