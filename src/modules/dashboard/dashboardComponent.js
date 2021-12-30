@@ -783,13 +783,13 @@ const JoyrideTextContainer = styled.div`
 `;
 
 const JoyrideNextButton = styled.button`
-  background-color: #007bff;
+  background-color: #2358e5;
   outline: none;
   border: none;
   width: 100%;
   max-width: 63px;
   color: white;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 4px;
   font-size: 0.8rem;
 
