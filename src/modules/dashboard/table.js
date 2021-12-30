@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,8 +10,8 @@ import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-import {dispatchAction} from "../../utility";
-import {connect} from "react-redux";
+import { dispatchAction } from "../../utility";
+import { connect } from "react-redux";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const TableBox = styled.div`
@@ -28,7 +28,7 @@ const SearchBox = styled.input`
   background-position: 0.5rem;
   padding-left: 2rem;
   background-size: 0.875rem;
-  position: relative;
+
   background-color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -39,9 +39,8 @@ const SearchBox = styled.input`
   font-size: 0.875rem;
   margin-bottom: 20px;
   outline: none;
-  color: #BEBEBE;
+  color: #bebebe;
 `;
-
 
 const Label = styled.div`
   font-size: 12px;
@@ -92,17 +91,16 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-
- function EnhancedTable(props) {
+function EnhancedTable(props) {
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
   }
 
   const [rows, setRows] = useState([]);
-  useEffect(()=>{
-   setRows(props.stats.nodesArr)
-  },[props.stats.nodesArr]);
+  useEffect(() => {
+    setRows(props.stats.nodesArr);
+  }, [props.stats.nodesArr]);
   const requestSearch = (searchedVal) => {
     const filteredRows = props.stats.nodesArr.filter((row) => {
       return row.nodeName.toLowerCase().includes(searchedVal);
@@ -240,126 +238,127 @@ const StyledTableCell = withStyles((theme) => ({
 
   return (
     <>
-    <SearchBox placeholder="Search"  
-    // value={searched}
-    onChange={(searchVal) => requestSearch(searchVal)}
-    />
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead />
-            <TableBody>
-              {stableSort(rows).map((row) => {
-                return (
-                  <StyledTableRow>
-                    <StyledTableCell padding="radio">
-                      <Radio control={<Radio />} />
-                    </StyledTableCell>
-                    <StyledTableCell
-                      scope="row"
-                      padding="none"
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        width: "450px",
-                      }}
-                    >
-                      {row.nodeName}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        whiteSpace: "nowrap",
-                        width: "450px",
-                      }}
-                    >
-                      {row.type}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.latency}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.peers}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.pendingTxn}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.lastBlock}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {row.graph}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "50px",
-                      }}
-                    >
-                      {row.upTime}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </TableBox>
+      <SearchBox
+        placeholder="Search"
+        // value={searched}
+        onChange={(searchVal) => requestSearch(searchVal)}
+      />
+      <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+        <Paper sx={{ width: "auto" }}>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead />
+              <TableBody>
+                {stableSort(rows).map((row) => {
+                  return (
+                    <StyledTableRow>
+                      <StyledTableCell padding="radio">
+                        <Radio control={<Radio />} />
+                      </StyledTableCell>
+                      <StyledTableCell
+                        scope="row"
+                        padding="none"
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          width: "450px",
+                        }}
+                      >
+                        {row.nodeName}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          whiteSpace: "nowrap",
+                          width: "450px",
+                        }}
+                      >
+                        {row.type}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.latency}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.peers}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.pendingTxn}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.lastBlock}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.graph}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "50px",
+                        }}
+                      >
+                        {row.upTime}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </TableBox>
     </>
   );
 }
 
 const mapStateToProps = (state) => {
-  return {stats: state.stats}
+  return { stats: state.stats };
 };
 
-export default connect(mapStateToProps, {dispatchAction})(EnhancedTable);
+export default connect(mapStateToProps, { dispatchAction })(EnhancedTable);

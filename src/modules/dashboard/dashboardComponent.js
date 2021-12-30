@@ -16,8 +16,6 @@ import store from "../../store";
 import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
-import { makeStyles } from "@material-ui/styles";
-import MappleToolTip from "reactjs-mappletooltip";
 
 const Footer = styled.div`
   background-color: white;
@@ -49,27 +47,8 @@ const TOUR_STEPS = [
   },
 ];
 
-const use = makeStyles(() => ({
-  arrow: {
-    "&:before": {
-      backgroundColor: "white",
-    },
-  },
-  tooltip: {
-    color: "#2a2a2a",
-    backgroundColor: "white",
-    padding: "9px",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.42",
-    letterSpacing: "0.46px",
-  },
-}));
 export default function Dashboard(props) {
   const { content } = props;
-  const classes = use();
 
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
@@ -145,7 +124,8 @@ export default function Dashboard(props) {
   const [gasUsd, setGasUsd] = useState(0);
   const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
-  const [buttonToggle, setButtonToggle] = useState(1);
+  const [buttonToggle, setButtonToggle] = useState(3);
+
   async function fetchTime(value = 1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
@@ -168,27 +148,17 @@ export default function Dashboard(props) {
   }, [content.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
-  // useEffect(()=>{
-  //   // if(content.stats.bestBlock!==0){
-  //   setInterval(()=>{
-  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: content.stats.lastBlock+1 });
-  //   },1000)
-  // })
-
-  // useEffect(()=>{
-  //   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: 0 });
-  // },[content.stats.bestBlock])
-
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
+    console.log("");
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
   };
 
   const [setText, showSetText] = useState(0);
   const [showBackButton, setShowBackButton] = useState(true);
-  const [showBackCount, setShowBackCount] = useState(0);
+  const [showBackCount, setShowBackCount] = useState(1);
 
   const backButtonTour = () => {
     setShow(show - 1);
@@ -208,28 +178,57 @@ export default function Dashboard(props) {
         disableScrolling={true}
         floaterProps={{ disableAnimation: true }}
       />
-      <MappleToolTip float={true} direction={"bottom"} mappleType={"warning"}>
-        {showTabJoyRide && (
-          <CustomerJoyRide>
-            <CrossButton onClick={() => setShowTabJoyRide(false)}>
-              X
-            </CrossButton>
+
+      {showTabJoyRide && (
+        // <CustomerJoyRide>
+        //   <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
+        //   <JoyrideTextContainer>
+        //     {TOUR_STEPS[setText].content}
+        //   </JoyrideTextContainer>
+        //   <JoyrideNextButton onClick={() => buttonTour()}>
+        //     Next
+        //   </JoyrideNextButton>
+        //   {showBackButton && showBackCount >= 1 ? (
+        //     <JoyrideBackButton onClick={() => backButtonTour()}>
+        //       Back
+        //     </JoyrideBackButton>
+        //   ) : (
+        //     ""
+        //   )}
+        // </CustomerJoyRide>
+        <div class="flex">
+          <div class="tooltip">
+            <div class="flex-img">
+              <Img
+                src="/images/Close.svg"
+                onClick={() => setShowTabJoyRide(false)}
+              />
+            </div>
             <JoyrideTextContainer>
               {TOUR_STEPS[setText].content}
             </JoyrideTextContainer>
-            <JoyrideNextButton onClick={() => buttonTour()}>
-              Next
-            </JoyrideNextButton>
-            {showBackButton && showBackCount >= 1 ? (
-              <JoyrideBackButton onClick={() => backButtonTour()}>
-                Back
-              </JoyrideBackButton>
-            ) : (
-              ""
-            )}
-          </CustomerJoyRide>
-        )}
-      </MappleToolTip>
+            <div class="flex-condition">
+              {showBackButton ? (
+                <JoyrideBackButton
+                  showBackCount={setText}
+                  onClick={() => backButtonTour()}
+                >
+                  Back
+                </JoyrideBackButton>
+              ) : (
+                ""
+              )}
+              <JoyrideNextButton
+                onClick={() => buttonTour()}
+                showBackCount={setText}
+              >
+                Next
+              </JoyrideNextButton>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Header
         setJoyrideRun={setJoyrideRun}
         setShowTabJoyRide={setShowTabJoyRide}
@@ -395,10 +394,13 @@ export default function Dashboard(props) {
                             fetchTime(30);
                             setButtonToggle(1);
                           }}
+                          buttonToggle={buttonToggle}
                         >
                           30D
                         </SelectionDivStyle>
-                        <SelectionDivStyle
+
+                        <SelectionDivStyleTwo
+                          buttonToggle={buttonToggle}
                           onClick={() => {
                             fetchTime(7);
                             setButtonToggle(2);
@@ -406,8 +408,9 @@ export default function Dashboard(props) {
                           style={{ borderRadius: "0px" }}
                         >
                           7D
-                        </SelectionDivStyle>
-                        <SelectionDivStyle
+                        </SelectionDivStyleTwo>
+                        <SelectionDivStyleThree
+                          buttonToggle={buttonToggle}
                           onClick={() => {
                             fetchTime(1);
                             setButtonToggle(3);
@@ -418,7 +421,7 @@ export default function Dashboard(props) {
                           }}
                         >
                           24H
-                        </SelectionDivStyle>
+                        </SelectionDivStyleThree>
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
@@ -442,7 +445,7 @@ export default function Dashboard(props) {
                         {content.stats.nodes}/{content.stats.totalNodes}
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
-                      <NodeGraph/>
+                      <NodeGraph />
                     </ContentData>
                     <CountryData>
                       <SpaceBetween>
@@ -458,7 +461,7 @@ export default function Dashboard(props) {
                         />
                       </SpaceBetween>
                       <MapDiv>
-                        <Map/>
+                        <Map />
                       </MapDiv>
                     </CountryData>
                   </ContentSecurity>
@@ -491,7 +494,7 @@ export default function Dashboard(props) {
                         </div>
                       </SpaceBetween>
                       <Speedbar>
-                        <LastBlockBar/>
+                        <LastBlockBar />
                       </Speedbar>
                       <DisplayFlex>
                         <FlexStyled>
@@ -525,24 +528,39 @@ export default function Dashboard(props) {
                           <CountriesData>{content.stats.upTime}%</CountriesData>
                         </div>
                         <SelectionDiv>
-                          <SelectionDivStyle onClick={() => fetchTime(30)}>
+                          <SelectionDivStyle
+                            onClick={() => {
+                              fetchTime(30);
+                              setButtonToggle(1);
+                            }}
+                            buttonToggle={buttonToggle}
+                          >
                             30D
                           </SelectionDivStyle>
-                          <SelectionDivStyle
-                            onClick={() => fetchTime(7)}
+
+                          <SelectionDivStyleTwo
+                            buttonToggle={buttonToggle}
+                            onClick={() => {
+                              fetchTime(7);
+                              setButtonToggle(2);
+                            }}
                             style={{ borderRadius: "0px" }}
                           >
                             7D
-                          </SelectionDivStyle>
-                          <SelectionDivStyle
-                            onClick={() => fetchTime(1)}
+                          </SelectionDivStyleTwo>
+                          <SelectionDivStyleThree
+                            buttonToggle={buttonToggle}
+                            onClick={() => {
+                              fetchTime(1);
+                              setButtonToggle(3);
+                            }}
                             style={{
                               borderRight: "none",
                               borderRadius: "0px 4px 4px 0px",
                             }}
                           >
                             24H
-                          </SelectionDivStyle>
+                          </SelectionDivStyleThree>
                         </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
@@ -591,7 +609,7 @@ export default function Dashboard(props) {
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <MobileGraphDiv>
-                        <NodeGraph/>
+                        <NodeGraph />
                       </MobileGraphDiv>
                     </ContentData>
                   ) : (
@@ -608,7 +626,7 @@ export default function Dashboard(props) {
                         </div>
                       </SpaceBetween>
                       <MapWidth>
-                        <Map/>
+                        <Map />
                       </MapWidth>
                     </CountryData>
                   ) : (
@@ -683,28 +701,38 @@ export default function Dashboard(props) {
                     </div>
                     <SelectionDiv>
                       <SelectionDivStyle
-                        onClick={() => fetchTime(30)}
+                        onClick={() => {
+                          fetchTime(30);
+                          setButtonToggle(1);
+                        }}
                         buttonToggle={buttonToggle}
                       >
                         30D
                       </SelectionDivStyle>
-                      <SelectionDivStyle
+
+                      <SelectionDivStyleTwo
                         buttonToggle={buttonToggle}
-                        onClick={() => fetchTime(7)}
+                        onClick={() => {
+                          fetchTime(7);
+                          setButtonToggle(2);
+                        }}
                         style={{ borderRadius: "0px" }}
                       >
                         7D
-                      </SelectionDivStyle>
-                      <SelectionDivStyle
+                      </SelectionDivStyleTwo>
+                      <SelectionDivStyleThree
                         buttonToggle={buttonToggle}
-                        onClick={() => fetchTime(1)}
+                        onClick={() => {
+                          fetchTime(1);
+                          setButtonToggle(3);
+                        }}
                         style={{
                           borderRight: "none",
                           borderRadius: "0px 4px 4px 0px",
                         }}
                       >
                         24H
-                      </SelectionDivStyle>
+                      </SelectionDivStyleThree>
                     </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
@@ -746,15 +774,12 @@ const CustomerJoyRide = styled.div`
 `;
 
 const JoyrideTextContainer = styled.div`
-  top: 48%;
-  position: absolute;
   background: white;
-  width: 80%;
-  height: 200px;
-  z-index: 100;
   border-radius: 10px;
-  padding: 15px 45px 15px 15px;
   display: flex;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: Inter !important;
 `;
 
 const JoyrideNextButton = styled.button`
@@ -766,37 +791,34 @@ const JoyrideNextButton = styled.button`
   color: white;
   border-radius: 4px;
   padding: 4px;
-  z-index: 200;
-  position: absolute;
-  bottom: 30%;
-  right: 13%;
-  display: flex;
+  font-size: 0.8rem;
+
+  display: ${(props) => (props.showBackCount === 2 ? "none" : "flex")};
   justify-content: center;
   align-items: center;
 `;
 const JoyrideBackButton = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-family: Inter;
   font-weight: 600;
   color: #2256df;
   border-radius: 4px;
   padding: 4px;
-  z-index: 200;
-  position: absolute;
-  bottom: 30%;
-  display: flex;
+
   align-items: center;
   justify-content: center;
-  right: 27%;
-  @media (min-width: 300px) and (max-width: 560px) {
-    margin-right: 20px;
-  }
+  margin-right: 14px;
+  display: ${(props) => (props.showBackCount === 0 ? "none" : "flex")};
 `;
 const CrossButton = styled.div`
   position: absolute;
   z-index: 200;
-  left: 86%;
-  top: 50%;
+  left: 95%;
+  top: 10%;
+`;
+const Img = styled.img`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const MainContainer = styled.div`
@@ -1123,27 +1145,6 @@ const TableDiv = styled.div`
   }
 `;
 
-const ButtonDiv = styled.div`
-  white-space: nowrap;
-  cursor: pointer;
-  border-radius: 6px;
-`;
-const Button = styled.button`
-  background: #1c3c93;
-  opacity: 1;
-  border: none;
-  border-radius: 1px;
-  color: #3c70ff;
-  font-size: 0.8rem;
-  height: 30px;
-  cursor: pointer;
-
-  :hover {
-    background-color: #3c70ff;
-    color: white;
-  }
-`;
-
 const BestBlock = styled.div`
   font: normal normal 600 16px/20px Inter;
   letter-spacing: 0px;
@@ -1227,9 +1228,6 @@ const FullScreen = styled.div`
 `;
 
 const MapDiv = styled.div`
-  /* @media (min-width: 100px) and (max-width: 1024px) {
-    padding-left: 105px;
-  } */
   margin-left: -38px;
 `;
 const EthDiv = styled.div`
@@ -1242,13 +1240,13 @@ const SelectionDiv = styled.div`
   display: flex;
   width: 100%;
   max-width: 108px;
-  background: #1c3c93 0% 0% no-repeat padding-box;
   border-radius: 4px;
   height: 30px;
   align-items: center;
   text-align: center;
   cursor: pointer;
   margin-top: 10px;
+  background-color: #1c3c93;
 `;
 const SelectionDivStyle = styled.div`
   font-size: 12px;
@@ -1259,9 +1257,42 @@ const SelectionDivStyle = styled.div`
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
-  background: ${(props) => (props.buttonToggle === 1 ? "red" : "blue")};
-
+  background-color: ${(props) =>
+    props.buttonToggle === 1 ? "#3c70ff" : "#1C3C93"};
+  /* 
   :hover {
     background-color: #3c70ff;
-  }
+  } */
+`;
+const SelectionDivStyleTwo = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #3c70ff;
+  cursor: pointer;
+  background-color: ${(props) =>
+    props.buttonToggle === 2 ? "#3c70ff" : "#1C3C93"};
+
+  /* :hover {
+    background-color: #3c70ff;
+  } */
+`;
+const SelectionDivStyleThree = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #3c70ff;
+  cursor: pointer;
+  background-color: ${(props) =>
+    props.buttonToggle === 3 ? "#3c70ff" : "#1C3C93"};
+
+  /* :hover {
+    background-color: #3c70ff;
+  } */
 `;
