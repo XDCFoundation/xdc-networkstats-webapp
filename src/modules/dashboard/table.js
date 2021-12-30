@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,8 +10,8 @@ import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
-import {dispatchAction} from "../../utility";
-import {connect} from "react-redux";
+import { dispatchAction } from "../../utility";
+import { connect } from "react-redux";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 const TableBox = styled.div`
@@ -28,7 +28,7 @@ const SearchBox = styled.input`
   background-position: 0.5rem;
   padding-left: 2rem;
   background-size: 0.875rem;
-  position: relative;
+
   background-color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -41,7 +41,6 @@ const SearchBox = styled.input`
   outline: none;
   color: "black";
 `;
-
 
 const Label = styled.div`
   font-size: 12px;
@@ -92,8 +91,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-
- function EnhancedTable(props) {
+function EnhancedTable(props) {
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
@@ -358,7 +356,7 @@ const StyledTableCell = withStyles((theme) => ({
 }
 
 const mapStateToProps = (state) => {
-  return {stats: state.stats}
+  return { stats: state.stats };
 };
 
-export default connect(mapStateToProps, {dispatchAction})(EnhancedTable);
+export default connect(mapStateToProps, { dispatchAction })(EnhancedTable);

@@ -272,3 +272,51 @@ select {
 #react-joyride-step-0>div>div>div{
   top:-20px !important;
 }
+
+.tooltip{
+  position: absolute;
+  width: 50%;
+  top: 48%;
+  border-radius: 4px;
+  padding: 25px 17px 23px 20px !important;
+   background: #FFFFFF 0% 0% no-repeat padding-box;
+   opacity: 1;
+}
+.tooltip:before{
+  content: ' ';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -7px;
+    width: 26px;
+    height: 26px;
+   border-width: 1px; 
+    background-color: #fff;
+    -moz-box-shadow: -2px 2px 3.5px rgba(0, 0, 0, .5);
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+}
+.flex{
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+}
+@media screen and (min-width: 1024px) {
+  .flex {
+    display: none;
+  }
+}
+.flex-img{
+  display: flex;
+  justify-content:flex-end;
+}
+.flex-condition{
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+ 
+}

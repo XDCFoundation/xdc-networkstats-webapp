@@ -7,8 +7,8 @@ import {
   Marker,
 } from "react-simple-maps";
 import styled from "styled-components";
-import {dispatchAction} from "../../utility";
-import {connect} from "react-redux";
+import { dispatchAction } from "../../utility";
+import { connect } from "react-redux";
 
 const Div = styled.div`
   fill: #103aaa;
@@ -22,7 +22,7 @@ const Div = styled.div`
   }
   @media (min-width: 300px) and (max-width: 1024px) {
     fill: #103aaa;
-    width: 100vw;
+    width: 100%auto;
     max-width: 240px;
   }
 `;
@@ -33,7 +33,10 @@ const geoUrl =
 function Map(props) {
   const [node, setNode] = useState([]);
   useEffect(() => {
-    if (!_.isUndefined(props.stats.markers) && !_.isEmpty(props.stats.markers)) {
+    if (
+      !_.isUndefined(props.stats.markers) &&
+      !_.isEmpty(props.stats.markers)
+    ) {
       setNode(props.stats.markers);
     }
   });
@@ -58,7 +61,7 @@ function Map(props) {
 }
 
 const mapStateToProps = (state) => {
-  return {stats: state.stats}
+  return { stats: state.stats };
 };
 
-export default connect(mapStateToProps, {dispatchAction})(Map);
+export default connect(mapStateToProps, { dispatchAction })(Map);
