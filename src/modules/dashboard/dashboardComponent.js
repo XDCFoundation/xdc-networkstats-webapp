@@ -145,7 +145,7 @@ export default function Dashboard(props) {
   const [gasUsd, setGasUsd] = useState(0);
   const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(0);
-
+  const [buttonToggle, setButtonToggle] = useState(1);
   async function fetchTime(value = 1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
@@ -390,17 +390,28 @@ export default function Dashboard(props) {
                       </div>
 
                       <SelectionDiv>
-                        <SelectionDivStyle onClick={() => fetchTime(30)}>
+                        <SelectionDivStyle
+                          onClick={() => {
+                            fetchTime(30);
+                            setButtonToggle(1);
+                          }}
+                        >
                           30D
                         </SelectionDivStyle>
                         <SelectionDivStyle
-                          onClick={() => fetchTime(7)}
+                          onClick={() => {
+                            fetchTime(7);
+                            setButtonToggle(2);
+                          }}
                           style={{ borderRadius: "0px" }}
                         >
                           7D
                         </SelectionDivStyle>
                         <SelectionDivStyle
-                          onClick={() => fetchTime(1)}
+                          onClick={() => {
+                            fetchTime(1);
+                            setButtonToggle(3);
+                          }}
                           style={{
                             borderRight: "none",
                             borderRadius: "0px 4px 4px 0px",
@@ -671,16 +682,21 @@ export default function Dashboard(props) {
                       </MobileAverageBlockData>
                     </div>
                     <SelectionDiv>
-                      <SelectionDivStyle onClick={() => fetchTime(30)}>
+                      <SelectionDivStyle
+                        onClick={() => fetchTime(30)}
+                        buttonToggle={buttonToggle}
+                      >
                         30D
                       </SelectionDivStyle>
                       <SelectionDivStyle
+                        buttonToggle={buttonToggle}
                         onClick={() => fetchTime(7)}
                         style={{ borderRadius: "0px" }}
                       >
                         7D
                       </SelectionDivStyle>
                       <SelectionDivStyle
+                        buttonToggle={buttonToggle}
                         onClick={() => fetchTime(1)}
                         style={{
                           borderRight: "none",
@@ -1243,6 +1259,8 @@ const SelectionDivStyle = styled.div`
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+  background: ${(props) => (props.buttonToggle === 1 ? "red" : "blue")};
+
   :hover {
     background-color: #3c70ff;
   }
