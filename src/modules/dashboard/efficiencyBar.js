@@ -1,12 +1,27 @@
 import React from "react";
-import { Bar } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import styled from "styled-components";
 import _ from "lodash";
 
 const Div = styled.div`
-  cursor: pointer;
   width: 100%;
+  max-width: 560px;
+  height: 120px;
+
+  font-family: sans-serif;
+  text-align: center;
+  cursor: pointer;
 `;
+
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        fill: "#667FC1",
+      },
+    },
+  },
+};
 
 let data = [];
 function EfficiencyBar(props) {
@@ -89,10 +104,13 @@ function EfficiencyBar(props) {
   }
   return (
     <Div>
-      <Bar
-        width={280}
-        maxWidth={500}
-        height={120}
+      <ResponsiveBar
+        yScale={{
+          type: "linear",
+          stacked: true,
+          min: 0,
+          max: 100,
+        }}
         data={data}
         keys={["value"]}
         indexBy="time"
@@ -101,19 +119,17 @@ function EfficiencyBar(props) {
         axisBottom={false}
         enableGridY={false}
         padding={0.7}
+        axisRight={null}
+        axisTop={null}
+        axisBottom={null}
+        theme={theme}
         axisLeft={{
-          tickSize: 5,
+          tickSize: 2,
           tickValues: ["0", "50", "100"],
+          tickPadding: 0
         }}
-        theme={{
-          axis: {
-            ticks: {
-              text: {
-                fill: "#667FC1",
-              },
-            },
-          },
-        }}
+        margin={{ top: 4, bottom: 4, left: 20 }}
+        gridYValues={["0", "50", "100"]}
         tooltip={({ id, value, color }) => (
           <div
             style={{

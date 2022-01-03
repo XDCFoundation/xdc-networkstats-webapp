@@ -1,14 +1,11 @@
 import React from "react";
 import io from "socket.io-client";
-import Utils, { dispatchAction } from "../utility";
 import { eventConstants } from "../constants";
 import _ from "lodash";
 import store from "../store";
 import moment from "moment";
 import utility from "../utility";
-import TableGraph from "../modules/dashboard/tableGraph";
 import { NodesService } from "../services/";
-import { object } from "underscore";
 import sorter from "sort-nested-json";
 import { batch } from "react-redux";
 

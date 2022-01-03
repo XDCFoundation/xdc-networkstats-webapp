@@ -18,7 +18,7 @@ const TableBox = styled.div`
   width: 100%;
   overflow: scroll;
   display: block;
-  overflow-x: auto;
+  overflow-y: auto;
   white-space: nowrap;
 `;
 
@@ -103,7 +103,7 @@ function EnhancedTable(props) {
   },[props.stats.nodesArr]);
   const [query, setQuery] = useState('');
     const filteredRows = props.stats.nodesArr.filter((row) => {
-      return row.nodeName.toLowerCase().includes(query);
+      return row.nodeName.toLowerCase().includes((query).toLowerCase());
     });
   
 
