@@ -30,7 +30,7 @@ const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "View the number of active Heading, their history and geolocation of all the active Heading on the blockchain.",
+      "View the number of active Nodes, their history and geolocation of all the active Heading on the blockchain.",
     disableBeacon: true,
   },
   {
@@ -42,7 +42,7 @@ const TOUR_STEPS = [
   {
     target: ".efficiency",
     content:
-      "Ensure the efficiency of the blockchain with zero downtime, negligible gas price, and average transaction rate displayed transparently.",
+      "Ensure the efficiency of the blockchain with zero downtime, negligible gas price, and average transaction speed displayed transparently.",
     disableBeacon: true,
   },
 ];
@@ -178,7 +178,7 @@ export default function Dashboard(props) {
         disableScrolling={true}
         floaterProps={{ disableAnimation: true }}
       />
-
+      
       {showTabJoyRide && (
         // <CustomerJoyRide>
         //   <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
@@ -201,7 +201,7 @@ export default function Dashboard(props) {
             <div class="flex-img">
               <Img
                 src="/images/Close.svg"
-                onClick={() => setShowTabJoyRide(false)}
+                onClick={() => {setShowTabJoyRide(false); setShow(1); showSetText(0)}}
               />
             </div>
             <JoyrideTextContainer>
@@ -226,15 +226,17 @@ export default function Dashboard(props) {
               </JoyrideNextButton>
             </div>
           </div>
+        <BackDrop/>
         </div>
       )}
-
+      
       <Header
         setJoyrideRun={setJoyrideRun}
         setShowTabJoyRide={setShowTabJoyRide}
         showTabJoyRide={showTabJoyRide}
         showSideDrop={showSideDrop}
         setShowSideDrop={setShowSideDrop}
+        expand={setCountry}
       />
       {showSideDrop ? (
         <div>
@@ -779,7 +781,8 @@ const JoyrideTextContainer = styled.div`
   display: flex;
   font-size: 1rem !important;
   font-weight: 600 !important;
-  font-family: Inter !important;
+  font-family: 'Inter' !important;
+  width: 100%;
 `;
 
 const JoyrideNextButton = styled.button`
@@ -1036,7 +1039,7 @@ const TabScreen = styled.div`
   @media (min-width: 300px) and (max-width: 767px) {
     display: none;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 1025px) {
     display: none;
   }
 `;
@@ -1247,6 +1250,7 @@ const SelectionDiv = styled.div`
   cursor: pointer;
   margin-top: 10px;
   background-color: #1c3c93;
+  margin-right: 20px
 `;
 const SelectionDivStyle = styled.div`
   font-size: 12px;

@@ -56,7 +56,7 @@ export default function Header(props) {
           </StartGuideTourButton>
           <StartGuideTourButtonTab
             onClick={() => {
-              props.setShowTabJoyRide(true);
+              props.setShowTabJoyRide(true); props.expand(false)
             }}
           >
             <PlayImage src="/images/Play.svg" alt="Start" />
@@ -79,7 +79,7 @@ const DivRow = styled.div`
 `;
 const NetworkStats = styled.div`
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   font-family: Inter;
   color: #ffffff;
   white-space: nowrap;
