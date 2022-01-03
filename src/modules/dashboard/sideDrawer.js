@@ -13,7 +13,7 @@ const Div = styled.div`
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   top: 0;
   right: 0;
-
+  
   @media (min-width: 300px) and (max-width: 767px) {
     width: 100%;
     max-width: 200px;
@@ -45,7 +45,7 @@ const Content = styled.span`
   display: flex;
   justify-content: space-between;
   font-size: 1.2rem;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Medium;
   font-weight: 500;
   cursor: pointer;
   @media (min-width: 300px) and (max-width: 767px) {

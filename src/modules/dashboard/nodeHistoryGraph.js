@@ -120,6 +120,7 @@ function NodeGraph() {
         axisLeft={{
           tickSize: 0,
           tickValues: ["0", "100", "200"],
+          tickPadding: 5
         }}
         axisBottom={false}
         // curve="monotoneX"

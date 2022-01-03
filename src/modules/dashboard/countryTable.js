@@ -23,6 +23,9 @@ const TableBox = styled.div`
   @media (min-width: 300px) and (max-width: 1024px) {
   max-width: 1024px
   }
+  @media (min-width: 300px) and (max-width: 767px) {
+  max-width: 767px
+  }
 `;
 const Flex = styled.div`
 display: flex;
@@ -216,28 +219,19 @@ function EnhancedTable(props) {
           {headCells.map((headCell) => (
             <StyledTableCell
               key={headCell.id}
-              sortDirection={orderBy === headCell.id ? order : false}
               style={{
                 color: "white",
-                columnWidth: "90px",
                 whiteSpace: "nowrap",
                 alignContent: "start",
                 borderColor: "#4E6AB5",
+                columnWidth: "90px"
               }}
             >
               <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
+                active={false}
+                hideSortIcon={false}
               >
                 {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
               </TableSortLabel>
             </StyledTableCell>
           ))}
@@ -320,18 +314,11 @@ function EnhancedTable(props) {
                 const isItemSelected = isSelected(row.id);
 
                 return (
-                  <StyledTableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                  >
+                  <StyledTableRow>
                     <StyledTableCell
                       style={{
                         color: "white",
-                        width: "20px",
+                        width: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -342,6 +329,7 @@ function EnhancedTable(props) {
                         color: "white",
                         width: "20px",
                         borderColor: "#4E6AB5",
+                        width: "60px",
                       }}
                     >
                       {row.countries}
@@ -350,6 +338,7 @@ function EnhancedTable(props) {
                       style={{
                         color: "white",
                         borderColor: "#4E6AB5",
+                        width: "50px",
                       }}
                     >
                       {row.last24h}
@@ -358,6 +347,7 @@ function EnhancedTable(props) {
                       style={{
                         borderColor: "#4E6AB5",
                         color: "white",
+                        width: "50px",
                       }}
                     >
                       {row.last24}
@@ -366,6 +356,7 @@ function EnhancedTable(props) {
                       style={{
                         borderColor: "#4E6AB5",
                         color: "white",
+                        width: "50px",
                       }}
                     >
                       {row.last7}
