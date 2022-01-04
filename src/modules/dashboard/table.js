@@ -81,6 +81,7 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
     justifyContent: "center",
     display: "flex",
     whiteSpace: "nowrap",
+    pointerEvents: 'none',
   },
 }));
 
@@ -320,7 +321,7 @@ function EnhancedTable(props) {
                         columnWidth: "70px",
                       }}
                     >
-                      {row.lastBlock}
+                      #{row.lastBlock}
                     </StyledTableCell>
                     <StyledTableCell
                       style={{
