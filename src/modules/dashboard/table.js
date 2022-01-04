@@ -14,6 +14,7 @@ import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
+
 const TableBox = styled.div`
   width: 100%;
   overflow: scroll;
@@ -238,7 +239,7 @@ function EnhancedTable(props) {
 
   return (
     <>
-    <SearchBox placeholder="Search"  
+    <SearchBox placeholder="Search by node name"  
     value={query}
     onChange={e => setQuery(e.target.value)}
     />
@@ -249,6 +250,7 @@ function EnhancedTable(props) {
             <EnhancedTableHead />
             <TableBody>
               {stableSort(query!=='' ? filteredRows : rows).map((row) => {
+                let block = row.lastBlock.toLocaleString();
                 return (
                   <StyledTableRow>
                     <StyledTableCell padding="radio">
@@ -321,7 +323,7 @@ function EnhancedTable(props) {
                         columnWidth: "70px",
                       }}
                     >
-                      #{row.lastBlock}
+                      #{block}
                     </StyledTableCell>
                     <StyledTableCell
                       style={{

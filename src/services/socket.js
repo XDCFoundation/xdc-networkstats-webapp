@@ -38,8 +38,31 @@ let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
+let pinned = localStorage.pinned || [];
 
-const socket = io("http://52.15.80.60:3000/", {
+
+
+function pinNode(id)
+	{
+		let index = findIndex({id: id});
+
+		if( !_.isUndefined(nodesArr[index]) )
+		{
+			nodesArr[index].pinned = !nodesArr[index].pinned;
+
+			if(nodesArr[index].pinned)
+			{
+				pinned.push(id);
+			}
+			else
+			{
+				pinned.splice(pinned.indexOf(id), 1);
+			}
+		}
+
+		localStorage.pinned = pinned;
+	}
+const socket = io("http://3.88.252.78:3000", {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -551,17 +574,15 @@ setInterval(() => {
       table.push({
         type: nodesArr[i].info.node,
         pendingTxn: nodesArr[i].stats.pending,
-        lastBlock: <NumberFormat
-          value={nodesArr[i].stats.block.number}
-          displayType={"text"}
-          thousandSeparator={true}
-        />,
+        lastBlock: nodesArr[i].stats.block.number,
         upTime: `${nodesArr[i].stats.uptime}%`,
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,
         nodeName: nodesArr[i].info.name,
       });
+      
     }
+    table = sorter.sort(table).desc("lastBlock");
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-}, 10000);
+}, 1000);

@@ -17,8 +17,7 @@ import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
-
-
+import Table from "./table";
 
 const TOUR_STEPS = [
   {
@@ -285,7 +284,7 @@ function Dashboard(props) {
             </MobileContainer>
             <TabContainer>
               <TabSecurity
-                show={tabResponsive}
+                back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(1);
                 }}
@@ -293,7 +292,7 @@ function Dashboard(props) {
                 Security
               </TabSecurity>
               <TabSpeed
-                show={tabResponsive}
+                back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(2);
                 }}
@@ -301,7 +300,7 @@ function Dashboard(props) {
                 Speed
               </TabSpeed>
               <TabEfficiency
-                show={tabResponsive}
+                back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(3);
                 }}
@@ -745,6 +744,10 @@ function Dashboard(props) {
               )}
             </MobileContentParent>
           </MainContainer>
+          <TableDiv>
+            <Table />
+          </TableDiv>
+          <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
         </>
       )}
     </Div>
@@ -753,6 +756,15 @@ function Dashboard(props) {
 
 const Div = styled.div`
   width: 100%;
+`;
+
+const Footer = styled.div`
+  background-color: white;
+  color: #808080;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  font-family: "Inter", sans-serif;
 `;
 
 const CustomerJoyRide = styled.div`
@@ -776,7 +788,7 @@ const JoyrideTextContainer = styled.div`
   display: flex;
   font-size: 1rem !important;
   font-weight: 600 !important;
-  font-family: 'Inter' !important;
+  font-family: "Inter" !important;
   width: 100%;
 `;
 
@@ -871,7 +883,7 @@ const TabSecurity = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
+  background: ${(props) => (props.back === 1 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
     color: white;
@@ -890,7 +902,7 @@ const TabSpeed = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
+  background: ${(props) => (props.back === 2 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
     color: white;
@@ -909,7 +921,7 @@ const TabEfficiency = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
+  background: ${(props) => (props.back === 3 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
     color: white;
@@ -1130,8 +1142,16 @@ const Speedbar = styled.div`
   width: 100%;
   max-width: 500px;
   margin-left: -4px;
-  @media (min-width: 100px) and (max-width: 1024px) {
-  margin-top: 18px;
+`;
+const TableDiv = styled.div`
+  background: #f8f8f8;
+  border-radius: 4px;
+  padding: 50px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    padding: 30px;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+    padding: 15px;
   }
 `;
 

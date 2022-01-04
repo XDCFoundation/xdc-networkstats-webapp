@@ -232,7 +232,7 @@ select {
 
 
 .__floater__arrow {
-  top: 26px ;
+  top:-20px !important;
 }
 .react-joyride__tooltip {
   width: 530px !important;
@@ -242,6 +242,7 @@ select {
   font-family: Inter !important;
   color: #1F1F1F !important;
   padding: 25px 28px 23px 20px !important;
+  top:-20px !important;
 }
 
 .react-joyride__spotlight {
@@ -281,9 +282,9 @@ select {
   }
 
 
-#react-joyride-step-0>div>div>div{
+/* #react-joyride-step-0>div>div>div{
   top:-20px !important;
-}
+} */
 
 .tooltip{
   position: absolute;
@@ -304,6 +305,18 @@ select {
 @media (min-width: 1024px) {
   .tooltip {
   top: 48%;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 374px) {
+  .tooltip {
+  top: 65%;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .tooltip {
+  top: 51%;
   }
 }
 
