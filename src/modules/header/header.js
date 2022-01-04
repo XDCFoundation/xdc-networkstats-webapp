@@ -32,7 +32,7 @@ const StartGuideTourButton = styled.button`
   width: 100%;
   max-width: 186px;
   padding: 6px 5px 8px 6px;
-  @media (min-width: 100px) and (max-width: 1024px) {
+  @media (min-width: 100px) and (max-width: 767px) {
     display: none;
   }
 `;
@@ -48,7 +48,7 @@ export default function Header(props) {
         <div style={{ display: "flex", alignItems: "center" }}>
           <StartGuideTourButton
             onClick={() => {
-              props.setJoyrideRun(true);
+              props.setJoyrideRun(true); props.setShowTabJoyRide(true); props.expand(false); props.tab(1);
             }}
           >
             <img src="/images/Play.svg" alt="Start" />
@@ -56,7 +56,7 @@ export default function Header(props) {
           </StartGuideTourButton>
           <StartGuideTourButtonTab
             onClick={() => {
-              props.setShowTabJoyRide(true); props.expand(false)
+              props.setShowTabJoyRide(true); props.expand(false); props.mobile(1);
             }}
           >
             <PlayImage src="/images/Play.svg" alt="Start" />
@@ -102,10 +102,10 @@ const StartGuideTourButtonTab = styled.div`
   width: 100%;
   max-width: 186px;
   padding: 6px 5px 8px 6px;
-  @media (min-width: 1024px) {
+  @media (min-width: 767px) {
     display: none;
   }
-  @media (min-width: 300px) and (max-width: 1024px) {
+  @media (min-width: 300px) and (max-width: 767px) {
     margin-right: -12px;
     padding: 4px;
   }

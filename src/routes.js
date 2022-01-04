@@ -7,14 +7,8 @@ import {connect} from "react-redux";
 import {Dashboard} from "./modules";
 import {history} from "./managers/history";
 import BaseComponent from "./modules/baseComponent";
-import { io } from "socket.io-client";
 
 class Routes extends BaseComponent {
-  Socket = io("http://52.15.80.60:3000/", {
-    path: "/stats-data/",
-    transports: ["websocket"],
-    reconnection: true,
-  });
 
   componentDidMount() {}
 
@@ -26,7 +20,7 @@ class Routes extends BaseComponent {
             <Route
               exact
               path={"/"}
-              component={() => <Dashboard socket={this.Socket} />}
+              component={() => <Dashboard/>}
             />
             <Redirect exact from="*" to="/" />
           </Switch>

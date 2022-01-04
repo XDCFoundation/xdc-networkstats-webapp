@@ -247,6 +247,7 @@ select {
 .react-joyride__spotlight {
   height: 341px !important ;
   top: 61px !important ;
+  
 }
 /* *{
   -ms-overflow-style: none;
@@ -293,6 +294,19 @@ select {
    background: #FFFFFF 0% 0% no-repeat padding-box;
    opacity: 1;
 }
+
+@media (min-width: 767px) {
+  .tooltip {
+  top: 36%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tooltip {
+  top: 48%;
+  }
+}
+
 .tooltip:before{
   content: ' ';
     display: block;
@@ -314,7 +328,7 @@ select {
   background-color: rgba(0, 0, 0, 0.5);
   
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
   .flex {
     display: none;
   }

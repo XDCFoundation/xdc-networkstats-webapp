@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Map from "./map";
 import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
-import Table from "./table";
 import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
@@ -16,21 +15,16 @@ import store from "../../store";
 import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
+import { dispatchAction } from "../../utility";
+import { connect } from "react-redux";
 
-const Footer = styled.div`
-  background-color: white;
-  color: #808080;
-  text-align: center;
-  padding-bottom: 20px;
-  padding-top: 10px;
-  font-family: "Inter", sans-serif;
-`;
+
 
 const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "View the number of active Nodes, their history and geolocation of all the active Heading on the blockchain.",
+      "View the number of active nodes, their history and geolocation of all the active Heading on the blockchain.",
     disableBeacon: true,
   },
   {
@@ -47,7 +41,7 @@ const TOUR_STEPS = [
   },
 ];
 
-export default function Dashboard(props) {
+function Dashboard(props) {
   const { content } = props;
 
   const [Expand, setCountry] = React.useState(false);
@@ -123,7 +117,7 @@ export default function Dashboard(props) {
   const [mobileTab, setMobileTab] = useState(0);
   const [gasUsd, setGasUsd] = useState(0);
   const [Eth, setEth] = useState(0);
-  const [tabResponsive, setTabResponsive] = useState(0);
+  const [tabResponsive, setTabResponsive] = useState(1);
   const [buttonToggle, setButtonToggle] = useState(3);
 
   async function fetchTime(value = 1) {
@@ -135,7 +129,7 @@ export default function Dashboard(props) {
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
     let EthVal = `${
       Math.round(
-        ((resp.normal.usd - content.stats.gasPrice) / resp.normal.usd) *
+        ((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *
           100 *
           100000
       ) / 100000
@@ -144,16 +138,18 @@ export default function Dashboard(props) {
   }
   useEffect(() => {
     fetchTime();
-    setGasUsd(content.stats.gasPrice.toFixed(6));
-  }, [content.stats.gasPrice]);
+    setGasUsd(props.stats.gasPrice.toFixed(6));
+  }, [props.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
+    setTabResponsive(tabResponsive+1);
     console.log("");
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
+    if(tabResponsive > 2) setTabResponsive(0);
   };
 
   const [setText, showSetText] = useState(0);
@@ -163,8 +159,9 @@ export default function Dashboard(props) {
   const backButtonTour = () => {
     setShow(show - 1);
     showSetText(setText - 1);
+    setTabResponsive(tabResponsive - 1);
   };
-
+  
   return (
     <Div>
       <Joyride
@@ -237,6 +234,8 @@ export default function Dashboard(props) {
         showSideDrop={showSideDrop}
         setShowSideDrop={setShowSideDrop}
         expand={setCountry}
+        mobile={setShow}
+        tab={setTabResponsive}
       />
       {showSideDrop ? (
         <div>
@@ -316,7 +315,7 @@ export default function Dashboard(props) {
                   <ContentData>
                     <Heading>Nodes</Heading>
                     <DataCount>
-                      {content.stats.nodes}/{content.stats.totalNodes}
+                      {props.stats.nodes}/{props.stats.totalNodes}
                     </DataCount>
                     <NodeHistory>Node History (7 Days)</NodeHistory>
                     <NodeGraph />
@@ -325,7 +324,7 @@ export default function Dashboard(props) {
                     <SpaceBetween>
                       <div>
                         <Countries>Countries</Countries>
-                        <CountriesData>{content.stats.countries}</CountriesData>
+                        <CountriesData>{props.stats.countries}</CountriesData>
                       </div>
                       <Image
                         src="/images/Expand.svg"
@@ -342,20 +341,20 @@ export default function Dashboard(props) {
                     <DataCount>
                       #{" "}
                       <NumberFormat
-                        value={content.stats.bestBlock}
+                        value={props.stats.bestBlock}
                         displayType={"text"}
                         thousandSeparator={true}
                       />
                     </DataCount>
                     <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
-                    <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
+                    <BlockTime>{props.stats.avgBlock + " "}Sec</BlockTime>
                   </ContentData>
 
                   <CountryData>
                     <SpaceBetween>
                       <div>
                         <Countries>Last Block</Countries>
-                        <CountriesData>{content.stats.lastBlock}</CountriesData>
+                        <CountriesData>{props.stats.lastBlock}</CountriesData>
                       </div>
                     </SpaceBetween>
                     <Speedbar>
@@ -381,13 +380,13 @@ export default function Dashboard(props) {
                       {" " + Eth} than Ethereum
                     </EthDiv>
                     <NodeHistory>Avg Transaction Speed</NodeHistory>
-                    <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
+                    <BlockTime>{props.stats.avgRate + " "}TPS</BlockTime>
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
                       <div>
                         <Countries>UP Time</Countries>
-                        <CountriesData>{content.stats.upTime}%</CountriesData>
+                        <CountriesData>{props.stats.upTime}%</CountriesData>
                       </div>
 
                       <SelectionDiv>
@@ -427,8 +426,8 @@ export default function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {content.stats.efficiency.length !== 0 ? (
-                        <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                      {props.stats.efficiency.length !== 0 ? (
+                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
                       ) : (
                         <div></div>
                       )}
@@ -444,7 +443,7 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Nodes</Heading>
                       <DataCount>
-                        {content.stats.nodes}/{content.stats.totalNodes}
+                        {props.stats.nodes}/{props.stats.totalNodes}
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <NodeGraph />
@@ -454,7 +453,7 @@ export default function Dashboard(props) {
                         <div>
                           <Countries>Countries</Countries>
                           <CountriesData>
-                            {content.stats.countries}
+                            {props.stats.countries}
                           </CountriesData>
                         </div>
                         <Image
@@ -477,13 +476,13 @@ export default function Dashboard(props) {
                       <DataCount>
                         #{" "}
                         <NumberFormat
-                          value={content.stats.bestBlock}
+                          value={props.stats.bestBlock}
                           displayType={"text"}
                           thousandSeparator={true}
                         />
                       </DataCount>
                       <NodeHistory>Avg Block Time</NodeHistory>
-                      <BlockTime>{content.stats.avgBlock + " "}Sec</BlockTime>
+                      <BlockTime>{props.stats.avgBlock + " "}Sec</BlockTime>
                     </ContentData>
 
                     <CountryData>
@@ -491,7 +490,7 @@ export default function Dashboard(props) {
                         <div>
                           <Countries>Last Block</Countries>
                           <CountriesData>
-                            {content.stats.lastBlock}
+                            {props.stats.lastBlock}
                           </CountriesData>
                         </div>
                       </SpaceBetween>
@@ -521,13 +520,13 @@ export default function Dashboard(props) {
                         {" " + Eth} than Ethereum
                       </EthDiv>
                       <NodeHistory>Avg Transaction Speed</NodeHistory>
-                      <BlockTime>{content.stats.avgRate + " "}TPS</BlockTime>
+                      <BlockTime>{props.stats.avgRate + " "}TPS</BlockTime>
                     </ContentData>
                     <CountryData>
                       <SpaceBetween>
                         <div>
                           <Countries>UP Time</Countries>
-                          <CountriesData>{content.stats.upTime}%</CountriesData>
+                          <CountriesData>{props.stats.upTime}%</CountriesData>
                         </div>
                         <SelectionDiv>
                           <SelectionDivStyle
@@ -566,7 +565,7 @@ export default function Dashboard(props) {
                         </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
-                        <UpTimeBar data={content.stats.efficiency}></UpTimeBar>
+                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
                       </Speedbar>
                     </CountryData>
                   </ContentEfficiency>
@@ -607,7 +606,7 @@ export default function Dashboard(props) {
                     <ContentData>
                       <Heading>Nodes</Heading>
                       <DataCount>
-                        {content.stats.nodes}/{content.stats.totalNodes}
+                        {props.stats.nodes}/{props.stats.totalNodes}
                       </DataCount>
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <MobileGraphDiv>
@@ -623,7 +622,7 @@ export default function Dashboard(props) {
                         <div>
                           <Countries>Countries</Countries>
                           <BestBlockData>
-                            {content.stats.countries}
+                            {props.stats.countries}
                           </BestBlockData>
                         </div>
                       </SpaceBetween>
@@ -646,7 +645,7 @@ export default function Dashboard(props) {
                       <BestBlockData>
                         #{" "}
                         <NumberFormat
-                          value={content.stats.bestBlock}
+                          value={props.stats.bestBlock}
                           displayType={"text"}
                           thousandSeparator={true}
                         />
@@ -654,12 +653,12 @@ export default function Dashboard(props) {
                     </div>
                     <div>
                       <LastBlock>LastBlock</LastBlock>
-                      <LastBLockData> {content.stats.lastBlock}</LastBLockData>
+                      <LastBLockData> {props.stats.lastBlock}</LastBLockData>
                     </div>
                   </SpaceBetween>
                   <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
                   <MobileAverageBlockData>
-                    {content.stats.avgBlock + " "}Sec
+                    {props.stats.avgBlock + " "}Sec
                   </MobileAverageBlockData>
                   <MobileGraphDiv>
                     <LastBlockBar content={content} />
@@ -689,7 +688,7 @@ export default function Dashboard(props) {
                     </div>
                     <div>
                       <LastBlock>UP Time</LastBlock>
-                      <LastBLockData> {content.stats.upTime}%</LastBLockData>
+                      <LastBLockData> {props.stats.upTime}%</LastBLockData>
                     </div>
                   </SpaceBetween>
                   <SpaceBetween>
@@ -698,7 +697,7 @@ export default function Dashboard(props) {
                         Avg Transaction Speed
                       </MobileAverageBlock>
                       <MobileAverageBlockData>
-                        {content.stats.avgRate + " "}TPS
+                        {props.stats.avgRate + " "}TPS
                       </MobileAverageBlockData>
                     </div>
                     <SelectionDiv>
@@ -746,10 +745,6 @@ export default function Dashboard(props) {
               )}
             </MobileContentParent>
           </MainContainer>
-          <TableDiv>
-            <Table />
-          </TableDiv>
-          <Footer>© 2021 XDC Network. All Rights Reserved.</Footer>
         </>
       )}
     </Div>
@@ -1135,16 +1130,8 @@ const Speedbar = styled.div`
   width: 100%;
   max-width: 500px;
   margin-left: -4px;
-`;
-const TableDiv = styled.div`
-  background: #f8f8f8;
-  border-radius: 4px;
-  padding: 50px;
-  @media (min-width: 300px) and (max-width: 1024px) {
-    padding: 30px;
-  }
-  @media (min-width: 300px) and (max-width: 767px) {
-    padding: 15px;
+  @media (min-width: 100px) and (max-width: 1024px) {
+  margin-top: 18px;
   }
 `;
 
@@ -1250,7 +1237,7 @@ const SelectionDiv = styled.div`
   cursor: pointer;
   margin-top: 10px;
   background-color: #1c3c93;
-  margin-right: 20px
+  margin-right: 20px;
 `;
 const SelectionDivStyle = styled.div`
   font-size: 12px;
@@ -1300,3 +1287,9 @@ const SelectionDivStyleThree = styled.div`
     background-color: #3c70ff;
   } */
 `;
+
+const mapStateToProps = (state) => {
+  return { stats: state.stats };
+};
+
+export default connect(mapStateToProps, { dispatchAction })(Dashboard);
