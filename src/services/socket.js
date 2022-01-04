@@ -8,6 +8,7 @@ import utility from "../utility";
 import { NodesService } from "../services/";
 import sorter from "sort-nested-json";
 import { batch } from "react-redux";
+import NumberFormat from "react-number-format";
 
 let MAX_BINS = 40;
 let nodesArr = [];
@@ -550,7 +551,11 @@ setInterval(() => {
       table.push({
         type: nodesArr[i].info.node,
         pendingTxn: nodesArr[i].stats.pending,
-        lastBlock: nodesArr[i].stats.block.number,
+        lastBlock: <NumberFormat
+          value={nodesArr[i].stats.block.number}
+          displayType={"text"}
+          thousandSeparator={true}
+        />,
         upTime: `${nodesArr[i].stats.uptime}%`,
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,
@@ -559,4 +564,4 @@ setInterval(() => {
     }
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-}, 1000);
+}, 10000);

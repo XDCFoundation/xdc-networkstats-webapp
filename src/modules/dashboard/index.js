@@ -1,8 +1,7 @@
 import React from "react";
 import BaseComponent from "../baseComponent";
-import DashboardComponent from "./dashboardComponent";
-import {dispatchAction} from "../../utility";
-import {connect} from "react-redux";
+// import DashboardComponent from "./dashboardComponent";
+import MainComponent from "./mainComponent";
 import "../../services/socket";
 
 class Dashboard extends BaseComponent {
@@ -26,12 +25,12 @@ class Dashboard extends BaseComponent {
   componentDidMount() {}
 
   render() {
-    return <DashboardComponent state={this.state} content={this.props}/>;
+    return <MainComponent/>;
   }
 }
 
-const mapStateToProps = (state) => {
-    return {stats: state.stats}
-};
+// const mapStateToProps = (state) => {
+//     return {stats: state.stats}
+// };
 
-export default connect(mapStateToProps, {dispatchAction})(Dashboard);
+export default Dashboard;
