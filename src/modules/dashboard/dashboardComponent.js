@@ -18,8 +18,6 @@ import BackDrop from "./backDrop";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
 
-
-
 const TOUR_STEPS = [
   {
     target: ".security",
@@ -73,7 +71,8 @@ function Dashboard(props) {
         },
         buttonClose: {
           size: 1,
-          padding: 10,
+          padding: "10px",
+          width: 10,
         },
         buttonLast: {
           display: "none",
@@ -100,6 +99,7 @@ function Dashboard(props) {
         buttonClose: {
           size: 1,
           padding: 10,
+          width: 10,
         },
         buttonLast: {
           display: "none",
@@ -114,7 +114,7 @@ function Dashboard(props) {
   };
   const [showSideDrop, setShowSideDrop] = useState(false);
   const [show, setShow] = useState(1);
-  const [mobileTab, setMobileTab] = useState(0);
+  const [mobileTab, setMobileTab] = useState(1);
   const [gasUsd, setGasUsd] = useState(0);
   const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(1);
@@ -145,11 +145,11 @@ function Dashboard(props) {
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
-    setTabResponsive(tabResponsive+1);
+    setTabResponsive(tabResponsive + 1);
     console.log("");
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
-    if(tabResponsive > 2) setTabResponsive(0);
+    if (tabResponsive > 2) setTabResponsive(0);
   };
 
   const [setText, showSetText] = useState(0);
@@ -161,7 +161,7 @@ function Dashboard(props) {
     showSetText(setText - 1);
     setTabResponsive(tabResponsive - 1);
   };
-  
+
   return (
     <Div>
       <Joyride
@@ -175,58 +175,47 @@ function Dashboard(props) {
         disableScrolling={true}
         floaterProps={{ disableAnimation: true }}
       />
-      
+
       {showTabJoyRide && (
-        // <CustomerJoyRide>
-        //   <CrossButton onClick={() => setShowTabJoyRide(false)}>X</CrossButton>
-        //   <JoyrideTextContainer>
-        //     {TOUR_STEPS[setText].content}
-        //   </JoyrideTextContainer>
-        //   <JoyrideNextButton onClick={() => buttonTour()}>
-        //     Next
-        //   </JoyrideNextButton>
-        //   {showBackButton && showBackCount >= 1 ? (
-        //     <JoyrideBackButton onClick={() => backButtonTour()}>
-        //       Back
-        //     </JoyrideBackButton>
-        //   ) : (
-        //     ""
-        //   )}
-        // </CustomerJoyRide>
-        <div class="flex">
-          <div class="tooltip">
-            <div class="flex-img">
-              <Img
-                src="/images/Close.svg"
-                onClick={() => {setShowTabJoyRide(false); setShow(1); showSetText(0)}}
-              />
-            </div>
-            <JoyrideTextContainer>
-              {TOUR_STEPS[setText].content}
-            </JoyrideTextContainer>
-            <div class="flex-condition">
-              {showBackButton ? (
-                <JoyrideBackButton
+        <BackDropStyle>
+          <div class="flex">
+            <div class="tooltip">
+              <div class="flex-img">
+                <Img
+                  src="/images/Close.svg"
+                  onClick={() => {
+                    setShowTabJoyRide(false);
+                    setShow(1);
+                    showSetText(0);
+                  }}
+                />
+              </div>
+              <JoyrideTextContainer>
+                {TOUR_STEPS[setText].content}
+              </JoyrideTextContainer>
+              <div class="flex-condition">
+                {showBackButton ? (
+                  <JoyrideBackButton
+                    showBackCount={setText}
+                    onClick={() => backButtonTour()}
+                  >
+                    Back
+                  </JoyrideBackButton>
+                ) : (
+                  ""
+                )}
+                <JoyrideNextButton
+                  onClick={() => buttonTour()}
                   showBackCount={setText}
-                  onClick={() => backButtonTour()}
                 >
-                  Back
-                </JoyrideBackButton>
-              ) : (
-                ""
-              )}
-              <JoyrideNextButton
-                onClick={() => buttonTour()}
-                showBackCount={setText}
-              >
-                Next
-              </JoyrideNextButton>
+                  Next
+                </JoyrideNextButton>
+              </div>
             </div>
           </div>
-        <BackDrop/>
-        </div>
+        </BackDropStyle>
       )}
-      
+
       <Header
         setJoyrideRun={setJoyrideRun}
         setShowTabJoyRide={setShowTabJoyRide}
@@ -452,9 +441,7 @@ function Dashboard(props) {
                       <SpaceBetween>
                         <div>
                           <Countries>Countries</Countries>
-                          <CountriesData>
-                            {props.stats.countries}
-                          </CountriesData>
+                          <CountriesData>{props.stats.countries}</CountriesData>
                         </div>
                         <Image
                           src="/images/Expand.svg"
@@ -481,6 +468,7 @@ function Dashboard(props) {
                           thousandSeparator={true}
                         />
                       </DataCount>
+                      <div style={{ marginTop: "55px" }}></div>
                       <NodeHistory>Avg Block Time</NodeHistory>
                       <BlockTime>{props.stats.avgBlock + " "}Sec</BlockTime>
                     </ContentData>
@@ -489,9 +477,7 @@ function Dashboard(props) {
                       <SpaceBetween>
                         <div>
                           <Countries>Last Block</Countries>
-                          <CountriesData>
-                            {props.stats.lastBlock}
-                          </CountriesData>
+                          <CountriesData>{props.stats.lastBlock}</CountriesData>
                         </div>
                       </SpaceBetween>
                       <Speedbar>
@@ -621,9 +607,7 @@ function Dashboard(props) {
                       <SpaceBetween>
                         <div>
                           <Countries>Countries</Countries>
-                          <BestBlockData>
-                            {props.stats.countries}
-                          </BestBlockData>
+                          <BestBlockData>{props.stats.countries}</BestBlockData>
                         </div>
                       </SpaceBetween>
                       <MapWidth>
@@ -755,28 +739,13 @@ const Div = styled.div`
   width: 100%;
 `;
 
-const CustomerJoyRide = styled.div`
-  width: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  @media (min-width: 1024px) {
-    display: none;
-  }
-`;
-
 const JoyrideTextContainer = styled.div`
   background: white;
   border-radius: 10px;
   display: flex;
   font-size: 1rem !important;
-  font-weight: 600 !important;
-  font-family: 'Inter' !important;
+  color: #1f1f1f !important;
+  font-family: "Inter" !important;
   width: 100%;
 `;
 
@@ -795,6 +764,22 @@ const JoyrideNextButton = styled.button`
   justify-content: center;
   align-items: center;
 `;
+const BackDropStyle = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  top: 392px;
+  right: 0;
+  @media (min-width: 1024px) {
+    display: none;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    top: 348px;
+  }
+`;
 const JoyrideBackButton = styled.div`
   font-size: 0.8rem;
   font-family: Inter;
@@ -808,12 +793,7 @@ const JoyrideBackButton = styled.div`
   margin-right: 14px;
   display: ${(props) => (props.showBackCount === 0 ? "none" : "flex")};
 `;
-const CrossButton = styled.div`
-  position: absolute;
-  z-index: 200;
-  left: 95%;
-  top: 10%;
-`;
+
 const Img = styled.img`
   display: flex;
   justify-content: flex-end;
@@ -976,7 +956,7 @@ const MobileTitleEfficiency = styled.div`
 `;
 const ContentSecurity = styled.div`
   background-color: #102c78;
-  height: 300px;
+  height: 270px;
   width: 33.33%;
   padding: 15px;
   display: flex;
@@ -1001,7 +981,7 @@ const ContentSecurityMobile = styled.div`
 `;
 const ContentSpeed = styled.div`
   background-color: #102c78;
-  height: 300px;
+  height: 270px;
   width: 33.33%;
   padding: 15px;
   display: flex;
@@ -1013,7 +993,7 @@ const ContentSpeed = styled.div`
 `;
 const ContentEfficiency = styled.div`
   background-color: #102c78;
-  height: 300px;
+  height: 270px;
   width: 33.33%;
   padding: 15px;
   display: flex;
@@ -1052,20 +1032,22 @@ const Heading = styled.div`
   white-space: nowrap;
 `;
 const ColorDivNodes = styled.div`
-  color: #667fc1;
   font-size: 1rem;
   font-weight: 600;
+  height: 27px;
   white-space: nowrap;
   border-bottom: ${(props) =>
     props.mobileTab === 1 ? "2px solid #ffffff" : ""};
+  color: ${(props) => (props.mobileTab === 1 ? "white" : "#667fc1")};
 `;
 const ColorDivCountries = styled.div`
-  color: #667fc1;
   font-size: 1rem;
+  height: 27px;
   font-weight: 600;
   white-space: nowrap;
   border-bottom: ${(props) =>
     props.mobileTab === 2 ? "2px solid #ffffff" : ""};
+  color: ${(props) => (props.mobileTab === 2 ? "white" : "#667fc1")};
 `;
 const ContentData = styled.div`
   width: 50%;
@@ -1114,7 +1096,7 @@ const CountriesData = styled.div`
   color: #ffffff;
 `;
 const Image = styled.img`
-  width: 20px;
+  width: 25px;
   padding-bottom: 25px;
   @media (min-width: 767px) and (max-width: 1024px) {
     width: 25px;
@@ -1131,7 +1113,7 @@ const Speedbar = styled.div`
   max-width: 500px;
   margin-left: -4px;
   @media (min-width: 100px) and (max-width: 1024px) {
-  margin-top: 18px;
+    margin-top: 18px;
   }
 `;
 

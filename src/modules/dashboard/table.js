@@ -70,7 +70,7 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "white",
-    color: "pink",
+
     background: "#FFFFFF 0% 0% no-repeat padding-box",
     boxShadow: "0px 3px 6px #00000029",
     border: "1px solid #F2F2F2",
@@ -81,7 +81,7 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
     justifyContent: "center",
     display: "flex",
     whiteSpace: "nowrap",
-    pointerEvents: 'none',
+    pointerEvents: "none",
   },
 }));
 
@@ -99,15 +99,21 @@ function EnhancedTable(props) {
   }
 
   const [rows, setRows] = useState([]);
-  useEffect(()=>{
-   setRows(props.stats.nodesArr)
-  },[props.stats.nodesArr]);
-  const [query, setQuery] = useState('');
-    const filteredRows = props.stats.nodesArr.filter((row) => {
-      return row.nodeName.toLowerCase().includes((query).toLowerCase());
-    });
-  
+  useEffect(() => {
+    setRows(props.stats.nodesArr);
+  }, [props.stats.nodesArr]);
+  const [query, setQuery] = useState("");
+  const filteredRows = props.stats.nodesArr.filter((row) => {
+    return row.nodeName.toLowerCase().includes(query.toLowerCase());
+  });
 
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [showType, setShowType] = useState(false);
+  const [showLatency, setShowLatency] = useState(false);
+  const [showPeers, setShowPeers] = useState(false);
+  const [showPendingTxn, setShowPendingTxn] = useState(false);
+  const [setLastBlock, setShowLastBlock] = useState(false);
+  const [showUptime, setShowUptime] = useState(false);
   const headCells = [
     {
       id: "nodeName",
@@ -117,8 +123,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Node Name</Label>&nbsp;
-          <CustomiseTooltip title="Name of the specified node">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showTooltip}
+            onOpen={() => setShowTooltip(true)}
+            onClose={() => setShowTooltip(false)}
+            disableFocusListener
+            disableTouchListener
+            title="Name of the specified node"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowTooltip(!showTooltip)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -130,8 +147,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Type</Label>&nbsp;
-          <CustomiseTooltip title="Type of node with the architecture and version details">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showType}
+            onOpen={() => setShowType(true)}
+            onClose={() => setShowType(false)}
+            title="Type of node with the architecture and version details"
+            disableFocusListener
+            disableTouchListener
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowType(!showType)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -143,8 +171,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Latency</Label>&nbsp;
-          <CustomiseTooltip title="Delay in acceptance of a transaction">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showLatency}
+            onOpen={() => {
+              setShowLatency(true);
+            }}
+            onClose={() => setShowLatency(false)}
+            title="Delay in acceptance of a transaction"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowLatency(!showLatency)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -156,8 +195,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Peers</Label>&nbsp;
-          <CustomiseTooltip title="Number of peers sharing the ledger">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showPeers}
+            onClose={() => setShowPeers(false)}
+            onOpen={() => setShowPeers(true)}
+            title="Number of peers sharing the ledger"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowPeers(!showPeers)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -169,8 +217,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Pending Txn</Label>&nbsp;
-          <CustomiseTooltip title="Number of incomplete transactions">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showPendingTxn}
+            onOpen={() => setShowPendingTxn(true)}
+            onClose={() => setShowPendingTxn(false)}
+            title="Number of incomplete transactions"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowPendingTxn(!showPendingTxn)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -182,8 +239,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Last Block</Label>&nbsp;
-          <CustomiseTooltip title="Latest block associated with the node">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={setLastBlock}
+            title="Latest block associated with the node"
+            onClose={() => setShowLastBlock(false)}
+            onOpen={() => setShowLastBlock(true)}
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowLastBlock(!setLastBlock)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -200,8 +266,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Up Time</Label>&nbsp;
-          <CustomiseTooltip title="Total available and working time of the network">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showUptime}
+            onClose={() => setShowUptime(false)}
+            onOpen={() => setShowUptime(true)}
+            title="Total available and working time of the network"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowUptime(!showUptime)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -238,120 +313,121 @@ function EnhancedTable(props) {
 
   return (
     <>
-    <SearchBox placeholder="Search"  
-    value={query}
-    onChange={e => setQuery(e.target.value)}
-    />
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead />
-            <TableBody>
-              {stableSort(query!=='' ? filteredRows : rows).map((row) => {
-                return (
-                  <StyledTableRow>
-                    <StyledTableCell padding="radio">
-                      <Radio control={<Radio />} />
-                    </StyledTableCell>
-                    <StyledTableCell
-                      scope="row"
-                      padding="none"
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        width: "450px",
-                      }}
-                    >
-                      {row.nodeName}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        whiteSpace: "nowrap",
-                        width: "450px",
-                      }}
-                    >
-                      {row.type}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.latency}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.peers}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.pendingTxn}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      #{row.lastBlock}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {row.graph}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "50px",
-                      }}
-                    >
-                      {row.upTime}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </TableBox>
+      <SearchBox
+        placeholder="Search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+        <Paper sx={{ width: "auto" }}>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead />
+              <TableBody>
+                {stableSort(query !== "" ? filteredRows : rows).map((row) => {
+                  return (
+                    <StyledTableRow>
+                      <StyledTableCell padding="radio">
+                        <Radio control={<Radio />} />
+                      </StyledTableCell>
+                      <StyledTableCell
+                        scope="row"
+                        padding="none"
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          width: "450px",
+                        }}
+                      >
+                        {row.nodeName}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          whiteSpace: "nowrap",
+                          width: "450px",
+                        }}
+                      >
+                        {row.type}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.latency}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.peers}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        {row.pendingTxn}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "70px",
+                        }}
+                      >
+                        #{row.lastBlock}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {row.graph}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          fontSize: "12px",
+                          color: "#393939",
+                          fontFamily: "Inter",
+                          fontWeight: "400",
+                          columnWidth: "50px",
+                        }}
+                      >
+                        {row.upTime}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </TableBox>
     </>
   );
 }
