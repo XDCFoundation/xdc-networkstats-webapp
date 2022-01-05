@@ -90,9 +90,9 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 8px",
     fontWeight: "400",
-    borderBottom: "0.3px solid #E8E8E8"
+    borderBottom: "0.3px solid #E8E8E8",
+    padding: "6px",
   },
 }))(TableCell);
 
@@ -377,6 +377,10 @@ function EnhancedTable(props) {
                       <Radio control={<Radio />}
                       value={row.nodeName}
                       onChange={e => pinned(e.target.value)}
+                      style={{
+                        paddingRight: "0px",
+                        paddingLeft: "18px",
+                      }}
                       />
                     </StyledTableCell>
                     <StyledTableCell
@@ -387,7 +391,7 @@ function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
-                        width: "450px",
+                        // width: "450px",
                       }}
                     >
                       {row.nodeName}
@@ -399,7 +403,7 @@ function EnhancedTable(props) {
                         fontFamily: "Inter",
                         fontWeight: "400",
                         whiteSpace: "nowrap",
-                        width: "450px",
+                        // width: "450px",
                       }}
                     >
                       {row.type}

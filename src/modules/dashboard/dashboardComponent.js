@@ -920,7 +920,6 @@ const MobileTitleSecurity = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: none;
   background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
@@ -939,7 +938,6 @@ const MobileTitleSpeed = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: none;
   background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
@@ -958,7 +956,6 @@ const MobileTitleEfficiency = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: none;
   background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
   :hover {
     background-color: #4065cb;
@@ -1188,6 +1185,7 @@ const MobileGraphDiv = styled.div`
 `;
 const MapWidth = styled.div`
   width: 100%;
+  padding-left: 40px;
 `;
 const TabContainer = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
