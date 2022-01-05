@@ -239,7 +239,6 @@ select {
   max-width: 530px !important;
   text-align: left !important;
   font-size:1rem !important;
-  font-weight: 600 !important;
   font-family: Inter !important;
   color: #1F1F1F !important;
   padding: 25px 28px 23px 20px !important;
@@ -247,8 +246,9 @@ select {
 }
 
 .react-joyride__spotlight {
-  height: 341px !important ;
+  height: 307px !important ;
   top: 61px !important ;
+  border-radius: 0px !important;
   
 }
 
@@ -282,14 +282,20 @@ select {
   }
 
 
-/* #react-joyride-step-0>div>div>div{
+ #react-joyride-step-0>div>div>div{
   top:-20px !important;
-} */
+}
+#react-joyride-step-1>div>div>div{
+  top:-20px !important;
+}
+#react-joyride-step-2>div>div>div{
+  top:-20px !important;
+}
 
 .tooltip{
   position: absolute;
   width: 80%;
-  top: 65%;
+  top: 4%;
   border-radius: 4px;
   padding: 25px 17px 23px 20px !important;
    background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -298,7 +304,7 @@ select {
 
 @media (min-width: 767px) {
   .tooltip {
-  top: 36%;
+  top: 2%;
   }
 }
 
@@ -330,7 +336,7 @@ select {
     height: 26px;
    border-width: 1px; 
     background-color: #fff;
-    /* -moz-box-shadow: -2px 2px 3.5px rgba(0, 0, 0, .5); */
+   
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
@@ -338,7 +344,7 @@ select {
 .flex{
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+ 
   
 }
 @media screen and (min-width: 1025px) {

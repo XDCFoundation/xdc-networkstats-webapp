@@ -61,7 +61,10 @@ export default function Header(props) {
         <div style={{ display: "flex", alignItems: "center" }}>
           <StartGuideTourButton
             onClick={() => {
-              props.setJoyrideRun(true); props.setShowTabJoyRide(true); props.expand(false); props.tab(1);
+              props.setJoyrideRun(true);
+              props.setShowTabJoyRide(true);
+              props.expand(false);
+              props.tab(1);
             }}
           >
             <img src="/images/Play.svg" alt="Start" />
@@ -69,7 +72,9 @@ export default function Header(props) {
           </StartGuideTourButton>
           <StartGuideTourButtonTab
             onClick={() => {
-              props.setShowTabJoyRide(true); props.expand(false); props.mobile(1);
+              props.setShowTabJoyRide(true);
+              props.expand(false);
+              props.mobile(1);
             }}
           >
             <PlayImage src="/images/Play.svg" alt="Start" />
@@ -87,7 +92,7 @@ export default function Header(props) {
 const DivRow = styled.div`
   background: #2149b9 0% 0% no-repeat padding-box;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   white-space: nowrap;
 `;
 const NetworkStats = styled.div`
