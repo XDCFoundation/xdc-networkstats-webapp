@@ -12,8 +12,10 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
+import _ from "lodash";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-
+import { eventConstants } from "../../constants";
+import store from "../../store";
 
 const TableBox = styled.div`
   width: 100%;
@@ -90,19 +92,43 @@ const StyledTableCell = withStyles((theme) => ({
   root: {
     padding: "0px 8px",
     fontWeight: "400",
+    borderBottom: "0.3px solid #E8E8E8"
   },
 }))(TableCell);
 
 function EnhancedTable(props) {
+
+
+  function findIndex(search) {
+    return _.findIndex(rows, search);
+  }
+
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
   }
 
+  function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+}
+
   const [rows, setRows] = useState([]);
   useEffect(()=>{
-   setRows(props.stats.nodesArr)
+   if(!_.isEmpty(props.stats.pinned)){
+   let pin = props.stats.pinned;
+    for(let i = 0; i< pin.length; i++) {
+     let index = props.stats.nodesArr.findIndex(a => a.nodeName === pin[i]);
+     arraymove(props.stats.nodesArr, index, 0);
+     setRows(props.stats.nodesArr);
+    }
+  }
+  else{
+    setRows(props.stats.nodesArr);
+  }
   },[props.stats.nodesArr]);
+
   const [query, setQuery] = useState('');
     const filteredRows = props.stats.nodesArr.filter((row) => {
       return row.nodeName.toLowerCase().includes((query).toLowerCase());
@@ -208,6 +234,24 @@ function EnhancedTable(props) {
       ),
     },
   ];
+  
+  const [checked, setChecked] = useState(true);
+  const [pin, setPin] = useState([]);
+  const changeRadio = (e) => {
+    setChecked(e.target.value)
+  };
+  useEffect(()=>{})
+
+
+  function pinned(pin){
+  // let nodes = rows;
+  let filter = props.stats.pinned;
+  filter.push(pin)
+  store.dispatch({ type: eventConstants.UPDATE_PINNED, data: filter});
+  // nodes.splice(nodes.findIndex(a => a.nodeName === pinNode[0].nodeName) , 1)
+  console.log("filter", props.stats.pinned);
+  
+  }
 
   function EnhancedTableHead() {
     return (
@@ -254,7 +298,10 @@ function EnhancedTable(props) {
                 return (
                   <StyledTableRow>
                     <StyledTableCell padding="radio">
-                      <Radio control={<Radio />} />
+                      <Radio control={<Radio />}
+                      value={row.nodeName}
+                      onChange={e => pinned(e.target.value)}
+                      />
                     </StyledTableCell>
                     <StyledTableCell
                       scope="row"

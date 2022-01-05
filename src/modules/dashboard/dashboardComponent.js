@@ -88,8 +88,9 @@ function Dashboard(props) {
           border: "none",
           width: 70,
           borderRadius: 0,
-          fontSize: 13,
+          fontSize: 12,
           borderRadius: "3px",
+          fontWeight: 50
         },
         buttonBack: {
           marginRight: 10,
@@ -801,8 +802,8 @@ const JoyrideNextButton = styled.button`
   color: white;
   border-radius: 2px;
   padding: 4px;
-  font-size: 0.8rem;
-
+  font-size: 12px;
+  font-weight: 50;
   display: ${(props) => (props.showBackCount === 2 ? "none" : "flex")};
   justify-content: center;
   align-items: center;
@@ -877,7 +878,6 @@ const TabSecurity = styled.div`
   font-size: 1rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
   padding: 8px 6px 8px 16px;
   display: flex;
   justify-content: center;
@@ -896,7 +896,6 @@ const TabSpeed = styled.div`
   font-size: 1rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
   padding: 8px 6px 8px 16px;
   display: flex;
   justify-content: center;
@@ -915,7 +914,6 @@ const TabEfficiency = styled.div`
   font-size: 1rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
   padding: 8px 6px 8px 16px;
   display: flex;
   justify-content: center;
@@ -1141,12 +1139,15 @@ const Speedbar = styled.div`
   margin-top: 40px;
   width: 100%;
   max-width: 500px;
-  margin-left: -4px;
+  margin-left: -20px;
 `;
 const TableDiv = styled.div`
   background: #f8f8f8;
   border-radius: 4px;
-  padding: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 50px;
+  padding-bottom: 30px;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
   }
@@ -1255,9 +1256,9 @@ const SelectionDiv = styled.div`
   align-items: center;
   text-align: center;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 12px;
   background-color: #1c3c93;
-  margin-right: 20px;
+  margin-right: 22px;
 `;
 const SelectionDivStyle = styled.div`
   font-size: 12px;

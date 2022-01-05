@@ -36,12 +36,25 @@ const StartGuideTourButton = styled.button`
     display: none;
   }
 `;
+
+const Img = styled.img`
+height: 30px;
+width: 84px;
+@media (min-width: 300px) and (max-width: 767px) {
+height: 25px;
+width: 70px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+height: 28px;
+width: 78px;
+}
+`;
 export default function Header(props) {
   return (
     <DivRow>
       <SpaceBetween>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <img src="/images/XDC-Logo.svg" />
+          <Img src="/images/XDC-Logo.svg" />
           <img src="/images/VerticalLine.svg" />
           <NetworkStats>Network Stats</NetworkStats>
         </div>
@@ -84,6 +97,9 @@ const NetworkStats = styled.div`
   color: #ffffff;
   white-space: nowrap;
   margin-left: 9px;
+  @media (min-width: 767px) and (max-width: 1024px) {
+  font-weight: 350;
+  }
 `;
 const SpaceBetween = styled.div`
   display: flex;
