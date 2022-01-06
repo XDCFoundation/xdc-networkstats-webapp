@@ -36,19 +36,42 @@ const StartGuideTourButton = styled.button`
     display: none;
   }
 `;
+
+const Img = styled.img`
+height: 30px;
+width: 84px;
+@media (min-width: 300px) and (max-width: 767px) {
+height: 20px;
+width: 70px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+height: 28px;
+width: 78px;
+}
+`;
+
+const Line = styled.img`
+@media (min-width: 300px) and (max-width: 767px) {
+height: 25px;
+}
+`;
+
 export default function Header(props) {
   return (
     <DivRow>
       <SpaceBetween>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <img src="/images/XDC-Logo.svg" />
-          <img src="/images/VerticalLine.svg" />
+          <Img src="/images/XDC-Logo.svg" />
+          <Line src="/images/VerticalLine.svg" />
           <NetworkStats>Network Stats</NetworkStats>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <StartGuideTourButton
             onClick={() => {
-              props.setJoyrideRun(true); props.setShowTabJoyRide(true); props.expand(false); props.tab(1);
+              props.setJoyrideRun(true);
+              props.setShowTabJoyRide(true);
+              props.expand(false);
+              props.tab(1);
             }}
           >
             <img src="/images/Play.svg" alt="Start" />
@@ -56,7 +79,9 @@ export default function Header(props) {
           </StartGuideTourButton>
           <StartGuideTourButtonTab
             onClick={() => {
-              props.setShowTabJoyRide(true); props.expand(false); props.mobile(1);
+              props.setShowTabJoyRide(true);
+              props.expand(false);
+              props.mobile(1);
             }}
           >
             <PlayImage src="/images/Play.svg" alt="Start" />
@@ -74,7 +99,7 @@ export default function Header(props) {
 const DivRow = styled.div`
   background: #2149b9 0% 0% no-repeat padding-box;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   white-space: nowrap;
 `;
 const NetworkStats = styled.div`
@@ -84,6 +109,13 @@ const NetworkStats = styled.div`
   color: #ffffff;
   white-space: nowrap;
   margin-left: 9px;
+  @media (min-width: 768px) and (max-width: 1024px) {
+  font-weight: 350;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+  font-weight: 200;
+  font-size: 14px;
+  }
 `;
 const SpaceBetween = styled.div`
   display: flex;

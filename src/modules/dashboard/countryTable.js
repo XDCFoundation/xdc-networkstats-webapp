@@ -55,8 +55,9 @@ const StyledTableRow = withStyles((theme) => ({
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    height: "30px",
-    padding: "0px 40px",
+    height: "5px",
+    padding: "10px",
+    width: "17px",
   },
 }))(TableCell);
 
@@ -215,7 +216,11 @@ function EnhancedTable(props) {
 
     return (
       <TableHead>
-        <StyledTableRow>
+        <StyledTableRow
+        style={{
+        height: "40px"
+        }}
+        >
           {headCells.map((headCell) => (
             <StyledTableCell
               key={headCell.id}
@@ -224,12 +229,11 @@ function EnhancedTable(props) {
                 whiteSpace: "nowrap",
                 alignContent: "start",
                 borderColor: "#4E6AB5",
-                columnWidth: "90px"
               }}
             >
               <TableSortLabel
                 active={false}
-                hideSortIcon={false}
+                hideSortIcon={true}
               >
                 {headCell.label}
               </TableSortLabel>
@@ -318,7 +322,6 @@ function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        width: "5px",
                         borderColor: "#4E6AB5",
                       }}
                     >
@@ -327,9 +330,7 @@ function EnhancedTable(props) {
                     <StyledTableCell
                       style={{
                         color: "white",
-                        width: "20px",
                         borderColor: "#4E6AB5",
-                        width: "60px",
                       }}
                     >
                       {row.countries}
@@ -338,7 +339,6 @@ function EnhancedTable(props) {
                       style={{
                         color: "white",
                         borderColor: "#4E6AB5",
-                        width: "50px",
                       }}
                     >
                       {row.last24h}
@@ -347,7 +347,6 @@ function EnhancedTable(props) {
                       style={{
                         borderColor: "#4E6AB5",
                         color: "white",
-                        width: "50px",
                       }}
                     >
                       {row.last24}
@@ -356,7 +355,6 @@ function EnhancedTable(props) {
                       style={{
                         borderColor: "#4E6AB5",
                         color: "white",
-                        width: "50px",
                       }}
                     >
                       {row.last7}

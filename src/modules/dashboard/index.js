@@ -1,7 +1,6 @@
 import React from "react";
 import BaseComponent from "../baseComponent";
-// import DashboardComponent from "./dashboardComponent";
-import MainComponent from "./mainComponent";
+import DashboardComponent from "./dashboardComponent";
 import "../../services/socket";
 
 class Dashboard extends BaseComponent {
@@ -25,12 +24,7 @@ class Dashboard extends BaseComponent {
   componentDidMount() {}
 
   render() {
-    return <MainComponent/>;
+    return <DashboardComponent/>;
   }
 }
-
-// const mapStateToProps = (state) => {
-//     return {stats: state.stats}
-// };
-
 export default Dashboard;

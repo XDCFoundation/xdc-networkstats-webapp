@@ -111,10 +111,10 @@ export default function SideDrawer(props) {
             <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
             <Content
               onClick={() =>
-                (window.location.href = "https://betaexplorer.xdcroadmap.net/")
+                (window.location.href = "https://observer.xdc.org/")
               }
             >
-              Block Explorer
+              XDC Observatory
             </Content>
           </RowDiv>
 
