@@ -786,12 +786,12 @@ const JoyrideNextButton = styled.button`
 const BackDropStyle = styled.div`
   position: absolute;
   width: 100%;
-  height: 50%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.6);
   z-index: 100;
-  top: 392px;
+  top: 390px;
   right: 0;
-  @media (min-width: 1024px) {
+  @media (min-width: 1025px) {
     display: none;
   }
 
@@ -1111,6 +1111,7 @@ const CountriesData = styled.div`
 const Image = styled.img`
   width: 25px;
   padding-bottom: 25px;
+  cursor: pointer;
   @media (min-width: 767px) and (max-width: 1024px) {
     width: 25px;
   }
@@ -1121,7 +1122,7 @@ const BlockTime = styled.div`
   color: #ffffff;
 `;
 const Speedbar = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
   width: 100%;
   max-width: 500px;
   margin-left: -20px;

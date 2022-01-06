@@ -39,7 +39,7 @@ let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
 
-const socket = io("http://52.15.80.60:3000", {
+const socket = io("http://3.88.252.78:3000", {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -408,8 +408,8 @@ function updateActiveNodes(data) {
         for (let j = 0; j < res.responseData.last24.length; j++) {
           if (countryArray[i].country === res.responseData.last24[j].country) {
             countryArray[i].last24diff = (((countryArray[i].count -
-            res.responseData.last24[j].count / 24) /
-            (res.responseData.last24[j].count / 24)) *
+            8) /
+            (8)) *
               100
             ).toFixed(2);
           }

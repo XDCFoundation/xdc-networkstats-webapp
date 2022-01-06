@@ -3,76 +3,78 @@ import styled from "styled-components";
 import CountryMap from "./countryMap";
 import CountryTable from "./countryTable";
 
-
 const TabDiv = styled.div`
   width: 100%;
   height: 100%;
-  
-   @media (min-width: 1025px) {
+
+  @media (min-width: 1025px) {
     display: none;
   }
 `;
-const Img = styled.div`
-width: 2%;
-@media (min-width: 300px) and (max-width: 767px) {
-padding-right: 30px;
-}
-@media (min-width: 300px) and (max-width: 1024px) {
-padding-right: 30px;
-}
+const Img = styled.img`
+   cursor: pointer;
+   @media (min-width: 300px) and (max-width: 767px) {
+    width: 25px;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 30px; 
+  }
+`;
+
+const Close = styled.img`
+  cursor: pointer;
 `;
 
 export default function Countries(props) {
-
   return (
     <Div>
       <DesktopDiv>
-      <SpaceBetween>
+        <SpaceBetween>
+          <LeftDiv>
+            Nodes
+            <Label>Top 10 Countries</Label>
+          </LeftDiv>
+          <div>
+            <Close
+              src="/images/Collapse.svg"
+              alt="close"
+              onClick={() => {
+                props.expand(false);
+              }}
+            />
+          </div>
+        </SpaceBetween>
+        <MainContainer>
+          <TableDiv>
+            <CountryTable />
+          </TableDiv>
+          <MapDiv>
+            <CountryMap />
+          </MapDiv>
+        </MainContainer>
+      </DesktopDiv>
+      <TabDiv>
+        <SpaceBetween>
+          <MapDiv>
+            <CountryMap />
+          </MapDiv>
+          <div>
+          <Img
+            src="/images/Collapse.svg"
+            alt="close"
+            onClick={() => {
+              props.expand(false);
+            }}
+          />
+          </div>
+        </SpaceBetween>
         <LeftDiv>
           Nodes
           <Label>Top 10 Countries</Label>
         </LeftDiv>
-        <div>
-          <img
-            src="/images/Collapse.svg"
-            alt="close"
-            onClick={() => {
-              props.expand(false);
-            }}
-          />
-        </div>
-      </SpaceBetween>
-      <MainContainer>
-      <TableDiv>
-      <CountryTable/>
-      </TableDiv>
-      <MapDiv>
-      <CountryMap/>
-      </MapDiv>
-      </MainContainer>
-      </DesktopDiv>
-      <TabDiv>
-      <SpaceBetween>
-      <MapDiv>
-      <CountryMap/>
-      </MapDiv>
-      <Img>
-      <img
-            src="/images/Collapse.svg"
-            alt="close"
-            onClick={() => {
-              props.expand(false);
-            }}
-          />
-          </Img>
-      </SpaceBetween>
-      <LeftDiv>
-          Nodes
-          <Label>Top 10 Countries</Label>
-        </LeftDiv>
-      <TableDiv>
-      <CountryTable/>
-      </TableDiv>
+        <TableDiv>
+          <CountryTable />
+        </TableDiv>
       </TabDiv>
     </Div>
   );
@@ -96,10 +98,11 @@ const LeftDiv = styled.div`
   color: #667fc1;
   font-size: 16px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  padding-left: 10px;
+    padding-left: 10px;
+    padding-top: 0px;
   }
   @media (min-width: 300px) and (max-width: 767px) {
-  padding-left: 10px;
+    padding-left: 10px;
   }
 `;
 
@@ -107,13 +110,12 @@ const Label = styled.div`
   font-size: 26px;
   color: white;
   font-family: "Inter";
-  
 `;
 
 const MainContainer = styled.div`
-height: 100%;
-width: 100%;
-display: flex;
+  height: 100%;
+  width: 100%;
+  display: flex;
 `;
 
 const TableDiv = styled.div`
@@ -130,22 +132,22 @@ padding-left: 40px;
 `;
 
 const MapDiv = styled.div`
-height: 100%;
-width: 60%;
-padding-right: 40px;
-@media (min-width: 300px) and (max-width: 1024px) {
-  width: 100%;
-  padding-right: 0px;
-}
-@media (min-width: 300px) and (max-width: 767px) {
-  width: 100%;
-  padding-right: 0px;
-  padding-top: 20px;
-}
+  height: 100%;
+  width: 60%;
+  padding-right: 40px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    padding-right: 0px;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+    padding-right: 0px;
+    padding-top: 20px;
+  }
 `;
 
 const DesktopDiv = styled.div`
-@media (min-width: 300px) and (max-width: 1024px) {
-  display: none;
-}
+  @media (min-width: 300px) and (max-width: 1024px) {
+    display: none;
+  }
 `;
