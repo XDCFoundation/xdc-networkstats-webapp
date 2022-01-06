@@ -316,8 +316,6 @@ function EnhancedTable(props) {
   const changeRadio = (e) => {
     setChecked(e.target.value)
   };
-  useEffect(()=>{})
-
 
   function pinned(pin){
   // let nodes = rows;
