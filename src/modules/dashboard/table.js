@@ -12,7 +12,10 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
+import _ from "lodash";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { eventConstants } from "../../constants";
+import store from "../../store";
 
 const TableBox = styled.div`
   width: 100%;
@@ -70,7 +73,7 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "white",
-    color: "pink",
+
     background: "#FFFFFF 0% 0% no-repeat padding-box",
     boxShadow: "0px 3px 6px #00000029",
     border: "1px solid #F2F2F2",
@@ -81,33 +84,64 @@ const CustomiseTooltip = styled(({ className, ...props }) => (
     justifyContent: "center",
     display: "flex",
     whiteSpace: "nowrap",
-    pointerEvents: 'none',
+    pointerEvents: "none",
   },
 }));
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
-    padding: "0px 8px",
     fontWeight: "400",
+    borderBottom: "0.3px solid #E8E8E8",
+    padding: "6px",
   },
 }))(TableCell);
 
 function EnhancedTable(props) {
+
+
+  function findIndex(search) {
+    return _.findIndex(rows, search);
+  }
+
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
   }
 
+  function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+}
+
   const [rows, setRows] = useState([]);
   useEffect(()=>{
-   setRows(props.stats.nodesArr)
+   if(!_.isEmpty(props.stats.pinned)){
+   let pin = props.stats.pinned;
+    for(let i = 0; i< pin.length; i++) {
+     let index = props.stats.nodesArr.findIndex(a => a.nodeName === pin[i]);
+     arraymove(props.stats.nodesArr, index, 0);
+     setRows(props.stats.nodesArr);
+    }
+  }
+  else{
+    setRows(props.stats.nodesArr);
+  }
   },[props.stats.nodesArr]);
+
   const [query, setQuery] = useState('');
     const filteredRows = props.stats.nodesArr.filter((row) => {
       return row.nodeName.toLowerCase().includes((query).toLowerCase());
     });
   
 
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [showType, setShowType] = useState(false);
+  const [showLatency, setShowLatency] = useState(false);
+  const [showPeers, setShowPeers] = useState(false);
+  const [showPendingTxn, setShowPendingTxn] = useState(false);
+  const [setLastBlock, setShowLastBlock] = useState(false);
+  const [showUptime, setShowUptime] = useState(false);
   const headCells = [
     {
       id: "nodeName",
@@ -117,8 +151,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Node Name</Label>&nbsp;
-          <CustomiseTooltip title="Name of the specified node">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showTooltip}
+            onOpen={() => setShowTooltip(true)}
+            onClose={() => setShowTooltip(false)}
+            disableFocusListener
+            disableTouchListener
+            title="Name of the specified node"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowTooltip(!showTooltip)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -130,8 +175,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Type</Label>&nbsp;
-          <CustomiseTooltip title="Type of node with the architecture and version details">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showType}
+            onOpen={() => setShowType(true)}
+            onClose={() => setShowType(false)}
+            title="Type of node with the architecture and version details"
+            disableFocusListener
+            disableTouchListener
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowType(!showType)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -143,8 +199,19 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Latency</Label>&nbsp;
-          <CustomiseTooltip title="Delay in acceptance of a transaction">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showLatency}
+            onOpen={() => {
+              setShowLatency(true);
+            }}
+            onClose={() => setShowLatency(false)}
+            title="Delay in acceptance of a transaction"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowLatency(!showLatency)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -156,8 +223,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Peers</Label>&nbsp;
-          <CustomiseTooltip title="Number of peers sharing the ledger">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showPeers}
+            onClose={() => setShowPeers(false)}
+            onOpen={() => setShowPeers(true)}
+            title="Number of peers sharing the ledger"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowPeers(!showPeers)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -169,8 +245,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Pending Txn</Label>&nbsp;
-          <CustomiseTooltip title="Number of incomplete transactions">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showPendingTxn}
+            onOpen={() => setShowPendingTxn(true)}
+            onClose={() => setShowPendingTxn(false)}
+            title="Number of incomplete transactions"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowPendingTxn(!showPendingTxn)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -182,8 +267,17 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Last Block</Label>&nbsp;
-          <CustomiseTooltip title="Latest block associated with the node">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={setLastBlock}
+            title="Latest block associated with the node"
+            onClose={() => setShowLastBlock(false)}
+            onOpen={() => setShowLastBlock(true)}
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowLastBlock(!setLastBlock)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
@@ -200,13 +294,38 @@ function EnhancedTable(props) {
       label: (
         <DisplayFlex>
           <Label>Up Time</Label>&nbsp;
-          <CustomiseTooltip title="Total available and working time of the network">
-            <Img src="/images/Help.svg" alt=" " />
+          <CustomiseTooltip
+            open={showUptime}
+            onClose={() => setShowUptime(false)}
+            onOpen={() => setShowUptime(true)}
+            title="Total available and working time of the network"
+          >
+            <Img
+              src="/images/Help.svg"
+              alt=" "
+              onClick={() => setShowUptime(!showUptime)}
+            />
           </CustomiseTooltip>
         </DisplayFlex>
       ),
     },
   ];
+  
+  const [checked, setChecked] = useState(true);
+  const [pin, setPin] = useState([]);
+  const changeRadio = (e) => {
+    setChecked(e.target.value)
+  };
+
+  function pinned(pin){
+  // let nodes = rows;
+  let filter = props.stats.pinned;
+  filter.push(pin)
+  store.dispatch({ type: eventConstants.UPDATE_PINNED, data: filter});
+  // nodes.splice(nodes.findIndex(a => a.nodeName === pinNode[0].nodeName) , 1)
+  console.log("filter", props.stats.pinned);
+  
+  }
 
   function EnhancedTableHead() {
     return (
@@ -238,7 +357,7 @@ function EnhancedTable(props) {
 
   return (
     <>
-    <SearchBox placeholder="Search"  
+    <SearchBox placeholder="Search by node name"  
     value={query}
     onChange={e => setQuery(e.target.value)}
     />
@@ -249,10 +368,18 @@ function EnhancedTable(props) {
             <EnhancedTableHead />
             <TableBody>
               {stableSort(query!=='' ? filteredRows : rows).map((row) => {
+                let block = row.lastBlock.toLocaleString();
                 return (
                   <StyledTableRow>
                     <StyledTableCell padding="radio">
-                      <Radio control={<Radio />} />
+                      <Radio control={<Radio />}
+                      value={row.nodeName}
+                      onChange={e => pinned(e.target.value)}
+                      style={{
+                        paddingRight: "0px",
+                        paddingLeft: "18px",
+                      }}
+                      />
                     </StyledTableCell>
                     <StyledTableCell
                       scope="row"
@@ -262,7 +389,7 @@ function EnhancedTable(props) {
                         color: "#393939",
                         fontFamily: "Inter",
                         fontWeight: "400",
-                        width: "450px",
+                        // width: "450px",
                       }}
                     >
                       {row.nodeName}
@@ -274,7 +401,7 @@ function EnhancedTable(props) {
                         fontFamily: "Inter",
                         fontWeight: "400",
                         whiteSpace: "nowrap",
-                        width: "450px",
+                        // width: "450px",
                       }}
                     >
                       {row.type}
@@ -321,7 +448,7 @@ function EnhancedTable(props) {
                         columnWidth: "70px",
                       }}
                     >
-                      #{row.lastBlock}
+                      #{block}
                     </StyledTableCell>
                     <StyledTableCell
                       style={{

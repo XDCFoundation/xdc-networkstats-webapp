@@ -232,22 +232,30 @@ select {
 
 
 .__floater__arrow {
-  top: 26px ;
+  top:-20px !important;
 }
 .react-joyride__tooltip {
-  width: 530px !important;
+  width: 100% !important;
+  max-width: 530px !important;
   text-align: left !important;
   font-size:1rem !important;
-  font-weight: 600 !important;
   font-family: Inter !important;
   color: #1F1F1F !important;
   padding: 25px 28px 23px 20px !important;
+  top:-20px !important;
 }
 
 .react-joyride__spotlight {
-  height: 341px !important ;
+  height: 307px !important ;
   top: 61px !important ;
+  border-radius: 0px !important;
   
+}
+
+@media (max-height: 800px) {
+  .react-joyride__tooltip{
+    max-width: 450px !important;
+  }
 }
 /* *{
   -ms-overflow-style: none;
@@ -268,27 +276,26 @@ select {
 }
 
 
-.MuiTableCell-root {
-  height: 10px !important;
-  padding: 0px !important; 
-  /* border-bottom: 0.5px solid #E8E8E8 !important; */
-  }
-
-  
   
   .MuiButtonBase-root{
   height: 10px !important;
   }
 
 
-#react-joyride-step-0>div>div>div{
+ #react-joyride-step-0>div>div>div{
+  top:-20px !important;
+}
+#react-joyride-step-1>div>div>div{
+  top:-20px !important;
+}
+#react-joyride-step-2>div>div>div{
   top:-20px !important;
 }
 
 .tooltip{
   position: absolute;
   width: 80%;
-  top: 65%;
+  top: 4%;
   border-radius: 4px;
   padding: 25px 17px 23px 20px !important;
    background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -297,13 +304,25 @@ select {
 
 @media (min-width: 767px) {
   .tooltip {
-  top: 36%;
+  top: 2%;
   }
 }
 
 @media (min-width: 1024px) {
   .tooltip {
   top: 48%;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 374px) {
+  .tooltip {
+  top: 5%;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .tooltip {
+  top: 51%;
   }
 }
 
@@ -317,7 +336,7 @@ select {
     height: 26px;
    border-width: 1px; 
     background-color: #fff;
-    /* -moz-box-shadow: -2px 2px 3.5px rgba(0, 0, 0, .5); */
+   
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
@@ -325,7 +344,7 @@ select {
 .flex{
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+ 
   
 }
 @media screen and (min-width: 1025px) {

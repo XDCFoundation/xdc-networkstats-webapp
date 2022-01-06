@@ -39,7 +39,7 @@ let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
 
-const socket = io("http://52.15.80.60:3000/", {
+const socket = io("http://52.15.80.60:3000", {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -551,17 +551,15 @@ setInterval(() => {
       table.push({
         type: nodesArr[i].info.node,
         pendingTxn: nodesArr[i].stats.pending,
-        lastBlock: <NumberFormat
-          value={nodesArr[i].stats.block.number}
-          displayType={"text"}
-          thousandSeparator={true}
-        />,
+        lastBlock: nodesArr[i].stats.block.number,
         upTime: `${nodesArr[i].stats.uptime}%`,
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,
         nodeName: nodesArr[i].info.name,
       });
+      
     }
+    table = sorter.sort(table).desc("lastBlock");
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-}, 10000);
+}, 1000);
