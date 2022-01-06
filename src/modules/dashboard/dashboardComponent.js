@@ -142,6 +142,8 @@ function Dashboard(props) {
   }, [props.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
 
+  document.body.style.overflow = showTabJoyRide ? "hidden" : "unset";
+
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
@@ -842,11 +844,11 @@ const FlexStyledOne = styled.div`
 const TabSecurity = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
-  padding: 8px 6px 8px 16px;
+
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -861,11 +863,10 @@ const TabSecurity = styled.div`
 const TabSpeed = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
-  padding: 8px 6px 8px 16px;
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -880,11 +881,11 @@ const TabSpeed = styled.div`
 const TabEfficiency = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  border: none;
-  padding: 8px 6px 8px 16px;
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1170,7 +1171,7 @@ const TabContainer = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
   width: 100%;
   display: none;
-
+  height: 33px;
   @media (min-width: 768px) and (max-width: 1024px) {
     display: flex;
   }
