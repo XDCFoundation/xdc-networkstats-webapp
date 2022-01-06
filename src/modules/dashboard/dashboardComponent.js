@@ -807,7 +807,7 @@ const MainContainer = styled.div`
 const Title = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
@@ -1212,9 +1212,10 @@ const EthDiv = styled.div`
 const SelectionDiv = styled.div`
   display: flex;
   width: 100%;
-  max-width: 108px;
+
+  max-width: 133px;
   border-radius: 4px;
-  height: 30px;
+  height: 28px;
   align-items: center;
   text-align: center;
   cursor: pointer;
@@ -1226,11 +1227,16 @@ const SelectionDivStyle = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+
+  color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 1 ? "#3c70ff" : "#1C3C93"};
   /* 
@@ -1242,11 +1248,15 @@ const SelectionDivStyleTwo = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  width: 100%;
+  height: 28px;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 2 ? "#3c70ff" : "#1C3C93"};
 
@@ -1258,11 +1268,15 @@ const SelectionDivStyleThree = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 3 ? "#3c70ff" : "#1C3C93"};
 
