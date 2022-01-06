@@ -316,7 +316,7 @@ select {
 
 @media (min-width: 360px) and (max-width: 374px) {
   .tooltip {
-  top: 65%;
+  top: 5%;
   }
 }
 

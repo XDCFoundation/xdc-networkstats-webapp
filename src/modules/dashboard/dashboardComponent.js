@@ -143,7 +143,7 @@ function Dashboard(props) {
     setGasUsd(props.stats.gasPrice.toFixed(6));
   }, [props.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
-
+  document.body.style.overflow = showTabJoyRide ? "hidden" : "unset";
   const buttonTour = () => {
     setShow(show + 1);
     showSetText(setText + 1);
@@ -759,9 +759,13 @@ const Footer = styled.div`
   background-color: white;
   color: #808080;
   text-align: center;
+  /* display: flex; */
+  align-items: center;
   padding-bottom: 20px;
-  padding-top: 10px;
+  padding-top: 17px;
   font-family: "Inter", sans-serif;
+  white-space: nowrap;
+  font-size: 0.8rem;
 `;
 
 const JoyrideNextButton = styled.button`

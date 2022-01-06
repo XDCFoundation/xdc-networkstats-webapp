@@ -23,7 +23,8 @@ const Div = styled.div`
   @media (min-width: 300px) and (max-width: 1024px) {
     fill: #103aaa;
     width: 100%auto;
-    max-width: 240px;
+    max-width: 280px;
+    margin-left: 80px
   }
 `;
 
