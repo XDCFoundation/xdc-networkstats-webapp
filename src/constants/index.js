@@ -39,7 +39,7 @@ export const eventConstants = {
   UPDATE_MARKERS: "UPDATE_MARKERS",
   UPDATE_EFFICIENCY: "UPDATE_EFFICIENCY",
 };
-export const countryName = {
-  de: "deepali",
-  sh: "sharma",
-};
+// export const countryName = {
+//   de: "deepali",
+//   sh: "sharma",
+// };
