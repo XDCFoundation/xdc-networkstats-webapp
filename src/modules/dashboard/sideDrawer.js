@@ -114,7 +114,7 @@ export default function SideDrawer(props) {
                 (window.location.href = "https://observer.xdc.org/")
               }
             >
-              XDC Observatory
+              Block Explorer
             </Content>
           </RowDiv>
 
