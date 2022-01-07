@@ -482,7 +482,7 @@ function updateBestBlock(data) {
           NodesService.getGasPrice()
         );
         if (typeof res.responseData[0].gasPrice !== "undefined") {
-          let price = res.responseData[0].gasPrice.data.ETH.quote.USD.price;
+          let price = res?.responseData[0]?.gasPrice?.data?.ETH?.quote?.USD?.price;
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit;
         }
@@ -527,7 +527,7 @@ setInterval(()=>{
 
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
-  let initNodes = resp.responseData[0].nodes;
+  let initNodes = resp?.responseData[0]?.nodes;
   let table = [];
   for (let i = 0; i < initNodes.length; i++) {
     table.push({
