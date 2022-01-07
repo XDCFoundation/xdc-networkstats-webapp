@@ -229,6 +229,9 @@ select {
   width: 100vw;
   height: 100vh;
 }
+.PrivateSwitchBase-input css-1m9pwf3{
+  box-shadow: none;
+}
 
 
 .__floater__arrow {
@@ -246,8 +249,8 @@ select {
 }
 
 .react-joyride__spotlight {
-  height: 307px !important ;
-  top: 61px !important ;
+  height: 312px !important ;
+  top: 58px !important ;
   border-radius: 0px !important;
   
 }
