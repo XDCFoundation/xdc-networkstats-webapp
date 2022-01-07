@@ -408,10 +408,10 @@ function updateActiveNodes(data) {
         !_.isEmpty(res?.responseData?.last24)
       ) {
         for (let j = 0; j < res.responseData.last24.length; j++) {
-          if (countryArray[i].country === res.responseData.last24[j].country) {
+          if (countryArray[i].country === res?.responseData?.last24[j]?.country) {
             countryArray[i].last24diff = (((countryArray[i].count -
-              res.responseData.last24[j].count / 24) /
-            (res.responseData.last24[j].count / 24)) *
+              res?.responseData?.last24[j].count / 24) /
+            (res?.responseData?.last24[j].count / 24)) *
               100
             ).toFixed(2);
           }
@@ -421,14 +421,14 @@ function updateActiveNodes(data) {
 
     for (let i = 0; i < countryArray.length; i++) {
       if (
-        !_.isUndefined(res.responseData.last7) &&
-        !_.isEmpty(res.responseData.last7)
+        !_.isUndefined(res?.responseData?.last7) &&
+        !_.isEmpty(res?.responseData?.last7)
       ) {
-        for (let j = 0; j < res.responseData.last7.length; j++) {
-          if (countryArray[i].country === res.responseData.last7[j].country) {
+        for (let j = 0; j < res?.responseData?.last7?.length; j++) {
+          if (countryArray[i].country === res?.responseData?.last7[j]?.country) {
             countryArray[i].last7diff = (((countryArray[i].count -
-            res.responseData.last7[j].count / 168) /
-            (res.responseData.last7[j].count / 168)) *
+            res?.responseData?.last7[j]?.count / 168) /
+            (res?.responseData?.last7[j]?.count / 168)) *
               100
             ).toFixed(2);
             }
