@@ -9,6 +9,8 @@ import { NodesService } from "../services/";
 import sorter from "sort-nested-json";
 import { batch } from "react-redux";
 import NumberFormat from "react-number-format";
+import {httpConstants} from "../constants";
+
 
 let MAX_BINS = 40;
 let nodesArr = [];
@@ -367,7 +369,7 @@ function updateActiveNodes(data) {
         coords: swap(node.geo.ll[0], node.geo.ll[1]),
       });
       country.push({
-        loc: node.geo.country,
+        loc: (node.geo.country).toString(),
       });
     }
   });
@@ -402,14 +404,14 @@ function updateActiveNodes(data) {
     );
     for (let i = 0; i < countryArray.length; i++) {
       if (
-        !_.isUndefined(res.responseData.last24) &&
-        !_.isEmpty(res.responseData.last24)
+        !_.isUndefined(res?.responseData?.last24) &&
+        !_.isEmpty(res?.responseData?.last24)
       ) {
         for (let j = 0; j < res.responseData.last24.length; j++) {
           if (countryArray[i].country === res.responseData.last24[j].country) {
             countryArray[i].last24diff = (((countryArray[i].count -
-            8) /
-            (8)) *
+              res.responseData.last24[j].count / 24) /
+            (res.responseData.last24[j].count / 24)) *
               100
             ).toFixed(2);
           }
@@ -481,7 +483,7 @@ function updateBestBlock(data) {
         const [error, res] = await utility.parseResponse(
           NodesService.getGasPrice()
         );
-        if (typeof res.responseData[0].gasPrice !== "undefined") {
+        if (typeof res?.responseData[0]?.gasPrice !== "undefined") {
           let price = res?.responseData[0]?.gasPrice?.data?.ETH?.quote?.USD?.price;
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit;
@@ -517,6 +519,7 @@ function findIndex(search) {
   return _.findIndex(nodesArr, search);
 }
 
+console.log("print", process.env.REACT_APP_NODE+httpConstants.API_END_POINT.NODE);
 
 setInterval(()=>{
   let val = timeFilter(lastBlock);

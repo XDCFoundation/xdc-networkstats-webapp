@@ -796,7 +796,7 @@ const BackDropStyle = styled.div`
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
-    top: 348px;
+    top: 341px;
   }
 `;
 const JoyrideBackButton = styled.div`
@@ -824,7 +824,7 @@ const MainContainer = styled.div`
 const Title = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
@@ -861,10 +861,11 @@ const FlexStyledOne = styled.div`
 const TabSecurity = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
+
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -879,10 +880,10 @@ const TabSecurity = styled.div`
 const TabSpeed = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -897,10 +898,11 @@ const TabSpeed = styled.div`
 const TabEfficiency = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1rem;
+
+  font-size: 0.9rem;
   font-weight: 600;
   border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
+  padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1196,7 +1198,7 @@ const TabContainer = styled.div`
   background: #1c3c93 0% 0% no-repeat padding-box;
   width: 100%;
   display: none;
-
+  height: 33px;
   @media (min-width: 768px) and (max-width: 1024px) {
     display: flex;
   }
@@ -1237,9 +1239,10 @@ const EthDiv = styled.div`
 const SelectionDiv = styled.div`
   display: flex;
   width: 100%;
-  max-width: 108px;
+
+  max-width: 133px;
   border-radius: 4px;
-  height: 30px;
+  height: 28px;
   align-items: center;
   text-align: center;
   cursor: pointer;
@@ -1251,11 +1254,16 @@ const SelectionDivStyle = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+
+  color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 1 ? "#3c70ff" : "#1C3C93"};
   /* 
@@ -1267,11 +1275,15 @@ const SelectionDivStyleTwo = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  width: 100%;
+  height: 28px;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 2 ? "#3c70ff" : "#1C3C93"};
 
@@ -1283,11 +1295,15 @@ const SelectionDivStyleThree = styled.div`
   font-size: 12px;
   font-weight: 600;
   font-family: Inter;
-  color: #ffffff;
-  padding: 7px;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
   border-radius: 4px 0px 0px 4px;
   border-right: 0.5px solid #3c70ff;
   cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
+
   background-color: ${(props) =>
     props.buttonToggle === 3 ? "#3c70ff" : "#1C3C93"};
 
