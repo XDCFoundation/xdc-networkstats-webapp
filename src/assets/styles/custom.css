@@ -229,6 +229,9 @@ select {
   width: 100vw;
   height: 100vh;
 }
+.PrivateSwitchBase-input css-1m9pwf3{
+  box-shadow: none;
+}
 
 
 .__floater__arrow {
@@ -246,8 +249,8 @@ select {
 }
 
 .react-joyride__spotlight {
-  height: 307px !important ;
-  top: 61px !important ;
+  height: 312px !important ;
+  top: 58px !important ;
   border-radius: 0px !important;
   
 }
@@ -292,38 +295,15 @@ select {
   top:-20px !important;
 }
 
+
 .tooltip{
   position: absolute;
   width: 80%;
-  top: 4%;
+  top: 3%;
   border-radius: 4px;
   padding: 25px 17px 23px 20px !important;
    background: #FFFFFF 0% 0% no-repeat padding-box;
    opacity: 1;
-}
-
-@media (min-width: 767px) {
-  .tooltip {
-  top: 2%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tooltip {
-  top: 48%;
-  }
-}
-
-@media (min-width: 360px) and (max-width: 374px) {
-  .tooltip {
-  top: 5%;
-  }
-}
-
-@media (min-width: 375px) and (max-width: 767px) {
-  .tooltip {
-  top: 51%;
-  }
 }
 
 .tooltip:before{
@@ -347,11 +327,7 @@ select {
  
   
 }
-@media screen and (min-width: 1025px) {
-  .flex {
-    display: none;
-  }
-}
+
 .flex-img{
   display: flex;
   justify-content:flex-end;

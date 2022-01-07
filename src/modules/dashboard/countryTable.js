@@ -14,7 +14,8 @@ import { withStyles } from "@material-ui/styles";
 import _ from "lodash";
 import {dispatchAction} from "../../utility";
 import {connect} from "react-redux";
-import TablePagination from '@mui/material/TablePagination';
+
+const { getName } = require('country-list');
 
 const TableBox = styled.div`
   width: 100%;
@@ -58,6 +59,7 @@ const StyledTableCell = withStyles((theme) => ({
     height: "5px",
     padding: "10px",
     width: "17px",
+    whiteSpace: "nowrap",
   },
 }))(TableCell);
 
@@ -68,7 +70,7 @@ function EnhancedTable(props) {
         if(parseFloat(props.stats.expandedCountry[i].last24diff)>0 && parseFloat(props.stats.expandedCountry[i].last7diff)>0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last24diff+"%"}</Up></Flex>,
           last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
@@ -77,7 +79,7 @@ function EnhancedTable(props) {
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)>0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
           last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
@@ -85,7 +87,7 @@ function EnhancedTable(props) {
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)>0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
           last7: props.stats.expandedCountry[i].last7diff+"%"
@@ -94,7 +96,7 @@ function EnhancedTable(props) {
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)>0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
           last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
@@ -103,7 +105,7 @@ function EnhancedTable(props) {
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
           last7: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
@@ -111,7 +113,7 @@ function EnhancedTable(props) {
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
           last7: props.stats.expandedCountry[i].last7diff+"%"
@@ -121,7 +123,7 @@ function EnhancedTable(props) {
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)>0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
           last7: <Flex><img src="/images/Up Arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
@@ -130,7 +132,7 @@ function EnhancedTable(props) {
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
           last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
@@ -138,7 +140,7 @@ function EnhancedTable(props) {
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
-          countries: props.stats.expandedCountry[i].country,
+          countries: getName(props.stats.expandedCountry[i].country),
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
           last7: props.stats.expandedCountry[i].last7diff+"%"

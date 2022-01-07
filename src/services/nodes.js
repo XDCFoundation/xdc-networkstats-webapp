@@ -1,10 +1,12 @@
+import {httpConstants} from "../constants";
 const { default: axios } = require('axios');
 
 
 export default { getNodes, getGasPrice, getUpTime, getInitNodes, getCountryInit, getEth};
 async function getNodes() {
+  let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.NODE;
   return axios
-    .get("http://52.15.80.60:3000/node")
+    .get(url)
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -15,8 +17,10 @@ async function getNodes() {
 
 
 async function getGasPrice() {
+  let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.GAS_PRICE;
+  console.log("gas", url);
   return axios
-    .get("http://52.15.80.60:3000/getGasPrice")
+    .get(url)
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -26,8 +30,9 @@ async function getGasPrice() {
 }
 
 async function getUpTime(data) {
+  let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.UPTIME;
   return axios
-    .get(`http://52.15.80.60:3000/uptime/${data}`)
+    .get(url + data)
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -38,8 +43,9 @@ async function getUpTime(data) {
 
 
 async function getCountryInit() {
+  let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.EXPANDED;
   return axios
-    .get(`http://52.15.80.60:3000/getInit`)
+    .get(url)
     .then((res) => {
       return Promise.resolve(res.data);
     })
@@ -49,8 +55,9 @@ async function getCountryInit() {
 }
 
 async function getInitNodes() {
+  let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.INIT_TABLE;
   return axios
-      .get(`http://52.15.80.60:3000/get-table-nodes`)
+      .get(url)
       .then((res) => {
           return Promise.resolve(res.data);
       })
@@ -60,8 +67,10 @@ async function getInitNodes() {
 }
 
 async function getEth() {
+  let url = process.env.REACT_APP_NODE_ETH_GAS;
+  console.log("eth", url);
   return axios
-      .get(`https://ethgas.watch/api/gas`)
+      .get(url)
       .then((res) => {
           return Promise.resolve(res.data);
       })

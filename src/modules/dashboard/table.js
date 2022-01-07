@@ -8,16 +8,15 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
-import styled from "styled-components";
+import style from "styled-components";
+import { styled } from '@mui/material/styles';
 import { withStyles } from "@material-ui/styles";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
 import _ from "lodash";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { eventConstants } from "../../constants";
-import store from "../../store";
 
-const TableBox = styled.div`
+const TableBox = style.div`
   width: 100%;
   overflow: scroll;
   display: block;
@@ -25,7 +24,7 @@ const TableBox = styled.div`
   white-space: nowrap;
 `;
 
-const SearchBox = styled.input`
+const SearchBox = style.input`
   background-image: url("/images/Search.svg");
   background-repeat: no-repeat;
   background-position: 0.5rem;
@@ -45,19 +44,19 @@ const SearchBox = styled.input`
   color: "black";
 `;
 
-const Label = styled.div`
+const Label = style.div`
   font-size: 12px;
   line-height: 15px;
   font-family: "Inter";
   color: #393939;
   font-weight: 600;
 `;
-const DisplayFlex = styled.div`
+const DisplayFlex = style.div`
   display: flex;
   align-items: center;
   text-align: center;
 `;
-const Img = styled.img`
+const Img = style.img`
   display: flex;
   align-items: center;
   text-align: center;
@@ -67,6 +66,26 @@ const StyledTableRow = withStyles((theme) => ({
     height: 50,
   },
 }))(TableRow);
+
+const BpIcon = styled('span')(({ theme }) => ({
+  borderRadius: '50%',
+  width: 16,
+  height: 16,
+  boxShadow:
+    theme.palette.mode === 'dark'
+      ? '0 0 0 1px rgb(16 22 26 / 40%)'
+      : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
+}));
+
+const BpCheckedIcon = styled(BpIcon)({
+  backgroundImage: 'url("/images/Selected.svg")',
+  '&:before': {
+    display: 'block',
+    width: 16,
+    height: 16,
+    content: '""',
+  },
+});
 
 const CustomiseTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -97,11 +116,32 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 function EnhancedTable(props) {
-
-
   function findIndex(search) {
     return _.findIndex(rows, search);
   }
+
+  const [selected, setSelected] = React.useState([]);
+  console.log("selected", selected);
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -112,28 +152,28 @@ function EnhancedTable(props) {
     var element = arr[fromIndex];
     arr.splice(fromIndex, 1);
     arr.splice(toIndex, 0, element);
-}
+  }
 
   const [rows, setRows] = useState([]);
-  useEffect(()=>{
-   if(!_.isEmpty(props.stats.pinned)){
-   let pin = props.stats.pinned;
-    for(let i = 0; i< pin.length; i++) {
-     let index = props.stats.nodesArr.findIndex(a => a.nodeName === pin[i]);
-     arraymove(props.stats.nodesArr, index, 0);
-     setRows(props.stats.nodesArr);
+  useEffect(() => {
+    if (!_.isEmpty(selected)) {
+      let pin = selected;
+      for (let i = 0; i < pin.length; i++) {
+        let index = props.stats.nodesArr.findIndex(
+          (a) => a.nodeName === pin[i]
+        );
+        arraymove(props.stats.nodesArr, index, 0);
+        setRows(props.stats.nodesArr);
+      }
+    } else {
+      setRows(props.stats.nodesArr);
     }
-  }
-  else{
-    setRows(props.stats.nodesArr);
-  }
-  },[props.stats.nodesArr]);
+  }, [props.stats.nodesArr]);
 
-  const [query, setQuery] = useState('');
-    const filteredRows = props.stats.nodesArr.filter((row) => {
-      return row.nodeName.toLowerCase().includes((query).toLowerCase());
-    });
-  
+  const [query, setQuery] = useState("");
+  const filteredRows = props.stats.nodesArr.filter((row) => {
+    return row.nodeName.toLowerCase().includes(query.toLowerCase());
+  });
 
   const [showTooltip, setShowTooltip] = useState(false);
   const [showType, setShowType] = useState(false);
@@ -310,22 +350,13 @@ function EnhancedTable(props) {
       ),
     },
   ];
-  
+
   const [checked, setChecked] = useState(true);
   const [pin, setPin] = useState([]);
   const changeRadio = (e) => {
-    setChecked(e.target.value)
+    setChecked(e.target.value);
   };
 
-  function pinned(pin){
-  // let nodes = rows;
-  let filter = props.stats.pinned;
-  filter.push(pin)
-  store.dispatch({ type: eventConstants.UPDATE_PINNED, data: filter});
-  // nodes.splice(nodes.findIndex(a => a.nodeName === pinNode[0].nodeName) , 1)
-  console.log("filter", props.stats.pinned);
-  
-  }
 
   function EnhancedTableHead() {
     return (
@@ -357,128 +388,146 @@ function EnhancedTable(props) {
 
   return (
     <>
-    <SearchBox placeholder="Search by node name"  
-    value={query}
-    onChange={e => setQuery(e.target.value)}
-    />
-    <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-      <Paper sx={{ width: "auto" }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead />
-            <TableBody>
-              {stableSort(query!=='' ? filteredRows : rows).map((row) => {
-                let block = row.lastBlock.toLocaleString();
-                return (
-                  <StyledTableRow>
-                    <StyledTableCell padding="radio">
-                      <Radio control={<Radio />}
-                      value={row.nodeName}
-                      onChange={e => pinned(e.target.value)}
-                      style={{
-                        paddingRight: "0px",
-                        paddingLeft: "18px",
-                      }}
-                      />
-                    </StyledTableCell>
-                    <StyledTableCell
-                      scope="row"
-                      padding="none"
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        // width: "450px",
-                      }}
-                    >
-                      {row.nodeName}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        whiteSpace: "nowrap",
-                        // width: "450px",
-                      }}
-                    >
-                      {row.type}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.latency}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.peers}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      {row.pendingTxn}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "70px",
-                      }}
-                    >
-                      #{block}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {row.graph}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        fontSize: "12px",
-                        color: "#393939",
-                        fontFamily: "Inter",
-                        fontWeight: "400",
-                        columnWidth: "50px",
-                      }}
-                    >
-                      {row.upTime}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </TableBox>
+      <SearchBox
+        placeholder="Search by node name"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
+        <Paper sx={{ width: "auto" }}>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead />
+              <TableBody>
+                {stableSort(query !== "" ? filteredRows : rows).map(
+                  (row, index) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
+                    const isItemSelected = isSelected(row.nodeName);
+                    let block = row.lastBlock.toLocaleString();
+                    return (
+                      <StyledTableRow
+                        onClick={(event) => {handleClick(event, row.nodeName);}}
+                        role="radio"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.nodeName}
+                      >
+                        <StyledTableCell padding="radio">
+                          <Radio
+                            control={<Radio />}
+                            style={{
+                              paddingRight: "0px",
+                              paddingLeft: "18px",
+                            }}
+                            color="default"
+                            checkedIcon={<BpCheckedIcon />}
+                            icon={<BpIcon />}
+                            checked={isItemSelected}
+                            disableRipple
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                          />
+                        </StyledTableCell>
+                        <StyledTableCell
+                          scope="row"
+                          padding="none"
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            // width: "450px",
+                          }}
+                        >
+                          {row.nodeName}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            whiteSpace: "nowrap",
+                            // width: "450px",
+                          }}
+                        >
+                          {row.type}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            columnWidth: "70px",
+                          }}
+                        >
+                          {row.latency}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            columnWidth: "70px",
+                          }}
+                        >
+                          {row.peers}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            columnWidth: "70px",
+                          }}
+                        >
+                          {row.pendingTxn}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            columnWidth: "70px",
+                          }}
+                        >
+                          #{block}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                          }}
+                        >
+                          {row.graph}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{
+                            fontSize: "12px",
+                            color: "#393939",
+                            fontFamily: "Inter",
+                            fontWeight: "400",
+                            columnWidth: "50px",
+                          }}
+                        >
+                          {row.upTime}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </TableBox>
     </>
   );
 }
