@@ -26,7 +26,6 @@ let initialState = {
     },
   ],
   blockTime: [],
-  pinned: [],
 };
 export default function stats(state = initialState, action) {
   switch (action.type) {
@@ -105,11 +104,7 @@ export default function stats(state = initialState, action) {
         ...state,
         efficiency: action.data,
       };
-      case eventConstants.UPDATE_PINNED:
-        return {
-          ...state,
-          pinned: action.data,
-        };
+      
     default:
       return state;
   }
