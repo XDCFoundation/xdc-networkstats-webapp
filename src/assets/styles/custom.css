@@ -340,3 +340,27 @@ select {
   margin-top: 20px;
  
 }
+
+.extra {
+  height: 20px;
+  padding:1px 15px !important;
+  background-color: white !important;
+  background: "#FFFFFF 0% 0% no-repeat padding-box" !important;
+  box-shadow: "0px 3px 6px #00000029" !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: "#1F1F1F" !important;
+  align-items: center;
+  justify-content: "center" !important;
+  display: "flex" !important;
+  white-space: "nowrap" !important;
+}
+
+.extra::before{
+  border: 0 !important;
+}
+
+
+.__react_component_tooltip.show{
+  margin-top: 15px !important;
+}

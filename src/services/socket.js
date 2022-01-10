@@ -40,8 +40,8 @@ let transactionDensity = _.fill(Array(MAX_BINS), 2);
 let gasSpending = _.fill(Array(MAX_BINS), 2);
 let miners = [];
 let node = [];
-
-const socket = io("http://52.15.80.60:3000", {
+let url = process.env.REACT_APP_NODE_WS;
+const socket = io(url, {
   path: "/stats-data/",
   transports: ["websocket"],
   reconnection: true,
@@ -56,7 +56,6 @@ socket.on("end", function end() {});
 socket.on("error", function error(err) {});
 
 socket.on("reconnecting", function reconnecting(opts) {
-  console.log("We are scheduling a reconnect operation", opts);
 });
 
 socket.on("network-stats-data", function node(data) {
@@ -518,8 +517,6 @@ function timeFilter(data) {
 function findIndex(search) {
   return _.findIndex(nodesArr, search);
 }
-
-console.log("print", process.env.REACT_APP_NODE+httpConstants.API_END_POINT.NODE);
 
 setInterval(()=>{
   let val = timeFilter(lastBlock);
