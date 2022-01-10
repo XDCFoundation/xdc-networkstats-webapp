@@ -13,18 +13,17 @@ import { connect } from "react-redux";
 const Div = styled.div`
   fill: #103aaa;
   width: 100%;
-  margin-top: -15px;
 
   @media (min-width: 300px) and (max-width: 767px) {
     fill: #103aaa;
-    width: 70vw;
-    max-width: 300px;
+    width: 310px;
+    margin-left: -30px;
   }
-  @media (min-width: 300px) and (max-width: 1024px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     fill: #103aaa;
-    width: 100%auto;
-    max-width: 280px;
-    margin-left: 80px
+    width: 100%;
+    max-width: 290px;
+    margin-left: 44px;
   }
 `;
 
@@ -43,7 +42,11 @@ function Map(props) {
   });
   return (
     <Div>
-      <ComposableMap>
+      <ComposableMap
+       width={800}
+       height={450}
+      //  style={{ width: "84%" }} 
+      >
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (

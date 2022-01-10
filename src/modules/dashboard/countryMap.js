@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 const Div = styled.div`
   fill: #103aaa;
   width: 100%;
+  max-width: 965px;
 `;
 
 const geoUrl =
@@ -44,7 +45,7 @@ function CountryMap(props) {
         </Geographies>
         {node.map((items, index) => (
           <Marker key={index} coordinates={items.coords}>
-            <circle r={12} fill="#3AF219" />
+            <circle r={6} fill="#3AF219" />
           </Marker>
         ))}
       </ComposableMap>
