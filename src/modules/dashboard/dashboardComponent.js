@@ -133,8 +133,8 @@ function Dashboard(props) {
       Math.round(
         ((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *
           100 *
-          100000
-      ) / 100000
+          1000000
+      ) / 1000000
     }%`;
     setEth(EthVal);
   }
@@ -148,7 +148,6 @@ function Dashboard(props) {
     setShow(show + 1);
     showSetText(setText + 1);
     setTabResponsive(tabResponsive + 1);
-    console.log("");
     if (show > 2) setShow(0);
     if (setText > 1) showSetText(0);
     if (tabResponsive > 2) setTabResponsive(0);
@@ -163,6 +162,14 @@ function Dashboard(props) {
     showSetText(setText - 1);
     setTabResponsive(tabResponsive - 1);
   };
+
+  const [showTable, setShowTable] = useState();
+  const [showExpandedCountry, setShowExpandedCountry] = useState();
+  
+  useEffect(()=>{
+  setShowTable(<Table/>);
+  setShowExpandedCountry(<Country expand={setCountry}/>)
+  },[])
 
   return (
     <Div>
@@ -239,7 +246,7 @@ function Dashboard(props) {
       ) : null}
 
       {Expand === 2 ? (
-        <Country expand={setCountry} />
+        <div>{showExpandedCountry}</div>
       ) : (
         <>
           <MainContainer>
@@ -253,6 +260,9 @@ function Dashboard(props) {
                 show={show}
                 onClick={() => {
                   setShow(1);
+                  setShowTabJoyRide(false);
+                  
+
                 }}
               >
                 Security
@@ -261,6 +271,7 @@ function Dashboard(props) {
                 show={show}
                 onClick={() => {
                   setShow(2);
+                  setShowTabJoyRide(false);
                 }}
               >
                 Speed
@@ -269,6 +280,7 @@ function Dashboard(props) {
                 show={show}
                 onClick={() => {
                   setShow(3);
+                  setShowTabJoyRide(false);
                 }}
               >
                 Efficiency
@@ -279,6 +291,7 @@ function Dashboard(props) {
                 back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(1);
+                  setShowTabJoyRide(false);
                 }}
               >
                 Security
@@ -287,6 +300,7 @@ function Dashboard(props) {
                 back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(2);
+                  setShowTabJoyRide(false);
                 }}
               >
                 Speed
@@ -295,6 +309,7 @@ function Dashboard(props) {
                 back={tabResponsive}
                 onClick={() => {
                   setTabResponsive(3);
+                  setShowTabJoyRide(false);
                 }}
               >
                 Efficiency
@@ -417,7 +432,7 @@ function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {props.stats.efficiency.length !== 0 ? (
+                      {props.stats?.efficiency?.length !== 0 ? (
                         <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
                       ) : (
                         <div></div>
@@ -732,7 +747,8 @@ function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            <Table />
+            {/* <Table /> */}
+            {showTable}
           </TableDiv>
           <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
         </>
@@ -1180,7 +1196,8 @@ const MobileAverageBlock = styled.div`
   font-weight: 600;
   font-size: 16px;
   font-family: Inter;
-`;
+  white-space: nowrap;
+  `;
 const MobileAverageBlockData = styled.div`
   font-size: 15px;
   font-weight: 600;
@@ -1228,7 +1245,8 @@ const FullScreen = styled.div`
 `;
 
 const MapDiv = styled.div`
-  margin-left: -38px;
+  /* margin-left: -38px; */
+  width: 100%;
 `;
 const EthDiv = styled.div`
   font-size: 14px;
@@ -1249,6 +1267,10 @@ const SelectionDiv = styled.div`
   margin-top: 12px;
   background-color: #1c3c93;
   margin-right: 22px;
+
+  @media (min-width: 300px) and (max-width: 767px) {
+  margin-right: 0px
+  }
 `;
 const SelectionDivStyle = styled.div`
   font-size: 12px;

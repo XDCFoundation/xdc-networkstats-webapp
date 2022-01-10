@@ -18,7 +18,6 @@ async function getNodes() {
 
 async function getGasPrice() {
   let url = process.env.REACT_APP_NODE+httpConstants.API_END_POINT.GAS_PRICE;
-  console.log("gas", url);
   return axios
     .get(url)
     .then((res) => {
@@ -68,7 +67,6 @@ async function getInitNodes() {
 
 async function getEth() {
   let url = process.env.REACT_APP_NODE_ETH_GAS;
-  console.log("eth", url);
   return axios
       .get(url)
       .then((res) => {

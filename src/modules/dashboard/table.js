@@ -9,12 +9,12 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import style from "styled-components";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import { withStyles } from "@material-ui/styles";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
 import _ from "lodash";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import ReactTooltip from "react-tooltip";
 
 const TableBox = style.div`
   width: 100%;
@@ -67,45 +67,25 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const BpIcon = styled('span')(({ theme }) => ({
-  borderRadius: '50%',
+const BpIcon = styled("span")(({ theme }) => ({
+  borderRadius: "50%",
   width: 16,
   height: 16,
   boxShadow:
-    theme.palette.mode === 'dark'
-      ? '0 0 0 1px rgb(16 22 26 / 40%)'
-      : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
+    theme.palette.mode === "dark"
+      ? "0 0 0 1px rgb(16 22 26 / 40%)"
+      : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
   backgroundImage: 'url("/images/Selected.svg")',
-  '&:before': {
-    display: 'block',
+  "&:before": {
+    display: "block",
     width: 16,
     height: 16,
     content: '""',
   },
 });
-
-const CustomiseTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "white",
-
-    background: "#FFFFFF 0% 0% no-repeat padding-box",
-    boxShadow: "0px 3px 6px #00000029",
-    border: "1px solid #F2F2F2",
-    fontSize: 11,
-    fontWeight: 600,
-    fontFamily: "Inter",
-    color: "#1F1F1F",
-    justifyContent: "center",
-    display: "flex",
-    whiteSpace: "nowrap",
-    pointerEvents: "none",
-  },
-}));
 
 const StyledTableCell = withStyles((theme) => ({
   root: {
@@ -115,13 +95,252 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function EnhancedTable(props) {
-  function findIndex(search) {
-    return _.findIndex(rows, search);
-  }
+const headCells = [
+  {
+    id: "nodeName",
 
+    disablePadding: true,
+
+    label: (
+      <DisplayFlex>
+        <Label>Node Name</Label>&nbsp;
+        <ReactTooltip
+          id="nodeName"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Name of the specified node
+        </ReactTooltip>
+        <Img
+          data-tip="nodeName"
+          data-for="nodeName"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "type",
+
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Type</Label>&nbsp;
+        <ReactTooltip
+          id="type"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Type of node with the architecture and version details
+        </ReactTooltip>
+        <Img data-tip="type" data-for="type" src="/images/Help.svg" alt=" " />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "latency",
+    numeric: true,
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Latency</Label>&nbsp;
+        <ReactTooltip
+          id="latency"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Delay in acceptance of a transaction
+        </ReactTooltip>
+        <Img
+          data-tip="latency"
+          data-for="latency"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "peers",
+    numeric: true,
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Peers</Label>&nbsp;
+        <ReactTooltip
+          id="peers"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Number of peers sharing the ledger
+        </ReactTooltip>
+        <Img data-tip="peers" data-for="peers" src="/images/Help.svg" alt=" " />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "pendingTxn",
+    numeric: true,
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Pending Txn</Label>&nbsp;
+        <ReactTooltip
+          id="pending"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Number of incomplete transactions
+        </ReactTooltip>
+        <Img
+          data-tip="pending"
+          data-for="pending"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "lastBlock",
+    numeric: true,
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Last Block</Label>&nbsp;
+        <ReactTooltip
+          id="lastblock"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Latest block associated with the node
+        </ReactTooltip>
+        <Img
+          data-tip="lastblock"
+          data-for="lastblock"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+    ),
+  },
+  {
+    id: "graph",
+    numeric: true,
+    disablePadding: false,
+  },
+  {
+    id: "upTime",
+    numeric: true,
+    disablePadding: false,
+    label: (
+      <DisplayFlex>
+        <Label>Up Time</Label>&nbsp;
+        <ReactTooltip
+          id="uptime"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Total available and working time of the network
+        </ReactTooltip>
+        <Img
+          data-tip="uptime"
+          data-for="uptime"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+    ),
+  },
+];
+
+function EnhancedTableHead() {
+  return (
+    <TableHead>
+      <StyledTableRow>
+        <StyledTableCell />
+        {headCells.map((headCell) => (
+          <StyledTableCell
+            key={headCell.id}
+            padding={headCell.disablePadding ? "none" : "normal"}
+          >
+            <TableSortLabel
+              active={false}
+              hideSortIcon={true}
+              style={{
+                fontSize: "12px",
+                lineHeight: "15px",
+                fontFamily: "Inter",
+              }}
+            >
+              {headCell.label}
+            </TableSortLabel>
+          </StyledTableCell>
+        ))}
+      </StyledTableRow>
+    </TableHead>
+  );
+}
+
+function EnhancedTable(props) {
   const [selected, setSelected] = React.useState([]);
-  console.log("selected", selected);
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -175,217 +394,6 @@ function EnhancedTable(props) {
     return row.nodeName.toLowerCase().includes(query.toLowerCase());
   });
 
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [showType, setShowType] = useState(false);
-  const [showLatency, setShowLatency] = useState(false);
-  const [showPeers, setShowPeers] = useState(false);
-  const [showPendingTxn, setShowPendingTxn] = useState(false);
-  const [setLastBlock, setShowLastBlock] = useState(false);
-  const [showUptime, setShowUptime] = useState(false);
-  const headCells = [
-    {
-      id: "nodeName",
-
-      disablePadding: true,
-
-      label: (
-        <DisplayFlex>
-          <Label>Node Name</Label>&nbsp;
-          <CustomiseTooltip
-            open={showTooltip}
-            onOpen={() => setShowTooltip(true)}
-            onClose={() => setShowTooltip(false)}
-            disableFocusListener
-            disableTouchListener
-            title="Name of the specified node"
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowTooltip(!showTooltip)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "type",
-
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Type</Label>&nbsp;
-          <CustomiseTooltip
-            open={showType}
-            onOpen={() => setShowType(true)}
-            onClose={() => setShowType(false)}
-            title="Type of node with the architecture and version details"
-            disableFocusListener
-            disableTouchListener
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowType(!showType)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "latency",
-      numeric: true,
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Latency</Label>&nbsp;
-          <CustomiseTooltip
-            open={showLatency}
-            onOpen={() => {
-              setShowLatency(true);
-            }}
-            onClose={() => setShowLatency(false)}
-            title="Delay in acceptance of a transaction"
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowLatency(!showLatency)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "peers",
-      numeric: true,
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Peers</Label>&nbsp;
-          <CustomiseTooltip
-            open={showPeers}
-            onClose={() => setShowPeers(false)}
-            onOpen={() => setShowPeers(true)}
-            title="Number of peers sharing the ledger"
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowPeers(!showPeers)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "pendingTxn",
-      numeric: true,
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Pending Txn</Label>&nbsp;
-          <CustomiseTooltip
-            open={showPendingTxn}
-            onOpen={() => setShowPendingTxn(true)}
-            onClose={() => setShowPendingTxn(false)}
-            title="Number of incomplete transactions"
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowPendingTxn(!showPendingTxn)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "lastBlock",
-      numeric: true,
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Last Block</Label>&nbsp;
-          <CustomiseTooltip
-            open={setLastBlock}
-            title="Latest block associated with the node"
-            onClose={() => setShowLastBlock(false)}
-            onOpen={() => setShowLastBlock(true)}
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowLastBlock(!setLastBlock)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-    {
-      id: "graph",
-      numeric: true,
-      disablePadding: false,
-    },
-    {
-      id: "upTime",
-      numeric: true,
-      disablePadding: false,
-      label: (
-        <DisplayFlex>
-          <Label>Up Time</Label>&nbsp;
-          <CustomiseTooltip
-            open={showUptime}
-            onClose={() => setShowUptime(false)}
-            onOpen={() => setShowUptime(true)}
-            title="Total available and working time of the network"
-          >
-            <Img
-              src="/images/Help.svg"
-              alt=" "
-              onClick={() => setShowUptime(!showUptime)}
-            />
-          </CustomiseTooltip>
-        </DisplayFlex>
-      ),
-    },
-  ];
-
-  const [checked, setChecked] = useState(true);
-  const [pin, setPin] = useState([]);
-  const changeRadio = (e) => {
-    setChecked(e.target.value);
-  };
-
-
-  function EnhancedTableHead() {
-    return (
-      <TableHead>
-        <StyledTableRow>
-          <StyledTableCell />
-          {headCells.map((headCell) => (
-            <StyledTableCell
-              key={headCell.id}
-              padding={headCell.disablePadding ? "none" : "normal"}
-            >
-              <TableSortLabel
-                active={false}
-                hideSortIcon={true}
-                style={{
-                  fontSize: "12px",
-                  lineHeight: "15px",
-                  fontFamily: "Inter",
-                }}
-              >
-                {headCell.label}
-              </TableSortLabel>
-            </StyledTableCell>
-          ))}
-        </StyledTableRow>
-      </TableHead>
-    );
-  }
-
   return (
     <>
       <SearchBox
@@ -396,8 +404,10 @@ function EnhancedTable(props) {
       <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
         <Paper sx={{ width: "auto" }}>
           <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            <Table sx={{ minWidth: 70 }} aria-labelledby="tableTitle">
+              {/* {Head} */}
               <EnhancedTableHead />
+              {/* <Main/> */}
               <TableBody>
                 {stableSort(query !== "" ? filteredRows : rows).map(
                   (row, index) => {
@@ -406,7 +416,9 @@ function EnhancedTable(props) {
                     let block = row.lastBlock.toLocaleString();
                     return (
                       <StyledTableRow
-                        onClick={(event) => {handleClick(event, row.nodeName);}}
+                        onClick={(event) => {
+                          handleClick(event, row.nodeName);
+                        }}
                         role="radio"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -437,7 +449,7 @@ function EnhancedTable(props) {
                             color: "#393939",
                             fontFamily: "Inter",
                             fontWeight: "400",
-                            // width: "450px",
+                            // width: "40px",
                           }}
                         >
                           {row.nodeName}
@@ -449,7 +461,7 @@ function EnhancedTable(props) {
                             fontFamily: "Inter",
                             fontWeight: "400",
                             whiteSpace: "nowrap",
-                            // width: "450px",
+                            // width: "40px",
                           }}
                         >
                           {row.type}
@@ -514,7 +526,7 @@ function EnhancedTable(props) {
                             color: "#393939",
                             fontFamily: "Inter",
                             fontWeight: "400",
-                            columnWidth: "50px",
+                            columnWidth: "0px",
                           }}
                         >
                           {row.upTime}
