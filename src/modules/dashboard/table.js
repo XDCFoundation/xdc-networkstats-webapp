@@ -416,9 +416,6 @@ function EnhancedTable(props) {
                     let block = row.lastBlock.toLocaleString();
                     return (
                       <StyledTableRow
-                        onClick={(event) => {
-                          handleClick(event, row.nodeName);
-                        }}
                         role="radio"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -426,6 +423,9 @@ function EnhancedTable(props) {
                       >
                         <StyledTableCell padding="radio">
                           <Radio
+                              onClick={(event) => {
+                                  handleClick(event, row.nodeName);
+                              }}
                             control={<Radio />}
                             style={{
                               paddingRight: "0px",
