@@ -234,7 +234,6 @@ async function socketAction(action, data) {
     case "charts":
       if (!_.isEqual(avgBlockTime, data.avgBlocktime))
         avgBlockTime = data.avgBlocktime;
-      var avgTime = avgBlockTimeFilter(avgBlockTime);
 
       if (!_.isEqual(avgTransactionRate, data.avgTransactionRate))
         avgTransactionRate = data.transactions;
@@ -245,7 +244,7 @@ async function socketAction(action, data) {
         data.blocktime.length >= MAX_BINS
       )
         lastBlocksTime = data.blocktime;
-
+        let avgTime = blockFilter(data.blocktime);
       batch(() => {
         store.dispatch({
           type: eventConstants.UPDATE_AVG_BLOCK,
@@ -321,29 +320,11 @@ async function latencyFilter(node) {
   return node;
 }
 
-function avgBlockTimeFilter(data) {
-  if (data < 60) return parseFloat(data).toFixed(2);
-
-  return moment.duration(Math.round(data)).humanize();
-}
 function transactions(data) {
-  if (data === null) data = 0;
-
-  var result = 0;
-  var unit = "";
-
-  if (data < 10000) {
-    result = data;
-    unit = "";
-  } else if (data < Math.pow(1000, 2)) {
-    result = data / 1000;
-    unit = "K";
-  } else if (data >= Math.pow(1000, 2)) {
-    // keeping the condition to cover the zero case
-    result = data / Math.pow(1000, 2);
-    unit = "M";
-  }
-  return parseInt(result).toFixed(0) + unit;
+  let trimmed = data.slice(30,40);
+  let sum = trimmed.reduce((a, b) => a + b, 0);
+  let avg = sum/10;
+  return avg;
 }
 
 function updateActiveNodes(data) {
@@ -505,6 +486,14 @@ function updateBestBlock(data) {
   }
 }
 
+function blockFilter(data){
+  let trimmed = data.slice(30,40);
+  let sum = trimmed.reduce((a, b) => a + b, 0);
+  let avg = sum/10;
+  return avg;
+}
+
+
 function timeFilter(data) {
   var timestamp = data;
   if (timestamp === 0) return '∞';
@@ -523,7 +512,7 @@ setInterval(()=>{
   if(val!=='∞'){
   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: val});
   }
-},1000)
+},3000)
 
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
@@ -556,6 +545,7 @@ setInterval(() => {
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,
         nodeName: nodesArr[i].info.name,
+        stats: nodesArr[i].stats
       });
       
     }

@@ -353,7 +353,7 @@ function Dashboard(props) {
                       />
                     </DataCount>
                     <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
-                    <BlockTime>{props.stats.avgBlock + " "}Sec</BlockTime>
+                    <BlockTime>{(props.stats.avgBlock).toFixed(4) + " "}Sec</BlockTime>
                   </ContentData>
 
                   <CountryData>
