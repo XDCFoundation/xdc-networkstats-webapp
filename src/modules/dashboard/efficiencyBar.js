@@ -21,6 +21,12 @@ const theme = {
       },
     },
   },
+  grid: {
+    line: {
+      stroke: "#667FC1",
+      strokeWidth: 1,
+    },
+  },
 };
 
 let data = [];
@@ -121,7 +127,7 @@ const colors = ["#3AF219", "#E62805"];
         colors={colors}
         enableLabel={false}
         axisBottom={false}
-        enableGridY={false}
+        enableGridY={true}
         padding={0.7}
         axisRight={null}
         axisTop={null}
@@ -133,7 +139,7 @@ const colors = ["#3AF219", "#E62805"];
           tickPadding: 0
         }}
         margin={{ top: 4, bottom: 4, left: 20 }}
-        gridYValues={["0", "50", "100"]}
+        gridYValues={["0"]}
         tooltip={({ id, value, color }) => (
           <div
             style={{

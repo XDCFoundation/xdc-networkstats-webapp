@@ -474,12 +474,12 @@ function EnhancedTable(props) {
                         aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.nodeName}
+                        onClick={(event) => {
+                          handleClick(event, row.nodeName);
+                      }}
                       >
                         <StyledTableCell padding="radio">
                           <Radio
-                              onClick={(event) => {
-                                  handleClick(event, row.nodeName);
-                              }}
                             control={<Radio />}
                             style={{
                               paddingRight: "0px",
