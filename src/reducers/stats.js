@@ -23,6 +23,7 @@ let initialState = {
       lastBlock: "Null",
       graph: "Graph",
       upTime: "0ms",
+      stats: {}
     },
   ],
   blockTime: [],

@@ -556,6 +556,7 @@ setInterval(() => {
         latency: `${nodesArr[i].stats.latency}ms`,
         peers: nodesArr[i].stats.peers,
         nodeName: nodesArr[i].info.name,
+        stats: nodesArr[i].stats
       });
       
     }
