@@ -82,7 +82,7 @@ export default function Countries(props) {
 
 const Div = styled.div`
   background-color: #102e84;
-  width: 100%;
+  width: auto;
   height: 120%;
   padding: 15px;
 `;
