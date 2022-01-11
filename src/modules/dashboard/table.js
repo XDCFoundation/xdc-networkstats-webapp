@@ -394,6 +394,60 @@ function EnhancedTable(props) {
     return row.nodeName.toLowerCase().includes(query.toLowerCase());
   });
 
+  const getLatencyColor = (stats) => {
+    if(!stats || stats.active === false){
+        return "text-danger";
+    }
+    else{
+        if (stats.latency <= 100){
+            return "text-success";
+        }
+        if (stats.latency > 100 && stats.latency <= 1000){
+            return "text-warning";
+        }
+        if (stats.latency > 1000){
+            return "text-danger";
+        }
+
+    }
+  }
+
+  const getColumnsColor = (stats) => {
+      if(!stats || !stats.active)
+          return 'text-gray';
+
+      return (stats.peers <= 1 ? 'text-danger' : (stats.peers > 1 && stats.peers < 4 ? 'text-warning' : 'text-success'));
+  }
+
+  const getLastBlockColor = (stats, best) => {
+      if(!stats || !stats.active)
+          return 'text-gray';
+
+      return (best - stats.block.number < 1 ? 'text-success' : (best - stats.block.number === 1 ? 'text-warning' : (best - stats.block.number > 1 && best - stats.block.number < 4 ? 'text-orange' : 'text-danger')));
+  }
+
+  const getUpTimeColor = (stats) => {
+
+      if(!stats){
+          return 'text-gray';
+      }
+      else{
+          let uptime = stats.uptime;
+          let active = stats.active;
+
+          if( ! active )
+              return 'text-gray';
+
+          if(uptime >= 90)
+              return 'text-success';
+
+          if(uptime >= 75)
+              return 'text-warning';
+
+          return 'text-danger';
+      }
+  }
+
   return (
     <>
       <SearchBox
@@ -416,9 +470,6 @@ function EnhancedTable(props) {
                     let block = row.lastBlock.toLocaleString();
                     return (
                       <StyledTableRow
-                        onClick={(event) => {
-                          handleClick(event, row.nodeName);
-                        }}
                         role="radio"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -426,6 +477,9 @@ function EnhancedTable(props) {
                       >
                         <StyledTableCell padding="radio">
                           <Radio
+                              onClick={(event) => {
+                                  handleClick(event, row.nodeName);
+                              }}
                             control={<Radio />}
                             style={{
                               paddingRight: "0px",
@@ -451,6 +505,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             // width: "40px",
                           }}
+
+                          className = {getColumnsColor(row.stats)}
                         >
                           {row.nodeName}
                         </StyledTableCell>
@@ -463,6 +519,8 @@ function EnhancedTable(props) {
                             whiteSpace: "nowrap",
                             // width: "40px",
                           }}
+
+                          className = {getColumnsColor(row.stats)}
                         >
                           {row.type}
                         </StyledTableCell>
@@ -474,6 +532,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             columnWidth: "70px",
                           }}
+
+                          className = {getLatencyColor(row.stats)}
                         >
                           {row.latency}
                         </StyledTableCell>
@@ -485,6 +545,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             columnWidth: "70px",
                           }}
+
+                          className = {getColumnsColor(row.stats)}
                         >
                           {row.peers}
                         </StyledTableCell>
@@ -496,6 +558,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             columnWidth: "70px",
                           }}
+
+                          className = {getColumnsColor(row.stats)}
                         >
                           {row.pendingTxn}
                         </StyledTableCell>
@@ -507,6 +571,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             columnWidth: "70px",
                           }}
+
+                          className = {getLastBlockColor(row.stats, props.stats.bestBlock)}
                         >
                           #{block}
                         </StyledTableCell>
@@ -528,6 +594,8 @@ function EnhancedTable(props) {
                             fontWeight: "400",
                             columnWidth: "0px",
                           }}
+
+                          className = {getUpTimeColor(row.stats)}
                         >
                           {row.upTime}
                         </StyledTableCell>
