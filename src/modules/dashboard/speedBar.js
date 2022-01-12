@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 
 const Div = styled.div`
   width: 100%;
-  max-width: 560px;
+  max-width: 900px;
   height: 120px;
 
   font-family: sans-serif;
@@ -90,7 +90,7 @@ function SpeedBar(props) {
         colors={["#0093FF"]}
         enableLabel={false}
         enableGridY={true}
-        gridYValues={["0", "1"]}
+        gridYValues={["0", "5"]}
         theme={theme}
         padding={0.5}
         tooltip={({ id, value, color }) => (

@@ -27,6 +27,7 @@ const Close = styled.img`
 
 export default function Countries(props) {
   return (
+    <>
     <Div>
       <DesktopDiv>
         <SpaceBetween>
@@ -77,13 +78,28 @@ export default function Countries(props) {
         </TableDiv>
       </TabDiv>
     </Div>
+    <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
+    </>
   );
 }
+
+const Footer = styled.div`
+  background-color: white;
+  color: #808080;
+  text-align: center;
+  /* display: flex; */
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 17px;
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+  font-size: 0.8rem;
+`;
 
 const Div = styled.div`
   background-color: #102e84;
   width: auto;
-  height: 120%;
+  height: 100vh;
   padding: 15px;
 `;
 
