@@ -42,6 +42,19 @@ function Map(props) {
   });
   return (
     <Div>
+      {
+        node.length === 0 ? (
+            <div className="center-parent-div position-relative top-50px">
+              <div className="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        ) : (
+            <div></div>
+        )
+      }
       <ComposableMap
        width={800}
        height={450}

@@ -364,3 +364,55 @@ select {
 .__react_component_tooltip.show{
   margin-top: 15px !important;
 }
+
+/*loader css*/
+
+.dots {
+  width: 1.6em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dots div {
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 50%;
+  background-color: #3c70ff;
+  animation: fade 0.8s ease-in-out alternate infinite;
+}
+
+.dots div:nth-of-type(1) {
+  animation-delay: -0.4s;
+}
+
+.dots div:nth-of-type(2) {
+  animation-delay: -0.2s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.center-parent-div{
+  display: flex;
+  justify-content: center;
+}
+
+.width-100p{
+  width: 100vw;
+}
+
+.position-relative{
+  position: relative;
+}
+
+.top-50px{
+  top: 50px;
+}

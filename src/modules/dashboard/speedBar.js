@@ -70,6 +70,19 @@ function SpeedBar(props) {
 
   return (
     <Div>
+      {
+        !data[0].value ? (
+            <div className="center-parent-div position-relative top-50px">
+              <div className="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        ) : (
+                <div></div>
+            )
+      }
       <ResponsiveBar
         data={data}
         keys={["value"]}

@@ -91,49 +91,62 @@ function NodeGraph() {
 
   return (
     <Div>
-      <ResponsiveLine
-        data={data}
-        theme={theme}
-        key={"Stats"}
-        isInteractive={true}
-        margin={{
-          top: 30,
-          right: 30,
-          bottom: 30,
-          left: 30,
-        }}
-        yScale={{
-          type: "linear",
-          stacked: true,
-          min: 0,
-          max: 200,
-        }}
-        pointColor="#7299FF"
-        tickSize
-        pointSize={4}
-        lineWidth="1px"
-        enableArea={true}
-        enableGridX={false}
-        enableGridY={true}
-        enableDotLabel={false}
-        gridYValues={["0", "100", "200"]}
-        axisLeft={{
-          tickSize: 0,
-          tickValues: ["0", "100", "200"],
-          tickPadding: 5
-        }}
-        axisBottom={false}
-        // curve="monotoneX"
-        colors={["#275FF5"]}
-        areaOpacity={0.3}
-        defs={[
-          linearGradientDef("gradientA", [
-            { offset: 55, color: "#275FF5" },
-            { offset: 100, color: "#102C78" },
-          ]),
-        ]}
-        fill={[{ match: { id: "Stats" }, id: "gradientA" }]}
-      />
+      {
+        data[0].data[0].y.length === 0 ? (
+            <div className="center-parent-div position-relative top-50px">
+              <div className="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        ) : (
+            <ResponsiveLine
+                data={data}
+                theme={theme}
+                key={"Stats"}
+                isInteractive={true}
+                margin={{
+                  top: 30,
+                  right: 30,
+                  bottom: 30,
+                  left: 30,
+                }}
+                yScale={{
+                  type: "linear",
+                  stacked: true,
+                  min: 0,
+                  max: 200,
+                }}
+                pointColor="#7299FF"
+                tickSize
+                pointSize={4}
+                lineWidth="1px"
+                enableArea={true}
+                enableGridX={false}
+                enableGridY={true}
+                enableDotLabel={false}
+                gridYValues={["0", "100", "200"]}
+                axisLeft={{
+                  tickSize: 0,
+                  tickValues: ["0", "100", "200"],
+                  tickPadding: 5
+                }}
+                axisBottom={false}
+                // curve="monotoneX"
+                colors={["#275FF5"]}
+                areaOpacity={0.3}
+                defs={[
+                  linearGradientDef("gradientA", [
+                    { offset: 55, color: "#275FF5" },
+                    { offset: 100, color: "#102C78" },
+                  ]),
+                ]}
+                fill={[{ match: { id: "Stats" }, id: "gradientA" }]}
+            />
+        )
+      }
+
     </Div>
   );
 }
