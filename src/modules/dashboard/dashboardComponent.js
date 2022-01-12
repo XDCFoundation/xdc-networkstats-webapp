@@ -866,7 +866,7 @@ const Title = styled.div`
   width: 33.33%;
   font-size: 18px;
   font-weight: 500;
-  font-family: 'Inter';
+  font-family: 'Inter', Medium;
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
 `;
@@ -905,10 +905,10 @@ const FlexStyledOne = styled.div`
 const TabSecurity = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 16px;
   border-right: 2px solid #274598;
-
+  font-weight: 500;
+  font-family: 'Inter', Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
@@ -924,9 +924,10 @@ const TabSecurity = styled.div`
 const TabSpeed = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 16px;
   border-right: 2px solid #274598;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
@@ -942,10 +943,10 @@ const TabSpeed = styled.div`
 const TabEfficiency = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 16px;
   border-right: 2px solid #274598;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
