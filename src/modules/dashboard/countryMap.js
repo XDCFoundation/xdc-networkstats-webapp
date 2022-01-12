@@ -33,6 +33,13 @@ function CountryMap(props) {
     }
   }, [props?.stats.markers]);
 
+  const getNodesColor = (active, peers) => {
+    if(!active)
+      return '#dc3545';
+
+    return (peers <= 1 ? '#dc3545' : (peers > 1 && peers < 4 ? '#ffc107' : '#3AF219'));
+  }
+
   return (
     <Div>
       <ComposableMap>
@@ -45,7 +52,7 @@ function CountryMap(props) {
         </Geographies>
         {node.map((items, index) => (
           <Marker key={index} coordinates={items.coords}>
-            <circle r={6} fill="#3AF219" />
+            <circle r={6} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
       </ComposableMap>
