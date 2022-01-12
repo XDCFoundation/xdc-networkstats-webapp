@@ -136,11 +136,17 @@ function Dashboard(props) {
           1000000
       ) / 1000000
     }%`;
-    setEth(EthVal);
+    if(EthVal!=NaN){
+      setEth(EthVal);
+    }
   }
+  console.log("eth", Eth);
   useEffect(() => {
     fetchTime();
-    setGasUsd(props.stats.gasPrice.toFixed(6));
+    let value = props.stats.gasPrice.toFixed(6);
+    if(!isNaN(value)){
+    setGasUsd(value);
+    }
   }, [props.stats.gasPrice]);
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
   document.body.style.overflow = showTabJoyRide ? "hidden" : "unset";
@@ -386,7 +392,7 @@ function Dashboard(props) {
                       {" " + Eth} than Ethereum
                     </EthDiv>
                     <NodeHistory>Avg Transaction Speed</NodeHistory>
-                    <BlockTime>{props.stats.avgRate + " "}TPS</BlockTime>
+                    <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
@@ -487,7 +493,7 @@ function Dashboard(props) {
                       </DataCount>
                       <div style={{ marginTop: "55px" }}></div>
                       <NodeHistory>Avg Block Time</NodeHistory>
-                      <BlockTime>{props.stats.avgBlock + " "}Sec</BlockTime>
+                      <BlockTime>{props.stats.avgBlock.toFixed(4) + " "}Sec</BlockTime>
                     </ContentData>
 
                     <CountryData>
@@ -523,7 +529,7 @@ function Dashboard(props) {
                         {" " + Eth} than Ethereum
                       </EthDiv>
                       <NodeHistory>Avg Transaction Speed</NodeHistory>
-                      <BlockTime>{props.stats.avgRate + " "}TPS</BlockTime>
+                      <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
                     </ContentData>
                     <CountryData>
                       <SpaceBetween>
@@ -659,7 +665,7 @@ function Dashboard(props) {
                   </SpaceBetween>
                   <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
                   <MobileAverageBlockData>
-                    {props.stats.avgBlock + " "}Sec
+                    {props.stats.avgBlock.toFixed(4) + " "}Sec
                   </MobileAverageBlockData>
                   <MobileGraphDiv>
                     <LastBlockBar content={content} />
@@ -698,7 +704,7 @@ function Dashboard(props) {
                         Avg Transaction Speed
                       </MobileAverageBlock>
                       <MobileAverageBlockData>
-                        {props.stats.avgRate + " "}TPS
+                        {props.stats.avgRate.toFixed(2) + " "}TPS
                       </MobileAverageBlockData>
                     </div>
                     <SelectionDiv>
@@ -1143,7 +1149,6 @@ const Speedbar = styled.div`
   margin-top: 20px;
   width: 100%;
   max-width: 500px;
-  margin-left: -20px;
 `;
 const TableDiv = styled.div`
   background: #f8f8f8;

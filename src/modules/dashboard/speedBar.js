@@ -77,7 +77,7 @@ function SpeedBar(props) {
         colors={["#0093FF"]}
         enableLabel={false}
         enableGridY={true}
-        gridYValues={["0", "1"]}
+        gridYValues={["0", "5"]}
         theme={theme}
         padding={0.5}
         tooltip={({ id, value, color }) => (
