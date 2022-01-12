@@ -44,9 +44,9 @@ const Content = styled.span`
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
-  font-family: "Inter", Medium;
-  font-weight: 500;
+  font-size: 17px;
+  font-family: "Inter", Regular;
+  font-weight: 400;
   cursor: pointer;
   @media (min-width: 300px) and (max-width: 767px) {
     font-size: 0.8rem;

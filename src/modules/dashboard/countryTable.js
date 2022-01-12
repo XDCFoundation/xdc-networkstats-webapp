@@ -62,6 +62,17 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+const StyledTableHeadCell = withStyles((theme) => ({
+  root: {
+    height: 4,
+    paddingBottom: 5,
+    paddingRight: 10,
+    paddingLeft: 10,
+    width: 17,
+    whiteSpace: "nowrap",
+  },
+}))(TableCell);
+
 function EnhancedTable(props) {
   let rows = [];
     if (!_.isEmpty(props.stats.expandedCountry) && !_.isUndefined(props.stats.expandedCountry)) {
@@ -223,7 +234,7 @@ function EnhancedTable(props) {
         }}
         >
           {headCells.map((headCell) => (
-            <StyledTableCell
+            <StyledTableHeadCell
               key={headCell.id}
               style={{
                 color: "white",
@@ -238,7 +249,7 @@ function EnhancedTable(props) {
               >
                 {headCell.label}
               </TableSortLabel>
-            </StyledTableCell>
+            </StyledTableHeadCell>
           ))}
         </StyledTableRow>
       </TableHead>

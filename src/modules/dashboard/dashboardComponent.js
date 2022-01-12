@@ -89,9 +89,12 @@ function Dashboard(props) {
           border: "none",
           width: 70,
           borderRadius: 0,
-          fontSize: 12,
+          fontSize: 14,
+          fontFamily: "Inter-Regular",
           borderRadius: "3px",
-          fontWeight: 50
+          fontWeight: 50,
+          marginTop: 2,
+          marginRight: -5
         },
         buttonBack: {
           marginRight: 10,
@@ -136,11 +139,10 @@ function Dashboard(props) {
           1000000
       ) / 1000000
     }%`;
-    if(EthVal!=NaN){
+    if(!isNaN(parseFloat(EthVal))) {
       setEth(EthVal);
     }
   }
-  console.log("eth", Eth);
   useEffect(() => {
     fetchTime();
     let value = props.stats.gasPrice.toFixed(6);
@@ -481,7 +483,7 @@ function Dashboard(props) {
                 )}
                 {tabResponsive === 2 ? (
                   <ContentSpeed className="speed">
-                    <ContentData>
+                    <ContentDataSpeedIpad>
                       <Heading>Best Block</Heading>
                       <DataCount>
                         #{" "}
@@ -494,14 +496,14 @@ function Dashboard(props) {
                       <div style={{ marginTop: "55px" }}></div>
                       <NodeHistory>Avg Block Time</NodeHistory>
                       <BlockTime>{props.stats.avgBlock.toFixed(4) + " "}Sec</BlockTime>
-                    </ContentData>
+                    </ContentDataSpeedIpad>
 
-                    <CountryData>
+                    <ContentDataSpeedIpad2>
                       <SpaceBetween>
-                        <div>
+                        <ContentDataSpeedIpadLabel>
                           <Countries>Last Block</Countries>
                           <CountriesData>{props.stats.lastBlock}</CountriesData>
-                        </div>
+                        </ContentDataSpeedIpadLabel>
                       </SpaceBetween>
                       <Speedbar>
                         <LastBlockBar />
@@ -514,14 +516,14 @@ function Dashboard(props) {
                           Max &nbsp;<Span>26s</Span>
                         </FlexStyledOne>
                       </DisplayFlex>
-                    </CountryData>
+                    </ContentDataSpeedIpad2>
                   </ContentSpeed>
                 ) : (
                   ""
                 )}
                 {tabResponsive === 3 ? (
                   <ContentEfficiency className="efficiency">
-                    <ContentData>
+                    <ContentDataEfficiencyIpad>
                       <Heading>Gas Price (USD)</Heading>
                       <DataCount>{gasUsd}</DataCount>
                       <EthDiv>
@@ -530,13 +532,13 @@ function Dashboard(props) {
                       </EthDiv>
                       <NodeHistory>Avg Transaction Speed</NodeHistory>
                       <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
-                    </ContentData>
-                    <CountryData>
+                    </ContentDataEfficiencyIpad>
+                    <ContentDataSpeedIpad2>
                       <SpaceBetween>
-                        <div>
+                        <ContentDataEfficiencyIpadLabel>
                           <Countries>UP Time</Countries>
                           <CountriesData>{props.stats.upTime}%</CountriesData>
-                        </div>
+                        </ContentDataEfficiencyIpadLabel>
                         <SelectionDiv>
                           <SelectionDivStyle
                             onClick={() => {
@@ -576,7 +578,7 @@ function Dashboard(props) {
                       <Speedbar>
                         <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
                       </Speedbar>
-                    </CountryData>
+                    </ContentDataSpeedIpad2>
                   </ContentEfficiency>
                 ) : (
                   ""
@@ -846,8 +848,9 @@ const MainContainer = styled.div`
 const Title = styled.div`
   color: #c8d1f1;
   width: 33.33%;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: 'Inter';
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
 `;
@@ -872,6 +875,9 @@ const FlexStyled = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
+  @media (min-width: 768px) and (max-width: 1024px) {
+  padding-left: 10px;
+  }
 `;
 const FlexStyledOne = styled.div`
   color: #c8d1f1;
@@ -1092,6 +1098,21 @@ const ContentData = styled.div`
     width: 100%;
   }
 `;
+
+const ContentDataSpeedIpad = styled.div`
+  width: 38%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const ContentDataEfficiencyIpad = styled.div`
+  width: 38%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
 const DataCount = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
@@ -1118,6 +1139,22 @@ const DesktopAvgBlockTime = styled.div`
 const CountryData = styled.div`
   width: 50%;
 `;
+const ContentDataSpeedIpad2= styled.div`
+  width: 62%;
+`;
+const ContentDataEfficiencyIpad2= styled.div`
+  width: 62%;
+`;
+
+const ContentDataSpeedIpadLabel= styled.div`
+padding-left: 7px;
+`;
+
+const ContentDataEfficiencyIpadLabel= styled.div`
+padding-left: 35px;
+`;
+
+
 const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
@@ -1149,6 +1186,9 @@ const Speedbar = styled.div`
   margin-top: 20px;
   width: 100%;
   max-width: 500px;
+  @media (min-width: 768px) and (max-width: 1024px) {
+  max-width: 800px;
+  }
 `;
 const TableDiv = styled.div`
   background: #f8f8f8;
