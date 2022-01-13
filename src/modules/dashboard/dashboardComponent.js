@@ -46,9 +46,9 @@ function Dashboard(props) {
 
   // User has switched back to the tab
   const onFocus = () => {
-    if(props.stats.bestBlock !== 0){
-      window.location.reload();
-    }
+    // if(props.stats.bestBlock !== 0){
+    //   window.location.reload();
+    // }
   };
 
   useEffect(() => {
@@ -1208,7 +1208,7 @@ const TableDiv = styled.div`
   padding-right: 50px;
   padding-top: 20px;
   padding-bottom: 30px;
-  min-height: 40vh;
+  min-height: 60vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
   }
