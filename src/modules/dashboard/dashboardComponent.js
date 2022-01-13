@@ -936,7 +936,6 @@ function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            {/* <Table /> */}
             {showTable}
           </TableDiv>
           <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
@@ -1367,7 +1366,7 @@ const TableDiv = styled.div`
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 20px;
-  padding-bottom: 30px;
+  padding-bottom: 42px;
   min-height: 60vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
