@@ -464,13 +464,13 @@ function EnhancedTable(props) {
               {/* <Main/> */}
                 {
                     rows.length === 1 ? (
-                        <div style={{position: "absolute", left: "45vw"}}>
+                        <div style={{position: "absolute", left: "48vw"}}>
                             <div className="table-dots" style={{top: "40px"}}>
                                 <div></div>
                                 <div></div>
                                 <div></div>
                             </div>
-                            <div style={{color: "#C0C0C0", fontSize: "0.7rem", top: "20px"}}>Loading Nodes Data</div>
+                            <div style={{color: "#C0C0C0", position: "relative", fontSize: "0.7rem", top: "8px", right: "2.5vw"}}>Loading Nodes Data</div>
                         </div>
                     ) : (
                         <TableBody>
