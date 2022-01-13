@@ -467,154 +467,168 @@ function EnhancedTable(props) {
       </div>
       </form>
       <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-        <Paper sx={{ width: "auto" }}>
+        <Paper sx={{ width: "auto", minHeight: "20vh" }}>
           <TableContainer>
             <Table sx={{ minWidth: 70 }} aria-labelledby="tableTitle">
               {/* {Head} */}
               <EnhancedTableHead />
               {/* <Main/> */}
-              <TableBody>
-                {stableSort(query !== "" ? filteredRows : rows).map(
-                  (row, index) => {
-                    const labelId = `enhanced-table-checkbox-${index}`;
-                    const isItemSelected = isSelected(row.nodeName);
-                    let block = row.lastBlock.toLocaleString();
-                    return (
-                      <StyledTableRow
-                        role="radio"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.nodeName}
-                        onClick={(event) => {
-                          handleClick(event, row.nodeName);
-                      }}
-                      >
-                        <StyledTableCell padding="radio">
-                          <Radio
-                            control={<Radio />}
-                            style={{
-                              paddingRight: "0px",
-                              paddingLeft: "18px",
-                            }}
-                            color="default"
-                            checkedIcon={<BpCheckedIcon />}
-                            icon={<BpIcon />}
-                            checked={isItemSelected}
-                            disableRipple
-                            inputProps={{
-                              "aria-labelledby": labelId,
-                            }}
-                          />
-                        </StyledTableCell>
-                        <StyledTableCell
-                          scope="row"
-                          padding="none"
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            // width: "40px",
-                          }}
+                {
+                    rows.length === 1 ? (
+                        <div style={{position: "absolute", left: "48vw"}}>
+                            <div className="table-dots" style={{top: "40px"}}>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div style={{color: "#C0C0C0", position: "relative", fontSize: "0.7rem", top: "8px", right: "2.5vw"}}>Loading Nodes Data</div>
+                        </div>
+                    ) : (
+                        <TableBody>
+                            {stableSort(query !== "" ? filteredRows : rows).map(
+                                (row, index) => {
+                                    const labelId = `enhanced-table-checkbox-${index}`;
+                                    const isItemSelected = isSelected(row.nodeName);
+                                    let block = row.lastBlock.toLocaleString();
+                                    return (
+                                        <StyledTableRow
+                                            role="radio"
+                                            aria-checked={isItemSelected}
+                                            tabIndex={-1}
+                                            key={row.nodeName}
+                                            onClick={(event) => {
+                                                handleClick(event, row.nodeName);
+                                            }}
+                                        >
+                                            <StyledTableCell padding="radio">
+                                                <Radio
+                                                    control={<Radio />}
+                                                    style={{
+                                                        paddingRight: "0px",
+                                                        paddingLeft: "18px",
+                                                    }}
+                                                    color="default"
+                                                    checkedIcon={<BpCheckedIcon />}
+                                                    icon={<BpIcon />}
+                                                    checked={isItemSelected}
+                                                    disableRipple
+                                                    inputProps={{
+                                                        "aria-labelledby": labelId,
+                                                    }}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                scope="row"
+                                                padding="none"
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    // width: "40px",
+                                                }}
 
-                          className = {getColumnsColor(row.stats)}
-                        >
-                          {row.nodeName}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            whiteSpace: "nowrap",
-                            // width: "40px",
-                          }}
+                                                className = {getColumnsColor(row.stats)}
+                                            >
+                                                {row.nodeName}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    whiteSpace: "nowrap",
+                                                    // width: "40px",
+                                                }}
 
-                          className = {getColumnsColor(row.stats)}
-                        >
-                          {row.type}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            columnWidth: "70px",
-                          }}
+                                                className = {getColumnsColor(row.stats)}
+                                            >
+                                                {row.type}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    columnWidth: "70px",
+                                                }}
 
-                          className = {getLatencyColor(row.stats)}
-                        >
-                          {row.latency}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            columnWidth: "70px",
-                          }}
+                                                className = {getLatencyColor(row.stats)}
+                                            >
+                                                {row.latency}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    columnWidth: "70px",
+                                                }}
 
-                          className = {getColumnsColor(row.stats)}
-                        >
-                          {row.peers}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            columnWidth: "70px",
-                          }}
+                                                className = {getColumnsColor(row.stats)}
+                                            >
+                                                {row.peers}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    columnWidth: "70px",
+                                                }}
 
-                          className = {getColumnsColor(row.stats)}
-                        >
-                          {row.pendingTxn}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            columnWidth: "70px",
-                          }}
+                                                className = {getColumnsColor(row.stats)}
+                                            >
+                                                {row.pendingTxn}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    columnWidth: "70px",
+                                                }}
 
-                          className = {getLastBlockColor(row.stats, props.stats.bestBlock)}
-                        >
-                          #{block}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                          }}
-                        >
-                          {row.graph}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{
-                            fontSize: "12px",
-                            color: "#393939",
-                            fontFamily: "Inter",
-                            fontWeight: "400",
-                            columnWidth: "0px",
-                          }}
+                                                className = {getLastBlockColor(row.stats, props.stats.bestBlock)}
+                                            >
+                                                #{block}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                }}
+                                            >
+                                                {row.graph}
+                                            </StyledTableCell>
+                                            <StyledTableCell
+                                                style={{
+                                                    fontSize: "12px",
+                                                    color: "#393939",
+                                                    fontFamily: "Inter",
+                                                    fontWeight: "400",
+                                                    columnWidth: "0px",
+                                                }}
 
-                          className = {getUpTimeColor(row.stats)}
-                        >
-                          {row.upTime}
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  }
-                )}
-              </TableBody>
+                                                className = {getUpTimeColor(row.stats)}
+                                            >
+                                                {row.upTime}
+                                            </StyledTableCell>
+                                        </StyledTableRow>
+                                    );
+                                }
+                            )}
+                        </TableBody>
+                    )
+                }
+
             </Table>
           </TableContainer>
         </Paper>
