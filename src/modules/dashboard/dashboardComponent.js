@@ -45,19 +45,19 @@ function Dashboard(props) {
   const { content } = props;
 
   // User has switched back to the tab
-  const onFocus = () => {
-    // if(props.stats.bestBlock !== 0){
-    //   window.location.reload();
-    // }
-  };
+  // const onFocus = () => {
+  //   if(props.stats.bestBlock !== 0){
+  //     window.location.reload();
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener('focus', onFocus);
-    // Specify how to clean up after this effect:
-    return () => {
-      window.removeEventListener('focus', onFocus);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener('focus', onFocus);
+  //   // Specify how to clean up after this effect:
+  //   return () => {
+  //     window.removeEventListener('focus', onFocus);
+  //   };
+  // });
 
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
@@ -936,7 +936,6 @@ function Dashboard(props) {
             </MobileContentParent>
           </MainContainer>
           <TableDiv>
-            {/* <Table /> */}
             {showTable}
           </TableDiv>
           <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
@@ -1367,7 +1366,7 @@ const TableDiv = styled.div`
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 20px;
-  padding-bottom: 30px;
+  padding-bottom: 42px;
   min-height: 60vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
