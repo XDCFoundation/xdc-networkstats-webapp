@@ -62,6 +62,14 @@ const Img = style.img`
   text-align: center;
 `;
 
+// const useStyles = makeStyles(() => ({
+//   root: {
+//     '&:hover': {
+//       backgroundColor: 'transparent !important'
+//     }
+//   }
+// }));
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
@@ -389,6 +397,7 @@ function EnhancedTable(props) {
       setRows(props.stats.nodesArr);
     }
   }, [props.stats.nodesArr]);
+  console.log("rowsss", rows);
 
   const [query, setQuery] = useState("");
   const filteredRows = props.stats.nodesArr.filter((row) => {
@@ -496,10 +505,16 @@ function EnhancedTable(props) {
                                         >
                                             <StyledTableCell padding="radio">
                                                 <Radio
-                                                    control={<Radio />}
+                                                    className="radioButton"
                                                     style={{
                                                         paddingRight: "0px",
                                                         paddingLeft: "18px",
+                                                    }}
+                                                    sx={{
+                                                      ml: 1,
+                                                      "&.MuiRadio-root:hover": {
+                                                        bgcolor: "transparent"
+                                                      }
                                                     }}
                                                     color="default"
                                                     checkedIcon={<BpCheckedIcon />}

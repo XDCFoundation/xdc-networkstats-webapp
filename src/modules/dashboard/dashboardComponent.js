@@ -45,19 +45,19 @@ function Dashboard(props) {
   const { content } = props;
 
   // User has switched back to the tab
-  const onFocus = () => {
-    if(props.stats.bestBlock !== 0){
-      window.location.reload();
-    }
-  };
+  // const onFocus = () => {
+  //   if(props.stats.bestBlock !== 0){
+  //     window.location.reload();
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener('focus', onFocus);
-    // Specify how to clean up after this effect:
-    return () => {
-      window.removeEventListener('focus', onFocus);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener('focus', onFocus);
+  //   // Specify how to clean up after this effect:
+  //   return () => {
+  //     window.removeEventListener('focus', onFocus);
+  //   };
+  // });
 
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
