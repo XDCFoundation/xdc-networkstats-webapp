@@ -398,7 +398,7 @@ function Dashboard(props) {
                               <BlockTime>{(props.stats.avgBlock).toFixed(4) + " "}Sec</BlockTime>
                           )
                     }
-                  </ContentData>
+                  </ContentDataEfficiencyDesk>
 
                   <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
@@ -412,7 +412,7 @@ function Dashboard(props) {
                                   <CountriesData>{props.stats.lastBlock}</CountriesData>
                               )
                         }
-                      </div>
+                      </SpeedLabel>
                     </SpaceBetween>
                     <Speedbar>
                       <LastBlockBar />
@@ -455,7 +455,7 @@ function Dashboard(props) {
                               <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
                           )
                     }
-                  </ContentData>
+                  </ContentDataEfficiencyDesk>
                   <CountryData>
                     <SpaceBetween>
                       <EfficiencyLabel>
@@ -468,7 +468,7 @@ function Dashboard(props) {
                                   <CountriesData>{props.stats.upTime}%</CountriesData>
                               )
                         }
-                      </div>
+                      </EfficiencyLabel>
 
                       <SelectionDiv>
                         <SelectionDivStyle
@@ -526,7 +526,7 @@ function Dashboard(props) {
                       {/*  <div></div>*/}
                       {/*)}*/}
                     </Speedbar>
-                  </CountryDataEfficiencyDesk2>
+                  </CountryData>
                 </ContentEfficiency>
               </ContentParent>
             </FullScreen>
