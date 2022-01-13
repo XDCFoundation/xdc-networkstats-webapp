@@ -162,35 +162,11 @@ function EnhancedTable(props) {
         });
       }
       }}
-  
-  
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
 
   // This method is created for cross-browser compatibility, if you don't
   // need to support IE11, you can use Array.prototype.sort() directly
-  function stableSort(array, comparator) {
+  function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
     return stabilizedThis.map((el) => el[0]);
   }
 
@@ -225,14 +201,12 @@ function EnhancedTable(props) {
     },
   ];
 
-  function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } = props;
-    const createSortHandler = (property) => (event) => {
-      onRequestSort(event, property);
-    };
+  function EnhancedTableHead() {
 
     return (
-      <TableHead>
+      <TableHead
+       className=""
+       >
         <StyledTableRow
         style={{
         height: "40px"
@@ -251,6 +225,9 @@ function EnhancedTable(props) {
               <TableSortLabel
                 active={false}
                 hideSortIcon={true}
+                style={{
+                color: "white"
+                }}
               >
                 {headCell.label}
               </TableSortLabel>
@@ -261,55 +238,6 @@ function EnhancedTable(props) {
     );
   }
 
-  EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-  };
-
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState(" ");
-  const [selected, setSelected] = React.useState([]);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
 
@@ -318,24 +246,15 @@ function EnhancedTable(props) {
     <TableBox sx={{ width: "auto" }}>
       <TableContainer>
       <Div>
-        <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle"
+        <Table sx={{ minWidth: 100 }}
+         className='time-table-row-select'
          rowsPerPage={10}
         >
           <EnhancedTableHead
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={rows.length}
           />
           <TableBody>
-            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-            {stableSort(rows.slice(0,10), getComparator(order, orderBy)).map(
+            {stableSort(rows.slice(0,10)).map(
               (row, index) => {
-                const isItemSelected = isSelected(row.id);
-
                 return (
                   <StyledTableRow>
                     <StyledTableCell

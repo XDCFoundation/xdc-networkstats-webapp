@@ -148,13 +148,7 @@ function Dashboard(props) {
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
-    let EthVal = `${
-      Math.round(
-        ((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *
-          100 *
-          1000000
-      ) / 1000000
-    }%`;
+    let EthVal = `${Math.round(((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *100 * 1000000) / 1000000}%`;
     if(!isNaN(parseFloat(EthVal))) {
       setEth(EthVal);
     }
@@ -378,7 +372,7 @@ function Dashboard(props) {
                 </ContentSecurity>
 
                 <ContentSpeed className="speed">
-                  <ContentData>
+                  <ContentDataEfficiencyDesk>
                     <Heading>Best Block</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
@@ -406,9 +400,9 @@ function Dashboard(props) {
                     }
                   </ContentData>
 
-                  <CountryData>
+                  <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
-                      <div>
+                      <SpeedLabel>
                         <Countries>Last Block</Countries>
                         {
                           props.stats.bestBlock === 0 ? (
@@ -431,11 +425,11 @@ function Dashboard(props) {
                         Max &nbsp;<Span>26s</Span>
                       </FlexStyledOne>
                     </DisplayFlex>
-                  </CountryData>
+                  </CountryDataEfficiencyDesk2>
                 </ContentSpeed>
 
                 <ContentEfficiency className="efficiency">
-                  <ContentData>
+                  <ContentDataEfficiencyDesk>
                     <Heading>Gas Price (USD)</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
@@ -464,7 +458,7 @@ function Dashboard(props) {
                   </ContentData>
                   <CountryData>
                     <SpaceBetween>
-                      <div>
+                      <EfficiencyLabel>
                         <Countries>UP Time</Countries>
                         {
                           props.stats.upTime === 0 ? (
@@ -532,7 +526,7 @@ function Dashboard(props) {
                       {/*  <div></div>*/}
                       {/*)}*/}
                     </Speedbar>
-                  </CountryData>
+                  </CountryDataEfficiencyDesk2>
                 </ContentEfficiency>
               </ContentParent>
             </FullScreen>
@@ -960,9 +954,10 @@ const JoyrideTextContainer = styled.div`
   background: white;
   border-radius: 10px;
   display: flex;
-  font-size: 1rem !important;
+  font-size: 13px !important;
   color: #1f1f1f !important;
-  font-family: "Inter" !important;
+  font-family: "Inter", Regular !important;
+  font-weight: 400,
   width: 100%;
 `;
 
@@ -1257,6 +1252,13 @@ const ContentData = styled.div`
   }
 `;
 
+const ContentDataEfficiencyDesk = styled.div`
+  width: 45%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
 const ContentDataSpeedIpad = styled.div`
   width: 38%;
   @media (min-width: 300px) and (max-width: 767px) {
@@ -1297,6 +1299,10 @@ const DesktopAvgBlockTime = styled.div`
 const CountryData = styled.div`
   width: 50%;
 `;
+
+const CountryDataEfficiencyDesk2 = styled.div`
+  width: 55%;
+`;
 const ContentDataSpeedIpad2= styled.div`
   width: 62%;
 `;
@@ -1317,6 +1323,13 @@ const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+const EfficiencyLabel = styled.div`
+margin-left: 30px;
+`;
+const SpeedLabel = styled.div`
+`;
+
 const Countries = styled.div`
   font-weight: 600;
   font-size: 1rem;
