@@ -15,6 +15,9 @@ import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
 import _ from "lodash";
 import ReactTooltip from "react-tooltip";
+import {store, useGlobalState} from 'state-pool';
+
+store.setState("rows", []);
 
 const TableBox = style.div`
   width: 100%;
@@ -286,6 +289,12 @@ const headCells = [
     label: (
       <DisplayFlex>
         <Label>Up Time</Label>&nbsp;
+        <Img
+          data-tip="uptime"
+          data-for="uptime"
+          src="/images/Help.svg"
+          alt=" "
+        />
         <ReactTooltip
           id="uptime"
           className="extra"
@@ -296,17 +305,11 @@ const headCells = [
           delayHide={0}
           delayShow={0}
           clickable={true}
-          place="bottom"
+          place="left"
           effect="solid"
         >
           Total available and working time of network
         </ReactTooltip>
-        <Img
-          data-tip="uptime"
-          data-for="uptime"
-          src="/images/Help.svg"
-          alt=" "
-        />
       </DisplayFlex>
     ),
   },
@@ -341,7 +344,7 @@ function EnhancedTableHead() {
 }
 
 function EnhancedTable(props) {
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useGlobalState("rows");
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -389,6 +392,7 @@ function EnhancedTable(props) {
       setRows(props.stats.nodesArr);
     }
   }, [props.stats.nodesArr]);
+  console.log("rowsss", selected);
 
   const [query, setQuery] = useState("");
   const filteredRows = props.stats.nodesArr.filter((row) => {
@@ -496,10 +500,16 @@ function EnhancedTable(props) {
                                         >
                                             <StyledTableCell padding="radio">
                                                 <Radio
-                                                    control={<Radio />}
+                                                    className="radioButton"
                                                     style={{
                                                         paddingRight: "0px",
                                                         paddingLeft: "18px",
+                                                    }}
+                                                    sx={{
+                                                      ml: 1,
+                                                      "&.MuiRadio-root:hover": {
+                                                        bgcolor: "transparent"
+                                                      }
                                                     }}
                                                     color="default"
                                                     checkedIcon={<BpCheckedIcon />}
@@ -608,7 +618,6 @@ function EnhancedTable(props) {
                                                     color: "#393939",
                                                     fontFamily: "Inter",
                                                     fontWeight: "400",
-                                                    columnWidth: "85px",
                                                 }}
 
                                                 className = {getUpTimeColor(row.stats)}
