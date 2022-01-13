@@ -520,7 +520,7 @@ async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = resp?.responseData[0]?.nodes;
   let table = [];
-  for (let i = 0; i < initNodes.length; i++) {
+  for (let i = 0; i < initNodes && initNodes.length; i++) {
     table.push({
       type: initNodes[i].info.node,
       pendingTxn: initNodes[i].stats.pending,

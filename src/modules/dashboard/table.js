@@ -39,7 +39,7 @@ const SearchBox = style.input`
   white-space: nowrap;
   height: 2.5rem;
   font-size: 0.875rem;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   outline: none;
   color: "black";
 `;
@@ -61,6 +61,12 @@ const Img = style.img`
   align-items: center;
   text-align: center;
 `;
+const CloseButton = style.img`
+	width: 15px;
+	height: 15px;
+	padding: 2px;
+`;
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
@@ -450,11 +456,16 @@ function EnhancedTable(props) {
 
   return (
     <>
+      <form>
       <SearchBox
         placeholder="Search by node name"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      <div>
+      {/* <CloseButton src="/images/Close.svg" onClick={()=> setQuery("")} /> */}
+      </div>
+      </form>
       <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
         <Paper sx={{ width: "auto", minHeight: "20vh" }}>
           <TableContainer>
