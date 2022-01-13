@@ -40,7 +40,7 @@ const StartGuideTourButton = styled.button`
 const Img = styled.img`
 height: 30px;
 width: 84px;
-margin-right: 10px;
+margin-right: 15px;
 @media (min-width: 300px) and (max-width: 767px) {
 height: 20px;
 width: 70px;
@@ -109,7 +109,7 @@ const NetworkStats = styled.div`
   font-family: Inter;
   color: #ffffff;
   white-space: nowrap;
-  margin-left: 9px;
+  margin-left: 14px;
   @media (min-width: 768px) and (max-width: 1024px) {
   font-weight: 350;
   }

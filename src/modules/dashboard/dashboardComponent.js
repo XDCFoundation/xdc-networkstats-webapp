@@ -46,9 +46,9 @@ function Dashboard(props) {
 
   // User has switched back to the tab
   const onFocus = () => {
-    if(props.stats.bestBlock !== 0){
-      window.location.reload();
-    }
+    // if(props.stats.bestBlock !== 0){
+    //   window.location.reload();
+    // }
   };
 
   useEffect(() => {
@@ -148,17 +148,12 @@ function Dashboard(props) {
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
-    let EthVal = `${
-      Math.round(
-        ((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *
-          100 *
-          1000000
-      ) / 1000000
-    }%`;
+    let EthVal = `${Math.round(((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *100 * 1000000) / 1000000}%`;
     if(!isNaN(parseFloat(EthVal))) {
       setEth(EthVal);
     }
   }
+  console.log("dashh", props.stats.gasPrice);
   useEffect(() => {
     fetchTime();
     let value = props.stats.gasPrice.toFixed(6);
@@ -364,7 +359,7 @@ function Dashboard(props) {
                 </ContentSecurity>
 
                 <ContentSpeed className="speed">
-                  <ContentData>
+                  <ContentDataEfficiencyDesk>
                     <Heading>Best Block</Heading>
                     <DataCount>
                       #{" "}
@@ -376,14 +371,14 @@ function Dashboard(props) {
                     </DataCount>
                     <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
                     <BlockTime>{(props.stats.avgBlock).toFixed(4) + " "}Sec</BlockTime>
-                  </ContentData>
+                  </ContentDataEfficiencyDesk>
 
-                  <CountryData>
+                  <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
-                      <div>
+                      <SpeedLabel>
                         <Countries>Last Block</Countries>
                         <CountriesData>{props.stats.lastBlock}</CountriesData>
-                      </div>
+                      </SpeedLabel>
                     </SpaceBetween>
                     <Speedbar>
                       <LastBlockBar />
@@ -396,11 +391,11 @@ function Dashboard(props) {
                         Max &nbsp;<Span>26s</Span>
                       </FlexStyledOne>
                     </DisplayFlex>
-                  </CountryData>
+                  </CountryDataEfficiencyDesk2>
                 </ContentSpeed>
 
                 <ContentEfficiency className="efficiency">
-                  <ContentData>
+                  <ContentDataEfficiencyDesk>
                     <Heading>Gas Price (USD)</Heading>
                     <DataCount>{gasUsd}</DataCount>
                     <EthDiv>
@@ -409,13 +404,13 @@ function Dashboard(props) {
                     </EthDiv>
                     <NodeHistory>Avg Transaction Speed</NodeHistory>
                     <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
-                  </ContentData>
-                  <CountryData>
+                  </ContentDataEfficiencyDesk>
+                  <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
-                      <div>
+                      <EfficiencyLabel>
                         <Countries>UP Time</Countries>
                         <CountriesData>{props.stats.upTime}%</CountriesData>
-                      </div>
+                      </EfficiencyLabel>
 
                       <SelectionDiv>
                         <SelectionDivStyle
@@ -473,7 +468,7 @@ function Dashboard(props) {
                       {/*  <div></div>*/}
                       {/*)}*/}
                     </Speedbar>
-                  </CountryData>
+                  </CountryDataEfficiencyDesk2>
                 </ContentEfficiency>
               </ContentParent>
             </FullScreen>
@@ -813,9 +808,10 @@ const JoyrideTextContainer = styled.div`
   background: white;
   border-radius: 10px;
   display: flex;
-  font-size: 1rem !important;
+  font-size: 13px !important;
   color: #1f1f1f !important;
-  font-family: "Inter" !important;
+  font-family: "Inter", Regular !important;
+  font-weight: 400,
   width: 100%;
 `;
 
@@ -1110,6 +1106,13 @@ const ContentData = styled.div`
   }
 `;
 
+const ContentDataEfficiencyDesk = styled.div`
+  width: 45%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
 const ContentDataSpeedIpad = styled.div`
   width: 38%;
   @media (min-width: 300px) and (max-width: 767px) {
@@ -1150,6 +1153,10 @@ const DesktopAvgBlockTime = styled.div`
 const CountryData = styled.div`
   width: 50%;
 `;
+
+const CountryDataEfficiencyDesk2 = styled.div`
+  width: 55%;
+`;
 const ContentDataSpeedIpad2= styled.div`
   width: 62%;
 `;
@@ -1170,6 +1177,13 @@ const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+const EfficiencyLabel = styled.div`
+margin-left: 30px;
+`;
+const SpeedLabel = styled.div`
+`;
+
 const Countries = styled.div`
   font-weight: 600;
   font-size: 1rem;
@@ -1208,7 +1222,7 @@ const TableDiv = styled.div`
   padding-right: 50px;
   padding-top: 20px;
   padding-bottom: 30px;
-  min-height: 40vh;
+  min-height: 60vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
   }

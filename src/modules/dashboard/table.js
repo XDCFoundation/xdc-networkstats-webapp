@@ -30,7 +30,7 @@ const SearchBox = style.input`
   background-position: 0.5rem;
   padding-left: 2rem;
   background-size: 0.875rem;
-
+  position: relative;
   background-color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -60,11 +60,6 @@ const Img = style.img`
   display: flex;
   align-items: center;
   text-align: center;
-`;
-const CloseButton = style.img`
-	width: 15px;
-	height: 15px;
-	padding: 2px;
 `;
 
 const StyledTableRow = withStyles((theme) => ({
@@ -304,7 +299,7 @@ const headCells = [
           place="bottom"
           effect="solid"
         >
-          Total available and working time of the network
+          Total available and working time of network
         </ReactTooltip>
         <Img
           data-tip="uptime"
@@ -456,16 +451,15 @@ function EnhancedTable(props) {
 
   return (
     <>
-      <form>
+      <div className="search-wrapper">
       <SearchBox
+        className="search-box"
         placeholder="Search by node name"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <div>
-      {/* <CloseButton src="/images/Close.svg" onClick={()=> setQuery("")} /> */}
+      <button class="close-icon" onClick={()=> setQuery("")}></button>
       </div>
-      </form>
       <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
         <Paper sx={{ width: "auto", minHeight: "20vh" }}>
           <TableContainer>
@@ -474,7 +468,7 @@ function EnhancedTable(props) {
               <EnhancedTableHead />
               {/* <Main/> */}
                 {
-                    rows.length === 1 ? (
+                    ( rows.length === 1 || rows.length === 0 ) ? (
                         <div style={{position: "absolute", left: "48vw"}}>
                             <div className="table-dots" style={{top: "40px"}}>
                                 <div></div>
@@ -614,7 +608,7 @@ function EnhancedTable(props) {
                                                     color: "#393939",
                                                     fontFamily: "Inter",
                                                     fontWeight: "400",
-                                                    columnWidth: "0px",
+                                                    columnWidth: "85px",
                                                 }}
 
                                                 className = {getUpTimeColor(row.stats)}
