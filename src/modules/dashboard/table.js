@@ -477,7 +477,7 @@ function EnhancedTable(props) {
               <EnhancedTableHead />
               {/* <Main/> */}
                 {
-                    rows.length === 1 ? (
+                    ( rows.length === 1 || rows.length === 0 ) ? (
                         <div style={{position: "absolute", left: "48vw"}}>
                             <div className="table-dots" style={{top: "40px"}}>
                                 <div></div>
