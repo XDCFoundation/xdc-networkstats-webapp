@@ -347,6 +347,8 @@ function updateActiveNodes(data) {
     if (node.geo !== null) {
       marker.push({
         coords: swap(node.geo.ll[0], node.geo.ll[1]),
+        active: node.stats?.active,
+        peers: node.stats?.peers
       });
       country.push({
         loc: (node.geo.country).toString(),
@@ -518,7 +520,7 @@ async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
   let initNodes = resp?.responseData[0]?.nodes;
   let table = [];
-  for (let i = 0; i < initNodes.length; i++) {
+  for (let i = 0; i < initNodes && initNodes.length; i++) {
     table.push({
       type: initNodes[i].info.node,
       pendingTxn: initNodes[i].stats.pending,

@@ -103,7 +103,7 @@ function Dashboard(props) {
         buttonNext: {
           backgroundColor: "#2358E5",
           border: "none",
-          width: 70,
+          width: 77,
           borderRadius: 0,
           fontSize: 14,
           fontFamily: "Inter-Regular",
@@ -285,8 +285,6 @@ function Dashboard(props) {
                 onClick={() => {
                   setShow(1);
                   setShowTabJoyRide(false);
-                  
-
                 }}
               >
                 Security
@@ -456,11 +454,24 @@ function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {props.stats?.efficiency?.length !== 0 ? (
-                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
-                      ) : (
-                        <div></div>
-                      )}
+                      {
+                        props?.stats?.efficiency?.length === 0 ? (
+                            <div className="center-parent-div position-relative top-50px">
+                              <div className="dots">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                              </div>
+                            </div>
+                        ) : (
+                            <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                        )
+                      }
+                      {/*{props.stats?.efficiency?.length !== 0 ? (*/}
+                      {/*  <UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
+                      {/*) : (*/}
+                      {/*  <div></div>*/}
+                      {/*)}*/}
                     </Speedbar>
                   </CountryData>
                 </ContentEfficiency>
@@ -486,7 +497,7 @@ function Dashboard(props) {
                         </div>
                         <Image
                           src="/images/Expand.svg"
-                          onClick={() => changeExpand(2)}
+                          onClick={() => {changeExpand(2);setShowTabJoyRide(false);}}
                         />
                       </SpaceBetween>
                       <MapDiv>
@@ -592,7 +603,20 @@ function Dashboard(props) {
                         </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
-                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
+                        {
+                          props?.stats?.efficiency.length === 0 ? (
+                              <div className="center-parent-div position-relative top-50px">
+                                <div className="dots">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                          ) : (
+                              <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                          )
+                        }
+                        {/*<UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
                       </Speedbar>
                     </ContentDataSpeedIpad2>
                   </ContentEfficiency>
@@ -626,7 +650,7 @@ function Dashboard(props) {
                     </div>
                     <Image
                       src="/images/Expand.svg"
-                      onClick={() => changeExpand(2)}
+                      onClick={() => {changeExpand(2);setShowTabJoyRide(false);}}
                     />
                   </SpaceBetween>
                   {mobileTab <= 1 ? (
@@ -903,7 +927,6 @@ const FlexStyledOne = styled.div`
   text-align: center;
 `;
 const TabSecurity = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 16px;
   border-right: 2px solid #274598;
@@ -915,14 +938,9 @@ const TabSecurity = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.back === 1 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.back === 1 ? "#FFFFFF" : "#C8D1F1")};
 `;
 const TabSpeed = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 16px;
   border-right: 2px solid #274598;
@@ -934,14 +952,9 @@ const TabSpeed = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.back === 2 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.back === 2 ? "#FFFFFF" : "#C8D1F1")};
 `;
 const TabEfficiency = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 16px;
   border-right: 2px solid #274598;
@@ -953,15 +966,10 @@ const TabEfficiency = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.back === 3 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.back === 3 ? "#FFFFFF" : "#C8D1F1")};
 `;
 
 const MobileTitleSecurity = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
@@ -972,14 +980,9 @@ const MobileTitleSecurity = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.show === 1 ? "#FFFFFF" : "#C8D1F1")};
 `;
 const MobileTitleSpeed = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
@@ -990,14 +993,9 @@ const MobileTitleSpeed = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.show === 2 ? "#FFFFFF" : "#C8D1F1")};
 `;
 const MobileTitleEfficiency = styled.div`
-  color: #c8d1f1;
   width: 33.33%;
   font-size: 1rem;
   font-weight: 600;
@@ -1008,11 +1006,7 @@ const MobileTitleEfficiency = styled.div`
   align-items: center;
   text-align: center;
   background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
-  :hover {
-    background-color: #4065cb;
-    color: white;
-    cursor: pointer;
-  }
+  color: ${(props) => (props.show === 3 ? "#FFFFFF" : "#C8D1F1")};
 `;
 const ContentSecurity = styled.div`
   background-color: #102c78;
@@ -1212,8 +1206,9 @@ const TableDiv = styled.div`
   border-radius: 4px;
   padding-left: 50px;
   padding-right: 50px;
-  padding-top: 50px;
+  padding-top: 20px;
   padding-bottom: 30px;
+  min-height: 40vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
   }
@@ -1343,17 +1338,14 @@ const SelectionDivStyle = styled.div`
   height: 28px;
   width: 100%;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #3c70ff;
+  border-right: 0.5px solid #2149B9;
   cursor: pointer;
 
   color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
-    props.buttonToggle === 1 ? "#3c70ff" : "#1C3C93"};
-  /* 
-  :hover {
-    background-color: #3c70ff;
-  } */
+    props.buttonToggle === 1 ? "#2149B9" : "#1C3C93"};
+ 
 `;
 const SelectionDivStyleTwo = styled.div`
   font-size: 12px;
@@ -1364,16 +1356,13 @@ const SelectionDivStyleTwo = styled.div`
   width: 100%;
   height: 28px;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #3c70ff;
+  border-right: 0.5px solid #2149B9;
   cursor: pointer;
   color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
-    props.buttonToggle === 2 ? "#3c70ff" : "#1C3C93"};
+    props.buttonToggle === 2 ? "#2149B9" : "#1C3C93"};
 
-  /* :hover {
-    background-color: #3c70ff;
-  } */
 `;
 const SelectionDivStyleThree = styled.div`
   font-size: 12px;
@@ -1384,16 +1373,13 @@ const SelectionDivStyleThree = styled.div`
   height: 28px;
   width: 100%;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #3c70ff;
+  border-right: 0.5px solid #2149B9;
   cursor: pointer;
   color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
-    props.buttonToggle === 3 ? "#3c70ff" : "#1C3C93"};
+    props.buttonToggle === 3 ? "#2149B9" : "#1C3C93"};
 
-  /* :hover {
-    background-color: #3c70ff;
-  } */
 `;
 
 const mapStateToProps = (state) => {
