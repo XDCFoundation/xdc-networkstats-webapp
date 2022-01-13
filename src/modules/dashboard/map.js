@@ -40,8 +40,29 @@ function Map(props) {
       setNode(props.stats.markers);
     }
   });
+
+  const getNodesColor = (active, peers) => {
+    if(!active)
+      return '#dc3545';
+
+    return (peers <= 1 ? '#dc3545' : (peers > 1 && peers < 4 ? '#ffc107' : '#3AF219'));
+  }
+
   return (
     <Div>
+      {
+        node.length === 0 ? (
+            <div className="center-parent-div position-relative top-50px">
+              <div className="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        ) : (
+            <div></div>
+        )
+      }
       <ComposableMap
        width={800}
        height={450}
@@ -56,7 +77,7 @@ function Map(props) {
         </Geographies>
         {node.map((items, index) => (
           <Marker key={index} coordinates={items.coords}>
-            <circle r={12} fill="#3AF219" />
+            <circle r={12} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
       </ComposableMap>

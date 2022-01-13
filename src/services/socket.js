@@ -347,6 +347,8 @@ function updateActiveNodes(data) {
     if (node.geo !== null) {
       marker.push({
         coords: swap(node.geo.ll[0], node.geo.ll[1]),
+        active: node.stats?.active,
+        peers: node.stats?.peers
       });
       country.push({
         loc: (node.geo.country).toString(),

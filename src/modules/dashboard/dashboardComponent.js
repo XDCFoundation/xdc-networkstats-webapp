@@ -456,11 +456,24 @@ function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {props.stats?.efficiency?.length !== 0 ? (
-                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
-                      ) : (
-                        <div></div>
-                      )}
+                      {
+                        props?.stats?.efficiency?.length === 0 ? (
+                            <div className="center-parent-div position-relative top-50px">
+                              <div className="dots">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                              </div>
+                            </div>
+                        ) : (
+                            <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                        )
+                      }
+                      {/*{props.stats?.efficiency?.length !== 0 ? (*/}
+                      {/*  <UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
+                      {/*) : (*/}
+                      {/*  <div></div>*/}
+                      {/*)}*/}
                     </Speedbar>
                   </CountryData>
                 </ContentEfficiency>
@@ -592,7 +605,20 @@ function Dashboard(props) {
                         </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
-                        <UpTimeBar data={props.stats.efficiency}></UpTimeBar>
+                        {
+                          props?.stats?.efficiency.length === 0 ? (
+                              <div className="center-parent-div position-relative top-50px">
+                                <div className="dots">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                          ) : (
+                              <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                          )
+                        }
+                        {/*<UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
                       </Speedbar>
                     </ContentDataSpeedIpad2>
                   </ContentEfficiency>
@@ -1213,6 +1239,7 @@ const TableDiv = styled.div`
   padding-right: 50px;
   padding-top: 50px;
   padding-bottom: 30px;
+  min-height: 40vh;
   @media (min-width: 300px) and (max-width: 1024px) {
     padding: 30px;
   }
