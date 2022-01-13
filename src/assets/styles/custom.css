@@ -278,7 +278,9 @@ select {
   background-clip: content-box;
 }
 
-
+::-webkit-scrollbar-thumb:horizontal{
+  height: 10px;
+}
   
   .MuiButtonBase-root{
   height: 10px !important;
@@ -360,7 +362,7 @@ select {
   border: 0 !important;
 }
 
-
 .__react_component_tooltip.show{
   margin-top: 15px !important;
 }
+

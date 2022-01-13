@@ -21,7 +21,7 @@ const TableBox = styled.div`
   height: 100%;
   max-width: 550px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  max-width: 1024px
+  max-width: 1500px
   }
   @media (min-width: 300px) and (max-width: 767px) {
   max-width: 767px
@@ -73,6 +73,11 @@ const StyledTableHeadCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+const Div = styled.div`
+margin-bottom: 10px;
+width: 100%;
+`;
+
 function EnhancedTable(props) {
   let rows = [];
     if (!_.isEmpty(props.stats.expandedCountry) && !_.isUndefined(props.stats.expandedCountry)) {
@@ -117,15 +122,15 @@ function EnhancedTable(props) {
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
-          last7: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+          last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
         });
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Down Arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
           last7: props.stats.expandedCountry[i].last7diff+"%"
         });
       }
@@ -136,7 +141,7 @@ function EnhancedTable(props) {
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
-          last7: <Flex><img src="/images/Up Arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
         });
       }
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
@@ -309,8 +314,10 @@ function EnhancedTable(props) {
   // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
+    
     <TableBox sx={{ width: "auto" }}>
       <TableContainer>
+      <Div>
         <Table sx={{ minWidth: 100 }} aria-labelledby="tableTitle"
          rowsPerPage={10}
         >
@@ -377,6 +384,7 @@ function EnhancedTable(props) {
             )}
           </TableBody>
         </Table>
+        </Div>
       </TableContainer>
     </TableBox>
   );

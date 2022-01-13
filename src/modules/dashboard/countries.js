@@ -101,6 +101,9 @@ const Div = styled.div`
   width: auto;
   height: 100vh;
   padding: 15px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  height: 100%;
+  }
 `;
 
 const SpaceBetween = styled.div`
