@@ -95,95 +95,60 @@ export default function SideDrawer(props) {
           />
         </Nav>
         <ColumnContainer>
-          
+
           <RowDiv>
-            <Img src="/images/MasterNodes.svg" alt="Master" /> &nbsp;&nbsp;
+            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
-                (window.location.href = "https://apothem.network/#masternode")
+                // (window.location.href = "https://observer.xdc.org/")
+                window.open("https://observer.xdc.org/")
               }
             >
-              Masternodes
+              XDC Observatory
             </Content>
           </RowDiv>
 
           <RowDiv>
-            <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp;
+            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
-                (window.location.href = "https://observer.xdc.org/")
+                window.open("http://betagovernance.xdcroadmap.net/")
               }
             >
-              Block Explorer
+              XDC Governance
             </Content>
           </RowDiv>
 
-          <RowDiv>
+          {/* <RowDiv>
             <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp;
             <Content
               onClick={() =>
-                (window.location.href = "https://wallet.apothem.network/#/")
+                window.open("https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo?hl=en-US")
               }
             >
-              Web Wallet
+              XDCPay
             </Content>
-          </RowDiv>
+          </RowDiv> */}
 
-          <RowDiv>
-            <Img src="/images/Android.svg" alt="Android" /> &nbsp;&nbsp;
-            <Content
+          {/* <RowDiv>
+            {/* <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp; */}
+            {/* <Content
               onClick={() =>
-                (window.location.href =
-                  "https://play.google.com/store/apps/details?id=com.xdcwallet")
-              }
-            >
-              Android Wallet
-            </Content>
-          </RowDiv>
-
-          <RowDiv>
-            <Img src="/images/Download.svg" alt="Download" /> &nbsp;&nbsp;
-            <Content
-              onClick={() =>
-                (window.location.href = "https://xinfin.org/setup-masternode")
-              }
-            >
-              One Click Installer
-            </Content>
-          </RowDiv>
-
-          <RowDiv>
-            <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp;
-            <Content
-              onClick={() =>
-                (window.location.href = "http://docs.xdcfoundation.org/")
+                window.open("http://docs.xdcfoundation.org/")
               }
             >
               XDC Docs
             </Content>
-          </RowDiv>
+          </RowDiv> */} 
 
           <RowDiv>
-            <Img src="/images/APIs.svg" alt="Api" /> &nbsp;&nbsp;
+            {/* <Img src="/images/Documents.svg" alt="Api Documents" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
-                (window.location.href =
-                  "https://apidocs.xinfin.network/docs/#xinfin-apis")
-              }
-              c
-            >
-              XDC API
-            </Content>
-          </RowDiv>
-
-          <RowDiv>
-            <Img src="/images/Documents.svg" alt="Api Documents" /> &nbsp;&nbsp;
-            <Content
-              onClick={() =>
-                (window.location.href = "https://apidocs.xinfin.network/")
+                window.open("https://medium.com/xdc-foundation-communications")
               }
             >
-              XDC API Docs
+              XDC Communications
             </Content>
           </RowDiv>
         </ColumnContainer>

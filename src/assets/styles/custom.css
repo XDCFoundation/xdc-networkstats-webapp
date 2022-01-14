@@ -441,8 +441,12 @@ select {
 .top-50px{
   top: 50px;
 }
-
-.search-box,.close-icon,.search-wrapper {
+.search-wrapper{
+display: flex;
+justify-content: space-between;
+height: 55px;
+}
+.search-box,.close-icon{
 	position: relative;
 }
 .close-icon {
@@ -460,9 +464,10 @@ select {
 	height: 15px;
 	position: absolute;
 	z-index:1;
-	right: 20px;
+	/* right: 20px; */
 	top: 0;
-	bottom: 0;
+	bottom: 96px;
+  left: 225px;
 	margin: auto;
 	padding-bottom: 25px;
 	text-align: center;
@@ -494,4 +499,44 @@ select {
   position: relative;
   border-radius: 4px;
   margin-top: 5px;
+}
+
+.switch {
+  position: relative;
+  margin-top: 4px;
+  margin-left: 10px;
+}
+
+.switch label {
+  width: 45px;
+  height: 20px;
+  background-color: #999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50px;
+}
+
+.switch input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.switch label:after {
+  content: '';
+  width: 23px;
+  height: 23px;
+  border-radius: 50px;
+  position: absolute;
+  top: -1.75px;
+  left: 0px;
+  transition: .7s;
+  background-color: white;
+}
+
+.switch .look:checked + label:after {
+  left: 25px;
+}
+
+.switch .look:checked + label {
+  background-color: #3C70FF;
 }
