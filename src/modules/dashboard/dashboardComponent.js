@@ -430,7 +430,7 @@ function Dashboard(props) {
 
                 <ContentEfficiency className="efficiency">
                   <ContentDataEfficiencyDesk>
-                    <Heading>Gas Price (USD)</Heading>
+                    <Heading>Avg Transaction Fee</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
                               <div className="animated-background"></div>
@@ -459,7 +459,7 @@ function Dashboard(props) {
                   <CountryData>
                     <SpaceBetween>
                       <EfficiencyLabel>
-                        <Countries>UP Time</Countries>
+                        <Countries>Up Time</Countries>
                         {
                           props.stats.upTime === 0 ? (
                                   <div className="animated-background"></div>
@@ -632,7 +632,7 @@ function Dashboard(props) {
                 {tabResponsive === 3 ? (
                   <ContentEfficiency className="efficiency">
                     <ContentDataEfficiencyIpad>
-                      <Heading>Gas Price (USD)</Heading>
+                      <Heading>Avg Transaction Fee</Heading>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -660,7 +660,7 @@ function Dashboard(props) {
                     <ContentDataSpeedIpad2>
                       <SpaceBetween>
                         <ContentDataEfficiencyIpadLabel>
-                          <Countries>UP Time</Countries>
+                          <Countries>Up Time</Countries>
                           {
                             props.stats.upTime === 0 ? (
                                     <div className="animated-background"></div>
@@ -846,7 +846,7 @@ function Dashboard(props) {
                 <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <BestBlock>Gas Price (USD)</BestBlock>
+                      <BestBlock>Avg Transaction Fee</BestBlock>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -863,7 +863,7 @@ function Dashboard(props) {
                       }
                     </div>
                     <div>
-                      <LastBlock>UP Time</LastBlock>
+                      <LastBlock>Up Time</LastBlock>
                       {
                         props.stats.upTime === 0 ? (
                                 <div className="animated-background"></div>
