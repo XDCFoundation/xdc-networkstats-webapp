@@ -50,7 +50,6 @@ const socket = io(url, {
 socket.on("open", function open() {
   socket.emit("ready");
 });
-
 socket.on("end", function end() {});
 
 socket.on("error", function error(err) {});
@@ -340,7 +339,7 @@ function updateActiveNodes(data) {
     return node.stats.active === true;
   }).length;
 
-  nodesArr.forEach((node) => {
+  data.forEach((node) => {
     function swap(x, y) {
       return [y, x];
     }
@@ -348,7 +347,8 @@ function updateActiveNodes(data) {
       marker.push({
         coords: swap(node.geo.ll[0], node.geo.ll[1]),
         active: node.stats?.active,
-        peers: node.stats?.peers
+        peers: node.stats?.peers,
+        id: node.id
       });
       country.push({
         loc: (node.geo.country).toString(),
@@ -421,7 +421,7 @@ function updateActiveNodes(data) {
       country.count =
         country.count.toString() +
         " " +
-        `(${((country.count / nodesArr.length) * 100).toFixed(2)})%`;
+        `(${((country.count / data.length) * 100).toFixed(2)})%`;
     });
     
     store.dispatch({
@@ -518,9 +518,10 @@ setInterval(()=>{
 
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
-  let initNodes = resp?.responseData[0]?.nodes;
+  let initNodes = resp?.responseData[0]?.nodes
+  updateActiveNodes(initNodes);
   let table = [];
-  for (let i = 0; i < initNodes && initNodes.length; i++) {
+  for (let i = 0; i < initNodes.length; i++) {
     table.push({
       type: initNodes[i].info.node,
       pendingTxn: initNodes[i].stats.pending,

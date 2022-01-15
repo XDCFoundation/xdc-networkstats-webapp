@@ -12,7 +12,7 @@ const StartGuidedLabel = styled.span`
   font-weight: 400;
   font-family: "Inter";
   font-size: 1rem;
-  @media (max-width: 425px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
@@ -32,7 +32,7 @@ const StartGuideTourButton = styled.button`
   width: 100%;
   max-width: 186px;
   padding: 6px 5px 8px 6px;
-  @media (min-width: 100px) and (max-width: 767px) {
+  @media (min-width: 100px) and (max-width: 1024px) {
     display: none;
   }
 `;
@@ -70,9 +70,7 @@ export default function Header(props) {
           <StartGuideTourButton
             onClick={() => {
               props.setJoyrideRun(true);
-              props.setShowTabJoyRide(true);
               props.expand(false);
-              props.tab(1);
             }}
           >
             <img src="/images/Play.svg" alt="Start" />
@@ -83,9 +81,11 @@ export default function Header(props) {
               props.setShowTabJoyRide(true);
               props.expand(false);
               props.mobile(1);
+              props.tab(1);
             }}
           >
             <PlayImage src="/images/Play.svg" alt="Start" />
+            <StartGuidedLabel>Start Guided Tour</StartGuidedLabel>&nbsp;
           </StartGuideTourButtonTab>
           &emsp;
           <HeaderLogoElement
@@ -135,7 +135,7 @@ const StartGuideTourButtonTab = styled.div`
   width: 100%;
   max-width: 186px;
   padding: 6px 5px 8px 6px;
-  @media (min-width: 767px) {
+  @media (min-width: 1025px) {
     display: none;
   }
   @media (min-width: 300px) and (max-width: 767px) {

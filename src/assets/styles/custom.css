@@ -515,6 +515,7 @@ height: 55px;
   top: 0;
   left: 0;
   border-radius: 50px;
+  cursor: pointer;
 }
 
 .switch input[type="checkbox"] {
@@ -531,6 +532,7 @@ height: 55px;
   left: 0px;
   transition: .7s;
   background-color: white;
+  cursor: pointer;
 }
 
 .switch .look:checked + label:after {
