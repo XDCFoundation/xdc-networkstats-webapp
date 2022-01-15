@@ -1001,7 +1001,7 @@ const BackDropStyle = styled.div`
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
-    top: 341px;
+    top: 336px;
   }
 `;
 const JoyrideBackButton = styled.div`
