@@ -96,6 +96,18 @@ export default function SideDrawer(props) {
         </Nav>
         <ColumnContainer>
 
+        <RowDiv>
+            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
+            <Content
+              onClick={() =>
+                // (window.location.href = "https://observer.xdc.org/")
+                window.open("https://medium.com/xdc-foundation-communications")
+              }
+            >
+              About XDC
+            </Content>
+          </RowDiv>
+
           <RowDiv>
             {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
@@ -109,13 +121,35 @@ export default function SideDrawer(props) {
           </RowDiv>
 
           <RowDiv>
+            {/* <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp; */}
+            <Content
+              onClick={() =>
+                window.open("https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo?hl=en-US")
+              }
+            >
+              XDCPay
+            </Content>
+          </RowDiv>
+
+          <RowDiv>
             {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
-                window.open("http://betagovernance.xdcroadmap.net/")
+                window.open("https://github.com/xdcfoundation")
               }
             >
-              XDC Governance
+              XDC GitHub
+            </Content>
+          </RowDiv>
+
+          <RowDiv>
+            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
+            <Content
+              onClick={() =>
+                window.open("https://xdcroadmap.org/")
+              }
+            >
+              XDC Roadmap
             </Content>
           </RowDiv>
 
@@ -130,27 +164,27 @@ export default function SideDrawer(props) {
             </Content>
           </RowDiv> */}
 
-          {/* <RowDiv>
+          {/* <RowDiv> */}
             {/* <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp; */}
-            {/* <Content
+             {/* <Content
               onClick={() =>
                 window.open("http://docs.xdcfoundation.org/")
               }
             >
               XDC Docs
             </Content>
-          </RowDiv> */} 
+          </RowDiv>  */}
 
-          <RowDiv>
+          {/* <RowDiv> */}
             {/* <Img src="/images/Documents.svg" alt="Api Documents" /> &nbsp;&nbsp; */}
-            <Content
+            {/* <Content
               onClick={() =>
                 window.open("https://medium.com/xdc-foundation-communications")
               }
             >
               XDC Communications
             </Content>
-          </RowDiv>
+          </RowDiv> */}
         </ColumnContainer>
       </ColumnDiv>
     </Div>
