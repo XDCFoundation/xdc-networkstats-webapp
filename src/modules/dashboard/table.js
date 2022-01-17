@@ -35,6 +35,10 @@ font-weight: 500;
 font-size: 15px;
 margin-top: 3px;
 color: #393939;
+@media (min-height: 300px) and (max-width: 767px){
+
+font-size: 12px;
+}
 `;
 
 const SpaceBetween = style.div`
@@ -42,7 +46,9 @@ display: flex;
 justify-content: space-between;
 margin-right: 40px;
 white-space: nowrap;
-
+align-items: center;
+text-align: center;
+margin-bottom: 10px;
 `;
 
 const SearchBox = style.input`
@@ -56,13 +62,15 @@ const SearchBox = style.input`
   border: none;
   border-radius: 4px;
   width: 100%;
-  max-width: 17.75rem;
   white-space: nowrap;
   height: 2.5rem;
   font-size: 0.875rem;
   margin-bottom: 15px;
   outline: none;
   color: "black";
+  @media (min-height: 300px) and (max-width: 767px){
+  max-width: 300px
+  }
 `;
 
 const Label = style.div`
@@ -521,7 +529,7 @@ function EnhancedTable(props) {
         </SpaceBetween>
       </div>
       <TableBox sx={{ width: "auto", backgroundColor: "#F8F8F8" }}>
-        <Paper sx={{ width: "auto", minHeight: "20vh" }}>
+        <Paper sx={{ width: "auto", minHeight: "50vh" }}>
           <TableContainer>
             <Table sx={{ minWidth: 70 }} aria-labelledby="tableTitle">
               {/* {Head} */}
@@ -529,7 +537,7 @@ function EnhancedTable(props) {
               {/* <Main/> */}
               {rows.length === 1 || rows.length === 0 ? (
                 <div style={{ position: "absolute", left: "48vw" }}>
-                  <div className="table-dots" style={{ top: "40px" }}>
+                  <div className="table-dots" style={{ top: "40px", marginTop: "200px" }}>
                     <div></div>
                     <div></div>
                     <div></div>
@@ -539,7 +547,7 @@ function EnhancedTable(props) {
                       color: "#C0C0C0",
                       position: "relative",
                       fontSize: "0.7rem",
-                      top: "8px",
+                      top: "20px",
                       right: "2.5vw",
                     }}
                   >

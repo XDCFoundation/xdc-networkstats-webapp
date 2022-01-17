@@ -4,6 +4,7 @@ import {
   Geographies,
   Geography,
   Marker,
+  ZoomableGroup
 } from "react-simple-maps";
 import styled from "styled-components";
 import {dispatchAction} from "../../utility";
@@ -14,6 +15,7 @@ const Div = styled.div`
   fill: #103aaa;
   width: 100%;
   max-width: 965px;
+  border: none;
 `;
 
 const geoUrl =
@@ -44,15 +46,20 @@ function CountryMap(props) {
   return (
     <Div>
       <ComposableMap data-tip="">
+      <ZoomableGroup zoom={1}>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (
-              <Geography key={geo.rsmKey} geography={geo} />
+              <Geography key={geo.rsmKey} geography={geo} style={{
+                default: { outline: "none" },
+                hover: { outline: "none" },
+                pressed: { outline: "none" },
+              }}/>
             ))
           }
         </Geographies>
         {node.map((items, index) => (
-          <Marker key={index} coordinates={items.coords} onMouseEnter={()=>{
+          <Marker className="marker" key={index} coordinates={items.coords} onMouseEnter={()=>{
           setTooltip(items.id);
           }} onMouseLeave={() => {
             setTooltip("");
@@ -60,8 +67,14 @@ function CountryMap(props) {
             <circle r={6} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
+        </ZoomableGroup>
       </ComposableMap>
-      <ReactTooltip backgroundColor="white" textColor="black">{tooltip}</ReactTooltip>
+      <ReactTooltip arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          backgroundColor="white"
+          border={true}
+          place="bottom">{tooltip}</ReactTooltip>
     </Div>
   );
 }

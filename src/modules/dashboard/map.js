@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import { dispatchAction } from "../../utility";
 import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
 
 const Div = styled.div`
   fill: #103aaa;
@@ -32,6 +33,7 @@ const geoUrl =
 
 function Map(props) {
   const [node, setNode] = useState([]);
+  const [tooltip, setTooltip] = useState("");
   useEffect(() => {
     if (
       !_.isUndefined(props.stats.markers) &&
@@ -66,6 +68,7 @@ function Map(props) {
       <ComposableMap
        width={800}
        height={450}
+       data-tip=""
       //  style={{ width: "84%" }} 
       >
         <Geographies geography={geoUrl}>
@@ -76,11 +79,21 @@ function Map(props) {
           }
         </Geographies>
         {node.map((items, index) => (
-          <Marker key={index} coordinates={items.coords}>
+          <Marker className="marker" key={index} coordinates={items.coords} onMouseEnter={()=>{
+            setTooltip(items.id);
+            }} onMouseLeave={() => {
+              setTooltip("");
+            }}>
             <circle r={12} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
       </ComposableMap>
+      <ReactTooltip arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          backgroundColor="white"
+          border={true}
+          place="bottom">{tooltip}</ReactTooltip>
     </Div>
   );
 }
