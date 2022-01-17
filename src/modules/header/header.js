@@ -41,6 +41,7 @@ const Img = styled.img`
 height: 30px;
 width: 84px;
 margin-right: 15px;
+cursor: pointer;
 @media (min-width: 300px) and (max-width: 767px) {
 height: 20px;
 width: 70px;
@@ -62,7 +63,9 @@ export default function Header(props) {
     <DivRow>
       <SpaceBetween>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Img src="/images/XDC-Logo.svg" />
+          <Img onClick={() =>
+                window.location.href = 'https://stats.xdc.org/'
+              } src="/images/XDC-Logo.svg" />
           <Line src="/images/VerticalLine.svg" />
           <NetworkStats>Network Stats</NetworkStats>
         </div>
