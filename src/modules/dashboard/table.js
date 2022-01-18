@@ -91,9 +91,12 @@ const Img = style.img`
   text-align: center;
 `;
 
-const TopDiv = style.div`
-  display: flex;
-  justify-content: space-between;
+const LoadingDiv = style.div`
+color: #C0C0C0,
+position: relative,
+font-size: 0.7rem,
+top: 20px,
+right: 2.5vw,
 `;
 
 const StyledTableRow = withStyles((theme) => ({
@@ -513,7 +516,9 @@ function EnhancedTable(props) {
             className="search-box"
             placeholder="Search by node name"
             value={query}
+            type="text"
             onChange={(e) => setQuery(e.target.value)}
+            onInput={(e) => e.target.value = e.target.value.slice(0, 20)}
           />
           <button class="close-icon" onClick={() => setQuery("")}></button>
         </div>
@@ -545,7 +550,7 @@ function EnhancedTable(props) {
                     <div></div>
                     <div></div>
                   </div>
-                  <div
+                  <div className="loadingText"
                     style={{
                       color: "#C0C0C0",
                       position: "relative",
@@ -558,6 +563,20 @@ function EnhancedTable(props) {
                   </div>
                 </div>
               ) : (
+                <>
+                {rows.length === 0 ? (
+                <div className="loadingText"
+                style={{
+                  color: "#C0C0C0",
+                  position: "relative",
+                  fontSize: "0.7rem",
+                  top: "20px",
+                  right: "2.5vw",
+                }}
+              >
+                No Nodes
+              </div>
+                ) : (
                 <TableBody>
                   {stableSort(query !== "" ? filteredRows : rows).map(
                     (row, index) => {
@@ -698,6 +717,8 @@ function EnhancedTable(props) {
                     }
                   )}
                 </TableBody>
+                )}
+                </>
               )}
             </Table>
           </TableContainer>
