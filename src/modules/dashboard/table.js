@@ -448,7 +448,10 @@ function EnhancedTable(props) {
   });
 
   const getLatencyColor = (stats) => {
-    if (!stats || stats.active === false) {
+    if (!stats) {
+      return "text-gray";
+    }
+    else if(stats.active === false) {
       return "text-danger";
     } else {
       if (stats.latency <= 100) {
