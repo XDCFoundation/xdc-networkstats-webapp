@@ -26,6 +26,33 @@ const Div = styled.div`
     max-width: 290px;
     margin-left: 44px;
   }
+  @media (min-width: 2250px) {
+    fill: #103aaa;
+    width: 75%;
+    /* max-width: 290px; */
+    margin-left: 50px;
+  }
+
+  @media (min-width: 2890px) {
+    fill: #103aaa;
+    width: 62%;
+    /* max-width: 290px; */
+    margin-left: 96px;
+  }
+
+  @media (min-width: 3485px) {
+    fill: #103aaa;
+    width: 50%;
+    /* max-width: 290px; */
+    margin-left: 135px;
+  }
+
+  @media (min-width: 4418px) {
+    fill: #103aaa;
+    width: 45%;
+    /* max-width: 290px; */
+    margin-left: 180px;
+  }
 `;
 
 const geoUrl =
@@ -74,7 +101,11 @@ function Map(props) {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (
-              <Geography key={geo.rsmKey} geography={geo} />
+              <Geography key={geo.rsmKey} geography={geo} style={{
+                default: { outline: "none" },
+                hover: { outline: "none" },
+                pressed: { outline: "none" },
+              }} />
             ))
           }
         </Geographies>
