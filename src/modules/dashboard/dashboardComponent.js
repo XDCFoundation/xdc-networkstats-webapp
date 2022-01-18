@@ -373,7 +373,7 @@ function Dashboard(props) {
 
                 <ContentSpeed className="speed">
                   <ContentDataEfficiencyDesk>
-                    <Heading>Best Block</Heading>
+                    <Heading>Last Block Generated</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
                           <div className="animated-background"></div>
@@ -578,7 +578,7 @@ function Dashboard(props) {
                 {tabResponsive === 2 ? (
                   <ContentSpeed className="speed">
                     <ContentDataSpeedIpad>
-                      <Heading>Best Block</Heading>
+                      <Heading>Last Block Generated</Heading>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -808,7 +808,7 @@ function Dashboard(props) {
                 <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <BestBlock>BestBlock</BestBlock>
+                      <BestBlock>Last Block Generated</BestBlock>
                       <BestBlockData>
                         #{" "}
                         <NumberFormat
