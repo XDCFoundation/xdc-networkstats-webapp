@@ -123,6 +123,8 @@ async function socketAction(action, data) {
           }
 
           updateBestBlock(nodesArr);
+          nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
+          updateTable(nodesArr);
         }
       }
       break;
@@ -152,6 +154,8 @@ async function socketAction(action, data) {
           nodesArr[index1].stats.propagationAvg = data.propagationAvg;
 
           updateBestBlock(nodesArr);
+          nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
+          updateTable(nodesArr);
         }
       }
       // })
@@ -201,6 +205,8 @@ async function socketAction(action, data) {
               data: upTime,
             });
             updateActiveNodes(nodesArr);
+            nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
+            updateTable(nodesArr);
           }
         }
       }
@@ -536,23 +542,23 @@ async function getInitNodes() {
 }
 getInitNodes();
 
-setInterval(() => {
+function updateTable(nodes){
   let table = [];
-  if (!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
-    for (let i = 0; i < nodesArr.length; i++) {
+  if (!_.isEmpty(nodes) && !_.isUndefined(nodes)) {
+    for (let i = 0; i < nodes.length; i++) {
       table.push({
-        type: nodesArr[i].info.node,
-        pendingTxn: nodesArr[i].stats.pending,
-        lastBlock: nodesArr[i].stats.block.number,
-        upTime: `${nodesArr[i].stats.uptime}%`,
-        latency: `${nodesArr[i].stats.latency}ms`,
-        peers: nodesArr[i].stats.peers,
-        nodeName: nodesArr[i].info.name,
-        stats: nodesArr[i].stats
+        type: nodes[i].info.node,
+        pendingTxn: nodes[i].stats.pending,
+        lastBlock: nodes[i].stats.block.number,
+        upTime: `${nodes[i].stats.uptime}%`,
+        latency: `${nodes[i].stats.latency}ms`,
+        peers: nodes[i].stats.peers,
+        nodeName: nodes[i].info.name,
+        stats: nodes[i].stats
       });
       
     }
-    table = sorter.sort(table).desc("lastBlock");
+    // table = sorter.sort(table).desc("lastBlock");
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-}, 1000);
+}
