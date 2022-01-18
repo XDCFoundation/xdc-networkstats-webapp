@@ -45,8 +45,8 @@ const Content = styled.span`
   display: flex;
   justify-content: space-between;
   font-size: 17px;
-  font-family: "Inter", Regular;
-  font-weight: 400;
+  font-family: "Inter", Medium;
+  font-weight: 500;
   cursor: pointer;
   @media (min-width: 300px) and (max-width: 767px) {
     font-size: 0.8rem;

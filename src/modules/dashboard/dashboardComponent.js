@@ -808,25 +808,25 @@ function Dashboard(props) {
                 <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <BestBlock>Last Block Generated</BestBlock>
-                      <BestBlockData>
+                      <MobDiv>Last Block Generated</MobDiv>
+                      <DataMobDiv>
                         #{" "}
                         <NumberFormat
                           value={props.stats.bestBlock}
                           displayType={"text"}
                           thousandSeparator={true}
                         />
-                      </BestBlockData>
+                      </DataMobDiv>
                     </div>
                     <div>
-                      <LastBlock>LastBlock</LastBlock>
-                      <LastBLockData> {props.stats.lastBlock}</LastBLockData>
+                      <MobDiv>LastBlock</MobDiv>
+                      <DataMobDiv> {props.stats.lastBlock}</DataMobDiv>
                     </div>
                   </SpaceBetween>
-                  <MobileAverageBlock>Avg Block Time</MobileAverageBlock>
-                  <MobileAverageBlockData>
+                  <MobDiv>Avg Block Time</MobDiv>
+                  <DataMobDiv>
                     {props.stats.avgBlock.toFixed(4) + " "}Sec
-                  </MobileAverageBlockData>
+                  </DataMobDiv>
                   <MobileGraphDiv>
                     <LastBlockBar content={content} />
                   </MobileGraphDiv>
@@ -845,8 +845,8 @@ function Dashboard(props) {
               {show === 3 ? (
                 <MobileSpeedBlock>
                   <SpaceBetween>
-                    <div>
-                      <BestBlock>Avg Transaction Fee</BestBlock>
+                    <EfficiencyContentDiv>
+                      <MobDiv>Avg Transaction Fee</MobDiv>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -861,9 +861,9 @@ function Dashboard(props) {
                                 </div>
                             )
                       }
-                    </div>
+                    </EfficiencyContentDiv>
                     <div>
-                      <LastBlock>Up Time</LastBlock>
+                      <MobDiv>Up Time</MobDiv>
                       {
                         props.stats.upTime === 0 ? (
                                 <div className="animated-background"></div>
@@ -884,9 +884,9 @@ function Dashboard(props) {
                                 <div className="animated-background"></div>
                             ) :
                             (
-                                <MobileAverageBlockData>
+                                <DataMobDiv>
                                   {props.stats.avgRate.toFixed(2) + " "}TPS
-                                </MobileAverageBlockData>
+                                </DataMobDiv>
                             )
                       }
                     </div>
@@ -1113,7 +1113,6 @@ const TabEfficiency = styled.div`
 const MobileTitleSecurity = styled.div`
   width: 33.33%;
   font-size: 1rem;
-  font-weight: 600;
   border-right: 2px solid #274598;
   padding: 8px 6px 8px 16px;
   display: flex;
@@ -1122,11 +1121,12 @@ const MobileTitleSecurity = styled.div`
   text-align: center;
   background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 1 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
 `;
 const MobileTitleSpeed = styled.div`
   width: 33.33%;
   font-size: 1rem;
-  font-weight: 600;
   border-right: 2px solid #274598;
   padding: 8px 6px 8px 16px;
   display: flex;
@@ -1135,11 +1135,13 @@ const MobileTitleSpeed = styled.div`
   text-align: center;
   background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 2 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  
 `;
 const MobileTitleEfficiency = styled.div`
   width: 33.33%;
   font-size: 1rem;
-  font-weight: 600;
   border-right: 2px solid #274598;
   padding: 8px 6px 8px 16px;
   display: flex;
@@ -1148,6 +1150,8 @@ const MobileTitleEfficiency = styled.div`
   text-align: center;
   background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 3 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
 `;
 const ContentSecurity = styled.div`
   background-color: #102c78;
@@ -1323,6 +1327,10 @@ const SpaceBetween = styled.div`
   justify-content: space-between;
 `;
 
+const EfficiencyContentDiv = styled.div`
+  height: 90px;
+`;
+
 const EfficiencyLabel = styled.div`
 margin-left: 30px;
 `;
@@ -1407,6 +1415,22 @@ const LastBLockData = styled.div`
   font-family: Inter;
   color: #ffffff;
 `;
+
+const MobDiv = styled.div`
+  color: #667fc1;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Inter;
+  margin-top: 5px;
+`;
+const DataMobDiv = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 5px;
+`;
+
 const MobileAverageBlock = styled.div`
   color: #667fc1;
   font-weight: 600;
@@ -1422,6 +1446,7 @@ const MobileAverageBlockData = styled.div`
 `;
 const MobileGraphDiv = styled.div`
   width: 100%;
+  /* margin-top: 20px; */
 `;
 const MapWidth = styled.div`
   width: 100%;
