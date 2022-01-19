@@ -108,9 +108,9 @@ export default function SideDrawer(props) {
             </Content>
           </RowDiv>
 
-          <RowDiv>
+          {/* <RowDiv> */}
             {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
-            <Content
+            {/* <Content
               onClick={() =>
                 // (window.location.href = "https://observer.xdc.org/")
                 window.open("https://observer.xdc.org/")
@@ -118,7 +118,7 @@ export default function SideDrawer(props) {
             >
               XDC Observatory
             </Content>
-          </RowDiv>
+          </RowDiv> */}
 
           <RowDiv>
             {/* <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp; */}

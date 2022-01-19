@@ -78,7 +78,7 @@ function Map(props) {
   }
 
   return (
-    <Div>
+    <Div data-tip="">
       {
         node.length === 0 ? (
             <div className="center-parent-div position-relative top-50px">
@@ -95,7 +95,7 @@ function Map(props) {
       <ComposableMap
        width={800}
        height={450}
-       data-tip=""
+       
       //  style={{ width: "84%" }} 
       >
         <Geographies geography={geoUrl}>

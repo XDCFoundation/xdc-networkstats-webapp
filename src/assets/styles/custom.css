@@ -468,7 +468,7 @@ height: 55px;
 	/* right: 20px; */
 	top: 0;
 	bottom: 96px;
-  left: 218px;
+  left: 190px;
 	margin: auto;
 	padding-bottom: 25px;
 	text-align: center;
@@ -481,26 +481,26 @@ height: 55px;
 @media (min-height: 768px) and (max-width: 1024px){
 
   .close-icon:after {
-  left: 212px;
+  left: 180px;
   }
 
 }
 
 @media (min-width: 300px) and (max-width: 360px) {
   .close-icon:after {
-    left: 175px;
+    left: 160px;
     }
 }
 
 @media (min-width: 361px) and (max-width: 380px) {
   .close-icon:after {
-    left: 188px;
+    left: 175px;
     }
 }
 
 @media (min-width: 390px) and (max-width: 415px) {
   .close-icon:after {
-    left: 203px;
+    left: 180px;
     }
 }
 
@@ -511,6 +511,12 @@ height: 55px;
   100% {
     background-position: 800px 0
   }
+}
+
+.search-box,
+.search-box::-webkit-input-placeholder {
+    font-size: 12px;
+    line-height: 4;
 }
 
 .animated-background {
