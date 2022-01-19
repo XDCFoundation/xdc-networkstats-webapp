@@ -68,8 +68,15 @@ const SearchBox = style.input`
   margin-bottom: 15px;
   outline: none;
   color: "black";
-  @media (min-height: 300px) and (max-width: 767px){
-  max-width: 300px
+  max-width: 300px !important;
+  @media (min-width: 300px) and (max-width: 360px) {
+  max-width: 180px !important;
+  }
+  @media (min-width: 361px) and (max-width: 376px) {
+    max-width: 195px !important;
+  }
+  @media (min-width: 376px) and (max-width: 391px) {
+    max-width: 200px !important;
   }
 `;
 

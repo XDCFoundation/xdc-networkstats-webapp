@@ -373,7 +373,7 @@ function Dashboard(props) {
 
                 <ContentSpeed className="speed">
                   <ContentDataEfficiencyDesk>
-                    <Heading>Last Block Generated</Heading>
+                    <Heading>Last Block</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
                           <div className="animated-background"></div>
@@ -403,7 +403,7 @@ function Dashboard(props) {
                   <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
                       <SpeedLabel>
-                        <Countries>Last Block</Countries>
+                        <Countries>Last Block Generated</Countries>
                         {
                           props.stats.bestBlock === 0 ? (
                                   <div className="animated-background"></div>
@@ -578,7 +578,7 @@ function Dashboard(props) {
                 {tabResponsive === 2 ? (
                   <ContentSpeed className="speed">
                     <ContentDataSpeedIpad>
-                      <Heading>Last Block Generated</Heading>
+                      <Heading>Last Block</Heading>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -602,7 +602,7 @@ function Dashboard(props) {
                     <ContentDataSpeedIpad2>
                       <SpaceBetween>
                         <ContentDataSpeedIpadLabel>
-                          <Countries>Last Block</Countries>
+                          <Countries>Last Block Generated</Countries>
                           {
                             props.stats.bestBlock === 0 ? (
                                     <div className="animated-background"></div>
@@ -808,7 +808,7 @@ function Dashboard(props) {
                 <MobileSpeedBlock>
                   <SpaceBetween>
                     <div>
-                      <MobDiv>Last Block Generated</MobDiv>
+                      <MobDiv>Last Block</MobDiv>
                       <DataMobDiv>
                         #{" "}
                         <NumberFormat
@@ -819,7 +819,7 @@ function Dashboard(props) {
                       </DataMobDiv>
                     </div>
                     <div>
-                      <MobDiv>LastBlock</MobDiv>
+                      <MobDiv>Last Block Generated</MobDiv>
                       <DataMobDiv> {props.stats.lastBlock}</DataMobDiv>
                     </div>
                   </SpaceBetween>
