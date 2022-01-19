@@ -69,15 +69,9 @@ const SearchBox = style.input`
   outline: none;
   color: "black";
   max-width: 300px !important;
-  @media (min-width: 300px) and (max-width: 360px) {
-  max-width: 180px !important;
-  }
-  @media (min-width: 361px) and (max-width: 376px) {
-    max-width: 195px !important;
-  }
-  @media (min-width: 376px) and (max-width: 391px) {
-    max-width: 200px !important;
-  }
+  // @media (min-height: 300px) and (max-width: 767px){
+  // max-width: 300px
+  // }
 `;
 
 const Label = style.div`
@@ -518,7 +512,7 @@ function EnhancedTable(props) {
   return (
     <>
       <div className="search-wrapper">
-        <div>
+        <div style={{paddingRight: "20px"}}>
           <SearchBox
             className="search-box"
             placeholder="Search by node name"
