@@ -44,8 +44,8 @@ function CountryMap(props) {
     return (peers <= 1 ? '#dc3545' : (peers > 1 && peers < 4 ? '#ffc107' : '#3AF219'));
   }
   return (
-    <Div>
-      <ComposableMap data-tip="">
+    <Div data-tip="">
+      <ComposableMap >
       <ZoomableGroup zoom={1}>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
