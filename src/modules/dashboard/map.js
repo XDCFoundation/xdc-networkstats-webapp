@@ -115,7 +115,7 @@ function Map(props) {
             }} onMouseLeave={() => {
               setTooltip("");
             }}>
-            <circle r={12} fill={getNodesColor(items.active, items.peers)} />
+            <circle r={5} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
       </ComposableMap>

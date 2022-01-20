@@ -73,60 +73,6 @@ function Dashboard(props) {
       setJoyrideRun(false);
       setStep(0);
     }
-    if (index === 2) {
-      setJoyrideStyle({
-        tooltipContainer: {
-          textAlign: "left",
-        },
-        buttonNext: {
-          display: "none",
-        },
-        buttonBack: {
-          marginRight: 10,
-          color: "#2256DF",
-          fontSize: 13,
-        },
-        buttonClose: {
-          size: 1,
-          padding: "10px",
-          width: 10,
-        },
-        buttonLast: {
-          display: "none",
-        },
-      });
-    } else {
-      setJoyrideStyle({
-        tooltipContainer: {
-          textAlign: "left",
-        },
-        buttonNext: {
-          backgroundColor: "#2358E5",
-          border: "none",
-          width: 77,
-          borderRadius: 0,
-          fontSize: 14,
-          fontFamily: "Inter-Regular",
-          borderRadius: "3px",
-          fontWeight: 50,
-          marginTop: 2,
-          marginRight: -5
-        },
-        buttonBack: {
-          marginRight: 10,
-          color: "#2256DF",
-          fontSize: 13,
-        },
-        buttonClose: {
-          size: 1,
-          padding: 10,
-          width: 10,
-        },
-        buttonLast: {
-          display: "none",
-        },
-      });
-    }
     if (action === "update") {
     }
     if (finishedStatuses.includes(status)) {
@@ -140,11 +86,31 @@ function Dashboard(props) {
   const [Eth, setEth] = useState(0);
   const [tabResponsive, setTabResponsive] = useState(1);
   const [buttonToggle, setButtonToggle] = useState(3);
+  const [upTime, setUpTime] = useState(0);
 
   async function fetchTime(value = 1) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
+    let sum = 0;
+    let avg = 0;
+    if(res.responseData.length === 24){
+        sum = res.responseData.reduce((a,b)=> a+b.upTime,0)
+        avg = sum/24;
+        setUpTime((avg).toFixed(2))
+    }
+    else if(res.responseData.length === 7)
+    {
+      sum = res.responseData.reduce((a,b)=> a+b.uptime,0)
+      avg = sum/7;
+      setUpTime((avg).toFixed(2))
+    }
+    else{
+      sum = res.responseData.reduce((a,b)=> a+b.uptime,0)
+      avg = sum/30;
+      setUpTime((avg).toFixed(2))
+    }
+    
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
 
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
@@ -153,8 +119,11 @@ function Dashboard(props) {
       setEth(EthVal);
     }
   }
-  useEffect(() => {
+  useEffect(()=>{
     fetchTime();
+  },[])
+
+  useEffect(() => {
     let value = props.stats.gasPrice.toFixed(6);
     if(!isNaN(value)){
     setGasUsd(value);
@@ -195,12 +164,41 @@ function Dashboard(props) {
         steps={TOUR_STEPS}
         callback={handleJoyrideCallback}
         continuous={true}
-        styles={joyrideStyle}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "#2358E5",
+            border: "none",
+            width: 77,
+            borderRadius: 0,
+            fontSize: 14,
+            fontFamily: "Inter-Regular",
+            borderRadius: "3px",
+            fontWeight: 50,
+            marginTop: 2,
+            marginRight: -5
+          },
+          buttonBack: {
+            marginRight: 10,
+            color: "#2256DF",
+            fontSize: 13,
+          },
+          buttonClose: {
+            size: 1,
+            padding: 10,
+            width: 10,
+          }
+        }}
         spotlightPadding={0}
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
         floaterProps={{ disableAnimation: true }}
+        locale={{
+          last: 'End'
+        }}
       />
 
       {showTabJoyRide && (
@@ -222,12 +220,22 @@ function Dashboard(props) {
               </JoyrideTextContainer>
               <div class="flex-condition">
                 {showBackButton ? (
+                  <>
                   <JoyrideBackButton
                     showBackCount={setText}
                     onClick={() => backButtonTour()}
                   >
                     Back
                   </JoyrideBackButton>
+                  <JoyrideEndButton
+                    showBackCount={setText}
+                    onClick={() => {setShowTabJoyRide(false);
+                      setShow(1);
+                      showSetText(0)}}
+                  >
+                    End
+                  </JoyrideEndButton>
+                </>
                 ) : (
                   ""
                 )}
@@ -430,7 +438,7 @@ function Dashboard(props) {
 
                 <ContentEfficiency className="efficiency">
                   <ContentDataEfficiencyDesk>
-                    <Heading>Avg Transaction Fee</Heading>
+                    <Heading>Avg Transaction Fee(USD)</Heading>
                     {
                       props.stats.bestBlock === 0 ? (
                               <div className="animated-background"></div>
@@ -440,13 +448,13 @@ function Dashboard(props) {
                               <DataCount>{gasUsd}</DataCount>
                               <EthDiv>
                                 <img src="/images/Down.svg" alt=" " />
-                                {" " + Eth} than Ethereum
+                                {" " + Eth} less than Ethereum
                               </EthDiv>
                               </div>
                           )
                     }
 
-                    <NodeHistory>Avg Transaction Speed</NodeHistory>
+                    <NodeHistory>Avg Transaction/Second</NodeHistory>
                     {
                       props.stats.avgRate === 0 ? (
                               <div className="animated-background"></div>
@@ -461,11 +469,11 @@ function Dashboard(props) {
                       <EfficiencyLabel>
                         <Countries>Up Time</Countries>
                         {
-                          props.stats.upTime === 0 ? (
+                          upTime === 0 ? (
                                   <div className="animated-background"></div>
                               ) :
                               (
-                                  <CountriesData>{props.stats.upTime}%</CountriesData>
+                                  <CountriesData>{upTime}%</CountriesData>
                               )
                         }
                       </EfficiencyLabel>
@@ -632,7 +640,7 @@ function Dashboard(props) {
                 {tabResponsive === 3 ? (
                   <ContentEfficiency className="efficiency">
                     <ContentDataEfficiencyIpad>
-                      <Heading>Avg Transaction Fee</Heading>
+                      <Heading>Avg Transaction Fee(USD)</Heading>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -642,12 +650,12 @@ function Dashboard(props) {
                                   <DataCount>{gasUsd}</DataCount>
                                   <EthDiv>
                                     <img src="/images/Down.svg" alt=" " />
-                                    {" " + Eth} than Ethereum
+                                    {" " + Eth} less than Ethereum
                                   </EthDiv>
                                 </div>
                             )
                       }
-                      <NodeHistory>Avg Transaction Speed</NodeHistory>
+                      <NodeHistory>Avg Transaction/Second</NodeHistory>
                       {
                         props.stats.avgRate === 0 ? (
                                 <div className="animated-background"></div>
@@ -662,11 +670,11 @@ function Dashboard(props) {
                         <ContentDataEfficiencyIpadLabel>
                           <Countries>Up Time</Countries>
                           {
-                            props.stats.upTime === 0 ? (
+                            upTime === 0 ? (
                                     <div className="animated-background"></div>
                                 ) :
                                 (
-                                    <CountriesData>{props.stats.upTime}%</CountriesData>
+                                    <CountriesData>{upTime}%</CountriesData>
                                 )
                           }
                         </ContentDataEfficiencyIpadLabel>
@@ -846,7 +854,7 @@ function Dashboard(props) {
                 <MobileSpeedBlock>
                   <SpaceBetween>
                     <EfficiencyContentDiv>
-                      <MobDiv>Avg Transaction Fee</MobDiv>
+                      <MobDiv>Avg Transaction Fee(USD)</MobDiv>
                       {
                         props.stats.bestBlock === 0 ? (
                                 <div className="animated-background"></div>
@@ -856,7 +864,7 @@ function Dashboard(props) {
                                   <BestBlockData>{gasUsd}</BestBlockData>
                                   <EthDiv>
                                     <img src="/images/Down.svg" alt=" " />
-                                    {" " + Eth} than Ethereum
+                                    {" " + Eth} less than Ethereum
                                   </EthDiv>
                                 </div>
                             )
@@ -865,11 +873,11 @@ function Dashboard(props) {
                     <div>
                       <MobDiv>Up Time</MobDiv>
                       {
-                        props.stats.upTime === 0 ? (
+                        upTime === 0 ? (
                                 <div className="animated-background"></div>
                             ) :
                             (
-                                <LastBLockData> {props.stats.upTime}%</LastBLockData>
+                                <LastBLockData> {upTime}%</LastBLockData>
                             )
                       }
                     </div>
@@ -877,7 +885,7 @@ function Dashboard(props) {
                   <SpaceBetween>
                     <div>
                       <MobileAverageBlock>
-                        Avg Transaction Speed
+                        Avg Transaction/Second
                       </MobileAverageBlock>
                       {
                         props.stats.avgRate === 0 ? (
@@ -988,6 +996,23 @@ const JoyrideNextButton = styled.button`
   justify-content: center;
   align-items: center;
 `;
+
+const JoyrideEndButton = styled.button`
+  background-color: #2358e5;
+  outline: none;
+  border: none;
+  width: 100%;
+  max-width: 63px;
+  color: white;
+  border-radius: 2px;
+  padding: 4px;
+  font-size: 12px;
+  font-weight: 50;
+  display: ${(props) => (props.showBackCount === 2 ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+`;
+
 const BackDropStyle = styled.div`
   position: absolute;
   width: 100%;

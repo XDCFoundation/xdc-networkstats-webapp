@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CountryMap from "./countryMap";
 import CountryTable from "./countryTable";
@@ -12,13 +12,45 @@ const TabDiv = styled.div`
   }
 `;
 const Img = styled.img`
-   cursor: pointer;
-   @media (min-width: 300px) and (max-width: 767px) {
+  cursor: pointer;
+  @media (min-width: 300px) and (max-width: 767px) {
     width: 25px;
   }
   @media (min-width: 768px) and (max-width: 1024px) {
-    width: 30px; 
+    width: 30px;
   }
+`;
+const SelectionDiv = styled.div`
+  width: 37px;
+  /* max-width: 133px; */
+  border-radius: 4px;
+  height: 28px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  background-color: #102C78;
+  margin-top: 20px;
+`;
+
+const SelectionDivStyle = styled.div`
+  content: url("images/ZoomIn.svg");
+  padding: 6px;
+  height: 37px;
+  width: 100%;
+  border: 1px solid #103EB7;
+  cursor: pointer;
+  color: "#3C70FF";
+  background-color: #102C78;
+`;
+const SelectionDivStyleTwo = styled.div`
+  content: url("images/ZoomOut.svg");
+  padding: 6px;
+  height: 37px;
+  width: 100%;
+  border: 1px solid #103EB7;
+  cursor: pointer;
+  color: "#3C70FF";
+  background-color: #102C78;
 `;
 
 const Close = styled.img`
@@ -26,59 +58,103 @@ const Close = styled.img`
 `;
 
 export default function Countries(props) {
+  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+
+  function handleZoomIn() {
+    if (position.zoom >= 4) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
+  }
+
+  function handleZoomOut() {
+    if (position.zoom <= 1) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
+  }
+
+  function handleMoveEnd(position) {
+    setPosition(position);
+  }
+
+  const mapWidth = 800;
+  const mapHeight = 600;
+
   return (
     <>
-    <Div>
-      <DesktopDiv>
-        <SpaceBetween>
+      <Div>
+        <DesktopDiv>
+          <SpaceBetween>
+            <LeftDiv>
+              Nodes
+              <Label>Top 10 Countries</Label>
+            </LeftDiv>
+            <div>
+            <div>
+              <Close
+                src="/images/Collapse.svg"
+                alt="close"
+                onClick={() => {
+                  props.expand(false);
+                }}
+              />
+            </div>
+            <SelectionDiv>
+              <SelectionDivStyle onClick={handleZoomIn} />
+              <SelectionDivStyleTwo onClick={handleZoomOut} />
+            </SelectionDiv>
+            </div>
+          </SpaceBetween>
+          <MainContainer>
+            <TableDiv>
+              <CountryTable />
+            </TableDiv>
+            <MapDiv>
+              <CountryMap
+                zoom={position.zoom}
+                center={position.coordinates}
+                click={handleMoveEnd}
+                width={mapWidth}
+                height={mapHeight}
+              />
+            </MapDiv>
+            
+          </MainContainer>
+        </DesktopDiv>
+        <TabDiv>
+          <SpaceBetween>
+            <MapDiv>
+              <CountryMap
+                zoom={position.zoom}
+                center={position.coordinates}
+                click={handleMoveEnd}
+                width={mapWidth}
+                height={mapHeight}
+              />
+            </MapDiv>
+            <div>
+            <div>
+              <Img
+                src="/images/Collapse.svg"
+                alt="close"
+                onClick={() => {
+                  props.expand(false);
+                }}
+              />
+            </div>
+            <SelectionDiv>
+              <SelectionDivStyle onClick={handleZoomIn} />
+              <SelectionDivStyleTwo onClick={handleZoomOut} />
+            </SelectionDiv>
+            </div>
+          </SpaceBetween>
           <LeftDiv>
             Nodes
             <Label>Top 10 Countries</Label>
           </LeftDiv>
-          <div>
-            <Close
-              src="/images/Collapse.svg"
-              alt="close"
-              onClick={() => {
-                props.expand(false);
-              }}
-            />
-          </div>
-        </SpaceBetween>
-        <MainContainer>
           <TableDiv>
             <CountryTable />
           </TableDiv>
-          <MapDiv>
-            <CountryMap />
-          </MapDiv>
-        </MainContainer>
-      </DesktopDiv>
-      <TabDiv>
-        <SpaceBetween>
-          <MapDiv>
-            <CountryMap />
-          </MapDiv>
-          <div>
-          <Img
-            src="/images/Collapse.svg"
-            alt="close"
-            onClick={() => {
-              props.expand(false);
-            }}
-          />
-          </div>
-        </SpaceBetween>
-        <LeftDiv>
-          Nodes
-          <Label>Top 10 Countries</Label>
-        </LeftDiv>
-        <TableDiv>
-          <CountryTable />
-        </TableDiv>
-      </TabDiv>
-    </Div>
-    <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
+        </TabDiv>
+      </Div>
+      <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
     </>
   );
 }
@@ -102,7 +178,7 @@ const Div = styled.div`
   height: 100vh;
   padding: 15px;
   @media (min-width: 300px) and (max-width: 1024px) {
-  height: 100%;
+    height: 100%;
   }
 `;
 
