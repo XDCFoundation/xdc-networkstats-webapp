@@ -69,9 +69,6 @@ const SearchBox = style.input`
   outline: none;
   color: "black";
   max-width: 300px !important;
-  // @media (min-height: 300px) and (max-width: 767px){
-  // max-width: 300px
-  // }
 `;
 
 const Label = style.div`
@@ -80,6 +77,7 @@ const Label = style.div`
   font-family: "Inter";
   color: #393939;
   font-weight: 600;
+  cursor: pointer;
 `;
 const DisplayFlex = style.div`
   display: flex;
@@ -90,6 +88,7 @@ const Img = style.img`
   display: flex;
   align-items: center;
   text-align: center;
+  cursor: pointer;
 `;
 
 const LoadingDiv = style.div`
@@ -135,6 +134,7 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 const headCells = [
+
   {
     id: "nodeName",
 
@@ -354,7 +354,35 @@ function EnhancedTableHead() {
   return (
     <TableHead>
       <StyledTableRow>
-        <StyledTableCell />
+        <StyledTableCell style={{
+          paddingLeft: "30px",
+          paddingRight: "0px"
+        }}>
+        <DisplayFlex>
+        <Label>Pin</Label>&nbsp;
+        <ReactTooltip
+          id="pin"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+          Pin to keep the node on the top
+        </ReactTooltip>
+        <Img
+          data-tip="pin"
+          data-for="pin"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>
+        </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
@@ -444,7 +472,7 @@ function EnhancedTable(props) {
         }
       }
     }
-  }, [props.stats.nodesArr]);
+  },[props.stats.nodesArr]);
 
   const [query, setQuery] = useState("");
   const filteredRows = props.stats.nodesArr.filter((row) => {
@@ -512,7 +540,7 @@ function EnhancedTable(props) {
   return (
     <>
       <div className="search-wrapper">
-        <div style={{paddingRight: "20px"}}>
+        <div>
           <SearchBox
             className="search-box"
             placeholder="Search by node name"
@@ -524,6 +552,29 @@ function EnhancedTable(props) {
           <button class="close-icon" onClick={() => setQuery("")}></button>
         </div>
         <SpaceBetween>
+        <DisplayFlex>
+        <ReactTooltip
+          id="live"
+          className="extra"
+          arrowColor="transparent"
+          textColor="black"
+          borderColor="white"
+          border={true}
+          delayHide={0}
+          delayShow={0}
+          clickable={true}
+          place="bottom"
+          effect="solid"
+        >
+         Enable/Disable live updates for nodes table
+        </ReactTooltip>
+        <Img
+          data-tip="live"
+          data-for="live"
+          src="/images/Help.svg"
+          alt=" "
+        />
+      </DisplayFlex>&nbsp;
           <LiveLabel>Live Updates</LiveLabel>
           <div class="switch">
             <input
