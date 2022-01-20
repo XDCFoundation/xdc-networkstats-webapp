@@ -11,12 +11,18 @@ import {dispatchAction} from "../../utility";
 import {connect} from "react-redux";
 import ReactTooltip from "react-tooltip";
 
-const Div = styled.div`
+const MapDiv = styled.div`
   fill: #103aaa;
   width: 100%;
   max-width: 965px;
   border: none;
 `;
+const MainDiv = styled.div`
+  display: flex;
+`;
+
+
+
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -43,10 +49,20 @@ function CountryMap(props) {
 
     return (peers <= 1 ? '#dc3545' : (peers > 1 && peers < 4 ? '#ffc107' : '#3AF219'));
   }
+
   return (
-    <Div data-tip="">
-      <ComposableMap >
-      <ZoomableGroup zoom={1}>
+    <MainDiv>
+    <MapDiv data-tip="">
+      <ComposableMap projectionConfig={{ scale: 180 }}>
+      <ZoomableGroup
+          zoom={props.zoom}
+          center={props.center}
+          onMoveEnd={props.click}
+          translateExtent={[
+            [0, -props.height],
+            [props.width, props.height]
+          ]}
+        >
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (
@@ -64,7 +80,7 @@ function CountryMap(props) {
           }} onMouseLeave={() => {
             setTooltip("");
           }}>
-            <circle r={6} fill={getNodesColor(items.active, items.peers)} />
+            <circle r={3} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
         </ZoomableGroup>
@@ -75,7 +91,8 @@ function CountryMap(props) {
           backgroundColor="white"
           border={true}
           place="bottom">{tooltip}</ReactTooltip>
-    </Div>
+    </MapDiv>
+    </MainDiv>
   );
 }
 

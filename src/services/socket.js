@@ -518,7 +518,9 @@ function findIndex(search) {
 setInterval(()=>{
   let val = timeFilter(lastBlock);
   if(val!=='∞'){
+   if(parseInt(val)>=0){
   store.dispatch({ type: eventConstants.UPDATE_LAST_BLOCK, data: val});
+   }
   }
 },3000)
 
@@ -563,5 +565,5 @@ getInitNodes();
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
 // }
-},250)
+},400)
 
