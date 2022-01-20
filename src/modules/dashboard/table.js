@@ -282,12 +282,12 @@ const headCells = [
     ),
   },
   {
-    id: "lastBlock",
+    id: "bestBlock",
     numeric: true,
     disablePadding: false,
     label: (
       <DisplayFlex>
-        <Label>Last Block</Label>&nbsp;
+        <Label>Best Block</Label>&nbsp;
         <ReactTooltip
           id="lastblock"
           className="extra"
@@ -566,7 +566,7 @@ function EnhancedTable(props) {
           place="bottom"
           effect="solid"
         >
-         Enable/Disable live updates for nodes table
+         Enable/disable the live updates of nodes
         </ReactTooltip>
         <Img
           data-tip="live"
