@@ -23,19 +23,19 @@ const TOUR_STEPS = [
   {
     target: ".security",
     content:
-      "View the number of active nodes, their history and geolocation of all the active Heading on the blockchain.",
+      "View the number of active nodes, their history and geolocation in real-time on the Network Stats. The visibility of live network data helps bring transparency and security to the XDC users.",
     disableBeacon: true,
   },
   {
     target: ".speed",
     content:
-      "Explore the best block, average block time, and the last block created on-chain.",
+      "Explore the best block, average block time, and the last block created on-chain. Visualize the speed of the XDC Network and understand the value proposition of the network.",
     disableBeacon: true,
   },
   {
     target: ".efficiency",
     content:
-      "Ensure the efficiency of the blockchain with zero downtime, negligible gas price, and average transaction speed displayed transparently.",
+      "Showcases the efficiency of the blockchain with zero downtime, negligible gas price, and average transaction rate displayed transparently.",
     disableBeacon: true,
   },
 ];
