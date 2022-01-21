@@ -112,7 +112,8 @@ function Dashboard(props) {
     }
     
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
-
+  }
+  async function EthVal(){
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
     let EthVal = `${Math.round(((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *100 * 1000000) / 1000000}%`;
     if(!isNaN(parseFloat(EthVal))) {
@@ -121,14 +122,17 @@ function Dashboard(props) {
   }
   useEffect(()=>{
     fetchTime();
-  },[])
+  },[]);
 
   useEffect(() => {
     let value = props.stats.gasPrice.toFixed(6);
     if(!isNaN(value)){
     setGasUsd(value);
+    EthVal();
     }
   }, [props.stats.gasPrice]);
+
+
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
   document.body.style.overflow = showTabJoyRide ? "hidden" : "unset";
   const buttonTour = () => {

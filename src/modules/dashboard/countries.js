@@ -20,6 +20,10 @@ const Img = styled.img`
     width: 30px;
   }
 `;
+const CloseDiv = styled.div`
+height: 100px;
+`;
+
 const SelectionDiv = styled.div`
   width: 37px;
   /* max-width: 133px; */
@@ -30,6 +34,10 @@ const SelectionDiv = styled.div`
   cursor: pointer;
   background-color: #102C78;
   margin-top: 20px;
+  @media (min-width: 300px) and (max-width: 1024px) {
+  display: flex;
+  margin-top: 0px;
+  }
 `;
 
 const SelectionDivStyle = styled.div`
@@ -41,6 +49,9 @@ const SelectionDivStyle = styled.div`
   cursor: pointer;
   color: "#3C70FF";
   background-color: #102C78;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    height: 28px;
+  }
 `;
 const SelectionDivStyleTwo = styled.div`
   content: url("images/ZoomOut.svg");
@@ -51,10 +62,32 @@ const SelectionDivStyleTwo = styled.div`
   cursor: pointer;
   color: "#3C70FF";
   background-color: #102C78;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    height: 28px;
+  }
 `;
 
 const Close = styled.img`
   cursor: pointer;
+`;
+
+const BottomDiv = styled.div`
+display: flex;
+justify-content: right;
+`;
+
+const LabelBottom = styled.div`
+color: white;
+font-family: 'Inter', Medium;
+font-weight: 500;
+margin-left: 5px;
+margin-right: 15px;
+@media (min-width: 300px) and (max-width: 1024px) {
+font-size: 10px;
+align-items: center;
+justify-items: center;
+display: flex;
+  }
 `;
 
 export default function Countries(props) {
@@ -115,8 +148,17 @@ export default function Countries(props) {
                 height={mapHeight}
               />
             </MapDiv>
-            
           </MainContainer>
+             <BottomDiv>
+             <Img src="images/Green.svg"/>
+             <LabelBottom>Active</LabelBottom>
+             <Img src="images/Orange.svg"/>
+             <LabelBottom>Moderate</LabelBottom>
+             {/* <Img src="images/Yellow.svg"/>
+             <LabelBottom>Moderate</LabelBottom> */}
+             <Img src="images/Red.svg"/>
+             <LabelBottom>Inactive</LabelBottom>
+            </BottomDiv>
         </DesktopDiv>
         <TabDiv>
           <SpaceBetween>
@@ -128,8 +170,22 @@ export default function Countries(props) {
                 width={mapWidth}
                 height={mapHeight}
               />
+              <BottomDiv>
+             <img src="images/Green.svg"/>
+             <LabelBottom>Active</LabelBottom>
+             <img src="images/Orange.svg"/>
+             <LabelBottom>Moderate</LabelBottom>
+             {/* <img src="images/Yellow.svg"/>
+             <LabelBottom>Moderate</LabelBottom> */}
+             <img src="images/Red.svg"/>
+             <LabelBottom>Inactive</LabelBottom>
+             <SelectionDiv>
+              <SelectionDivStyle onClick={handleZoomIn} />
+              <SelectionDivStyleTwo onClick={handleZoomOut} />
+            </SelectionDiv>
+            </BottomDiv>
             </MapDiv>
-            <div>
+            <CloseDiv>
             <div>
               <Img
                 src="/images/Collapse.svg"
@@ -139,11 +195,7 @@ export default function Countries(props) {
                 }}
               />
             </div>
-            <SelectionDiv>
-              <SelectionDivStyle onClick={handleZoomIn} />
-              <SelectionDivStyleTwo onClick={handleZoomOut} />
-            </SelectionDiv>
-            </div>
+            </CloseDiv>
           </SpaceBetween>
           <LeftDiv>
             Nodes

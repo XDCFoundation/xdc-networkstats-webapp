@@ -565,5 +565,5 @@ getInitNodes();
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
 // }
-},400)
+},500)
 
