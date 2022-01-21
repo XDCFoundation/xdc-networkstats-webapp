@@ -31,6 +31,26 @@ function CountryMap(props) {
   const [node, setNode] = useState([]);
   const [data, setData] = useState([]);
   const [tooltip, setTooltip] = useState("");
+  const [markerSize, setMarkerSize] = useState(4);
+
+  useEffect(() => {
+  if(props.zoom >1 && props.zoom<=2){
+  setMarkerSize(3);
+  }
+  else if(props.zoom >2 && props.zoom<=4){
+    setMarkerSize(1.5);
+  }
+  else if(props.zoom >4 && props.zoom<=6){
+    setMarkerSize(1);
+  }
+  else if(props.zoom >6 && props.zoom<=8){
+    setMarkerSize(0.5);
+  }
+  else{
+    setMarkerSize(4);
+  }
+  },[props.zoom]);
+
   useEffect(() => {
     if (props?.stats.markers && props?.stats.markers?.length >= 1) {
       (props?.stats.markers).map((item, index) => {
@@ -80,7 +100,7 @@ function CountryMap(props) {
           }} onMouseLeave={() => {
             setTooltip("");
           }}>
-            <circle r={3} fill={getNodesColor(items.active, items.peers)} />
+            <circle r={markerSize} fill={getNodesColor(items.active, items.peers)} />
           </Marker>
         ))}
         </ZoomableGroup>
