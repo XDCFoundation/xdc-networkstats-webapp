@@ -409,6 +409,15 @@ function EnhancedTableHead() {
 function EnhancedTable(props) {
   const [sliderCheck, setSliderCheck] = useGlobalState("slider");
   const [selected, setSelected] = useGlobalState("selected");
+  
+  function setClass(data){
+    if(sliderCheck === true){
+      return data;
+    }
+    else{
+      return "";
+    }
+  }
 
   const handleSlider = () => {
     setSliderCheck(!sliderCheck);
@@ -635,6 +644,7 @@ function EnhancedTable(props) {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       const isItemSelected = isSelected(row.nodeName);
                       let block = row.lastBlock.toLocaleString();
+                      const stats = setClass(row.stats);
                       return (
                         <StyledTableRow>
                           <StyledTableCell padding="radio">
@@ -675,7 +685,7 @@ function EnhancedTable(props) {
                               fontWeight: "400",
                               // width: "40px",
                             }}
-                            className={getColumnsColor(row.stats)}
+                            className={getColumnsColor(stats)}
                           >
                             {row.nodeName}
                           </StyledTableCell>
@@ -688,7 +698,7 @@ function EnhancedTable(props) {
                               whiteSpace: "nowrap",
                               // width: "40px",
                             }}
-                            className={getColumnsColor(row.stats)}
+                            className={getColumnsColor(stats)}
                           >
                             {row.type}
                           </StyledTableCell>
@@ -700,7 +710,7 @@ function EnhancedTable(props) {
                               fontWeight: "400",
                               columnWidth: "70px",
                             }}
-                            className={getLatencyColor(row.stats)}
+                            className={getLatencyColor(stats)}
                           >
                             {row.latency}
                           </StyledTableCell>
@@ -712,7 +722,7 @@ function EnhancedTable(props) {
                               fontWeight: "400",
                               columnWidth: "70px",
                             }}
-                            className={getColumnsColor(row.stats)}
+                            className={getColumnsColor(stats)}
                           >
                             {row.peers}
                           </StyledTableCell>
@@ -724,7 +734,7 @@ function EnhancedTable(props) {
                               fontWeight: "400",
                               columnWidth: "70px",
                             }}
-                            className={getColumnsColor(row.stats)}
+                            className={getColumnsColor(stats)}
                           >
                             {row.pendingTxn}
                           </StyledTableCell>
@@ -737,7 +747,7 @@ function EnhancedTable(props) {
                               columnWidth: "70px",
                             }}
                             className={getLastBlockColor(
-                              row.stats,
+                              stats,
                               props.stats.bestBlock
                             )}
                           >
@@ -760,7 +770,7 @@ function EnhancedTable(props) {
                               fontFamily: "Inter",
                               fontWeight: "400",
                             }}
-                            className={getUpTimeColor(row.stats)}
+                            className={getUpTimeColor(stats)}
                           >
                             {row.upTime}
                           </StyledTableCell>
