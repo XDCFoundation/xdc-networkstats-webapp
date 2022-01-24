@@ -447,64 +447,7 @@ display: flex;
 justify-content: space-between;
 height: 55px;
 }
-.search-box,.close-icon{
-	position: relative;
-}
-.close-icon {
-	border:1px solid transparent;
-	background-color: transparent;
-	display: inline-block;
-	vertical-align: middle;
-  outline: 0;
-  cursor: pointer;
-}
-.close-icon:after {
-	content: url("/images/Close.svg");
-	display: block;
-	width: 15px;
-	height: 15px;
-	position: absolute;
-	z-index:1;
-	/* right: 20px; */
-	top: 0;
-	bottom: 96px;
-  left: 218px;
-	margin: auto;
-	padding-bottom: 25px;
-	text-align: center;
-	cursor: pointer;
-}
-.search-box:not(:valid) ~ .close-icon {
-	display: none;
-}
 
-/* @media (min-height: 768px) and (max-width: 1024px){
-
-  .close-icon:after {
-  left: 212px;
-  }
-
-} */
-
-@media (min-width: 300px) and (max-width: 360px) {
-  .close-icon:after {
-    left: 155px;
-    }
-}
-
-@media (min-width: 361px) and (max-width: 380px) {
-  .close-icon:after {
-    left: 165px;
-    }
-}
-
-@media (min-width: 390px) and (max-width: 415px) {
-  .close-icon:after {
-    left: 185px;
-    }
-}
-
-/* .search-box, */
 .search-box::-webkit-input-placeholder {
     font-size: 12px;
     line-height: 4;
@@ -517,6 +460,11 @@ height: 55px;
   100% {
     background-position: 800px 0
   }
+}
+.css-2ehmn7-MuiInputBase-root-MuiOutlinedInput-root{
+  font-size: 14px !important;
+  width: 100% !important;
+  max-width: 230px !important;
 }
 
 .animated-background {
@@ -590,4 +538,30 @@ height: 55px;
   .extra{
     padding:1px 22px !important;
   }
+
+  .css-2ehmn7-MuiInputBase-root-MuiOutlinedInput-root{
+    font-size: 12px !important;
+    /* margin-top: 4px !important; */
+    max-width: 180px !important;
+  }
+  .css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input{
+    height: 1.5rem !important;
+  }
+}
+
+.inputBorder:focus{
+ outline: none !important;
+ border: none !important;
+ box-shadow: none !important;
+}
+.Mui-focused:focus{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.MuiOutlinedInput-notchedOutline{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }

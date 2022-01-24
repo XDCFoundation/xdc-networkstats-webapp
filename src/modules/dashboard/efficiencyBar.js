@@ -7,11 +7,34 @@ const Div = styled.div`
   width: 100%;
   max-width: 560px;
   height: 120px;
-
+  display: ${(props) => (props.data ===30 ? "block" : "none")};
   font-family: sans-serif;
   text-align: center;
   cursor: pointer;
 `;
+
+
+const Div1 = styled.div`
+  width: 100%;
+  max-width: 560px;
+  height: 120px;
+  display: ${(props) => (props.data === 24 ? "block" : "none")};
+  font-family: sans-serif;
+  text-align: center;
+  cursor: pointer;
+`;
+
+
+const Div2 = styled.div`
+  width: 100%;
+  max-width: 560px;
+  height: 120px;
+  display: ${(props) => (props.data === 7 ? "block" : "none")};
+  font-family: sans-serif;
+  text-align: center;
+  cursor: pointer;
+`;
+
 
 const theme = {
   axis: {
@@ -32,7 +55,7 @@ const theme = {
 let data = [];
 function EfficiencyBar(props) {
   if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
-    if (props.data.responseData.length == 7) {
+    if (props.data.responseData.length === 7) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].uptime * 100) / 100 },
         { time: 2, Up: Math.round(props.data.responseData[1].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].uptime * 100) / 100 },
@@ -45,7 +68,7 @@ function EfficiencyBar(props) {
     }
   
 
-    if (props.data.responseData.length == 24) {
+    if (props.data.responseData.length === 24) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].upTime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].upTime * 100) / 100 },
         { time: 2, Up: Math.round(props.data.responseData[1].upTime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].upTime * 100) / 100 },
@@ -74,7 +97,7 @@ function EfficiencyBar(props) {
       ];
     }
 
-    if (props.data.responseData.length == 30) {
+    if (props.data.responseData.length === 30) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].uptime * 100) / 100},
         { time: 2, Up: Math.round(props.data.responseData[1].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].uptime * 100) / 100 },
@@ -113,7 +136,8 @@ function EfficiencyBar(props) {
   const keys = ["Up", "Down"];
 const colors = ["#3AF219", "#E62805"];
   return (
-    <Div>
+    <>
+    <Div data={props.data.responseData.length}>
       <ResponsiveBar
         yScale={{
           type: "linear",
@@ -138,8 +162,13 @@ const colors = ["#3AF219", "#E62805"];
           tickValues: ["0", "50", "100"],
           tickPadding: 0
         }}
-        margin={{ top: 4, bottom: 4, left: 20 }}
+        margin={{ top: 4, bottom: 15, left: 20 }}
         gridYValues={["0"]}
+        axisBottom={{
+          tickSize: 2,
+          tickValues: ["1","15","30"],
+          tickPadding: 0
+        }}
         tooltip={({ id, value, color }) => (
           <div
             style={{
@@ -155,6 +184,101 @@ const colors = ["#3AF219", "#E62805"];
         )}
       />
     </Div>
+    <Div1 data={props.data.responseData.length}>
+      <ResponsiveBar
+        yScale={{
+          type: "linear",
+          stacked: true,
+          min: 0,
+          max: 100,
+        }}
+        data={data}
+        keys={keys}
+        indexBy="time"
+        colors={colors}
+        enableLabel={false}
+        axisBottom={false}
+        enableGridY={true}
+        padding={0.7}
+        axisRight={null}
+        axisTop={null}
+        axisBottom={null}
+        theme={theme}
+        axisLeft={{
+          tickSize: 2,
+          tickValues: ["0", "50", "100"],
+          tickPadding: 0
+        }}
+        margin={{ top: 4, bottom: 20, left: 20 }}
+        gridYValues={["0"]}
+        axisBottom={{
+          tickSize: 2,
+          tickValues: ["1","12","24"],
+          tickPadding: 0
+        }}
+        tooltip={({ id, value, color }) => (
+          <div
+            style={{
+              color,
+              background: "white",
+              fontSize: "15px",
+            }}
+          >
+            <strong>
+              {id}: {value}
+            </strong>
+          </div>
+        )}
+      />
+    </Div1>
+    <Div2 data={props.data.responseData.length}>
+      <ResponsiveBar
+        yScale={{
+          type: "linear",
+          stacked: true,
+          min: 0,
+          max: 100,
+        }}
+        data={data}
+        keys={keys}
+        indexBy="time"
+        colors={colors}
+        enableLabel={false}
+        axisBottom={false}
+        enableGridY={true}
+        padding={0.7}
+        axisRight={null}
+        axisTop={null}
+        axisBottom={null}
+        theme={theme}
+        axisLeft={{
+          tickSize: 2,
+          tickValues: ["0", "50", "100"],
+          tickPadding: 0
+        }}
+        margin={{ top: 4, bottom: 20, left: 20 }}
+        gridYValues={["0"]}
+        axisBottom={{
+          tickSize: 2,
+          tickValues: ["1","4","7"],
+          tickPadding: 0
+        }}
+        tooltip={({ id, value, color }) => (
+          <div
+            style={{
+              color,
+              background: "white",
+              fontSize: "15px",
+            }}
+          >
+            <strong>
+              {id}: {value}
+            </strong>
+          </div>
+        )}
+      />
+    </Div2>
+    </>
   );
 }
 export default EfficiencyBar;

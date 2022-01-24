@@ -1,4 +1,3 @@
-import React from "react";
 import io from "socket.io-client";
 import { eventConstants } from "../constants";
 import _ from "lodash";
@@ -8,8 +7,6 @@ import utility from "../utility";
 import { NodesService } from "../services/";
 import sorter from "sort-nested-json";
 import { batch } from "react-redux";
-import NumberFormat from "react-number-format";
-import {httpConstants} from "../constants";
 
 
 let MAX_BINS = 40;
@@ -124,12 +121,10 @@ async function socketAction(action, data) {
 
           updateBestBlock(nodesArr);
           nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-          // updateTable(nodesArr);
         }
       }
       break;
     case "block":
-      // setInterval(()=>{
       let index1 = findIndex({ id: data.id });
       if (!_.isEmpty(nodesArr)) {
         if (
@@ -155,10 +150,8 @@ async function socketAction(action, data) {
 
           updateBestBlock(nodesArr);
           nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-          // updateTable(nodesArr);
         }
       }
-      // })
 
       break;
     case "pending":
@@ -206,7 +199,6 @@ async function socketAction(action, data) {
             });
             updateActiveNodes(nodesArr);
             nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-            // updateTable(nodesArr);
           }
         }
       }
@@ -544,7 +536,6 @@ async function getInitNodes() {
 }
 getInitNodes();
 
-// function updateTable(nodes){
   setInterval(()=>{
   let table = [];
   if (!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
@@ -561,9 +552,7 @@ getInitNodes();
       });
       
     }
-    // table = sorter.sort(table).desc("lastBlock");
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-// }
 },500)
 

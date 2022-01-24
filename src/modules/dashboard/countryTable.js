@@ -163,8 +163,6 @@ function EnhancedTable(props) {
       }
       }}
 
-  // This method is created for cross-browser compatibility, if you don't
-  // need to support IE11, you can use Array.prototype.sort() directly
   function stableSort(array) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     return stabilizedThis.map((el) => el[0]);
@@ -237,9 +235,6 @@ function EnhancedTable(props) {
       </TableHead>
     );
   }
-
-
-  // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
     

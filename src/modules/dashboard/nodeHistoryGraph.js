@@ -133,7 +133,6 @@ function NodeGraph() {
                   tickPadding: 5
                 }}
                 axisBottom={false}
-                // curve="monotoneX"
                 colors={["#275FF5"]}
                 areaOpacity={0.3}
                 defs={[

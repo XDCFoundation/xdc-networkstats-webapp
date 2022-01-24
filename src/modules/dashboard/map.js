@@ -29,28 +29,24 @@ const Div = styled.div`
   @media (min-width: 2250px) {
     fill: #103aaa;
     width: 75%;
-    /* max-width: 290px; */
     margin-left: 50px;
   }
 
   @media (min-width: 2890px) {
     fill: #103aaa;
     width: 62%;
-    /* max-width: 290px; */
     margin-left: 96px;
   }
 
   @media (min-width: 3485px) {
     fill: #103aaa;
     width: 50%;
-    /* max-width: 290px; */
     margin-left: 135px;
   }
 
   @media (min-width: 4418px) {
     fill: #103aaa;
     width: 45%;
-    /* max-width: 290px; */
     margin-left: 180px;
   }
 `;
@@ -95,8 +91,6 @@ function Map(props) {
       <ComposableMap
        width={800}
        height={450}
-       
-      //  style={{ width: "84%" }} 
       >
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
