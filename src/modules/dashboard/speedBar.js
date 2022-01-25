@@ -14,8 +14,10 @@ const Div = styled.div`
   cursor: pointer;
 `;
 
+let data = [0];
+
 function SpeedBar(props) {
-  const data = [
+   data = [
     { time: 1, value: Math.round(props.stats.blockTime[0] * 100) / 100 },
     { time: 2, value: Math.round(props.stats.blockTime[1] * 100) / 100},
     { time: 3, value: Math.round(props.stats.blockTime[2] * 100) / 100},
@@ -66,6 +68,13 @@ function SpeedBar(props) {
         strokeDasharray: "1",
       },
     },
+    axis: {
+      ticks: {
+        text: {
+          fill: "#667FC1",
+        },
+      },
+    },
   };
 
   return (
@@ -90,8 +99,14 @@ function SpeedBar(props) {
         colors={["#0093FF"]}
         enableLabel={false}
         enableGridY={true}
-        gridYValues={["0", "1"]}
         theme={theme}
+        gridYValues={["0","1","2", "3","4","5","6","7","8","9","10", "15", "20", "25", "30", "35", "40", "45","50","55"]}
+        margin={{ bottom: 3, left: 10 }}
+        axisLeft={{
+          tickSize: 1,
+          tickValues: ["0","1","2", "3","4","5","6","7","8","9","10", "15", "20", "25", "30", "35", "40", "45","50","55"],
+          tickPadding: 0
+        }}
         padding={0.5}
         tooltip={({ id, value, color }) => (
           <div

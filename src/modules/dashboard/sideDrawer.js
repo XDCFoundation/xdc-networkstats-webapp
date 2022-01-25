@@ -56,10 +56,6 @@ const Content = styled.span`
   }
 `;
 
-const Img = styled.img`
-  width: 100%;
-  max-width: 35px;
-`;
 const CloseImg = styled.img`
   cursor: pointer;
 `;
@@ -97,10 +93,8 @@ export default function SideDrawer(props) {
         <ColumnContainer>
 
         <RowDiv>
-            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
-                // (window.location.href = "https://observer.xdc.org/")
                 window.open("https://medium.com/xdc-foundation-communications")
               }
             >
@@ -108,20 +102,7 @@ export default function SideDrawer(props) {
             </Content>
           </RowDiv>
 
-          {/* <RowDiv> */}
-            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
-            {/* <Content
-              onClick={() =>
-                // (window.location.href = "https://observer.xdc.org/")
-                window.open("https://observer.xdc.org/")
-              }
-            >
-              XDC Observatory
-            </Content>
-          </RowDiv> */}
-
           <RowDiv>
-            {/* <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
                 window.open("https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo?hl=en-US")
@@ -132,7 +113,6 @@ export default function SideDrawer(props) {
           </RowDiv>
 
           <RowDiv>
-            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
                 window.open("https://github.com/xdcfoundation")
@@ -143,7 +123,6 @@ export default function SideDrawer(props) {
           </RowDiv>
 
           <RowDiv>
-            {/* <Img src="/images/BlockExplorer.svg" alt="Block" /> &nbsp;&nbsp; */}
             <Content
               onClick={() =>
                 window.open("https://xdcroadmap.org/")
@@ -152,39 +131,6 @@ export default function SideDrawer(props) {
               XDC Roadmap
             </Content>
           </RowDiv>
-
-          {/* <RowDiv>
-            <Img src="/images/Wallet.svg" alt="Wallet" /> &nbsp;&nbsp;
-            <Content
-              onClick={() =>
-                window.open("https://chrome.google.com/webstore/detail/xdcpay/bocpokimicclpaiekenaeelehdjllofo?hl=en-US")
-              }
-            >
-              XDCPay
-            </Content>
-          </RowDiv> */}
-
-          {/* <RowDiv> */}
-            {/* <Img src="/images/Documents.svg" alt="Documents" /> &nbsp;&nbsp; */}
-             {/* <Content
-              onClick={() =>
-                window.open("http://docs.xdcfoundation.org/")
-              }
-            >
-              XDC Docs
-            </Content>
-          </RowDiv>  */}
-
-          {/* <RowDiv> */}
-            {/* <Img src="/images/Documents.svg" alt="Api Documents" /> &nbsp;&nbsp; */}
-            {/* <Content
-              onClick={() =>
-                window.open("https://medium.com/xdc-foundation-communications")
-              }
-            >
-              XDC Communications
-            </Content>
-          </RowDiv> */}
         </ColumnContainer>
       </ColumnDiv>
     </Div>

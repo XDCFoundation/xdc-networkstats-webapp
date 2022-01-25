@@ -13,13 +13,13 @@ const Div = styled.div`
 `;
 
 function NodeGraph() {
-  const [node, setNode] = useState([]);
-  const [node1, setNode1] = useState([]);
-  const [node2, setNode2] = useState([]);
-  const [node3, setNode3] = useState([]);
-  const [node4, setNode4] = useState([]);
-  const [node5, setNode5] = useState([]);
-  const [node6, setNode6] = useState([]);
+  const [node, setNode] = useState(0);
+  const [node1, setNode1] = useState(0);
+  const [node2, setNode2] = useState(0);
+  const [node3, setNode3] = useState(0);
+  const [node4, setNode4] = useState(0);
+  const [node5, setNode5] = useState(0);
+  const [node6, setNode6] = useState(0);
 
   async function fetchData() {
     const [error, res] = await utility.parseResponse(NodesService.getNodes());
@@ -133,7 +133,6 @@ function NodeGraph() {
                   tickPadding: 5
                 }}
                 axisBottom={false}
-                // curve="monotoneX"
                 colors={["#275FF5"]}
                 areaOpacity={0.3}
                 defs={[
