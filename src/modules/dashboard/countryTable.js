@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import { visuallyHidden } from "@mui/utils";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/styles";
 import _ from "lodash";
@@ -87,8 +84,8 @@ function EnhancedTable(props) {
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last24diff+"%"}</Up></Flex>,
-          last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
+          last24: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{props.stats.expandedCountry[i].last24diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
         });
       }
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)>0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
@@ -96,15 +93,15 @@ function EnhancedTable(props) {
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
-          last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+          last24: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
         });
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)>0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
+          last24: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Up></Flex>,
           last7: props.stats.expandedCountry[i].last7diff+"%"
         });
       }
@@ -113,8 +110,8 @@ function EnhancedTable(props) {
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
-          last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
+          last24: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
         });
       }
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
@@ -122,15 +119,15 @@ function EnhancedTable(props) {
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
-          last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+          last24: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last7: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
         });
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)<0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({
           id: 1 + i,
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
-          last24: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
+          last24: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last24diff).toFixed(2)+"%"}</Down></Flex>,
           last7: props.stats.expandedCountry[i].last7diff+"%"
         });
       }
@@ -141,7 +138,7 @@ function EnhancedTable(props) {
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
-          last7: <Flex><img src="/images/Up arrow.svg" />&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
+          last7: <Flex><img src="/images/Up arrow.svg" alt=""/>&nbsp;<Up>{props.stats.expandedCountry[i].last7diff+"%"}</Up></Flex>,
         });
       }
       else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)<0){
@@ -150,7 +147,7 @@ function EnhancedTable(props) {
           countries: countries[props.stats.expandedCountry[i].country].name,
           last24h: props.stats.expandedCountry[i].count,
           last24: props.stats.expandedCountry[i].last24diff+"%",
-          last7: <Flex><img src="/images/Down arrow.svg" />&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
+          last7: <Flex><img src="/images/Down arrow.svg" alt=""/>&nbsp;<Down>{Math.abs(props.stats.expandedCountry[i].last7diff).toFixed(2)+"%"}</Down></Flex>
         });
       }else if(parseFloat(props.stats.expandedCountry[i].last24diff)===0 && parseFloat(props.stats.expandedCountry[i].last7diff)===0){
         rows.push({

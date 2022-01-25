@@ -6,7 +6,7 @@ import _ from "lodash";
 const Div = styled.div`
   width: 100%;
   max-width: 560px;
-  height: 120px;
+  height: 140px;
   display: ${(props) => (props.data ===30 ? "block" : "none")};
   font-family: sans-serif;
   text-align: center;
@@ -17,7 +17,7 @@ const Div = styled.div`
 const Div1 = styled.div`
   width: 100%;
   max-width: 560px;
-  height: 120px;
+  height: 140px;
   display: ${(props) => (props.data === 24 ? "block" : "none")};
   font-family: sans-serif;
   text-align: center;
@@ -28,7 +28,7 @@ const Div1 = styled.div`
 const Div2 = styled.div`
   width: 100%;
   max-width: 560px;
-  height: 120px;
+  height: 140px;
   display: ${(props) => (props.data === 7 ? "block" : "none")};
   font-family: sans-serif;
   text-align: center;
@@ -43,6 +43,11 @@ const theme = {
         fill: "#667FC1",
       },
     },
+    legend: {
+      text: {
+        fill: "#667FC1"
+      }
+    }
   },
   grid: {
     line: {
@@ -150,24 +155,25 @@ const colors = ["#3AF219", "#E62805"];
         indexBy="time"
         colors={colors}
         enableLabel={false}
-        axisBottom={false}
         enableGridY={true}
         padding={0.7}
         axisRight={null}
         axisTop={null}
-        axisBottom={null}
         theme={theme}
         axisLeft={{
           tickSize: 2,
           tickValues: ["0", "50", "100"],
           tickPadding: 0
         }}
-        margin={{ top: 4, bottom: 15, left: 20 }}
+        margin={{ top: 4, bottom: 27, left: 20 }}
         gridYValues={["0"]}
         axisBottom={{
           tickSize: 2,
           tickValues: ["1","15","30"],
-          tickPadding: 0
+          tickPadding: 0,
+          legend: "Day",
+          legendPosition: "middle",
+          legendOffset: 20
         }}
         tooltip={({ id, value, color }) => (
           <div
@@ -197,24 +203,25 @@ const colors = ["#3AF219", "#E62805"];
         indexBy="time"
         colors={colors}
         enableLabel={false}
-        axisBottom={false}
         enableGridY={true}
         padding={0.7}
         axisRight={null}
         axisTop={null}
-        axisBottom={null}
         theme={theme}
         axisLeft={{
           tickSize: 2,
           tickValues: ["0", "50", "100"],
           tickPadding: 0
         }}
-        margin={{ top: 4, bottom: 20, left: 20 }}
+        margin={{ top: 4, bottom: 27, left: 20 }}
         gridYValues={["0"]}
         axisBottom={{
           tickSize: 2,
           tickValues: ["1","12","24"],
-          tickPadding: 0
+          tickPadding: 0,
+          legend: "Hour",
+          legendPosition: "middle",
+          legendOffset: 20
         }}
         tooltip={({ id, value, color }) => (
           <div
@@ -244,24 +251,25 @@ const colors = ["#3AF219", "#E62805"];
         indexBy="time"
         colors={colors}
         enableLabel={false}
-        axisBottom={false}
         enableGridY={true}
         padding={0.7}
         axisRight={null}
         axisTop={null}
-        axisBottom={null}
         theme={theme}
         axisLeft={{
           tickSize: 2,
           tickValues: ["0", "50", "100"],
           tickPadding: 0
         }}
-        margin={{ top: 4, bottom: 20, left: 20 }}
+        margin={{ top: 4, bottom: 27, left: 20 }}
         gridYValues={["0"]}
         axisBottom={{
           tickSize: 2,
           tickValues: ["1","4","7"],
-          tickPadding: 0
+          tickPadding: 0,
+          legend: "Day",
+          legendPosition: "middle",
+          legendOffset: 20
         }}
         tooltip={({ id, value, color }) => (
           <div

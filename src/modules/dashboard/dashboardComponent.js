@@ -804,7 +804,7 @@ function Dashboard(props) {
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
-        floaterProps={{ disableAnimation: true }}
+        floaterProps={{ disableAnimation: true, placement: "bottom" }}
         locale={{
           last: 'End'
         }}
@@ -812,9 +812,9 @@ function Dashboard(props) {
 
       {showTabJoyRide && (
         <BackDropStyle>
-          <div class="flex">
-            <div class="tooltip">
-              <div class="flex-img">
+          <div className="flex">
+            <div className="tooltip">
+              <div className="flex-img">
                 <Img
                   src="/images/Close.svg"
                   onClick={() => {
@@ -827,7 +827,7 @@ function Dashboard(props) {
               <JoyrideTextContainer>
                 {TOUR_STEPS[setText].content}
               </JoyrideTextContainer>
-              <div class="flex-condition">
+              <div className="flex-condition">
                 {showBackButton ? (
                   <>
                   <JoyrideBackButton
@@ -1544,7 +1544,7 @@ function Dashboard(props) {
                     </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
-                    <UpTimeBar> </UpTimeBar>
+                  <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
                   </MobileGraphDiv>
                 </MobileSpeedBlock>
               ) : (

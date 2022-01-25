@@ -72,14 +72,6 @@ const Img = style.img`
   cursor: pointer;
 `;
 
-const LoadingDiv = style.div`
-color: #C0C0C0,
-position: relative,
-font-size: 0.7rem,
-top: 20px,
-right: 2.5vw,
-`;
-
 const StyledTableRow = withStyles((theme) => ({
   root: {
     height: 50,
@@ -576,10 +568,10 @@ function EnhancedTable(props) {
           </DisplayFlex>
           &nbsp;
           <LiveLabel>Live Updates</LiveLabel>
-          <div class="switch">
+          <div className="switch">
             <input
               id="checkbox1"
-              class="look"
+              className="look"
               type="checkbox"
               checked={sliderCheck}
               onChange={handleSlider}
@@ -680,7 +672,6 @@ function EnhancedTable(props) {
                                   color: "#393939",
                                   fontFamily: "Inter",
                                   fontWeight: "400",
-                                  // width: "40px",
                                 }}
                                 className={getColumnsColor(stats)}
                               >
@@ -693,7 +684,6 @@ function EnhancedTable(props) {
                                   fontFamily: "Inter",
                                   fontWeight: "400",
                                   whiteSpace: "nowrap",
-                                  // width: "40px",
                                 }}
                                 className={getColumnsColor(stats)}
                               >

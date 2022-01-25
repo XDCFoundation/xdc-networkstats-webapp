@@ -565,3 +565,25 @@ height: 55px;
   border: none !important;
   box-shadow: none !important;
 }
+
+
+@media(min-height: 500px) and (max-height: 600px){
+  .MuiTableContainer-root{
+    height: 400px;
+  }
+}
+@media(min-height: 600px) and (max-height: 700px){
+  .MuiTableContainer-root{
+    height: 450px;
+  }
+}
+@media(min-height: 700px) and (max-height: 800px){
+  .MuiTableContainer-root{
+    height: 520px;
+  }
+}
+@media(min-height: 800px) and (max-height: 900px){
+  .MuiTableContainer-root{
+    height: 550px;
+  }
+}

@@ -142,6 +142,18 @@ const MainContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  @media(min-height: 500px) and (max-height: 600px){
+    max-height: 450px;
+  }
+  @media(min-height: 600px) and (max-height: 700px){
+    max-height: 470px;
+  }
+  @media(min-height: 700px) and (max-height: 800px){
+    max-height: 570px;
+  }
+  @media(min-height: 800px) and (max-height: 900px){
+    max-height: 650px;
+  }
 `;
 
 const TableDiv = styled.div`
@@ -173,6 +185,7 @@ const MapDiv = styled.div`
 `;
 
 const DesktopDiv = styled.div`
+  
   @media (min-width: 300px) and (max-width: 1024px) {
     display: none;
   }
