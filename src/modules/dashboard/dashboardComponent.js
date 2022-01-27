@@ -1555,7 +1555,7 @@ function Dashboard(props) {
           <TableDiv>
             {showTable}
           </TableDiv>
-          <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
+          <Footer>© 2022 XDC Foundation. All Rights Reserved.</Footer>
         </>
       )}
     </Div>
