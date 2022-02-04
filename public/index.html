@@ -32,6 +32,22 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "2d72be68-82dc-4af8-89f9-e184655fadf3",
+          safari_web_id: "",
+          notifyButton: {
+            enable: true,
+          },
+          subdomainName: "xinfin-network",
+        });
+      });
+    </script>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-207664160-3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
