@@ -20,9 +20,11 @@ function NodeGraph() {
   const [node4, setNode4] = useState(0);
   const [node5, setNode5] = useState(0);
   const [node6, setNode6] = useState(0);
+  const [maxVal, setMaxVal] = useState(0);
 
   async function fetchData() {
     const [error, res] = await utility.parseResponse(NodesService.getNodes());
+    setMaxVal(Math.max.apply(Math, res.responseData.map(function(o) { return o.nodes; })));
     if (error) return;
     setNode(res?.responseData[0]?.nodes);
     setNode1(res?.responseData[1]?.nodes);
@@ -116,7 +118,7 @@ function NodeGraph() {
                   type: "linear",
                   stacked: true,
                   min: 0,
-                  max: 200,
+                  max: maxVal + 100,
                 }}
                 pointColor="#7299FF"
                 tickSize
@@ -126,10 +128,10 @@ function NodeGraph() {
                 enableGridX={false}
                 enableGridY={true}
                 enableDotLabel={false}
-                gridYValues={["0", "100", "200"]}
+                gridYValues={["0", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000"]}
                 axisLeft={{
                   tickSize: 0,
-                  tickValues: ["0", "100", "200"],
+                  tickValues: ["0", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000"],
                   tickPadding: 5
                 }}
                 axisBottom={false}

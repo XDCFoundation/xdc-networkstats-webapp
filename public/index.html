@@ -32,44 +32,15 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
-
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "2d72be68-82dc-4af8-89f9-e184655fadf3",
-      safari_web_id: "web.onesignal.auto.1a6e6435-147d-4598-9ef8-2c64afd14980",
-      notifyButton: {
-        enable: true,
-      },
-      subdomainName: "xdc-stats",
-      promptOptions: {
-      slidedown: {
-        prompts: [
-          {
-            type: "push", // current types are "push" & "category"
-            autoPrompt: true,
-            text: {
-              /* limited to 90 characters */
-              actionMessage: "Please subscribe to the XDC stats beta test. Only 100 slots are available!!",
-              /* acceptButton limited to 15 characters */
-              acceptButton: "Sign me up!",
-              /* cancelButton limited to 15 characters */
-              cancelButton: "Maybe later"
-            },
-            delay: {
-              pageViews: 1,
-              timeDelay: 20
-            }
-          }
-        ]
-      }
-    }
-    });
-  });
-</script>
-
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "3e7f5895-b2b4-4c02-80c0-df5d8849fcb9",
+        });
+      });
+    </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-207664160-3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
