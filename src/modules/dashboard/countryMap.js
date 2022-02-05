@@ -16,13 +16,26 @@ const MapDiv = styled.div`
   width: 100%;
   max-width: 965px;
   border: none;
+  @media(min-height: 500px) and (max-height: 600px){
+    max-width: 500px;
+    margin-left: 120px;
+  }
+  @media(min-height: 600px) and (max-height: 700px){
+    max-width: 600px;
+    margin-left: 120px;
+  }
+  @media(min-height: 700px) and (max-height: 800px){
+    max-width: 700px;
+    margin-left: 120px;
+  }
+  @media(min-height: 800px) and (max-height: 900px){
+    max-width: 800px;
+    margin-left: 120px;
+  }
 `;
 const MainDiv = styled.div`
   display: flex;
 `;
-
-
-
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";

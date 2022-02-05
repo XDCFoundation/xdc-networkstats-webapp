@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import ReactTooltip from "react-tooltip";
 import { store, useGlobalState } from "state-pool";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 store.setState("selected", []);
 store.setState("slider", true);
@@ -51,26 +52,6 @@ text-align: center;
 margin-bottom: 10px;
 `;
 
-const SearchBox = style.input`
-  background-image: url("/images/Search.svg");
-  background-repeat: no-repeat;
-  background-position: 0.5rem;
-  padding-left: 2rem;
-  background-size: 0.875rem;
-  position: relative;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  width: 100%;
-  white-space: nowrap;
-  height: 2.5rem;
-  font-size: 0.875rem;
-  margin-bottom: 15px;
-  outline: none;
-  color: "black";
-  max-width: 300px !important;
-`;
-
 const Label = style.div`
   font-size: 12px;
   line-height: 15px;
@@ -89,14 +70,6 @@ const Img = style.img`
   align-items: center;
   text-align: center;
   cursor: pointer;
-`;
-
-const LoadingDiv = style.div`
-color: #C0C0C0,
-position: relative,
-font-size: 0.7rem,
-top: 20px,
-right: 2.5vw,
 `;
 
 const StyledTableRow = withStyles((theme) => ({
@@ -550,45 +523,55 @@ function EnhancedTable(props) {
     <>
       <div className="search-wrapper">
         <div>
-          <SearchBox
-            className="search-box"
-            placeholder="Search by node name"
+          <OutlinedInput
+            style={{ backgroundColor: "white" }}
+            required
+            size="small"
             value={query}
-            type="text"
             onChange={(e) => setQuery(e.target.value)}
-            onInput={(e) => e.target.value = e.target.value.slice(0, 20)}
+            placeholder="Search by node name"
+            startAdornment={
+              <div style={{ marginRight: "10px" }}>
+                <img src="images/Search.svg" alt="" />
+              </div>
+            }
+            endAdornment={
+              <div>
+              {query!=="" ? <Img onClick={() => setQuery("")} src="images/Close.svg" alt="" /> : ""}
+              </div>
+            }
           />
-          <button class="close-icon" onClick={() => setQuery("")}></button>
         </div>
         <SpaceBetween>
-        <DisplayFlex>
-        <ReactTooltip
-          id="live"
-          className="extra"
-          arrowColor="transparent"
-          textColor="black"
-          borderColor="white"
-          border={true}
-          delayHide={0}
-          delayShow={0}
-          clickable={true}
-          place="bottom"
-          effect="solid"
-        >
-         Enable/disable the live updates of nodes
-        </ReactTooltip>
-        <Img
-          data-tip="live"
-          data-for="live"
-          src="/images/Help.svg"
-          alt=" "
-        />
-      </DisplayFlex>&nbsp;
+          <DisplayFlex>
+            <ReactTooltip
+              id="live"
+              className="extra"
+              arrowColor="transparent"
+              textColor="black"
+              borderColor="white"
+              border={true}
+              delayHide={0}
+              delayShow={0}
+              clickable={true}
+              place="bottom"
+              effect="solid"
+            >
+              Enable/disable the live updates of nodes
+            </ReactTooltip>
+            <Img
+              data-tip="live"
+              data-for="live"
+              src="/images/Help.svg"
+              alt=" "
+            />
+          </DisplayFlex>
+          &nbsp;
           <LiveLabel>Live Updates</LiveLabel>
-          <div class="switch">
+          <div className="switch">
             <input
               id="checkbox1"
-              class="look"
+              className="look"
               type="checkbox"
               checked={sliderCheck}
               onChange={handleSlider}
@@ -606,12 +589,16 @@ function EnhancedTable(props) {
               {/* <Main/> */}
               {rows.length === 1 || rows.length === 0 ? (
                 <div style={{ position: "absolute", left: "48vw" }}>
-                  <div className="table-dots" style={{ top: "40px", marginTop: "200px" }}>
+                  <div
+                    className="table-dots"
+                    style={{ top: "40px", marginTop: "200px" }}
+                  >
                     <div></div>
                     <div></div>
                     <div></div>
                   </div>
-                  <div className="loadingText"
+                  <div
+                    className="loadingText"
                     style={{
                       color: "#C0C0C0",
                       position: "relative",
@@ -624,161 +611,161 @@ function EnhancedTable(props) {
                   </div>
                 </div>
               ) : (
-                <>
-                {rows.length === 0 ? (
-                <div className="loadingText"
-                style={{
-                  color: "#C0C0C0",
-                  position: "relative",
-                  fontSize: "0.7rem",
-                  top: "20px",
-                  right: "2.5vw",
-                }}
-              >
-                No Nodes
-              </div>
+                <>  {filteredRows.length === 0 ? (
+                  <div style={{ position: "absolute", left: "48vw" }}>
+                  <div
+                    className="loadingText"
+                    style={{
+                      color: "#C0C0C0",
+                      position: "relative",
+                      fontSize: "1.2rem",
+                      top: "20px",
+                      right: "0.5vw",
+                    }}
+                  >
+                    No node found
+                  </div>
+                </div>
                 ) : (
-                <TableBody>
-                  {stableSort(query !== "" ? filteredRows : rows).map(
-                    (row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-                      const isItemSelected = isSelected(row.nodeName);
-                      let block = row.lastBlock.toLocaleString();
-                      const stats = setClass(row.stats);
-                      return (
-                        <StyledTableRow>
-                          <StyledTableCell padding="radio">
-                            <Radio
-                              className="radioButton"
-                              tabIndex={-1}
-                              key={row.nodeName}
-                              onClick={(event) => {
-                                handleClick(event, row.nodeName);
-                              }}
-                              style={{
-                                paddingRight: "0px",
-                                paddingLeft: "18px",
-                              }}
-                              sx={{
-                                ml: 1,
-                                "&.MuiRadio-root:hover": {
-                                  bgcolor: "transparent",
-                                },
-                              }}
-                              color="default"
-                              checkedIcon={<BpCheckedIcon />}
-                              icon={<BpIcon />}
-                              checked={isItemSelected}
-                              disableRipple
-                              inputProps={{
-                                "aria-labelledby": labelId,
-                              }}
-                            />
-                          </StyledTableCell>
-                          <StyledTableCell
-                            scope="row"
-                            padding="none"
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              // width: "40px",
-                            }}
-                            className={getColumnsColor(stats)}
-                          >
-                            {row.nodeName}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              whiteSpace: "nowrap",
-                              // width: "40px",
-                            }}
-                            className={getColumnsColor(stats)}
-                          >
-                            {row.type}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              columnWidth: "70px",
-                            }}
-                            className={getLatencyColor(stats)}
-                          >
-                            {row.latency}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              columnWidth: "70px",
-                            }}
-                            className={getColumnsColor(stats)}
-                          >
-                            {row.peers}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              columnWidth: "70px",
-                            }}
-                            className={getColumnsColor(stats)}
-                          >
-                            {row.pendingTxn}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                              columnWidth: "70px",
-                            }}
-                            className={getLastBlockColor(
-                              stats,
-                              props.stats.bestBlock
-                            )}
-                          >
-                            #{block}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                            }}
-                          >
-                            {row.graph}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{
-                              fontSize: "12px",
-                              color: "#393939",
-                              fontFamily: "Inter",
-                              fontWeight: "400",
-                            }}
-                            className={getUpTimeColor(stats)}
-                          >
-                            {row.upTime}
-                          </StyledTableCell>
-                        </StyledTableRow>
-                      );
-                    }
-                  )}
-                </TableBody>
+                    <TableBody>
+                      {stableSort(query !== "" ? filteredRows : rows).map(
+                        (row, index) => {
+                          const labelId = `enhanced-table-checkbox-${index}`;
+                          const isItemSelected = isSelected(row.nodeName);
+                          let block = row.lastBlock.toLocaleString();
+                          const stats = setClass(row.stats);
+                          return (
+                            <StyledTableRow>
+                              <StyledTableCell padding="radio">
+                                <Radio
+                                  className="radioButton"
+                                  tabIndex={-1}
+                                  key={row.nodeName}
+                                  onClick={(event) => {
+                                    handleClick(event, row.nodeName);
+                                  }}
+                                  style={{
+                                    paddingRight: "0px",
+                                    paddingLeft: "18px",
+                                  }}
+                                  sx={{
+                                    ml: 1,
+                                    "&.MuiRadio-root:hover": {
+                                      bgcolor: "transparent",
+                                    },
+                                  }}
+                                  color="default"
+                                  checkedIcon={<BpCheckedIcon />}
+                                  icon={<BpIcon />}
+                                  checked={isItemSelected}
+                                  disableRipple
+                                  inputProps={{
+                                    "aria-labelledby": labelId,
+                                  }}
+                                />
+                              </StyledTableCell>
+                              <StyledTableCell
+                                scope="row"
+                                padding="none"
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                }}
+                                className={getColumnsColor(stats)}
+                              >
+                                {row.nodeName}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                  whiteSpace: "nowrap",
+                                }}
+                                className={getColumnsColor(stats)}
+                              >
+                                {row.type}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                  columnWidth: "70px",
+                                }}
+                                className={getLatencyColor(stats)}
+                              >
+                                {row.latency}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                  columnWidth: "70px",
+                                }}
+                                className={getColumnsColor(stats)}
+                              >
+                                {row.peers}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                  columnWidth: "70px",
+                                }}
+                                className={getColumnsColor(stats)}
+                              >
+                                {row.pendingTxn}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                  columnWidth: "70px",
+                                }}
+                                className={getLastBlockColor(
+                                  stats,
+                                  props.stats.bestBlock
+                                )}
+                              >
+                                #{block}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                }}
+                              >
+                                {row.graph}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{
+                                  fontSize: "12px",
+                                  color: "#393939",
+                                  fontFamily: "Inter",
+                                  fontWeight: "400",
+                                }}
+                                className={getUpTimeColor(stats)}
+                              >
+                                {row.upTime}
+                              </StyledTableCell>
+                            </StyledTableRow>
+                          );
+                        }
+                      )}
+                    </TableBody>
                 )}
                 </>
               )}

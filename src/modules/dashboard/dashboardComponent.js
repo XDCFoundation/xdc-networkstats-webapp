@@ -5,14 +5,13 @@ import LastBlockBar from "./speedBar";
 import UpTimeBar from "./efficiencyBar";
 import NodeGraph from "./nodeHistoryGraph";
 import Country from "./countries";
-import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+import Joyride, { STATUS } from "react-joyride";
 import Header from "../header/header";
 import NumberFormat from "react-number-format";
 import utility from "../../utility";
 import NodesService from "../../services/nodes";
 import { eventConstants } from "../../constants";
 import store from "../../store";
-import _ from "lodash";
 import SideDrawer from "./sideDrawer";
 import BackDrop from "./backDrop";
 import { dispatchAction } from "../../utility";
@@ -40,34 +39,637 @@ const TOUR_STEPS = [
   },
 ];
 
+const Div = styled.div`
+  width: 100%;
+`;
+
+const JoyrideTextContainer = styled.div`
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  font-size: 13px !important;
+  color: #1f1f1f !important;
+  font-family: "Inter", Regular !important;
+  font-weight: 400,
+  width: 100%;
+`;
+
+const Footer = styled.div`
+  background-color: white;
+  color: #808080;
+  text-align: center;
+  /* display: flex; */
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 17px;
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+  font-size: 0.8rem;
+`;
+
+const JoyrideNextButton = styled.button`
+  background-color: #2358e5;
+  outline: none;
+  border: none;
+  width: 100%;
+  max-width: 63px;
+  color: white;
+  border-radius: 2px;
+  padding: 4px;
+  font-size: 12px;
+  font-weight: 50;
+  display: ${(props) => (props.showBackCount === 2 ? "none" : "flex")};
+  justify-content: center;
+  align-items: center;
+`;
+
+const JoyrideEndButton = styled.button`
+  background-color: #2358e5;
+  outline: none;
+  border: none;
+  width: 100%;
+  max-width: 63px;
+  color: white;
+  border-radius: 2px;
+  padding: 4px;
+  font-size: 12px;
+  font-weight: 50;
+  display: ${(props) => (props.showBackCount === 2 ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+`;
+
+const BackDropStyle = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  top: 390px;
+  right: 0;
+  @media (min-width: 1025px) {
+    display: none;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    top: 336px;
+  }
+`;
+const JoyrideBackButton = styled.div`
+  font-size: 0.8rem;
+  font-family: Inter;
+  font-weight: 600;
+  color: #2256df;
+  border-radius: 4px;
+  padding: 4px;
+
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  display: ${(props) => (props.showBackCount === 0 ? "none" : "flex")};
+`;
+
+const Img = styled.img`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const MainContainer = styled.div`
+  width: 100%;
+`;
+const Title = styled.div`
+  color: #c8d1f1;
+  width: 33.33%;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  border-right: 1px solid #274598;
+  padding: 8px 6px 8px 16px;
+`;
+const Span = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 4px;
+`;
+const DisplayFlex = styled.div`
+  display: flex;
+  color: #ffffff;
+  align-items: center;
+  text-align: center;
+  margin-top: 8px;
+`;
+const FlexStyled = styled.div`
+  flex: 1;
+  font-size: 12px;
+  color: #c8d1f1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  @media (min-width: 768px) and (max-width: 1024px) {
+  padding-left: 10px;
+  }
+`;
+const FlexStyledOne = styled.div`
+  color: #c8d1f1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  text-align: center;
+`;
+const TabSecurity = styled.div`
+  width: 33.33%;
+  font-size: 16px;
+  border-right: 2px solid #274598;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  padding: 4px 11px 4px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.back === 1 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.back === 1 ? "#FFFFFF" : "#C8D1F1")};
+`;
+const TabSpeed = styled.div`
+  width: 33.33%;
+  font-size: 16px;
+  border-right: 2px solid #274598;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  padding: 4px 11px 4px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.back === 2 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.back === 2 ? "#FFFFFF" : "#C8D1F1")};
+`;
+const TabEfficiency = styled.div`
+  width: 33.33%;
+  font-size: 16px;
+  border-right: 2px solid #274598;
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  padding: 4px 11px 4px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.back === 3 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.back === 3 ? "#FFFFFF" : "#C8D1F1")};
+`;
+
+const MobileTitleSecurity = styled.div`
+  width: 33.33%;
+  font-size: 1rem;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.show === 1 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+`;
+const MobileTitleSpeed = styled.div`
+  width: 33.33%;
+  font-size: 1rem;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.show === 2 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+  
+`;
+const MobileTitleEfficiency = styled.div`
+  width: 33.33%;
+  font-size: 1rem;
+  border-right: 2px solid #274598;
+  padding: 8px 6px 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
+  color: ${(props) => (props.show === 3 ? "#FFFFFF" : "#C8D1F1")};
+  font-weight: 500;
+  font-family: 'Inter', Medium;
+`;
+const ContentSecurity = styled.div`
+  background-color: #102c78;
+  height: 270px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentSecurityMobile = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 33.33%;
+  padding: 15px;
+  border-right: 1px solid #274598;
+
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 300px;
+  }
+`;
+const ContentSpeed = styled.div`
+  background-color: #102c78;
+  height: 270px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentEfficiency = styled.div`
+  background-color: #102c78;
+  height: 270px;
+  width: 33.33%;
+  padding: 15px;
+  display: flex;
+  border-right: 1px solid #274598;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+`;
+const ContentParent = styled.div`
+  display: flex;
+  width: 100%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+`;
+const TabScreen = styled.div`
+  @media (min-width: 300px) and (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 1025px) {
+    display: none;
+  }
+`;
+const MobileContentParent = styled.div`
+  display: flex;
+  width: 100%;
+  @media (min-width: 767px) {
+    display: none;
+  }
+`;
+const Heading = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+`;
+const ColorDivNodes = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  height: 27px;
+  white-space: nowrap;
+  border-bottom: ${(props) =>
+    props.mobileTab === 1 ? "2px solid #ffffff" : ""};
+  color: ${(props) => (props.mobileTab === 1 ? "white" : "#667fc1")};
+`;
+const ColorDivCountries = styled.div`
+  font-size: 1rem;
+  height: 27px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: ${(props) =>
+    props.mobileTab === 2 ? "2px solid #ffffff" : ""};
+  color: ${(props) => (props.mobileTab === 2 ? "white" : "#667fc1")};
+`;
+const ContentData = styled.div`
+  width: 50%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const ContentDataEfficiencyDesk = styled.div`
+  width: 45%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const ContentDataSpeedIpad = styled.div`
+  width: 38%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const ContentDataEfficiencyIpad = styled.div`
+  width: 38%;
+  @media (min-width: 300px) and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const DataCount = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  @media (min-width: 300px) and (max-width: 767px) {
+    font-size: 15px;
+  }
+`;
+const NodeHistory = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 15px;
+  white-space: nowrap;
+`;
+const DesktopAvgBlockTime = styled.div`
+  color: #667fc1;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 68px;
+  white-space: nowrap;
+`;
+const CountryData = styled.div`
+  width: 50%;
+`;
+
+const CountryDataEfficiencyDesk2 = styled.div`
+  width: 55%;
+`;
+const ContentDataSpeedIpad2= styled.div`
+  width: 62%;
+`;
+
+const ContentDataSpeedIpadLabel= styled.div`
+padding-left: 7px;
+`;
+
+const ContentDataEfficiencyIpadLabel= styled.div`
+padding-left: 35px;
+`;
+
+
+const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const EfficiencyContentDiv = styled.div`
+  height: 90px;
+`;
+
+const EfficiencyLabel = styled.div`
+margin-left: 30px;
+`;
+const SpeedLabel = styled.div`
+`;
+
+const Countries = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  color: #667fc1;
+`;
+const CountriesData = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+`;
+const Image = styled.img`
+  width: 25px;
+  padding-bottom: 25px;
+  cursor: pointer;
+  @media (min-width: 767px) and (max-width: 1024px) {
+    width: 25px;
+  }
+`;
+const BlockTime = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+`;
+const Speedbar = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+  @media (min-width: 768px) and (max-width: 1024px) {
+  max-width: 800px;
+  }
+`;
+const TableDiv = styled.div`
+  background: #f8f8f8;
+  border-radius: 4px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 42px;
+  min-height: 60vh;
+  @media (min-width: 300px) and (max-width: 1024px) {
+    padding: 30px;
+  }
+  @media (min-width: 300px) and (max-width: 767px) {
+    padding: 15px;
+  }
+`;
+
+const BestBlockData = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+`;
+const MobileSpeedBlock = styled.div`
+  background-color: #102c78;
+  height: 300px;
+  width: 100%;
+  padding: 15px;
+  border-right: 1px solid #274598;
+`;
+
+const LastBLockData = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+`;
+
+const MobDiv = styled.div`
+  color: #667fc1;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Inter;
+  margin-top: 5px;
+`;
+const DataMobDiv = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  font-family: Inter;
+  color: #ffffff;
+  margin-top: 5px;
+`;
+
+const MobileAverageBlock = styled.div`
+  color: #667fc1;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Inter;
+  white-space: nowrap;
+  `;
+
+const MobileGraphDiv = styled.div`
+  width: 100%;
+  /* margin-top: 20px; */
+`;
+const MapWidth = styled.div`
+  width: 100%;
+  padding-left: 40px;
+`;
+const TabContainer = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: none;
+  height: 33px;
+  @media (min-width: 768px) and (max-width: 1024px) {
+    display: flex;
+  }
+`;
+const MobileContainer = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: flex;
+
+  @media (min-width: 767px) {
+    display: none;
+  }
+`;
+const Container = styled.div`
+  background: #1c3c93 0% 0% no-repeat padding-box;
+  width: 100%;
+  display: flex;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+const FullScreen = styled.div`
+  @media (min-width: 100px) and (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const MapDiv = styled.div`
+  /* margin-left: -38px; */
+  width: 100%;
+`;
+const EthDiv = styled.div`
+  font-size: 14px;
+  font-family: "Inter";
+  color: #3af219;
+  margin-bottom: 45px;
+`;
+const SelectionDiv = styled.div`
+  display: flex;
+  width: 100%;
+
+  max-width: 133px;
+  border-radius: 4px;
+  height: 28px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 12px;
+  background-color: #1c3c93;
+  margin-right: 22px;
+
+  @media (min-width: 300px) and (max-width: 767px) {
+  margin-right: 0px
+  }
+`;
+const SelectionDivStyle = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #2149B9;
+  cursor: pointer;
+
+  color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
+
+  background-color: ${(props) =>
+    props.buttonToggle === 1 ? "#2149B9" : "#1C3C93"};
+ 
+`;
+const SelectionDivStyleTwo = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+
+  padding: 6px;
+  width: 100%;
+  height: 28px;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #2149B9;
+  cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
+
+  background-color: ${(props) =>
+    props.buttonToggle === 2 ? "#2149B9" : "#1C3C93"};
+
+`;
+const SelectionDivStyleThree = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Inter;
+
+  padding: 6px;
+  height: 28px;
+  width: 100%;
+  border-radius: 4px 0px 0px 4px;
+  border-right: 0.5px solid #2149B9;
+  cursor: pointer;
+  color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
+
+  background-color: ${(props) =>
+    props.buttonToggle === 3 ? "#2149B9" : "#1C3C93"};
+
+`;
+
+
 
 function Dashboard(props) {
   const { content } = props;
-
-  // User has switched back to the tab
-  // const onFocus = () => {
-  //   if(props.stats.bestBlock !== 0){
-  //     window.location.reload();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('focus', onFocus);
-  //   // Specify how to clean up after this effect:
-  //   return () => {
-  //     window.removeEventListener('focus', onFocus);
-  //   };
-  // });
-
   const [Expand, setCountry] = React.useState(false);
   const changeExpand = (value) => {
     setCountry(value);
   };
   const [joyrideRun, setJoyrideRun] = useState(false);
-  const [joyrideStyle, setJoyrideStyle] = useState({});
   const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
-    const { status, type, action, index } = data;
+    const { status, action} = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (action === "close") {
       setJoyrideRun(false);
@@ -92,6 +694,9 @@ function Dashboard(props) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
+    if(error){
+      console.log("error", error);
+    }
     let sum = 0;
     let avg = 0;
     if(res.responseData.length === 24){
@@ -115,6 +720,9 @@ function Dashboard(props) {
   }
   async function EthVal(){
     const [err, resp] = await utility.parseResponse(NodesService.getEth());
+    if(err){
+    console.log("error", err);
+    }
     let EthVal = `${Math.round(((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *100 * 1000000) / 1000000}%`;
     if(!isNaN(parseFloat(EthVal))) {
       setEth(EthVal);
@@ -146,8 +754,6 @@ function Dashboard(props) {
 
   const [setText, showSetText] = useState(0);
   const [showBackButton, setShowBackButton] = useState(true);
-  const [showBackCount, setShowBackCount] = useState(1);
-
   const backButtonTour = () => {
     setShow(show - 1);
     showSetText(setText - 1);
@@ -179,7 +785,6 @@ function Dashboard(props) {
             borderRadius: 0,
             fontSize: 14,
             fontFamily: "Inter-Regular",
-            borderRadius: "3px",
             fontWeight: 50,
             marginTop: 2,
             marginRight: -5
@@ -199,7 +804,7 @@ function Dashboard(props) {
         run={joyrideRun}
         stepIndex={step}
         disableScrolling={true}
-        floaterProps={{ disableAnimation: true }}
+        floaterProps={{ disableAnimation: true, placement: "bottom" }}
         locale={{
           last: 'End'
         }}
@@ -207,9 +812,9 @@ function Dashboard(props) {
 
       {showTabJoyRide && (
         <BackDropStyle>
-          <div class="flex">
-            <div class="tooltip">
-              <div class="flex-img">
+          <div className="flex">
+            <div className="tooltip">
+              <div className="flex-img">
                 <Img
                   src="/images/Close.svg"
                   onClick={() => {
@@ -222,7 +827,7 @@ function Dashboard(props) {
               <JoyrideTextContainer>
                 {TOUR_STEPS[setText].content}
               </JoyrideTextContainer>
-              <div class="flex-condition">
+              <div className="flex-condition">
                 {showBackButton ? (
                   <>
                   <JoyrideBackButton
@@ -939,7 +1544,7 @@ function Dashboard(props) {
                     </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
-                    <UpTimeBar> </UpTimeBar>
+                  <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
                   </MobileGraphDiv>
                 </MobileSpeedBlock>
               ) : (
@@ -950,650 +1555,14 @@ function Dashboard(props) {
           <TableDiv>
             {showTable}
           </TableDiv>
-          <Footer>© 2022 XDC Network. All Rights Reserved.</Footer>
+          <Footer>© 2022 XDC Foundation. All Rights Reserved.</Footer>
         </>
       )}
     </Div>
   );
 }
 
-const Div = styled.div`
-  width: 100%;
-`;
 
-const JoyrideTextContainer = styled.div`
-  background: white;
-  border-radius: 10px;
-  display: flex;
-  font-size: 13px !important;
-  color: #1f1f1f !important;
-  font-family: "Inter", Regular !important;
-  font-weight: 400,
-  width: 100%;
-`;
-
-const Footer = styled.div`
-  background-color: white;
-  color: #808080;
-  text-align: center;
-  /* display: flex; */
-  align-items: center;
-  padding-bottom: 20px;
-  padding-top: 17px;
-  font-family: "Inter", sans-serif;
-  white-space: nowrap;
-  font-size: 0.8rem;
-`;
-
-const JoyrideNextButton = styled.button`
-  background-color: #2358e5;
-  outline: none;
-  border: none;
-  width: 100%;
-  max-width: 63px;
-  color: white;
-  border-radius: 2px;
-  padding: 4px;
-  font-size: 12px;
-  font-weight: 50;
-  display: ${(props) => (props.showBackCount === 2 ? "none" : "flex")};
-  justify-content: center;
-  align-items: center;
-`;
-
-const JoyrideEndButton = styled.button`
-  background-color: #2358e5;
-  outline: none;
-  border: none;
-  width: 100%;
-  max-width: 63px;
-  color: white;
-  border-radius: 2px;
-  padding: 4px;
-  font-size: 12px;
-  font-weight: 50;
-  display: ${(props) => (props.showBackCount === 2 ? "flex" : "none")};
-  justify-content: center;
-  align-items: center;
-`;
-
-const BackDropStyle = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 100;
-  top: 390px;
-  right: 0;
-  @media (min-width: 1025px) {
-    display: none;
-  }
-
-  @media (min-width: 768px) and (max-width: 1024px) {
-    top: 336px;
-  }
-`;
-const JoyrideBackButton = styled.div`
-  font-size: 0.8rem;
-  font-family: Inter;
-  font-weight: 600;
-  color: #2256df;
-  border-radius: 4px;
-  padding: 4px;
-
-  align-items: center;
-  justify-content: center;
-  margin-right: 14px;
-  display: ${(props) => (props.showBackCount === 0 ? "none" : "flex")};
-`;
-
-const Img = styled.img`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const MainContainer = styled.div`
-  width: 100%;
-`;
-const Title = styled.div`
-  color: #c8d1f1;
-  width: 33.33%;
-  font-size: 18px;
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-  border-right: 1px solid #274598;
-  padding: 8px 6px 8px 16px;
-`;
-const Span = styled.div`
-  font-size: 10px;
-  font-weight: 600;
-  font-family: Inter;
-  color: #ffffff;
-  margin-top: 4px;
-`;
-const DisplayFlex = styled.div`
-  display: flex;
-  color: #ffffff;
-  align-items: center;
-  text-align: center;
-  margin-top: 8px;
-`;
-const FlexStyled = styled.div`
-  flex: 1;
-  font-size: 12px;
-  color: #c8d1f1;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  @media (min-width: 768px) and (max-width: 1024px) {
-  padding-left: 10px;
-  }
-`;
-const FlexStyledOne = styled.div`
-  color: #c8d1f1;
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  text-align: center;
-`;
-const TabSecurity = styled.div`
-  width: 33.33%;
-  font-size: 16px;
-  border-right: 2px solid #274598;
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-  padding: 4px 11px 4px 11px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.back === 1 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.back === 1 ? "#FFFFFF" : "#C8D1F1")};
-`;
-const TabSpeed = styled.div`
-  width: 33.33%;
-  font-size: 16px;
-  border-right: 2px solid #274598;
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-  padding: 4px 11px 4px 11px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.back === 2 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.back === 2 ? "#FFFFFF" : "#C8D1F1")};
-`;
-const TabEfficiency = styled.div`
-  width: 33.33%;
-  font-size: 16px;
-  border-right: 2px solid #274598;
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-  padding: 4px 11px 4px 11px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.back === 3 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.back === 3 ? "#FFFFFF" : "#C8D1F1")};
-`;
-
-const MobileTitleSecurity = styled.div`
-  width: 33.33%;
-  font-size: 1rem;
-  border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.show === 1 ? "#FFFFFF" : "#C8D1F1")};
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-`;
-const MobileTitleSpeed = styled.div`
-  width: 33.33%;
-  font-size: 1rem;
-  border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.show === 2 ? "#FFFFFF" : "#C8D1F1")};
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-  
-`;
-const MobileTitleEfficiency = styled.div`
-  width: 33.33%;
-  font-size: 1rem;
-  border-right: 2px solid #274598;
-  padding: 8px 6px 8px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
-  color: ${(props) => (props.show === 3 ? "#FFFFFF" : "#C8D1F1")};
-  font-weight: 500;
-  font-family: 'Inter', Medium;
-`;
-const ContentSecurity = styled.div`
-  background-color: #102c78;
-  height: 270px;
-  width: 33.33%;
-  padding: 15px;
-  display: flex;
-  border-right: 1px solid #274598;
-
-  @media (min-width: 300px) and (max-width: 1024px) {
-    width: 100%;
-    height: 250px;
-  }
-`;
-const ContentSecurityMobile = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  width: 33.33%;
-  padding: 15px;
-  border-right: 1px solid #274598;
-
-  @media (min-width: 300px) and (max-width: 1024px) {
-    width: 100%;
-    height: 300px;
-  }
-`;
-const ContentSpeed = styled.div`
-  background-color: #102c78;
-  height: 270px;
-  width: 33.33%;
-  padding: 15px;
-  display: flex;
-  border-right: 1px solid #274598;
-  @media (min-width: 300px) and (max-width: 1024px) {
-    width: 100%;
-    height: 250px;
-  }
-`;
-const ContentEfficiency = styled.div`
-  background-color: #102c78;
-  height: 270px;
-  width: 33.33%;
-  padding: 15px;
-  display: flex;
-  border-right: 1px solid #274598;
-  @media (min-width: 300px) and (max-width: 1024px) {
-    width: 100%;
-    height: 250px;
-  }
-`;
-const ContentParent = styled.div`
-  display: flex;
-  width: 100%;
-  @media (min-width: 300px) and (max-width: 767px) {
-    display: none;
-  }
-`;
-const TabScreen = styled.div`
-  @media (min-width: 300px) and (max-width: 767px) {
-    display: none;
-  }
-  @media (min-width: 1025px) {
-    display: none;
-  }
-`;
-const MobileContentParent = styled.div`
-  display: flex;
-  width: 100%;
-  @media (min-width: 767px) {
-    display: none;
-  }
-`;
-const Heading = styled.div`
-  color: #667fc1;
-  font-size: 1rem;
-  font-weight: 600;
-  white-space: nowrap;
-`;
-const ColorDivNodes = styled.div`
-  font-size: 1rem;
-  font-weight: 600;
-  height: 27px;
-  white-space: nowrap;
-  border-bottom: ${(props) =>
-    props.mobileTab === 1 ? "2px solid #ffffff" : ""};
-  color: ${(props) => (props.mobileTab === 1 ? "white" : "#667fc1")};
-`;
-const ColorDivCountries = styled.div`
-  font-size: 1rem;
-  height: 27px;
-  font-weight: 600;
-  white-space: nowrap;
-  border-bottom: ${(props) =>
-    props.mobileTab === 2 ? "2px solid #ffffff" : ""};
-  color: ${(props) => (props.mobileTab === 2 ? "white" : "#667fc1")};
-`;
-const ContentData = styled.div`
-  width: 50%;
-  @media (min-width: 300px) and (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const ContentDataEfficiencyDesk = styled.div`
-  width: 45%;
-  @media (min-width: 300px) and (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const ContentDataSpeedIpad = styled.div`
-  width: 38%;
-  @media (min-width: 300px) and (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const ContentDataEfficiencyIpad = styled.div`
-  width: 38%;
-  @media (min-width: 300px) and (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const DataCount = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-  white-space: nowrap;
-  @media (min-width: 300px) and (max-width: 767px) {
-    font-size: 15px;
-  }
-`;
-const NodeHistory = styled.div`
-  color: #667fc1;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 15px;
-  white-space: nowrap;
-`;
-const DesktopAvgBlockTime = styled.div`
-  color: #667fc1;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 68px;
-  white-space: nowrap;
-`;
-const CountryData = styled.div`
-  width: 50%;
-`;
-
-const CountryDataEfficiencyDesk2 = styled.div`
-  width: 55%;
-`;
-const ContentDataSpeedIpad2= styled.div`
-  width: 62%;
-`;
-const ContentDataEfficiencyIpad2= styled.div`
-  width: 62%;
-`;
-
-const ContentDataSpeedIpadLabel= styled.div`
-padding-left: 7px;
-`;
-
-const ContentDataEfficiencyIpadLabel= styled.div`
-padding-left: 35px;
-`;
-
-
-const SpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const EfficiencyContentDiv = styled.div`
-  height: 90px;
-`;
-
-const EfficiencyLabel = styled.div`
-margin-left: 30px;
-`;
-const SpeedLabel = styled.div`
-`;
-
-const Countries = styled.div`
-  font-weight: 600;
-  font-size: 1rem;
-  color: #667fc1;
-`;
-const CountriesData = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-`;
-const Image = styled.img`
-  width: 25px;
-  padding-bottom: 25px;
-  cursor: pointer;
-  @media (min-width: 767px) and (max-width: 1024px) {
-    width: 25px;
-  }
-`;
-const BlockTime = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-`;
-const Speedbar = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-  @media (min-width: 768px) and (max-width: 1024px) {
-  max-width: 800px;
-  }
-`;
-const TableDiv = styled.div`
-  background: #f8f8f8;
-  border-radius: 4px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-top: 20px;
-  padding-bottom: 42px;
-  min-height: 60vh;
-  @media (min-width: 300px) and (max-width: 1024px) {
-    padding: 30px;
-  }
-  @media (min-width: 300px) and (max-width: 767px) {
-    padding: 15px;
-  }
-`;
-
-const BestBlock = styled.div`
-  font: normal normal 600 16px/20px Inter;
-  letter-spacing: 0px;
-  color: #667fc1;
-  white-space: nowrap;
-`;
-const BestBlockData = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-  font-family: Inter;
-  color: #ffffff;
-`;
-const MobileSpeedBlock = styled.div`
-  background-color: #102c78;
-  height: 300px;
-  width: 100%;
-  padding: 15px;
-  border-right: 1px solid #274598;
-`;
-const LastBlock = styled.div`
-  color: #667fc1;
-  font-weight: 600;
-  font-size: 16px;
-  font-family: Inter;
-`;
-const LastBLockData = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-  font-family: Inter;
-  color: #ffffff;
-`;
-
-const MobDiv = styled.div`
-  color: #667fc1;
-  font-weight: 600;
-  font-size: 16px;
-  font-family: Inter;
-  margin-top: 5px;
-`;
-const DataMobDiv = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-  font-family: Inter;
-  color: #ffffff;
-  margin-top: 5px;
-`;
-
-const MobileAverageBlock = styled.div`
-  color: #667fc1;
-  font-weight: 600;
-  font-size: 16px;
-  font-family: Inter;
-  white-space: nowrap;
-  `;
-const MobileAverageBlockData = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-  font-family: Inter;
-  color: #ffffff;
-`;
-const MobileGraphDiv = styled.div`
-  width: 100%;
-  /* margin-top: 20px; */
-`;
-const MapWidth = styled.div`
-  width: 100%;
-  padding-left: 40px;
-`;
-const TabContainer = styled.div`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  width: 100%;
-  display: none;
-  height: 33px;
-  @media (min-width: 768px) and (max-width: 1024px) {
-    display: flex;
-  }
-`;
-const MobileContainer = styled.div`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  width: 100%;
-  display: flex;
-
-  @media (min-width: 767px) {
-    display: none;
-  }
-`;
-const Container = styled.div`
-  background: #1c3c93 0% 0% no-repeat padding-box;
-  width: 100%;
-  display: flex;
-
-  @media (max-width: 1024px) {
-    display: none;
-  }
-`;
-const FullScreen = styled.div`
-  @media (min-width: 100px) and (max-width: 1024px) {
-    display: none;
-  }
-`;
-
-const MapDiv = styled.div`
-  /* margin-left: -38px; */
-  width: 100%;
-`;
-const EthDiv = styled.div`
-  font-size: 14px;
-  font-family: "Inter";
-  color: #3af219;
-  margin-bottom: 45px;
-`;
-const SelectionDiv = styled.div`
-  display: flex;
-  width: 100%;
-
-  max-width: 133px;
-  border-radius: 4px;
-  height: 28px;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  margin-top: 12px;
-  background-color: #1c3c93;
-  margin-right: 22px;
-
-  @media (min-width: 300px) and (max-width: 767px) {
-  margin-right: 0px
-  }
-`;
-const SelectionDivStyle = styled.div`
-  font-size: 12px;
-  font-weight: 600;
-  font-family: Inter;
-
-  padding: 6px;
-  height: 28px;
-  width: 100%;
-  border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
-  cursor: pointer;
-
-  color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
-
-  background-color: ${(props) =>
-    props.buttonToggle === 1 ? "#2149B9" : "#1C3C93"};
- 
-`;
-const SelectionDivStyleTwo = styled.div`
-  font-size: 12px;
-  font-weight: 600;
-  font-family: Inter;
-
-  padding: 6px;
-  width: 100%;
-  height: 28px;
-  border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
-  cursor: pointer;
-  color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
-
-  background-color: ${(props) =>
-    props.buttonToggle === 2 ? "#2149B9" : "#1C3C93"};
-
-`;
-const SelectionDivStyleThree = styled.div`
-  font-size: 12px;
-  font-weight: 600;
-  font-family: Inter;
-
-  padding: 6px;
-  height: 28px;
-  width: 100%;
-  border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
-  cursor: pointer;
-  color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
-
-  background-color: ${(props) =>
-    props.buttonToggle === 3 ? "#2149B9" : "#1C3C93"};
-
-`;
 
 const mapStateToProps = (state) => {
   return { stats: state.stats };

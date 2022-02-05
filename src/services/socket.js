@@ -1,4 +1,3 @@
-import React from "react";
 import io from "socket.io-client";
 import { eventConstants } from "../constants";
 import _ from "lodash";
@@ -8,23 +7,16 @@ import utility from "../utility";
 import { NodesService } from "../services/";
 import sorter from "sort-nested-json";
 import { batch } from "react-redux";
-import NumberFormat from "react-number-format";
-import {httpConstants} from "../constants";
 
 
 let MAX_BINS = 40;
 let nodesArr = [];
 let totalNodes = 0;
-let countries = 0;
 let bestBlock = 0;
-let avgTime = 0;
 let lastBlock = 0;
-let tableRows = [];
 let gasPrice = 0;
-let avgRate = 0;
 let upTime = 0;
 let bestStats = {};
-let lastDifficulty = 0;
 let nodesActive = 0;
 let blockPropagationChart = [];
 let blockPropagationAvg = 0;
@@ -124,12 +116,10 @@ async function socketAction(action, data) {
 
           updateBestBlock(nodesArr);
           nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-          // updateTable(nodesArr);
         }
       }
       break;
     case "block":
-      // setInterval(()=>{
       let index1 = findIndex({ id: data.id });
       if (!_.isEmpty(nodesArr)) {
         if (
@@ -155,10 +145,8 @@ async function socketAction(action, data) {
 
           updateBestBlock(nodesArr);
           nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-          // updateTable(nodesArr);
         }
       }
-      // })
 
       break;
     case "pending":
@@ -206,7 +194,6 @@ async function socketAction(action, data) {
             });
             updateActiveNodes(nodesArr);
             nodesArr = sorter.sort(nodesArr).desc("stats.block.number");
-            // updateTable(nodesArr);
           }
         }
       }
@@ -297,6 +284,9 @@ async function socketAction(action, data) {
       break;
     case "client-ping":
       break;
+
+    default:
+    return "";
   }
 }
 
@@ -390,6 +380,9 @@ function updateActiveNodes(data) {
     const [error, res] = await utility.parseResponse(
       NodesService.getCountryInit()
     );
+    if(error){
+      console.log("error", error);
+    }
     for (let i = 0; i < countryArray.length; i++) {
       if (
         !_.isUndefined(res?.responseData?.last24) &&
@@ -466,11 +459,13 @@ function updateBestBlock(data) {
       
       lastBlock = bestStats.block.arrived;
       let GasInit = bestStats.gasPrice;
-      let time = timeFilter(lastBlock);
       async function fetchData() {
         const [error, res] = await utility.parseResponse(
           NodesService.getGasPrice()
         );
+        if(error){
+          console.log("error", error);
+        }
         if (typeof res?.responseData[0]?.gasPrice !== "undefined") {
           let price = res?.responseData[0]?.gasPrice?.data?.ETH?.quote?.USD?.price;
           let convertedPrice = price * wei;
@@ -526,6 +521,9 @@ setInterval(()=>{
 
 async function getInitNodes() {
   const [error, resp] = await utility.parseResponse(NodesService.getInitNodes());
+  if(error){
+    console.log("error", error);
+  }
   let initNodes = resp?.responseData[0]?.nodes
   updateActiveNodes(initNodes);
   let table = [];
@@ -544,7 +542,6 @@ async function getInitNodes() {
 }
 getInitNodes();
 
-// function updateTable(nodes){
   setInterval(()=>{
   let table = [];
   if (!_.isEmpty(nodesArr) && !_.isUndefined(nodesArr)) {
@@ -561,9 +558,7 @@ getInitNodes();
       });
       
     }
-    // table = sorter.sort(table).desc("lastBlock");
     store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
-// }
 },500)
 

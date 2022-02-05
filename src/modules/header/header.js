@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import SideDrawer from "../dashboard/sideDrawer";
-import Side from "../dashboard/sideDrawer";
 
 const HeaderLogoElement = styled.img`
   cursor: pointer;
@@ -16,9 +14,7 @@ const StartGuidedLabel = styled.span`
     display: none;
   }
 `;
-const NavbarIcon = styled.div`
-  margin-right: 12px;
-`;
+
 const StartGuideTourButton = styled.button`
   color: white;
   background: #2a52c1 0% 0% no-repeat padding-box;

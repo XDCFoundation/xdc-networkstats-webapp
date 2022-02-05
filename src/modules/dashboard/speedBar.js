@@ -14,8 +14,10 @@ const Div = styled.div`
   cursor: pointer;
 `;
 
+let data = [0];
+
 function SpeedBar(props) {
-  const data = [
+   data = [
     { time: 1, value: Math.round(props.stats.blockTime[0] * 100) / 100 },
     { time: 2, value: Math.round(props.stats.blockTime[1] * 100) / 100},
     { time: 3, value: Math.round(props.stats.blockTime[2] * 100) / 100},
