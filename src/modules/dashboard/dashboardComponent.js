@@ -719,21 +719,22 @@ function Dashboard(props) {
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
   }
   async function EthVal(){
-    const [err, resp] = await utility.parseResponse(NodesService.getEth());
-    if(err){
-    console.log("error", err);
+    const [error, resp] = await utility.parseResponse(NodesService.getEth());
+    if(error){
+    console.log("error", error);
     }
-    let EthVal = `${Math.round(((resp.normal.usd - props.stats.gasPrice) / resp.normal.usd) *100 * 1000000) / 1000000}%`;
+    if(!resp){
+    let EthVal = `${Math.round(((resp && resp.normal.usd - props.stats.gasPrice) / resp && resp.normal.usd) *100 * 1000000) / 1000000}%`;
     if(!isNaN(parseFloat(EthVal))) {
       setEth(EthVal);
     }
-  }
+  }}
   useEffect(()=>{
     fetchTime();
   },[]);
 
   useEffect(() => {
-    let value = props.stats.gasPrice.toFixed(6);
+    let value = props.stats.gasPrice ?  props.stats.gasPrice.toFixed(8) : "";
     if(!isNaN(value)){
     setGasUsd(value);
     EthVal();
