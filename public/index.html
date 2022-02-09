@@ -32,23 +32,31 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+      async=""
+    ></script>
     <script>
       window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
+      OneSignal.push(function () {
         OneSignal.init({
           appId: "3e7f5895-b2b4-4c02-80c0-df5d8849fcb9",
         });
       });
     </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-207664160-3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-207664160-3"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'UA-207664160-3');
-</script>
+      gtag("config", "UA-207664160-3");
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -63,9 +71,8 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
-      </style>
-      
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap");
+    </style>
 
     <!--
       This HTML file is a template.
