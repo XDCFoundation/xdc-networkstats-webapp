@@ -95,10 +95,10 @@ export default function SideDrawer(props) {
         <RowDiv>
             <Content
               onClick={() =>
-                window.open("https://medium.com/xdc-foundation-communications")
+                window.open("https://observer.xdc.org/")
               }
             >
-              About XDC
+              XDC Observatory
             </Content>
           </RowDiv>
 
@@ -129,6 +129,16 @@ export default function SideDrawer(props) {
               }
             >
               XDC Roadmap
+            </Content>
+          </RowDiv>
+
+          <RowDiv>
+            <Content
+              onClick={() =>
+                window.open("https://medium.com/xdc-foundation-communications")
+              }
+            >
+              About XDC
             </Content>
           </RowDiv>
         </ColumnContainer>

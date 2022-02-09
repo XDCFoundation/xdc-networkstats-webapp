@@ -17,6 +17,7 @@ let lastBlock = 0;
 let gasPrice = 0;
 let upTime = 0;
 let bestStats = {};
+let gasUsed = 0;
 let nodesActive = 0;
 let blockPropagationChart = [];
 let blockPropagationAvg = 0;
@@ -456,7 +457,10 @@ function updateBestBlock(data) {
       bestStats = _.maxBy(data, function (node) {
         return parseInt(node.stats.block.number);
       }).stats;
-      
+      gasUsed = _.maxBy(data, function (node) {
+        return parseInt(node.stats.block.gasUsed);
+      }).stats.block.gasUsed;
+
       lastBlock = bestStats.block.arrived;
       let GasInit = bestStats.gasPrice;
       async function fetchData() {
@@ -467,9 +471,9 @@ function updateBestBlock(data) {
           console.log("error", error);
         }
         if (typeof res?.responseData[0]?.gasPrice !== "undefined") {
-          let price = res?.responseData[0]?.gasPrice?.data?.ETH?.quote?.USD?.price;
+          let price = res?.responseData[0]?.gasPrice?.data?.XDC?.quote?.USD?.price;
           let convertedPrice = price * wei;
-          gasPrice = convertedPrice * GasInit;
+          gasPrice = convertedPrice * GasInit * gasUsed;
         }
       }
       fetchData();
