@@ -542,7 +542,7 @@ async function getInitNodes() {
       nodeName: initNodes[i].info.name,
     });
   }
-  // store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
+  store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
 }
 getInitNodes();
 
@@ -562,7 +562,7 @@ getInitNodes();
       });
       
     }
-    // store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
+    store.dispatch({ type: eventConstants.UPDATE_NODES_ARR, data: table });
   }
 },500)
 
