@@ -115,6 +115,16 @@ export default function SideDrawer(props) {
           <RowDiv>
             <Content
               onClick={() =>
+                window.open("https://origin.xdc.org/")
+              }
+            >
+              XDC Origin
+            </Content>
+          </RowDiv>
+
+          <RowDiv>
+            <Content
+              onClick={() =>
                 window.open("https://github.com/xdcfoundation")
               }
             >

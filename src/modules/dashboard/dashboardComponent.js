@@ -142,7 +142,7 @@ const Title = styled.div`
   width: 33.33%;
   font-size: 18px;
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
   border-right: 1px solid #274598;
   padding: 8px 6px 8px 16px;
 `;
@@ -168,7 +168,7 @@ const FlexStyled = styled.div`
   align-items: center;
   text-align: center;
   @media (min-width: 768px) and (max-width: 1024px) {
-  padding-left: 10px;
+    padding-left: 10px;
   }
 `;
 const FlexStyledOne = styled.div`
@@ -183,7 +183,7 @@ const TabSecurity = styled.div`
   font-size: 16px;
   border-right: 2px solid #274598;
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
@@ -197,7 +197,7 @@ const TabSpeed = styled.div`
   font-size: 16px;
   border-right: 2px solid #274598;
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
@@ -211,7 +211,7 @@ const TabEfficiency = styled.div`
   font-size: 16px;
   border-right: 2px solid #274598;
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
   padding: 4px 11px 4px 11px;
   display: flex;
   justify-content: center;
@@ -233,7 +233,7 @@ const MobileTitleSecurity = styled.div`
   background: ${(props) => (props.show === 1 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 1 ? "#FFFFFF" : "#C8D1F1")};
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
 `;
 const MobileTitleSpeed = styled.div`
   width: 33.33%;
@@ -247,8 +247,7 @@ const MobileTitleSpeed = styled.div`
   background: ${(props) => (props.show === 2 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 2 ? "#FFFFFF" : "#C8D1F1")};
   font-weight: 500;
-  font-family: 'Inter', Medium;
-  
+  font-family: "Inter", Medium;
 `;
 const MobileTitleEfficiency = styled.div`
   width: 33.33%;
@@ -262,7 +261,7 @@ const MobileTitleEfficiency = styled.div`
   background: ${(props) => (props.show === 3 ? "#4065cb" : "#1c3c93")};
   color: ${(props) => (props.show === 3 ? "#FFFFFF" : "#C8D1F1")};
   font-weight: 500;
-  font-family: 'Inter', Medium;
+  font-family: "Inter", Medium;
 `;
 const ContentSecurity = styled.div`
   background-color: #102c78;
@@ -417,18 +416,17 @@ const CountryData = styled.div`
 const CountryDataEfficiencyDesk2 = styled.div`
   width: 55%;
 `;
-const ContentDataSpeedIpad2= styled.div`
+const ContentDataSpeedIpad2 = styled.div`
   width: 62%;
 `;
 
-const ContentDataSpeedIpadLabel= styled.div`
-padding-left: 7px;
+const ContentDataSpeedIpadLabel = styled.div`
+  padding-left: 7px;
 `;
 
-const ContentDataEfficiencyIpadLabel= styled.div`
-padding-left: 35px;
+const ContentDataEfficiencyIpadLabel = styled.div`
+  padding-left: 35px;
 `;
-
 
 const SpaceBetween = styled.div`
   display: flex;
@@ -440,10 +438,9 @@ const EfficiencyContentDiv = styled.div`
 `;
 
 const EfficiencyLabel = styled.div`
-margin-left: 30px;
+  margin-left: 30px;
 `;
-const SpeedLabel = styled.div`
-`;
+const SpeedLabel = styled.div``;
 
 const Countries = styled.div`
   font-weight: 600;
@@ -473,7 +470,7 @@ const Speedbar = styled.div`
   width: 100%;
   max-width: 500px;
   @media (min-width: 768px) and (max-width: 1024px) {
-  max-width: 800px;
+    max-width: 800px;
   }
 `;
 const TableDiv = styled.div`
@@ -534,7 +531,7 @@ const MobileAverageBlock = styled.div`
   font-size: 16px;
   font-family: Inter;
   white-space: nowrap;
-  `;
+`;
 
 const MobileGraphDiv = styled.div`
   width: 100%;
@@ -586,6 +583,7 @@ const EthDiv = styled.div`
   font-family: "Inter";
   color: #3af219;
   margin-bottom: 45px;
+  margin-top: 5px;
 `;
 const SelectionDiv = styled.div`
   display: flex;
@@ -602,7 +600,7 @@ const SelectionDiv = styled.div`
   margin-right: 22px;
 
   @media (min-width: 300px) and (max-width: 767px) {
-  margin-right: 0px
+    margin-right: 0px;
   }
 `;
 const SelectionDivStyle = styled.div`
@@ -614,14 +612,13 @@ const SelectionDivStyle = styled.div`
   height: 28px;
   width: 100%;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
+  border-right: 0.5px solid #2149b9;
   cursor: pointer;
 
   color: ${(props) => (props.buttonToggle === 1 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
     props.buttonToggle === 1 ? "#2149B9" : "#1C3C93"};
- 
 `;
 const SelectionDivStyleTwo = styled.div`
   font-size: 12px;
@@ -632,13 +629,12 @@ const SelectionDivStyleTwo = styled.div`
   width: 100%;
   height: 28px;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
+  border-right: 0.5px solid #2149b9;
   cursor: pointer;
   color: ${(props) => (props.buttonToggle === 2 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
     props.buttonToggle === 2 ? "#2149B9" : "#1C3C93"};
-
 `;
 const SelectionDivStyleThree = styled.div`
   font-size: 12px;
@@ -649,16 +645,13 @@ const SelectionDivStyleThree = styled.div`
   height: 28px;
   width: 100%;
   border-radius: 4px 0px 0px 4px;
-  border-right: 0.5px solid #2149B9;
+  border-right: 0.5px solid #2149b9;
   cursor: pointer;
   color: ${(props) => (props.buttonToggle === 3 ? "#ffffff" : "#3C70FF")};
 
   background-color: ${(props) =>
     props.buttonToggle === 3 ? "#2149B9" : "#1C3C93"};
-
 `;
-
-
 
 function Dashboard(props) {
   const { content } = props;
@@ -669,7 +662,7 @@ function Dashboard(props) {
   const [joyrideRun, setJoyrideRun] = useState(false);
   const [step, setStep] = useState();
   const handleJoyrideCallback = (data) => {
-    const { status, action} = data;
+    const { status, action } = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
     if (action === "close") {
       setJoyrideRun(false);
@@ -694,53 +687,57 @@ function Dashboard(props) {
     const [error, res] = await utility.parseResponse(
       NodesService.getUpTime(value)
     );
-    if(error){
+    if (error) {
       console.log("error", error);
     }
     let sum = 0;
     let avg = 0;
-    if(res.responseData.length === 24){
-        sum = res.responseData.reduce((a,b)=> a+b.upTime,0)
-        avg = sum/24;
-        setUpTime((avg).toFixed(2))
+    if (res.responseData.length === 24) {
+      sum = res.responseData.reduce((a, b) => a + b.upTime, 0);
+      avg = sum / 24;
+      setUpTime(avg.toFixed(2));
+    } else if (res.responseData.length === 7) {
+      sum = res.responseData.reduce((a, b) => a + b.uptime, 0);
+      avg = sum / 7;
+      setUpTime(avg.toFixed(2));
+    } else {
+      sum = res.responseData.reduce((a, b) => a + b.uptime, 0);
+      avg = sum / 30;
+      setUpTime(avg.toFixed(2));
     }
-    else if(res.responseData.length === 7)
-    {
-      sum = res.responseData.reduce((a,b)=> a+b.uptime,0)
-      avg = sum/7;
-      setUpTime((avg).toFixed(2))
-    }
-    else{
-      sum = res.responseData.reduce((a,b)=> a+b.uptime,0)
-      avg = sum/30;
-      setUpTime((avg).toFixed(2))
-    }
-    
+
     store.dispatch({ type: eventConstants.UPDATE_EFFICIENCY, data: res });
   }
-  async function EthVal(){
+  async function EthVal() {
     const [error, resp] = await utility.parseResponse(NodesService.getEth());
-    if(error){
-    console.log("error", error);
+    if (error) {
+      console.log("error", error);
     }
-    if(!resp){
-    let EthVal = `${Math.round(((resp && resp.normal.usd - props.stats.gasPrice) / resp && resp.normal.usd) *100 * 1000000) / 1000000}%`;
-    if(!isNaN(parseFloat(EthVal))) {
-      setEth(EthVal);
+    if (!resp) {
+      let EthVal = `${
+        Math.round(
+          ((resp && resp.normal.usd - props.stats.gasPrice) / resp &&
+            resp.normal.usd) *
+            100 *
+            1000000
+        ) / 1000000
+      }%`;
+      if (!isNaN(parseFloat(EthVal))) {
+        setEth(EthVal);
+      }
     }
-  }}
-  useEffect(()=>{
+  }
+  useEffect(() => {
     fetchTime();
-  },[]);
+  }, []);
 
   useEffect(() => {
-    let value = props.stats.gasPrice ?  props.stats.gasPrice.toFixed(8) : "";
-    if(!isNaN(value)){
-    setGasUsd(value);
-    EthVal();
+    let value = props.stats.gasPrice ? props.stats.gasPrice.toFixed(8) : "";
+    if (!isNaN(value)) {
+      setGasUsd(value);
+      EthVal();
     }
   }, [props.stats.gasPrice]);
-
 
   const [showTabJoyRide, setShowTabJoyRide] = useState(false);
   document.body.style.overflow = showTabJoyRide ? "hidden" : "unset";
@@ -763,11 +760,11 @@ function Dashboard(props) {
 
   const [showTable, setShowTable] = useState();
   const [showExpandedCountry, setShowExpandedCountry] = useState();
-  
-  useEffect(()=>{
-  setShowTable(<Table/>);
-  setShowExpandedCountry(<Country expand={setCountry}/>)
-  },[])
+
+  useEffect(() => {
+    setShowTable(<Table />);
+    setShowExpandedCountry(<Country expand={setCountry} />);
+  }, []);
 
   return (
     <Div>
@@ -788,7 +785,7 @@ function Dashboard(props) {
             fontFamily: "Inter-Regular",
             fontWeight: 50,
             marginTop: 2,
-            marginRight: -5
+            marginRight: -5,
           },
           buttonBack: {
             marginRight: 10,
@@ -799,7 +796,7 @@ function Dashboard(props) {
             size: 1,
             padding: 10,
             width: 10,
-          }
+          },
         }}
         spotlightPadding={0}
         run={joyrideRun}
@@ -807,7 +804,7 @@ function Dashboard(props) {
         disableScrolling={true}
         floaterProps={{ disableAnimation: true, placement: "bottom" }}
         locale={{
-          last: 'End'
+          last: "End",
         }}
       />
 
@@ -831,21 +828,23 @@ function Dashboard(props) {
               <div className="flex-condition">
                 {showBackButton ? (
                   <>
-                  <JoyrideBackButton
-                    showBackCount={setText}
-                    onClick={() => backButtonTour()}
-                  >
-                    Back
-                  </JoyrideBackButton>
-                  <JoyrideEndButton
-                    showBackCount={setText}
-                    onClick={() => {setShowTabJoyRide(false);
-                      setShow(1);
-                      showSetText(0)}}
-                  >
-                    End
-                  </JoyrideEndButton>
-                </>
+                    <JoyrideBackButton
+                      showBackCount={setText}
+                      onClick={() => backButtonTour()}
+                    >
+                      Back
+                    </JoyrideBackButton>
+                    <JoyrideEndButton
+                      showBackCount={setText}
+                      onClick={() => {
+                        setShowTabJoyRide(false);
+                        setShow(1);
+                        showSetText(0);
+                      }}
+                    >
+                      End
+                    </JoyrideEndButton>
+                  </>
                 ) : (
                   ""
                 )}
@@ -954,16 +953,13 @@ function Dashboard(props) {
                 <ContentSecurity className="security">
                   <ContentData>
                     <Heading>Nodes</Heading>
-                    {
-                      props.stats.totalNodes === 0 ? (
-                              <div className="animated-background"></div>
-                          ) :
-                          (
-                              <DataCount>
-                                {props.stats.nodes}/{props.stats.totalNodes}
-                              </DataCount>
-                          )
-                    }
+                    {props.stats.totalNodes === 0 ? (
+                      <div className="animated-background"></div>
+                    ) : (
+                      <DataCount>
+                        {props.stats.nodes}/{props.stats.totalNodes}
+                      </DataCount>
+                    )}
                     <NodeHistory>Node History (7 Days)</NodeHistory>
                     <NodeGraph />
                   </ContentData>
@@ -971,14 +967,11 @@ function Dashboard(props) {
                     <SpaceBetween>
                       <div>
                         <Countries>Countries</Countries>
-                        {
-                          props.stats.countries === 0 ? (
-                                  <div className="animated-background"></div>
-                              ) :
-                              (
-                                  <CountriesData>{props.stats.countries}</CountriesData>
-                              )
-                        }
+                        {props.stats.countries === 0 ? (
+                          <div className="animated-background"></div>
+                        ) : (
+                          <CountriesData>{props.stats.countries}</CountriesData>
+                        )}
                       </div>
                       <Image
                         src="/images/Expand.svg"
@@ -992,44 +985,37 @@ function Dashboard(props) {
                 <ContentSpeed className="speed">
                   <ContentDataEfficiencyDesk>
                     <Heading>Best Block</Heading>
-                    {
-                      props.stats.bestBlock === 0 ? (
-                          <div className="animated-background"></div>
-                      ) :
-                          (
-                              <DataCount>
-                                #{" "}
-                                <NumberFormat
-                                    value={props.stats.bestBlock}
-                                    displayType={"text"}
-                                    thousandSeparator={true}
-                                />
-                              </DataCount>
-                          )
-                    }
+                    {props.stats.bestBlock === 0 ? (
+                      <div className="animated-background"></div>
+                    ) : (
+                      <DataCount>
+                        #{" "}
+                        <NumberFormat
+                          value={props.stats.bestBlock}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                        />
+                      </DataCount>
+                    )}
                     <DesktopAvgBlockTime>Avg Block Time</DesktopAvgBlockTime>
-                    {
-                      props.stats.avgBlock === 0 ? (
-                              <div className="animated-background"></div>
-                          ) :
-                          (
-                              <BlockTime>{(props.stats.avgBlock).toFixed(4) + " "}Sec</BlockTime>
-                          )
-                    }
+                    {props.stats.avgBlock === 0 ? (
+                      <div className="animated-background"></div>
+                    ) : (
+                      <BlockTime>
+                        {props.stats.avgBlock.toFixed(4) + " "}Sec
+                      </BlockTime>
+                    )}
                   </ContentDataEfficiencyDesk>
 
                   <CountryDataEfficiencyDesk2>
                     <SpaceBetween>
                       <SpeedLabel>
                         <Countries>Best Block Generated</Countries>
-                        {
-                          props.stats.bestBlock === 0 ? (
-                                  <div className="animated-background"></div>
-                              ) :
-                              (
-                                  <CountriesData>{props.stats.lastBlock}</CountriesData>
-                              )
-                        }
+                        {props.stats.bestBlock === 0 ? (
+                          <div className="animated-background"></div>
+                        ) : (
+                          <CountriesData>{props.stats.lastBlock}</CountriesData>
+                        )}
                       </SpeedLabel>
                     </SpaceBetween>
                     <Speedbar>
@@ -1049,43 +1035,34 @@ function Dashboard(props) {
                 <ContentEfficiency className="efficiency">
                   <ContentDataEfficiencyDesk>
                     <Heading>Avg Transaction Fee(USD)</Heading>
-                    {
-                      props.stats.bestBlock === 0 ? (
-                              <div className="animated-background"></div>
-                          ) :
-                          (
-                              <div>
-                              <DataCount>{gasUsd}</DataCount>
-                              <EthDiv>
-                                <img src="/images/Down.svg" alt=" " />
-                                {" " + Eth} less than Ethereum
-                              </EthDiv>
-                              </div>
-                          )
-                    }
+                    {!gasUsd ? (
+                      <div className="animated-background"></div>
+                    ) : (
+                      <DataCount>{gasUsd}</DataCount>
+                    )}
+                    <EthDiv>
+                      <img src="/images/Down.svg" alt=" " />
+                      {" " + Eth} less than Ethereum
+                    </EthDiv>
 
                     <NodeHistory>Avg Transaction/Second</NodeHistory>
-                    {
-                      props.stats.avgRate === 0 ? (
-                              <div className="animated-background"></div>
-                          ) :
-                          (
-                              <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
-                          )
-                    }
+                    {props.stats.avgRate === 0 ? (
+                      <div className="animated-background"></div>
+                    ) : (
+                      <BlockTime>
+                        {props.stats.avgRate.toFixed(2) + " "}TPS
+                      </BlockTime>
+                    )}
                   </ContentDataEfficiencyDesk>
                   <CountryData>
                     <SpaceBetween>
                       <EfficiencyLabel>
                         <Countries>Up Time</Countries>
-                        {
-                          upTime === 0 ? (
-                                  <div className="animated-background"></div>
-                              ) :
-                              (
-                                  <CountriesData>{upTime}%</CountriesData>
-                              )
-                        }
+                        {upTime === 0 ? (
+                          <div className="animated-background"></div>
+                        ) : (
+                          <CountriesData>{upTime}%</CountriesData>
+                        )}
                       </EfficiencyLabel>
 
                       <SelectionDiv>
@@ -1125,19 +1102,17 @@ function Dashboard(props) {
                       </SelectionDiv>
                     </SpaceBetween>
                     <Speedbar>
-                      {
-                        props?.stats?.efficiency?.length === 0 ? (
-                            <div className="center-parent-div position-relative top-50px">
-                              <div className="dots">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                              </div>
-                            </div>
-                        ) : (
-                            <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
-                        )
-                      }
+                      {props?.stats?.efficiency?.length === 0 ? (
+                        <div className="center-parent-div position-relative top-50px">
+                          <div className="dots">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                      )}
                       {/*{props.stats?.efficiency?.length !== 0 ? (*/}
                       {/*  <UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
                       {/*) : (*/}
@@ -1154,16 +1129,13 @@ function Dashboard(props) {
                   <ContentSecurity className="security">
                     <ContentData>
                       <Heading>Nodes</Heading>
-                      {
-                        props.stats.totalNodes === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <DataCount>
-                                  {props.stats.nodes}/{props.stats.totalNodes}
-                                </DataCount>
-                            )
-                      }
+                      {props.stats.totalNodes === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <DataCount>
+                          {props.stats.nodes}/{props.stats.totalNodes}
+                        </DataCount>
+                      )}
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <NodeGraph />
                     </ContentData>
@@ -1171,18 +1143,20 @@ function Dashboard(props) {
                       <SpaceBetween>
                         <div>
                           <Countries>Countries</Countries>
-                          {
-                            props.stats.countries === 0 ? (
-                                    <div className="animated-background"></div>
-                                ) :
-                                (
-                                    <CountriesData>{props.stats.countries}</CountriesData>
-                                )
-                          }
+                          {props.stats.countries === 0 ? (
+                            <div className="animated-background"></div>
+                          ) : (
+                            <CountriesData>
+                              {props.stats.countries}
+                            </CountriesData>
+                          )}
                         </div>
                         <Image
                           src="/images/Expand.svg"
-                          onClick={() => {changeExpand(2);setShowTabJoyRide(false);}}
+                          onClick={() => {
+                            changeExpand(2);
+                            setShowTabJoyRide(false);
+                          }}
                         />
                       </SpaceBetween>
                       <MapDiv>
@@ -1197,38 +1171,36 @@ function Dashboard(props) {
                   <ContentSpeed className="speed">
                     <ContentDataSpeedIpad>
                       <Heading>Best Block</Heading>
-                      {
-                        props.stats.bestBlock === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <DataCount>
-                                  #{" "}
-                                  <NumberFormat
-                                      value={props.stats.bestBlock}
-                                      displayType={"text"}
-                                      thousandSeparator={true}
-                                  />
-                                </DataCount>
-                            )
-                      }
+                      {props.stats.bestBlock === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <DataCount>
+                          #{" "}
+                          <NumberFormat
+                            value={props.stats.bestBlock}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                        </DataCount>
+                      )}
                       <div style={{ marginTop: "55px" }}></div>
                       <NodeHistory>Avg Block Time</NodeHistory>
-                      <BlockTime>{props.stats.avgBlock.toFixed(4) + " "}Sec</BlockTime>
+                      <BlockTime>
+                        {props.stats.avgBlock.toFixed(4) + " "}Sec
+                      </BlockTime>
                     </ContentDataSpeedIpad>
 
                     <ContentDataSpeedIpad2>
                       <SpaceBetween>
                         <ContentDataSpeedIpadLabel>
                           <Countries>Best Block Generated</Countries>
-                          {
-                            props.stats.bestBlock === 0 ? (
-                                    <div className="animated-background"></div>
-                                ) :
-                                (
-                                    <CountriesData>{props.stats.lastBlock}</CountriesData>
-                                )
-                          }
+                          {props.stats.bestBlock === 0 ? (
+                            <div className="animated-background"></div>
+                          ) : (
+                            <CountriesData>
+                              {props.stats.lastBlock}
+                            </CountriesData>
+                          )}
                         </ContentDataSpeedIpadLabel>
                       </SpaceBetween>
                       <Speedbar>
@@ -1251,42 +1223,33 @@ function Dashboard(props) {
                   <ContentEfficiency className="efficiency">
                     <ContentDataEfficiencyIpad>
                       <Heading>Avg Transaction Fee(USD)</Heading>
-                      {
-                        props.stats.bestBlock === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <div>
-                                  <DataCount>{gasUsd}</DataCount>
-                                  <EthDiv>
-                                    <img src="/images/Down.svg" alt=" " />
-                                    {" " + Eth} less than Ethereum
-                                  </EthDiv>
-                                </div>
-                            )
-                      }
+                      {!gasUsd ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <DataCount>{gasUsd}</DataCount>
+                      )}
+                      <EthDiv>
+                        <img src="/images/Down.svg" alt=" " />
+                        {" " + Eth} less than Ethereum
+                      </EthDiv>
                       <NodeHistory>Avg Transaction/Second</NodeHistory>
-                      {
-                        props.stats.avgRate === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <BlockTime>{props.stats.avgRate.toFixed(2) + " "}TPS</BlockTime>
-                            )
-                      }
+                      {props.stats.avgRate === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <BlockTime>
+                          {props.stats.avgRate.toFixed(2) + " "}TPS
+                        </BlockTime>
+                      )}
                     </ContentDataEfficiencyIpad>
                     <ContentDataSpeedIpad2>
                       <SpaceBetween>
                         <ContentDataEfficiencyIpadLabel>
                           <Countries>Up Time</Countries>
-                          {
-                            upTime === 0 ? (
-                                    <div className="animated-background"></div>
-                                ) :
-                                (
-                                    <CountriesData>{upTime}%</CountriesData>
-                                )
-                          }
+                          {upTime === 0 ? (
+                            <div className="animated-background"></div>
+                          ) : (
+                            <CountriesData>{upTime}%</CountriesData>
+                          )}
                         </ContentDataEfficiencyIpadLabel>
                         <SelectionDiv>
                           <SelectionDivStyle
@@ -1325,19 +1288,19 @@ function Dashboard(props) {
                         </SelectionDiv>
                       </SpaceBetween>
                       <Speedbar>
-                        {
-                          props?.stats?.efficiency.length === 0 ? (
-                              <div className="center-parent-div position-relative top-50px">
-                                <div className="dots">
-                                  <div></div>
-                                  <div></div>
-                                  <div></div>
-                                </div>
-                              </div>
-                          ) : (
-                              <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
-                          )
-                        }
+                        {props?.stats?.efficiency.length === 0 ? (
+                          <div className="center-parent-div position-relative top-50px">
+                            <div className="dots">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                          </div>
+                        ) : (
+                          <UpTimeBar
+                            data={props?.stats?.efficiency}
+                          ></UpTimeBar>
+                        )}
                         {/*<UpTimeBar data={props.stats.efficiency}></UpTimeBar>*/}
                       </Speedbar>
                     </ContentDataSpeedIpad2>
@@ -1372,22 +1335,22 @@ function Dashboard(props) {
                     </div>
                     <Image
                       src="/images/Expand.svg"
-                      onClick={() => {changeExpand(2);setShowTabJoyRide(false);}}
+                      onClick={() => {
+                        changeExpand(2);
+                        setShowTabJoyRide(false);
+                      }}
                     />
                   </SpaceBetween>
                   {mobileTab <= 1 ? (
                     <ContentData>
                       <Heading>Nodes</Heading>
-                      {
-                        props.stats.totalNodes === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <DataCount>
-                                  {props.stats.nodes}/{props.stats.totalNodes}
-                                </DataCount>
-                            )
-                      }
+                      {props.stats.totalNodes === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <DataCount>
+                          {props.stats.nodes}/{props.stats.totalNodes}
+                        </DataCount>
+                      )}
                       <NodeHistory>Node History (7 Days)</NodeHistory>
                       <MobileGraphDiv>
                         <NodeGraph />
@@ -1401,14 +1364,13 @@ function Dashboard(props) {
                       <SpaceBetween>
                         <div>
                           <Countries>Countries</Countries>
-                          {
-                            props.stats.countries === 0 ? (
-                                    <div className="animated-background"></div>
-                                ) :
-                                (
-                                    <BestBlockData>{props.stats.countries}</BestBlockData>
-                                )
-                          }
+                          {props.stats.countries === 0 ? (
+                            <div className="animated-background"></div>
+                          ) : (
+                            <BestBlockData>
+                              {props.stats.countries}
+                            </BestBlockData>
+                          )}
                         </div>
                       </SpaceBetween>
                       <MapWidth>
@@ -1465,31 +1427,23 @@ function Dashboard(props) {
                   <SpaceBetween>
                     <EfficiencyContentDiv>
                       <MobDiv>Avg Transaction Fee(USD)</MobDiv>
-                      {
-                        props.stats.bestBlock === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <div>
-                                  <BestBlockData>{gasUsd}</BestBlockData>
-                                  <EthDiv>
-                                    <img src="/images/Down.svg" alt=" " />
-                                    {" " + Eth} less than Ethereum
-                                  </EthDiv>
-                                </div>
-                            )
-                      }
+                      {!gasUsd ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <BestBlockData>{gasUsd}</BestBlockData>
+                      )}
+                      <EthDiv>
+                        <img src="/images/Down.svg" alt=" " />
+                        {" " + Eth} less than Ethereum
+                      </EthDiv>
                     </EfficiencyContentDiv>
                     <div>
                       <MobDiv>Up Time</MobDiv>
-                      {
-                        upTime === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <LastBLockData> {upTime}%</LastBLockData>
-                            )
-                      }
+                      {upTime === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <LastBLockData> {upTime}%</LastBLockData>
+                      )}
                     </div>
                   </SpaceBetween>
                   <SpaceBetween>
@@ -1497,16 +1451,13 @@ function Dashboard(props) {
                       <MobileAverageBlock>
                         Avg Transaction/Second
                       </MobileAverageBlock>
-                      {
-                        props.stats.avgRate === 0 ? (
-                                <div className="animated-background"></div>
-                            ) :
-                            (
-                                <DataMobDiv>
-                                  {props.stats.avgRate.toFixed(2) + " "}TPS
-                                </DataMobDiv>
-                            )
-                      }
+                      {props.stats.avgRate === 0 ? (
+                        <div className="animated-background"></div>
+                      ) : (
+                        <DataMobDiv>
+                          {props.stats.avgRate.toFixed(2) + " "}TPS
+                        </DataMobDiv>
+                      )}
                     </div>
                     <SelectionDiv>
                       <SelectionDivStyle
@@ -1545,7 +1496,7 @@ function Dashboard(props) {
                     </SelectionDiv>
                   </SpaceBetween>
                   <MobileGraphDiv>
-                  <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
+                    <UpTimeBar data={props?.stats?.efficiency}></UpTimeBar>
                   </MobileGraphDiv>
                 </MobileSpeedBlock>
               ) : (
@@ -1553,17 +1504,13 @@ function Dashboard(props) {
               )}
             </MobileContentParent>
           </MainContainer>
-          <TableDiv>
-            {showTable}
-          </TableDiv>
+          <TableDiv>{showTable}</TableDiv>
           <Footer>© 2022 XDC Foundation. All Rights Reserved.</Footer>
         </>
       )}
     </Div>
   );
 }
-
-
 
 const mapStateToProps = (state) => {
   return { stats: state.stats };
