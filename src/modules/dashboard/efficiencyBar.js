@@ -60,7 +60,7 @@ const theme = {
 let data = [];
 function EfficiencyBar(props) {
   if (!_.isEmpty(props.data) && !_.isUndefined(props.data)) {
-    if (props.data.responseData.length === 7) {
+    if (props?.data?.responseData?.length === 7) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].uptime * 100) / 100 },
         { time: 2, Up: Math.round(props.data.responseData[1].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].uptime * 100) / 100 },
@@ -73,7 +73,7 @@ function EfficiencyBar(props) {
     }
   
 
-    if (props.data.responseData.length === 24) {
+    if (props?.data?.responseData?.length === 24) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].upTime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].upTime * 100) / 100 },
         { time: 2, Up: Math.round(props.data.responseData[1].upTime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].upTime * 100) / 100 },
@@ -102,7 +102,7 @@ function EfficiencyBar(props) {
       ];
     }
 
-    if (props.data.responseData.length === 30) {
+    if (props?.data?.responseData?.length === 30) {
       data = [
         { time: 1, Up: Math.round(props.data.responseData[0].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[0].uptime * 100) / 100},
         { time: 2, Up: Math.round(props.data.responseData[1].uptime * 100) / 100, Down: 100-Math.round(props.data.responseData[1].uptime * 100) / 100 },
@@ -142,7 +142,7 @@ function EfficiencyBar(props) {
 const colors = ["#3AF219", "#E62805"];
   return (
     <>
-    <Div data={props.data.responseData.length}>
+    <Div data={props?.data?.responseData?.length}>
       <ResponsiveBar
         yScale={{
           type: "linear",
