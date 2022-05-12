@@ -1038,12 +1038,14 @@ function Dashboard(props) {
                     {!gasUsd ? (
                       <div className="animated-background"></div>
                     ) : (
-                      <DataCount>{gasUsd}</DataCount>
+                      <>
+                        <DataCount>{gasUsd}</DataCount>
+                        <EthDiv>
+                          <img src="/images/Down.svg" alt=" " />
+                          {" " + "99.999980%"} less than Ethereum
+                        </EthDiv>
+                      </>
                     )}
-                    <EthDiv>
-                      <img src="/images/Down.svg" alt=" " />
-                      {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
-                    </EthDiv>
 
                     <NodeHistory>Avg Transaction/Second</NodeHistory>
                     {props.stats.avgRate === 0 ? (
@@ -1226,12 +1228,14 @@ function Dashboard(props) {
                       {!gasUsd ? (
                         <div className="animated-background"></div>
                       ) : (
-                        <DataCount>{gasUsd}</DataCount>
+                        <>
+                          <DataCount>{gasUsd}</DataCount>
+                          <EthDiv>
+                            <img src="/images/Down.svg" alt=" " />
+                            {" " + "99.999980%"} less than Ethereum
+                          </EthDiv>
+                        </>
                       )}
-                      <EthDiv>
-                        <img src="/images/Down.svg" alt=" " />
-                        {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
-                      </EthDiv>
                       <NodeHistory>Avg Transaction/Second</NodeHistory>
                       {props.stats.avgRate === 0 ? (
                         <div className="animated-background"></div>
@@ -1430,12 +1434,14 @@ function Dashboard(props) {
                       {!gasUsd ? (
                         <div className="animated-background"></div>
                       ) : (
-                        <BestBlockData>{gasUsd}</BestBlockData>
+                        <>
+                          <DataCount>{gasUsd}</DataCount>
+                          <EthDiv>
+                            <img src="/images/Down.svg" alt=" " />
+                            {" " + "99.999980%"} less than Ethereum
+                          </EthDiv>
+                        </>
                       )}
-                      <EthDiv>
-                        <img src="/images/Down.svg" alt=" " />
-                        {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
-                      </EthDiv>
                     </EfficiencyContentDiv>
                     <div>
                       <MobDiv>Up Time</MobDiv>
