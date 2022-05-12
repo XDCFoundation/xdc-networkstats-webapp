@@ -475,20 +475,19 @@ function updateBestBlock(data) {
           let convertedPrice = price * wei;
           gasPrice = convertedPrice * GasInit * gasUsed;
         }
-      }
-      fetchData();
-      batch(() => {
+
         store.dispatch({
           type: eventConstants.UPDATE_GAS_PRICE,
           data: gasPrice,
         });
+      }
+      fetchData();
         
         store.dispatch({
           type: eventConstants.UPDATE_BEST_BLOCK,
           data: bestBlock,
         });
         
-      });
     }
   }
 }
