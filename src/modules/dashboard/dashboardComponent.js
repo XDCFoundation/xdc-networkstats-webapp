@@ -1042,7 +1042,7 @@ function Dashboard(props) {
                     )}
                     <EthDiv>
                       <img src="/images/Down.svg" alt=" " />
-                      {!gasUsd ? " " + "0" : " " + "99.999980%"} less than Ethereum
+                      {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
                     </EthDiv>
 
                     <NodeHistory>Avg Transaction/Second</NodeHistory>
@@ -1230,7 +1230,7 @@ function Dashboard(props) {
                       )}
                       <EthDiv>
                         <img src="/images/Down.svg" alt=" " />
-                        {!gasUsd ? " " + "0" : " " + "99.999980%"} less than Ethereum
+                        {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
                       </EthDiv>
                       <NodeHistory>Avg Transaction/Second</NodeHistory>
                       {props.stats.avgRate === 0 ? (
@@ -1434,7 +1434,7 @@ function Dashboard(props) {
                       )}
                       <EthDiv>
                         <img src="/images/Down.svg" alt=" " />
-                        {!gasUsd ? " " + "0" : " " + "99.999980%"} less than Ethereum
+                        {!gasUsd ? " " : " " + "99.999980%"} less than Ethereum
                       </EthDiv>
                     </EfficiencyContentDiv>
                     <div>
